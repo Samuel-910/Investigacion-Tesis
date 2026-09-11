@@ -1,0 +1,1466 @@
+{
+  "us_adm_001": {
+    "role": "Administrador",
+    "top10": [
+      {
+        "ruta": "configuraciones/seguridad/usuarios",
+        "score": 9.261107
+      },
+      {
+        "ruta": "configuraciones/seguridad/roles",
+        "score": 8.958311
+      },
+      {
+        "ruta": "configuraciones/seguridad/permisos",
+        "score": 8.918488
+      },
+      {
+        "ruta": "dashboard",
+        "score": 0.088661
+      },
+      {
+        "ruta": "documentos/bloque",
+        "score": 0.03115
+      },
+      {
+        "ruta": "configuraciones/sucursales/editar",
+        "score": 0.030804
+      },
+      {
+        "ruta": "configuraciones",
+        "score": 0.011474
+      },
+      {
+        "ruta": "configuraciones/seguridad",
+        "score": 0.005519
+      },
+      {
+        "ruta": "documentos",
+        "score": 0.000777
+      },
+      {
+        "ruta": "configuraciones/sucursales",
+        "score": 0.000581
+      }
+    ],
+    "all_scores": [
+      {
+        "ruta": "configuraciones/seguridad/usuarios",
+        "score": 9.261107
+      },
+      {
+        "ruta": "configuraciones/seguridad/roles",
+        "score": 8.958311
+      },
+      {
+        "ruta": "configuraciones/seguridad/permisos",
+        "score": 8.918488
+      },
+      {
+        "ruta": "dashboard",
+        "score": 0.088661
+      },
+      {
+        "ruta": "documentos/bloque",
+        "score": 0.03115
+      },
+      {
+        "ruta": "configuraciones/sucursales/editar",
+        "score": 0.030804
+      },
+      {
+        "ruta": "configuraciones",
+        "score": 0.011474
+      },
+      {
+        "ruta": "configuraciones/seguridad",
+        "score": 0.005519
+      },
+      {
+        "ruta": "documentos",
+        "score": 0.000777
+      },
+      {
+        "ruta": "configuraciones/sucursales",
+        "score": 0.000581
+      },
+      {
+        "ruta": "documentos/formato",
+        "score": 0.000364
+      },
+      {
+        "ruta": "documentos/punto-documento",
+        "score": 0.000303
+      },
+      {
+        "ruta": "compra/registro",
+        "score": 2.6e-05
+      },
+      {
+        "ruta": "atributos",
+        "score": 1.8e-05
+      },
+      {
+        "ruta": "configuraciones/catalogo",
+        "score": 1.8e-05
+      },
+      {
+        "ruta": "procesos/movimientos/detalle",
+        "score": 1.4e-05
+      },
+      {
+        "ruta": "reportes",
+        "score": 1.1e-05
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 7e-06
+      },
+      {
+        "ruta": "procesos",
+        "score": 6e-06
+      },
+      {
+        "ruta": "procesos/movimientos",
+        "score": 6e-06
+      },
+      {
+        "ruta": "configuraciones/puntos",
+        "score": 5e-06
+      },
+      {
+        "ruta": "ventas",
+        "score": 5e-06
+      },
+      {
+        "ruta": "ventas/pago",
+        "score": 5e-06
+      },
+      {
+        "ruta": "compra",
+        "score": 4e-06
+      },
+      {
+        "ruta": "compra/orden/aprobar",
+        "score": 4e-06
+      },
+      {
+        "ruta": "ventas/exito",
+        "score": 4e-06
+      },
+      {
+        "ruta": "compra/orden",
+        "score": 3e-06
+      },
+      {
+        "ruta": "compra/registro/guardar",
+        "score": 3e-06
+      },
+      {
+        "ruta": "procesos/movimientos/mixto",
+        "score": 3e-06
+      },
+      {
+        "ruta": "reportes/inventario",
+        "score": 3e-06
+      },
+      {
+        "ruta": "unidad-medida",
+        "score": 3e-06
+      },
+      {
+        "ruta": "ventas/descuentos",
+        "score": 3e-06
+      },
+      {
+        "ruta": "ventas/registro",
+        "score": 2e-06
+      },
+      {
+        "ruta": "mi-perfil",
+        "score": 1e-06
+      }
+    ]
+  },
+  "us_adm_002": {
+    "role": "Administrador",
+    "top10": [
+      {
+        "ruta": "dashboard",
+        "score": 10.429893
+      },
+      {
+        "ruta": "documentos/bloque",
+        "score": 8.374217
+      },
+      {
+        "ruta": "configuraciones/sucursales/editar",
+        "score": 8.274238
+      },
+      {
+        "ruta": "documentos",
+        "score": 0.208814
+      },
+      {
+        "ruta": "configuraciones/sucursales",
+        "score": 0.154397
+      },
+      {
+        "ruta": "configuraciones",
+        "score": 0.11158
+      },
+      {
+        "ruta": "documentos/formato",
+        "score": 0.096086
+      },
+      {
+        "ruta": "documentos/punto-documento",
+        "score": 0.080186
+      },
+      {
+        "ruta": "configuraciones/seguridad/usuarios",
+        "score": 0.032973
+      },
+      {
+        "ruta": "configuraciones/seguridad/roles",
+        "score": 0.031919
+      }
+    ],
+    "all_scores": [
+      {
+        "ruta": "dashboard",
+        "score": 10.429893
+      },
+      {
+        "ruta": "documentos/bloque",
+        "score": 8.374217
+      },
+      {
+        "ruta": "configuraciones/sucursales/editar",
+        "score": 8.274238
+      },
+      {
+        "ruta": "documentos",
+        "score": 0.208814
+      },
+      {
+        "ruta": "configuraciones/sucursales",
+        "score": 0.154397
+      },
+      {
+        "ruta": "configuraciones",
+        "score": 0.11158
+      },
+      {
+        "ruta": "documentos/formato",
+        "score": 0.096086
+      },
+      {
+        "ruta": "documentos/punto-documento",
+        "score": 0.080186
+      },
+      {
+        "ruta": "configuraciones/seguridad/usuarios",
+        "score": 0.032973
+      },
+      {
+        "ruta": "configuraciones/seguridad/roles",
+        "score": 0.031919
+      },
+      {
+        "ruta": "configuraciones/seguridad/permisos",
+        "score": 0.031778
+      },
+      {
+        "ruta": "reportes",
+        "score": 3.3e-05
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 2.5e-05
+      },
+      {
+        "ruta": "configuraciones/seguridad",
+        "score": 2.3e-05
+      },
+      {
+        "ruta": "compra",
+        "score": 1.7e-05
+      },
+      {
+        "ruta": "compra/registro",
+        "score": 1.7e-05
+      },
+      {
+        "ruta": "procesos/movimientos",
+        "score": 1.7e-05
+      },
+      {
+        "ruta": "compra/orden",
+        "score": 1.3e-05
+      },
+      {
+        "ruta": "unidad-medida",
+        "score": 1.2e-05
+      },
+      {
+        "ruta": "mi-perfil",
+        "score": 1.1e-05
+      },
+      {
+        "ruta": "atributos",
+        "score": 8e-06
+      },
+      {
+        "ruta": "procesos",
+        "score": 8e-06
+      },
+      {
+        "ruta": "ventas",
+        "score": 7e-06
+      },
+      {
+        "ruta": "ventas/exito",
+        "score": 7e-06
+      },
+      {
+        "ruta": "configuraciones/puntos",
+        "score": 6e-06
+      },
+      {
+        "ruta": "procesos/movimientos/detalle",
+        "score": 6e-06
+      },
+      {
+        "ruta": "procesos/movimientos/mixto",
+        "score": 6e-06
+      },
+      {
+        "ruta": "ventas/pago",
+        "score": 6e-06
+      },
+      {
+        "ruta": "configuraciones/catalogo",
+        "score": 5e-06
+      },
+      {
+        "ruta": "ventas/descuentos",
+        "score": 4e-06
+      },
+      {
+        "ruta": "compra/orden/aprobar",
+        "score": 3e-06
+      },
+      {
+        "ruta": "compra/registro/guardar",
+        "score": 2e-06
+      },
+      {
+        "ruta": "reportes/inventario",
+        "score": 1e-06
+      },
+      {
+        "ruta": "ventas/registro",
+        "score": 1e-06
+      }
+    ]
+  },
+  "us_alm_001": {
+    "role": "Almacen",
+    "top10": [
+      {
+        "ruta": "dashboard",
+        "score": 9.866992
+      },
+      {
+        "ruta": "procesos/movimientos/detalle",
+        "score": 9.415516
+      },
+      {
+        "ruta": "procesos/movimientos/mixto",
+        "score": 9.23558
+      },
+      {
+        "ruta": "procesos",
+        "score": 0.041852
+      },
+      {
+        "ruta": "procesos/movimientos",
+        "score": 0.030342
+      },
+      {
+        "ruta": "configuraciones/catalogo",
+        "score": 0.029432
+      },
+      {
+        "ruta": "configuraciones/puntos",
+        "score": 0.0227
+      },
+      {
+        "ruta": "configuraciones",
+        "score": 0.022468
+      },
+      {
+        "ruta": "reportes/inventario",
+        "score": 0.017141
+      },
+      {
+        "ruta": "unidad-medida",
+        "score": 0.005962
+      }
+    ],
+    "all_scores": [
+      {
+        "ruta": "dashboard",
+        "score": 9.866992
+      },
+      {
+        "ruta": "procesos/movimientos/detalle",
+        "score": 9.415516
+      },
+      {
+        "ruta": "procesos/movimientos/mixto",
+        "score": 9.23558
+      },
+      {
+        "ruta": "procesos",
+        "score": 0.041852
+      },
+      {
+        "ruta": "procesos/movimientos",
+        "score": 0.030342
+      },
+      {
+        "ruta": "configuraciones/catalogo",
+        "score": 0.029432
+      },
+      {
+        "ruta": "configuraciones/puntos",
+        "score": 0.0227
+      },
+      {
+        "ruta": "configuraciones",
+        "score": 0.022468
+      },
+      {
+        "ruta": "reportes/inventario",
+        "score": 0.017141
+      },
+      {
+        "ruta": "unidad-medida",
+        "score": 0.005962
+      },
+      {
+        "ruta": "reportes",
+        "score": 0.005888
+      },
+      {
+        "ruta": "atributos",
+        "score": 0.005305
+      },
+      {
+        "ruta": "ventas/descuentos",
+        "score": 1.3e-05
+      },
+      {
+        "ruta": "mi-perfil",
+        "score": 7e-06
+      },
+      {
+        "ruta": "ventas/exito",
+        "score": 7e-06
+      },
+      {
+        "ruta": "ventas",
+        "score": 6e-06
+      },
+      {
+        "ruta": "compra/orden",
+        "score": 5e-06
+      },
+      {
+        "ruta": "documentos/bloque",
+        "score": 5e-06
+      },
+      {
+        "ruta": "configuraciones/sucursales/editar",
+        "score": 4e-06
+      },
+      {
+        "ruta": "configuraciones/seguridad/usuarios",
+        "score": 3e-06
+      },
+      {
+        "ruta": "documentos",
+        "score": 3e-06
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 3e-06
+      },
+      {
+        "ruta": "compra/registro",
+        "score": 2e-06
+      },
+      {
+        "ruta": "configuraciones/seguridad/roles",
+        "score": 2e-06
+      },
+      {
+        "ruta": "configuraciones/sucursales",
+        "score": 2e-06
+      },
+      {
+        "ruta": "documentos/formato",
+        "score": 2e-06
+      },
+      {
+        "ruta": "documentos/punto-documento",
+        "score": 2e-06
+      },
+      {
+        "ruta": "ventas/pago",
+        "score": 2e-06
+      },
+      {
+        "ruta": "ventas/registro",
+        "score": 2e-06
+      },
+      {
+        "ruta": "compra",
+        "score": 1e-06
+      },
+      {
+        "ruta": "configuraciones/seguridad",
+        "score": 1e-06
+      },
+      {
+        "ruta": "configuraciones/seguridad/permisos",
+        "score": 1e-06
+      },
+      {
+        "ruta": "compra/orden/aprobar",
+        "score": 0.0
+      },
+      {
+        "ruta": "compra/registro/guardar",
+        "score": 0.0
+      }
+    ]
+  },
+  "us_alm_002": {
+    "role": "Almacen",
+    "top10": [
+      {
+        "ruta": "dashboard",
+        "score": 7.207525
+      },
+      {
+        "ruta": "configuraciones/catalogo",
+        "score": 4.761555
+      },
+      {
+        "ruta": "reportes/inventario",
+        "score": 2.727469
+      },
+      {
+        "ruta": "configuraciones",
+        "score": 1.782005
+      },
+      {
+        "ruta": "unidad-medida",
+        "score": 0.966182
+      },
+      {
+        "ruta": "reportes",
+        "score": 0.936494
+      },
+      {
+        "ruta": "atributos",
+        "score": 0.861448
+      },
+      {
+        "ruta": "procesos/movimientos/detalle",
+        "score": 0.026553
+      },
+      {
+        "ruta": "procesos/movimientos/mixto",
+        "score": 0.026039
+      },
+      {
+        "ruta": "procesos",
+        "score": 0.000119
+      }
+    ],
+    "all_scores": [
+      {
+        "ruta": "dashboard",
+        "score": 7.207525
+      },
+      {
+        "ruta": "configuraciones/catalogo",
+        "score": 4.761555
+      },
+      {
+        "ruta": "reportes/inventario",
+        "score": 2.727469
+      },
+      {
+        "ruta": "configuraciones",
+        "score": 1.782005
+      },
+      {
+        "ruta": "unidad-medida",
+        "score": 0.966182
+      },
+      {
+        "ruta": "reportes",
+        "score": 0.936494
+      },
+      {
+        "ruta": "atributos",
+        "score": 0.861448
+      },
+      {
+        "ruta": "procesos/movimientos/detalle",
+        "score": 0.026553
+      },
+      {
+        "ruta": "procesos/movimientos/mixto",
+        "score": 0.026039
+      },
+      {
+        "ruta": "procesos",
+        "score": 0.000119
+      },
+      {
+        "ruta": "procesos/movimientos",
+        "score": 8.9e-05
+      },
+      {
+        "ruta": "configuraciones/puntos",
+        "score": 6.6e-05
+      },
+      {
+        "ruta": "compra/registro",
+        "score": 9e-06
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 7e-06
+      },
+      {
+        "ruta": "configuraciones/sucursales/editar",
+        "score": 6e-06
+      },
+      {
+        "ruta": "configuraciones/seguridad/usuarios",
+        "score": 5e-06
+      },
+      {
+        "ruta": "compra",
+        "score": 4e-06
+      },
+      {
+        "ruta": "compra/orden",
+        "score": 4e-06
+      },
+      {
+        "ruta": "configuraciones/seguridad/roles",
+        "score": 4e-06
+      },
+      {
+        "ruta": "configuraciones/seguridad/permisos",
+        "score": 3e-06
+      },
+      {
+        "ruta": "documentos/bloque",
+        "score": 3e-06
+      },
+      {
+        "ruta": "compra/orden/aprobar",
+        "score": 2e-06
+      },
+      {
+        "ruta": "compra/registro/guardar",
+        "score": 2e-06
+      },
+      {
+        "ruta": "configuraciones/sucursales",
+        "score": 2e-06
+      },
+      {
+        "ruta": "documentos",
+        "score": 2e-06
+      },
+      {
+        "ruta": "documentos/formato",
+        "score": 2e-06
+      },
+      {
+        "ruta": "documentos/punto-documento",
+        "score": 2e-06
+      },
+      {
+        "ruta": "ventas/descuentos",
+        "score": 2e-06
+      },
+      {
+        "ruta": "configuraciones/seguridad",
+        "score": 1e-06
+      },
+      {
+        "ruta": "mi-perfil",
+        "score": 1e-06
+      },
+      {
+        "ruta": "ventas",
+        "score": 1e-06
+      },
+      {
+        "ruta": "ventas/exito",
+        "score": 1e-06
+      },
+      {
+        "ruta": "ventas/pago",
+        "score": 1e-06
+      },
+      {
+        "ruta": "ventas/registro",
+        "score": 1e-06
+      }
+    ]
+  },
+  "us_cmp_001": {
+    "role": "Compras",
+    "top10": [
+      {
+        "ruta": "dashboard",
+        "score": 10.998472
+      },
+      {
+        "ruta": "compra/orden/aprobar",
+        "score": 9.250774
+      },
+      {
+        "ruta": "compra/registro/guardar",
+        "score": 9.188084
+      },
+      {
+        "ruta": "compra",
+        "score": 0.207536
+      },
+      {
+        "ruta": "compra/orden",
+        "score": 0.166444
+      },
+      {
+        "ruta": "configuraciones",
+        "score": 0.109241
+      },
+      {
+        "ruta": "configuraciones/catalogo",
+        "score": 0.10564
+      },
+      {
+        "ruta": "compra/registro",
+        "score": 0.098634
+      },
+      {
+        "ruta": "reportes",
+        "score": 0.014088
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 0.013957
+      }
+    ],
+    "all_scores": [
+      {
+        "ruta": "dashboard",
+        "score": 10.998472
+      },
+      {
+        "ruta": "compra/orden/aprobar",
+        "score": 9.250774
+      },
+      {
+        "ruta": "compra/registro/guardar",
+        "score": 9.188084
+      },
+      {
+        "ruta": "compra",
+        "score": 0.207536
+      },
+      {
+        "ruta": "compra/orden",
+        "score": 0.166444
+      },
+      {
+        "ruta": "configuraciones",
+        "score": 0.109241
+      },
+      {
+        "ruta": "configuraciones/catalogo",
+        "score": 0.10564
+      },
+      {
+        "ruta": "compra/registro",
+        "score": 0.098634
+      },
+      {
+        "ruta": "reportes",
+        "score": 0.014088
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 0.013957
+      },
+      {
+        "ruta": "atributos",
+        "score": 2.9e-05
+      },
+      {
+        "ruta": "documentos/bloque",
+        "score": 1.7e-05
+      },
+      {
+        "ruta": "unidad-medida",
+        "score": 1.1e-05
+      },
+      {
+        "ruta": "configuraciones/sucursales/editar",
+        "score": 9e-06
+      },
+      {
+        "ruta": "configuraciones/seguridad/usuarios",
+        "score": 4e-06
+      },
+      {
+        "ruta": "configuraciones/sucursales",
+        "score": 4e-06
+      },
+      {
+        "ruta": "documentos",
+        "score": 4e-06
+      },
+      {
+        "ruta": "ventas/exito",
+        "score": 4e-06
+      },
+      {
+        "ruta": "configuraciones/seguridad/permisos",
+        "score": 3e-06
+      },
+      {
+        "ruta": "configuraciones/seguridad/roles",
+        "score": 3e-06
+      },
+      {
+        "ruta": "documentos/formato",
+        "score": 3e-06
+      },
+      {
+        "ruta": "procesos/movimientos",
+        "score": 3e-06
+      },
+      {
+        "ruta": "reportes/inventario",
+        "score": 3e-06
+      },
+      {
+        "ruta": "ventas",
+        "score": 3e-06
+      },
+      {
+        "ruta": "ventas/registro",
+        "score": 3e-06
+      },
+      {
+        "ruta": "configuraciones/seguridad",
+        "score": 2e-06
+      },
+      {
+        "ruta": "documentos/punto-documento",
+        "score": 2e-06
+      },
+      {
+        "ruta": "ventas/descuentos",
+        "score": 2e-06
+      },
+      {
+        "ruta": "ventas/pago",
+        "score": 2e-06
+      },
+      {
+        "ruta": "configuraciones/puntos",
+        "score": 1e-06
+      },
+      {
+        "ruta": "mi-perfil",
+        "score": 1e-06
+      },
+      {
+        "ruta": "procesos",
+        "score": 1e-06
+      },
+      {
+        "ruta": "procesos/movimientos/detalle",
+        "score": 0.0
+      },
+      {
+        "ruta": "procesos/movimientos/mixto",
+        "score": 0.0
+      }
+    ]
+  },
+  "us_cmp_002": {
+    "role": "Compras",
+    "top10": [
+      {
+        "ruta": "dashboard",
+        "score": 35.038892
+      },
+      {
+        "ruta": "compra/registro",
+        "score": 18.104969
+      },
+      {
+        "ruta": "compra/orden",
+        "score": 8.62636
+      },
+      {
+        "ruta": "compra",
+        "score": 8.433962
+      },
+      {
+        "ruta": "reportes",
+        "score": 8.28514
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 8.205863
+      },
+      {
+        "ruta": "compra/orden/aprobar",
+        "score": 0.016424
+      },
+      {
+        "ruta": "compra/registro/guardar",
+        "score": 0.016319
+      },
+      {
+        "ruta": "configuraciones",
+        "score": 0.000206
+      },
+      {
+        "ruta": "configuraciones/catalogo",
+        "score": 0.000188
+      }
+    ],
+    "all_scores": [
+      {
+        "ruta": "dashboard",
+        "score": 35.038892
+      },
+      {
+        "ruta": "compra/registro",
+        "score": 18.104969
+      },
+      {
+        "ruta": "compra/orden",
+        "score": 8.62636
+      },
+      {
+        "ruta": "compra",
+        "score": 8.433962
+      },
+      {
+        "ruta": "reportes",
+        "score": 8.28514
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 8.205863
+      },
+      {
+        "ruta": "compra/orden/aprobar",
+        "score": 0.016424
+      },
+      {
+        "ruta": "compra/registro/guardar",
+        "score": 0.016319
+      },
+      {
+        "ruta": "configuraciones",
+        "score": 0.000206
+      },
+      {
+        "ruta": "configuraciones/catalogo",
+        "score": 0.000188
+      },
+      {
+        "ruta": "configuraciones/sucursales/editar",
+        "score": 3e-06
+      },
+      {
+        "ruta": "mi-perfil",
+        "score": 3e-06
+      },
+      {
+        "ruta": "unidad-medida",
+        "score": 3e-06
+      },
+      {
+        "ruta": "documentos/bloque",
+        "score": 2e-06
+      },
+      {
+        "ruta": "reportes/inventario",
+        "score": 2e-06
+      },
+      {
+        "ruta": "ventas",
+        "score": 2e-06
+      },
+      {
+        "ruta": "configuraciones/sucursales",
+        "score": 1e-06
+      },
+      {
+        "ruta": "documentos",
+        "score": 1e-06
+      },
+      {
+        "ruta": "documentos/formato",
+        "score": 1e-06
+      },
+      {
+        "ruta": "documentos/punto-documento",
+        "score": 1e-06
+      },
+      {
+        "ruta": "atributos",
+        "score": 0.0
+      },
+      {
+        "ruta": "configuraciones/puntos",
+        "score": 0.0
+      },
+      {
+        "ruta": "configuraciones/seguridad",
+        "score": 0.0
+      },
+      {
+        "ruta": "configuraciones/seguridad/permisos",
+        "score": 0.0
+      },
+      {
+        "ruta": "configuraciones/seguridad/roles",
+        "score": 0.0
+      },
+      {
+        "ruta": "configuraciones/seguridad/usuarios",
+        "score": 0.0
+      },
+      {
+        "ruta": "procesos",
+        "score": 0.0
+      },
+      {
+        "ruta": "procesos/movimientos",
+        "score": 0.0
+      },
+      {
+        "ruta": "procesos/movimientos/detalle",
+        "score": 0.0
+      },
+      {
+        "ruta": "procesos/movimientos/mixto",
+        "score": 0.0
+      },
+      {
+        "ruta": "ventas/descuentos",
+        "score": 0.0
+      },
+      {
+        "ruta": "ventas/exito",
+        "score": 0.0
+      },
+      {
+        "ruta": "ventas/pago",
+        "score": 0.0
+      },
+      {
+        "ruta": "ventas/registro",
+        "score": 0.0
+      }
+    ]
+  },
+  "us_vta_001": {
+    "role": "Ventas",
+    "top10": [
+      {
+        "ruta": "ventas/exito",
+        "score": 25.030749
+      },
+      {
+        "ruta": "dashboard",
+        "score": 12.7221
+      },
+      {
+        "ruta": "procesos/movimientos",
+        "score": 12.448524
+      },
+      {
+        "ruta": "ventas",
+        "score": 0.055084
+      },
+      {
+        "ruta": "ventas/registro",
+        "score": 0.026476
+      },
+      {
+        "ruta": "ventas/descuentos",
+        "score": 0.013675
+      },
+      {
+        "ruta": "ventas/pago",
+        "score": 0.010032
+      },
+      {
+        "ruta": "mi-perfil",
+        "score": 0.008301
+      },
+      {
+        "ruta": "documentos",
+        "score": 0.005013
+      },
+      {
+        "ruta": "documentos/bloque",
+        "score": 0.005012
+      }
+    ],
+    "all_scores": [
+      {
+        "ruta": "ventas/exito",
+        "score": 25.030749
+      },
+      {
+        "ruta": "dashboard",
+        "score": 12.7221
+      },
+      {
+        "ruta": "procesos/movimientos",
+        "score": 12.448524
+      },
+      {
+        "ruta": "ventas",
+        "score": 0.055084
+      },
+      {
+        "ruta": "ventas/registro",
+        "score": 0.026476
+      },
+      {
+        "ruta": "ventas/descuentos",
+        "score": 0.013675
+      },
+      {
+        "ruta": "ventas/pago",
+        "score": 0.010032
+      },
+      {
+        "ruta": "mi-perfil",
+        "score": 0.008301
+      },
+      {
+        "ruta": "documentos",
+        "score": 0.005013
+      },
+      {
+        "ruta": "documentos/bloque",
+        "score": 0.005012
+      },
+      {
+        "ruta": "procesos",
+        "score": 0.00501
+      },
+      {
+        "ruta": "reportes",
+        "score": 3e-06
+      },
+      {
+        "ruta": "configuraciones",
+        "score": 2e-06
+      },
+      {
+        "ruta": "documentos/punto-documento",
+        "score": 2e-06
+      },
+      {
+        "ruta": "procesos/movimientos/detalle",
+        "score": 2e-06
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 2e-06
+      },
+      {
+        "ruta": "compra",
+        "score": 1e-06
+      },
+      {
+        "ruta": "compra/orden",
+        "score": 1e-06
+      },
+      {
+        "ruta": "compra/orden/aprobar",
+        "score": 1e-06
+      },
+      {
+        "ruta": "compra/registro/guardar",
+        "score": 1e-06
+      },
+      {
+        "ruta": "configuraciones/catalogo",
+        "score": 1e-06
+      },
+      {
+        "ruta": "configuraciones/puntos",
+        "score": 1e-06
+      },
+      {
+        "ruta": "configuraciones/seguridad",
+        "score": 1e-06
+      },
+      {
+        "ruta": "configuraciones/seguridad/usuarios",
+        "score": 1e-06
+      },
+      {
+        "ruta": "configuraciones/sucursales",
+        "score": 1e-06
+      },
+      {
+        "ruta": "documentos/formato",
+        "score": 1e-06
+      },
+      {
+        "ruta": "procesos/movimientos/mixto",
+        "score": 1e-06
+      },
+      {
+        "ruta": "reportes/inventario",
+        "score": 1e-06
+      },
+      {
+        "ruta": "unidad-medida",
+        "score": 1e-06
+      },
+      {
+        "ruta": "atributos",
+        "score": 0.0
+      },
+      {
+        "ruta": "compra/registro",
+        "score": 0.0
+      },
+      {
+        "ruta": "configuraciones/seguridad/permisos",
+        "score": 0.0
+      },
+      {
+        "ruta": "configuraciones/seguridad/roles",
+        "score": 0.0
+      },
+      {
+        "ruta": "configuraciones/sucursales/editar",
+        "score": 0.0
+      }
+    ]
+  },
+  "us_vta_002": {
+    "role": "Ventas",
+    "top10": [
+      {
+        "ruta": "dashboard",
+        "score": 22.439791
+      },
+      {
+        "ruta": "ventas",
+        "score": 7.540906
+      },
+      {
+        "ruta": "ventas/registro",
+        "score": 3.43306
+      },
+      {
+        "ruta": "ventas/descuentos",
+        "score": 2.602502
+      },
+      {
+        "ruta": "mi-perfil",
+        "score": 2.501213
+      },
+      {
+        "ruta": "ventas/exito",
+        "score": 0.036169
+      },
+      {
+        "ruta": "procesos/movimientos",
+        "score": 0.017992
+      },
+      {
+        "ruta": "reportes",
+        "score": 2e-05
+      },
+      {
+        "ruta": "ventas/pago",
+        "score": 1.5e-05
+      },
+      {
+        "ruta": "compra",
+        "score": 1.3e-05
+      }
+    ],
+    "all_scores": [
+      {
+        "ruta": "dashboard",
+        "score": 22.439791
+      },
+      {
+        "ruta": "ventas",
+        "score": 7.540906
+      },
+      {
+        "ruta": "ventas/registro",
+        "score": 3.43306
+      },
+      {
+        "ruta": "ventas/descuentos",
+        "score": 2.602502
+      },
+      {
+        "ruta": "mi-perfil",
+        "score": 2.501213
+      },
+      {
+        "ruta": "ventas/exito",
+        "score": 0.036169
+      },
+      {
+        "ruta": "procesos/movimientos",
+        "score": 0.017992
+      },
+      {
+        "ruta": "reportes",
+        "score": 2e-05
+      },
+      {
+        "ruta": "ventas/pago",
+        "score": 1.5e-05
+      },
+      {
+        "ruta": "compra",
+        "score": 1.3e-05
+      },
+      {
+        "ruta": "documentos/bloque",
+        "score": 9e-06
+      },
+      {
+        "ruta": "documentos",
+        "score": 8e-06
+      },
+      {
+        "ruta": "procesos",
+        "score": 8e-06
+      },
+      {
+        "ruta": "configuraciones",
+        "score": 6e-06
+      },
+      {
+        "ruta": "procesos/movimientos/detalle",
+        "score": 5e-06
+      },
+      {
+        "ruta": "compra/registro",
+        "score": 3e-06
+      },
+      {
+        "ruta": "configuraciones/sucursales/editar",
+        "score": 3e-06
+      },
+      {
+        "ruta": "procesos/movimientos/mixto",
+        "score": 3e-06
+      },
+      {
+        "ruta": "compra/orden",
+        "score": 2e-06
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 2e-06
+      },
+      {
+        "ruta": "unidad-medida",
+        "score": 2e-06
+      },
+      {
+        "ruta": "compra/registro/guardar",
+        "score": 1e-06
+      },
+      {
+        "ruta": "configuraciones/catalogo",
+        "score": 1e-06
+      },
+      {
+        "ruta": "configuraciones/puntos",
+        "score": 1e-06
+      },
+      {
+        "ruta": "configuraciones/sucursales",
+        "score": 1e-06
+      },
+      {
+        "ruta": "atributos",
+        "score": 0.0
+      },
+      {
+        "ruta": "compra/orden/aprobar",
+        "score": 0.0
+      },
+      {
+        "ruta": "configuraciones/seguridad",
+        "score": 0.0
+      },
+      {
+        "ruta": "configuraciones/seguridad/permisos",
+        "score": 0.0
+      },
+      {
+        "ruta": "configuraciones/seguridad/roles",
+        "score": 0.0
+      },
+      {
+        "ruta": "configuraciones/seguridad/usuarios",
+        "score": 0.0
+      },
+      {
+        "ruta": "documentos/formato",
+        "score": 0.0
+      },
+      {
+        "ruta": "documentos/punto-documento",
+        "score": 0.0
+      },
+      {
+        "ruta": "reportes/inventario",
+        "score": 0.0
+      }
+    ]
+  }
+}

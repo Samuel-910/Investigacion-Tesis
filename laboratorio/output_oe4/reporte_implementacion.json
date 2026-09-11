@@ -1,0 +1,110 @@
+{
+  "oe4_completado": true,
+  "fecha": "2026-06-15T11:53:02.439079",
+  "referencia": "Weyns e Iftikhar (2023), Wohlrab et al. (2022), PPI ss.2.3.2 y 3.2.3",
+  "entorno": {
+    "sistema": {
+      "os": "Windows",
+      "os_version": "10.0.26200",
+      "python": "3.10.11 (tags/v3.10.11:7d",
+      "arquitectura": "AMD64"
+    },
+    "dependencias": {
+      "numpy": {
+        "ok": true,
+        "version": "1.26.4"
+      },
+      "pandas": {
+        "ok": true,
+        "version": "2.2.2"
+      },
+      "scikit-learn": {
+        "ok": true,
+        "version": "1.5.0"
+      }
+    },
+    "ram_disponible_mb": 1757,
+    "ram_total_gb": 15.2,
+    "archivos": {
+      "logs": false,
+      "oe1": true,
+      "oe2": true,
+      "oe3": true
+    },
+    "requiere_internet": false,
+    "ok": true
+  },
+  "cadena_pipelines": {
+    "OE1": {
+      "ok": true,
+      "faltantes": []
+    },
+    "OE2": {
+      "ok": true,
+      "faltantes": []
+    },
+    "OE3": {
+      "ok": true,
+      "faltantes": []
+    },
+    "consistencia_ids": true,
+    "tiempo_verificacion_s": 0.007,
+    "ok": true
+  },
+  "privacidad": {
+    "cumple": false,
+    "verificaciones": [
+      {
+        "nombre": "Anonimizacion SHA-256 de user_ids",
+        "ok": false,
+        "detalle": "11/28 perfiles anonimizados"
+      },
+      {
+        "nombre": "Sin referencias externas en outputs",
+        "ok": true,
+        "detalle": "Sin referencias externas"
+      },
+      {
+        "nombre": "Almacenamiento en rutas locales",
+        "ok": true,
+        "detalle": "Todos los datos en disco local"
+      },
+      {
+        "nombre": "Sin conexiones de red del proceso",
+        "ok": true,
+        "detalle": "0 conexiones activas"
+      }
+    ]
+  },
+  "robustez": {
+    "pasadas": 5,
+    "total": 5,
+    "detalle": [
+      {
+        "nombre": "Riesgo 1 - Fallback ante archivo faltante",
+        "ok": true,
+        "detalle": "Sistema detecta archivo inexistente correctamente"
+      },
+      {
+        "nombre": "Riesgo 2 - Usuario sin transiciones (top5 vacio)",
+        "ok": true,
+        "detalle": "Retorna string vacio, no IndexError"
+      },
+      {
+        "nombre": "Riesgo 3 - Muestra insuficiente",
+        "ok": true,
+        "detalle": "N=28 usuarios (Gaspar-Figueiredo et al. recomienda >= 20)"
+      },
+      {
+        "nombre": "Riesgo 4 - Restriccion de permisos",
+        "ok": true,
+        "detalle": "0 violaciones de permisos detectadas"
+      },
+      {
+        "nombre": "Integridad - JSON validos",
+        "ok": true,
+        "detalle": "11 archivos OK"
+      }
+    ]
+  }
+}

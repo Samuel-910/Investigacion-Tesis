@@ -1,0 +1,19 @@
+{
+  "tipo": "DQN (Deep Q-Network) - Agente de Refuerzo",
+  "n_menu_items": 37,
+  "n_actions": 666,
+  "state_dim": 74,
+  "rl_episodes": 500,
+  "steps_per_ep": 20,
+  "gamma": 0.95,
+  "reduccion_m1_pct": -0.16,
+  "reduccion_por_rol": {
+    "Administrador": 3.74,
+    "Caja": -0.74,
+    "Compras": 0.0,
+    "Logistica": -2.42,
+    "Reportes": 0.0,
+    "Ventas": 0.0
+  },
+  "nota": "Metadatos del agente DQN. Las rutinas de trabajo las aprende el agente DQN mediante politica optima de reestructuracion por usuario."
+}

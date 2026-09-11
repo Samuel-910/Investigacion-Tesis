@@ -1,0 +1,55 @@
+{
+  "Administrador": {
+    "configuraciones/seguridad/roles": 0.159567,
+    "configuraciones/seguridad/permisos": 0.158872,
+    "configuraciones/seguridad/usuarios": 0.16483,
+    "configuraciones": 0.002284,
+    "dashboard": 0.194618,
+    "configuraciones/seguridad": 9.9e-05,
+    "configuraciones/sucursales/editar": 0.154007,
+    "documentos/bloque": 0.155695,
+    "documentos/punto-documento": 0.001489,
+    "documentos": 0.003873,
+    "configuraciones/sucursales": 0.00288,
+    "documentos/formato": 0.001787
+  },
+  "Almacen": {
+    "dashboard": 0.361391,
+    "procesos/movimientos/detalle": 0.132757,
+    "procesos/movimientos/mixto": 0.13018,
+    "configuraciones/puntos": 0.000322,
+    "procesos/movimientos": 0.000429,
+    "procesos": 0.000591,
+    "configuraciones": 0.05583,
+    "reportes/inventario": 0.085677,
+    "configuraciones/catalogo": 0.147144,
+    "unidad-medida": 0.029794,
+    "reportes": 0.029364,
+    "atributos": 0.026519
+  },
+  "Compras": {
+    "dashboard": 0.392241,
+    "compra/orden/aprobar": 0.082113,
+    "compra/registro/guardar": 0.081577,
+    "configuraciones/catalogo": 0.000938,
+    "compra": 0.073235,
+    "configuraciones": 0.000972,
+    "compra/orden": 0.074609,
+    "compra/registro": 0.154377,
+    "reportes/compras": 0.069684,
+    "reportes": 0.070254
+  },
+  "Ventas": {
+    "procesos/movimientos": 0.089923,
+    "dashboard": 0.461552,
+    "ventas/exito": 0.180829,
+    "ventas": 0.125332,
+    "documentos/bloque": 3.6e-05,
+    "procesos": 3.6e-05,
+    "ventas/descuentos": 0.043342,
+    "ventas/registro": 0.057353,
+    "ventas/pago": 7.3e-05,
+    "documentos": 3.6e-05,
+    "mi-perfil": 0.041486
+  }
+}

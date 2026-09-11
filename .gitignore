@@ -1,0 +1,30 @@
+# Entornos Virtuales de Python
+venv/
+env/
+.env/
+ppi_env/
+laboratorio/ppi_env/
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Archivos de logs y ejecucion
+*.log
+pipeline_execution.log
+
+# Pesos y modelos binarios de PyTorch
+*.pt
+*.pth
+
+# Datos crudos masivos
+*.ndjson
+
+# Archivos temporales del SO
+.DS_Store
+Thumbs.db
+desktop.ini

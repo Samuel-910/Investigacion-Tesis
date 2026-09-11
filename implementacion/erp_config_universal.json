@@ -1,0 +1,603 @@
+{
+  "MENU_ERP": [
+    {
+      "id": 1,
+      "titulo": "Configuracion",
+      "tipo": "GRUPO",
+      "orden_default": 1,
+      "children": [
+        {
+          "id": 111,
+          "titulo": "Gestion de Usuarios",
+          "tipo": "ITEM",
+          "ruta": "configuracion/seguridad/users",
+          "orden_default": 1
+        },
+        {
+          "id": 112,
+          "titulo": "Roles de Usuario",
+          "tipo": "ITEM",
+          "ruta": "configuracion/seguridad/roles",
+          "orden_default": 2
+        },
+        {
+          "id": 113,
+          "titulo": "Catalogo de Permisos",
+          "tipo": "ITEM",
+          "ruta": "configuracion/seguridad/permisos",
+          "orden_default": 3
+        },
+        {
+          "id": 114,
+          "titulo": "Administracion avanzada",
+          "tipo": "ITEM",
+          "ruta": "configuracion/seguridad/admin",
+          "orden_default": 4
+        },
+        {
+          "id": 115,
+          "titulo": "Cambio de Clave",
+          "tipo": "ITEM",
+          "ruta": "configuracion/seguridad/cambio-clave",
+          "orden_default": 5
+        },
+        {
+          "id": 12,
+          "titulo": "Puntos de Venta",
+          "tipo": "ITEM",
+          "ruta": "configuracion/puntos-venta",
+          "orden_default": 6
+        },
+        {
+          "id": 13,
+          "titulo": "Atributos Puntos",
+          "tipo": "ITEM",
+          "ruta": "configuracion/puntos-atributos",
+          "orden_default": 7
+        },
+        {
+          "id": 14,
+          "titulo": "Datos Clinicas",
+          "tipo": "ITEM",
+          "ruta": "configuracion/empresas",
+          "orden_default": 8
+        },
+        {
+          "id": 15,
+          "titulo": "Sucursales",
+          "tipo": "ITEM",
+          "ruta": "configuracion/sucursales",
+          "orden_default": 9
+        },
+        {
+          "id": 16,
+          "titulo": "Catalogo",
+          "tipo": "ITEM",
+          "ruta": "configuracion/catalogo-productos",
+          "orden_default": 10
+        },
+        {
+          "id": 17,
+          "titulo": "Atributos Catalogo",
+          "tipo": "ITEM",
+          "ruta": "configuracion/atributos-producto",
+          "orden_default": 11
+        },
+        {
+          "id": 18,
+          "titulo": "Utilitarios XNO",
+          "tipo": "ITEM",
+          "ruta": "configuracion/utilitarios",
+          "orden_default": 12
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "titulo": "Procesos",
+      "tipo": "GRUPO",
+      "orden_default": 2,
+      "children": [
+        {
+          "id": 21,
+          "titulo": "Ingresos y salidas",
+          "tipo": "ITEM",
+          "ruta": "procesos/historial-movimientos",
+          "orden_default": 1
+        },
+        {
+          "id": 22,
+          "titulo": "Atributos Diversos",
+          "tipo": "ITEM",
+          "ruta": "procesos/atributos-diverso",
+          "orden_default": 2
+        },
+        {
+          "id": 23,
+          "titulo": "Reimprimir comprobantes",
+          "tipo": "ITEM",
+          "ruta": "procesos/reimprimir-comprobantes",
+          "orden_default": 3
+        },
+        {
+          "id": 24,
+          "titulo": "Detalle de documentos",
+          "tipo": "ITEM",
+          "ruta": "procesos/detalle-documentos",
+          "orden_default": 4
+        },
+        {
+          "id": 25,
+          "titulo": "Documento por paciente",
+          "tipo": "ITEM",
+          "ruta": "procesos/documento-paciente",
+          "orden_default": 5
+        },
+        {
+          "id": 26,
+          "titulo": "Transferencias",
+          "tipo": "ITEM",
+          "ruta": "procesos/transferencias",
+          "orden_default": 6
+        },
+        {
+          "id": 27,
+          "titulo": "Solicitudes de Anulacion",
+          "tipo": "ITEM",
+          "ruta": "procesos/aprobaciones",
+          "orden_default": 7
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "titulo": "Reportes",
+      "tipo": "GRUPO",
+      "orden_default": 3,
+      "children": [
+        {
+          "id": 31,
+          "titulo": "Correlatividad",
+          "tipo": "ITEM",
+          "ruta": "reportes/correlatividad",
+          "orden_default": 1
+        },
+        {
+          "id": 32,
+          "titulo": "Reporte de compras",
+          "tipo": "ITEM",
+          "ruta": "reportes/compras",
+          "orden_default": 2
+        },
+        {
+          "id": 33,
+          "titulo": "Reporte de ventas",
+          "tipo": "ITEM",
+          "ruta": "reportes/ventas",
+          "orden_default": 3
+        },
+        {
+          "id": 34,
+          "titulo": "Reporte de cajas",
+          "tipo": "ITEM",
+          "ruta": "reportes/cajas",
+          "orden_default": 4
+        },
+        {
+          "id": 35,
+          "titulo": "Kardex",
+          "tipo": "ITEM",
+          "ruta": "reportes/kardex",
+          "orden_default": 5
+        },
+        {
+          "id": 36,
+          "titulo": "Stock valorizado",
+          "tipo": "ITEM",
+          "ruta": "reportes/stock-valorizado",
+          "orden_default": 6
+        },
+        {
+          "id": 37,
+          "titulo": "Reporte descuento",
+          "tipo": "ITEM",
+          "ruta": "reportes/descuento",
+          "orden_default": 7
+        },
+        {
+          "id": 38,
+          "titulo": "Reporte anulados",
+          "tipo": "ITEM",
+          "ruta": "reportes/comprobantes-anulados",
+          "orden_default": 8
+        },
+        {
+          "id": 39,
+          "titulo": "Reporte nota de creditos",
+          "tipo": "ITEM",
+          "ruta": "reportes/nota-credito",
+          "orden_default": 9
+        },
+        {
+          "id": 310,
+          "titulo": "Reporte docs anulados",
+          "tipo": "ITEM",
+          "ruta": "reportes/documentos-anulados",
+          "orden_default": 10
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "titulo": "Compra",
+      "tipo": "GRUPO",
+      "orden_default": 4,
+      "children": [
+        {
+          "id": 41,
+          "titulo": "Orden de compra",
+          "tipo": "ITEM",
+          "ruta": "compra/orden",
+          "orden_default": 1
+        },
+        {
+          "id": 42,
+          "titulo": "Registrar compra",
+          "tipo": "ITEM",
+          "ruta": "compra/registrar",
+          "orden_default": 2
+        },
+        {
+          "id": 43,
+          "titulo": "Intercambio de Productos",
+          "tipo": "ITEM",
+          "ruta": "compra/intercambio",
+          "orden_default": 3
+        },
+        {
+          "id": 44,
+          "titulo": "Proveedores",
+          "tipo": "ITEM",
+          "ruta": "compra/proveedores",
+          "orden_default": 4
+        },
+        {
+          "id": 45,
+          "titulo": "Cuentas por pagar",
+          "tipo": "ITEM",
+          "ruta": "compra/pagos-pendientes",
+          "orden_default": 5
+        },
+        {
+          "id": 46,
+          "titulo": "Estado de cuenta",
+          "tipo": "ITEM",
+          "ruta": "compra/estado-cuenta",
+          "orden_default": 6
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "titulo": "Ventas",
+      "tipo": "GRUPO",
+      "orden_default": 5,
+      "children": [
+        {
+          "id": 51,
+          "titulo": "Listado de Ventas",
+          "tipo": "ITEM",
+          "ruta": "venta/listado",
+          "orden_default": 1
+        },
+        {
+          "id": 52,
+          "titulo": "Cotizacion de venta",
+          "tipo": "ITEM",
+          "ruta": "venta/cotizaciones",
+          "orden_default": 2
+        },
+        {
+          "id": 53,
+          "titulo": "Notas de venta",
+          "tipo": "ITEM",
+          "ruta": "venta/notas-venta",
+          "orden_default": 3
+        },
+        {
+          "id": 54,
+          "titulo": "Registrar venta",
+          "tipo": "ITEM",
+          "ruta": "venta/venta",
+          "orden_default": 4
+        },
+        {
+          "id": 55,
+          "titulo": "Anular comprobante",
+          "tipo": "ITEM",
+          "ruta": "venta/anulaciones",
+          "orden_default": 5
+        },
+        {
+          "id": 56,
+          "titulo": "Notas de credito",
+          "tipo": "ITEM",
+          "ruta": "venta/notas-credito",
+          "orden_default": 6
+        },
+        {
+          "id": 57,
+          "titulo": "Clientes",
+          "tipo": "ITEM",
+          "ruta": "venta/clientes",
+          "orden_default": 7
+        },
+        {
+          "id": 58,
+          "titulo": "Devoluciones",
+          "tipo": "ITEM",
+          "ruta": "venta/devoluciones",
+          "orden_default": 8
+        },
+        {
+          "id": 591,
+          "titulo": "Gestion de Beneficios",
+          "tipo": "ITEM",
+          "ruta": "venta/descuentos/lista",
+          "orden_default": 9
+        },
+        {
+          "id": 592,
+          "titulo": "Convenios",
+          "tipo": "ITEM",
+          "ruta": "venta/descuentos/convenio",
+          "orden_default": 10
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "titulo": "Facturacion",
+      "tipo": "GRUPO",
+      "orden_default": 6,
+      "children": [
+        {
+          "id": 61,
+          "titulo": "Comprobantes electronicos",
+          "tipo": "ITEM",
+          "ruta": "venta/comprobante-electronico",
+          "orden_default": 1
+        },
+        {
+          "id": 62,
+          "titulo": "Resumen de boletas",
+          "tipo": "ITEM",
+          "ruta": "facturacion/resumenes",
+          "orden_default": 2
+        },
+        {
+          "id": 63,
+          "titulo": "Resumen de bajas",
+          "tipo": "ITEM",
+          "ruta": "facturacion/anulaciones",
+          "orden_default": 3
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "titulo": "Caja",
+      "tipo": "GRUPO",
+      "orden_default": 7,
+      "children": [
+        {
+          "id": 71,
+          "titulo": "Arqueo Caja",
+          "tipo": "ITEM",
+          "ruta": "caja/arqueos",
+          "orden_default": 1
+        },
+        {
+          "id": 72,
+          "titulo": "Caja Chica",
+          "tipo": "ITEM",
+          "ruta": "caja/chica",
+          "orden_default": 2
+        },
+        {
+          "id": 73,
+          "titulo": "Caja General",
+          "tipo": "ITEM",
+          "ruta": "caja/general",
+          "orden_default": 3
+        },
+        {
+          "id": 74,
+          "titulo": "Medio Pago",
+          "tipo": "ITEM",
+          "ruta": "caja/medio-pago",
+          "orden_default": 4
+        },
+        {
+          "id": 75,
+          "titulo": "Diferencia de costos",
+          "tipo": "ITEM",
+          "ruta": "caja/diferencia-costos",
+          "orden_default": 5
+        },
+        {
+          "id": 76,
+          "titulo": "Gestion de cuentas",
+          "tipo": "ITEM",
+          "ruta": "caja/cuentas",
+          "orden_default": 6
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "titulo": "Almacen",
+      "tipo": "GRUPO",
+      "orden_default": 8,
+      "children": [
+        {
+          "id": 81,
+          "titulo": "Gestion Almacenes",
+          "tipo": "ITEM",
+          "ruta": "almacen/almacenes",
+          "orden_default": 1
+        },
+        {
+          "id": 82,
+          "titulo": "Productos",
+          "tipo": "ITEM",
+          "ruta": "almacen/productos",
+          "orden_default": 2
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "titulo": "Documentos",
+      "tipo": "GRUPO",
+      "orden_default": 9,
+      "children": [
+        {
+          "id": 91,
+          "titulo": "Plantillas",
+          "tipo": "ITEM",
+          "ruta": "documentos",
+          "orden_default": 1
+        },
+        {
+          "id": 92,
+          "titulo": "Bloques de plantillas",
+          "tipo": "ITEM",
+          "ruta": "documentos/bloques",
+          "orden_default": 2
+        },
+        {
+          "id": 93,
+          "titulo": "Puntos de Emision",
+          "tipo": "ITEM",
+          "ruta": "documentos/puntos",
+          "orden_default": 3
+        },
+        {
+          "id": 94,
+          "titulo": "Formatos de Impresion",
+          "tipo": "ITEM",
+          "ruta": "documentos/formatos",
+          "orden_default": 4
+        }
+      ]
+    }
+  ],
+  "GRUPOS_RUTAS": {
+    "1": [
+      "configuracion/seguridad/users",
+      "configuracion/seguridad/roles",
+      "configuracion/seguridad/permisos",
+      "configuracion/seguridad/admin",
+      "configuracion/sucursales",
+      "configuracion/puntos-venta",
+      "configuracion/catalogo-productos",
+      "configuracion/atributos-producto",
+      "configuracion/empresas"
+    ],
+    "2": [
+      "procesos/historial-movimientos",
+      "procesos/transferencias"
+    ],
+    "3": [
+      "reportes/ventas",
+      "reportes/compras",
+      "reportes/cajas",
+      "reportes/kardex",
+      "reportes/stock-valorizado",
+      "reportes/correlatividad",
+      "reportes/descuento",
+      "reportes/comprobantes-anulados",
+      "reportes/nota-credito"
+    ],
+    "4": [
+      "compra/orden",
+      "compra/registrar",
+      "compra/proveedores",
+      "compra/pagos-pendientes",
+      "compra/estado-cuenta",
+      "compra/intercambio"
+    ],
+    "5": [
+      "venta/listado",
+      "venta/cotizaciones",
+      "venta/venta",
+      "venta/devoluciones",
+      "venta/notas-credito",
+      "venta/notas-venta",
+      "venta/comprobante-electronico",
+      "venta/descuentos/lista",
+      "venta/descuentos/convenio"
+    ],
+    "6": [
+      "venta/comprobante-electronico"
+    ],
+    "7": [
+      "caja/general",
+      "caja/arqueos",
+      "caja/cuentas",
+      "caja/chica",
+      "caja/diferencia-costos",
+      "caja/medio-pago"
+    ],
+    "8": [
+      "almacen/productos",
+      "almacen/almacenes"
+    ],
+    "9": [
+      "documentos",
+      "documentos/bloques",
+      "documentos/puntos",
+      "documentos/formatos"
+    ]
+  },
+  "PERMISOS_ROL": {
+    "Ventas": [
+      5,
+      3,
+      8
+    ],
+    "Compras": [
+      4,
+      3,
+      8
+    ],
+    "Logistica": [
+      8,
+      3,
+      2
+    ],
+    "Caja": [
+      7,
+      3,
+      5
+    ],
+    "Reportes": [
+      3,
+      8,
+      5,
+      4
+    ],
+    "Administrador": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  }
+}

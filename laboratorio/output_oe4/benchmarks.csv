@@ -1,0 +1,10 @@
+archivo,existe,tamano_kb,tiempo_ms
+OE1 perfiles_usuario.json,True,225,0.42
+OE1 vocabulario_rutas.json,True,1,0.73
+OE1 costo_navegacion_baseline,True,74,2.46
+OE2 modelo_neuronal.json,True,3,10.71
+OE2 agente_dqn.json,True,0,16.46
+OE2 scores_relevancia.json,True,75,0.15
+OE3 menus_personalizados.json,True,256,13.9
+OE3 ordenes_db.csv,True,49,22.18
+Operacion_menu (por request),True,0,0.0001

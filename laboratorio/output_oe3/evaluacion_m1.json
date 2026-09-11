@@ -1,0 +1,170 @@
+{
+  "bot_Administrador_a86b": {
+    "role": "Administrador",
+    "M1_original": 3.2939,
+    "M1_adaptado": 2.8602,
+    "reduccion_pct": 13.17
+  },
+  "bot_Caja_1125": {
+    "role": "Caja",
+    "M1_original": 3.3644,
+    "M1_adaptado": 1.7583,
+    "reduccion_pct": 47.74
+  },
+  "bot_Caja_22f0": {
+    "role": "Caja",
+    "M1_original": 3.3717,
+    "M1_adaptado": 1.7997,
+    "reduccion_pct": 46.62
+  },
+  "bot_Compras_6cd7": {
+    "role": "Compras",
+    "M1_original": 3.5212,
+    "M1_adaptado": 3.0144,
+    "reduccion_pct": 14.39
+  },
+  "bot_Compras_b1d2": {
+    "role": "Compras",
+    "M1_original": 3.4415,
+    "M1_adaptado": 2.7231,
+    "reduccion_pct": 20.87
+  },
+  "bot_Logistica_7037": {
+    "role": "Logistica",
+    "M1_original": 3.8514,
+    "M1_adaptado": 3.2418,
+    "reduccion_pct": 15.83
+  },
+  "bot_Logistica_97c4": {
+    "role": "Logistica",
+    "M1_original": 3.9566,
+    "M1_adaptado": 3.3233,
+    "reduccion_pct": 16.01
+  },
+  "bot_Reportes_8c97": {
+    "role": "Reportes",
+    "M1_original": 4.2223,
+    "M1_adaptado": 3.3352,
+    "reduccion_pct": 21.01
+  },
+  "bot_Ventas_9525": {
+    "role": "Ventas",
+    "M1_original": 2.8544,
+    "M1_adaptado": 2.0516,
+    "reduccion_pct": 28.13
+  },
+  "bot_Ventas_9a82": {
+    "role": "Ventas",
+    "M1_original": 2.9675,
+    "M1_adaptado": 2.0506,
+    "reduccion_pct": 30.9
+  },
+  "bot_Ventas_c334": {
+    "role": "Ventas",
+    "M1_original": 2.8752,
+    "M1_adaptado": 2.0427,
+    "reduccion_pct": 28.95
+  },
+  "syn_Administrador_5b1d": {
+    "role": "Administrador",
+    "M1_original": 3.8808,
+    "M1_adaptado": 3.2927,
+    "reduccion_pct": 15.15
+  },
+  "syn_Administrador_9a0c": {
+    "role": "Administrador",
+    "M1_original": 3.3048,
+    "M1_adaptado": 2.9167,
+    "reduccion_pct": 11.74
+  },
+  "syn_Caja_105a": {
+    "role": "Caja",
+    "M1_original": 3.2287,
+    "M1_adaptado": 1.8329,
+    "reduccion_pct": 43.23
+  },
+  "syn_Caja_ac1c": {
+    "role": "Caja",
+    "M1_original": 3.3829,
+    "M1_adaptado": 1.7741,
+    "reduccion_pct": 47.56
+  },
+  "syn_Caja_d197": {
+    "role": "Caja",
+    "M1_original": 3.4028,
+    "M1_adaptado": 1.9659,
+    "reduccion_pct": 42.23
+  },
+  "syn_Compras_9e03": {
+    "role": "Compras",
+    "M1_original": 3.1947,
+    "M1_adaptado": 2.971,
+    "reduccion_pct": 7.0
+  },
+  "syn_Compras_df03": {
+    "role": "Compras",
+    "M1_original": 3.0403,
+    "M1_adaptado": 2.7145,
+    "reduccion_pct": 10.72
+  },
+  "syn_Compras_fb52": {
+    "role": "Compras",
+    "M1_original": 3.2936,
+    "M1_adaptado": 2.9139,
+    "reduccion_pct": 11.53
+  },
+  "syn_Logistica_0ca2": {
+    "role": "Logistica",
+    "M1_original": 4.0163,
+    "M1_adaptado": 3.6575,
+    "reduccion_pct": 8.93
+  },
+  "syn_Logistica_1d0a": {
+    "role": "Logistica",
+    "M1_original": 4.0501,
+    "M1_adaptado": 3.6043,
+    "reduccion_pct": 11.01
+  },
+  "syn_Logistica_2864": {
+    "role": "Logistica",
+    "M1_original": 4.047,
+    "M1_adaptado": 3.4075,
+    "reduccion_pct": 15.8
+  },
+  "syn_Reportes_69a4": {
+    "role": "Reportes",
+    "M1_original": 3.7033,
+    "M1_adaptado": 3.2556,
+    "reduccion_pct": 12.09
+  },
+  "syn_Reportes_f207": {
+    "role": "Reportes",
+    "M1_original": 3.7168,
+    "M1_adaptado": 3.1326,
+    "reduccion_pct": 15.72
+  },
+  "syn_Ventas_4aed": {
+    "role": "Ventas",
+    "M1_original": 3.46,
+    "M1_adaptado": 2.7203,
+    "reduccion_pct": 21.38
+  },
+  "syn_Ventas_6a40": {
+    "role": "Ventas",
+    "M1_original": 3.4151,
+    "M1_adaptado": 2.6942,
+    "reduccion_pct": 21.11
+  },
+  "syn_Ventas_a940": {
+    "role": "Ventas",
+    "M1_original": 3.8643,
+    "M1_adaptado": 2.962,
+    "reduccion_pct": 23.35
+  },
+  "syn_Ventas_e0e2": {
+    "role": "Ventas",
+    "M1_original": 3.6474,
+    "M1_adaptado": 2.8733,
+    "reduccion_pct": 21.22
+  }
+}

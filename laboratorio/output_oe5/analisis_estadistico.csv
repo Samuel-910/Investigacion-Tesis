@@ -1,0 +1,4 @@
+,PRE media,POST media,Reduccion %,p-value,Significativo,Cohen d,Efecto,IC 95% low,IC 95% high
+M1,2.0775,1.6208,22.32,0.0,SI,1.867,grande,0.4393,0.4742
+M2,419.8292,309.8566,18.22,0.0,SI,0.466,pequeno,93.1809,126.7643
+M3,0.0762,0.0471,13.29,0.0,SI,0.488,pequeno,0.0249,0.0334

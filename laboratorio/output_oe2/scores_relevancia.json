@@ -1,0 +1,2550 @@
+{
+  "bot_Administrador_a86b": {
+    "role": "Administrador",
+    "scores": {
+      "almacen/almacenes": 0.013585,
+      "almacen/productos": 6.7e-05,
+      "caja/arqueos": 0.000509,
+      "caja/chica": 0.000439,
+      "caja/cuentas": 0.000173,
+      "caja/diferencia-costos": 0.00044,
+      "caja/general": 0.000311,
+      "caja/medio-pago": 0.298226,
+      "compra/estado-cuenta": 0.000286,
+      "compra/intercambio": 7.1e-05,
+      "compra/orden": 0.000162,
+      "compra/pagos-pendientes": 0.000257,
+      "compra/proveedores": 0.000269,
+      "compra/registrar": 0.000401,
+      "configuracion/atributos-producto": 0.007391,
+      "configuracion/catalogo-productos": 0.002389,
+      "configuracion/empresas": 0.046373,
+      "configuracion/puntos-venta": 0.480583,
+      "configuracion/seguridad/admin": 0.500927,
+      "configuracion/seguridad/permisos": 0.766719,
+      "configuracion/seguridad/roles": 0.709541,
+      "configuracion/seguridad/users": 1.231075,
+      "configuracion/sucursales": 0.429003,
+      "procesos/historial-movimientos": 0.000238,
+      "procesos/transferencias": 0.000147,
+      "reportes/cajas": 0.000399,
+      "reportes/compras": 0.013681,
+      "reportes/comprobantes-anulados": 0.000234,
+      "reportes/correlatividad": 0.218924,
+      "reportes/descuento": 0.000141,
+      "reportes/documentos-anulados": 0.000131,
+      "reportes/kardex": 0.000123,
+      "reportes/nota-credito": 0.000364,
+      "reportes/stock-valorizado": 0.000176,
+      "reportes/ventas": 0.314845,
+      "venta/comprobante-electronico": 7.9e-05,
+      "venta/cotizaciones": 2.3e-05,
+      "venta/descuentos/convenio": 0.000114,
+      "venta/descuentos/lista": 6.5e-05,
+      "venta/devoluciones": 7.9e-05,
+      "venta/listado": 3.2e-05,
+      "venta/notas-credito": 0.000307,
+      "venta/notas-venta": 0.000156,
+      "venta/venta": 1.6e-05
+    },
+    "top10": [
+      {
+        "ruta": "configuracion/seguridad/users",
+        "score": 1.231075
+      },
+      {
+        "ruta": "configuracion/seguridad/permisos",
+        "score": 0.766719
+      },
+      {
+        "ruta": "configuracion/seguridad/roles",
+        "score": 0.709541
+      },
+      {
+        "ruta": "configuracion/seguridad/admin",
+        "score": 0.500927
+      },
+      {
+        "ruta": "configuracion/puntos-venta",
+        "score": 0.480583
+      },
+      {
+        "ruta": "configuracion/sucursales",
+        "score": 0.429003
+      },
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.314845
+      },
+      {
+        "ruta": "caja/medio-pago",
+        "score": 0.298226
+      },
+      {
+        "ruta": "reportes/correlatividad",
+        "score": 0.218924
+      },
+      {
+        "ruta": "configuracion/empresas",
+        "score": 0.046373
+      }
+    ]
+  },
+  "bot_Caja_1125": {
+    "role": "Caja",
+    "scores": {
+      "almacen/almacenes": 1.2e-05,
+      "almacen/productos": 1.5e-05,
+      "caja/arqueos": 0.671475,
+      "caja/chica": 0.428268,
+      "caja/cuentas": 0.446202,
+      "caja/diferencia-costos": 0.004594,
+      "caja/general": 1.922774,
+      "caja/medio-pago": 0.003855,
+      "compra/estado-cuenta": 1.8e-05,
+      "compra/intercambio": 3e-06,
+      "compra/orden": 1.9e-05,
+      "compra/pagos-pendientes": 2.5e-05,
+      "compra/proveedores": 1.3e-05,
+      "compra/registrar": 2e-05,
+      "configuracion/atributos-producto": 3.2e-05,
+      "configuracion/catalogo-productos": 2.1e-05,
+      "configuracion/empresas": 2.5e-05,
+      "configuracion/puntos-venta": 5.3e-05,
+      "configuracion/seguridad/admin": 3.7e-05,
+      "configuracion/seguridad/permisos": 8.9e-05,
+      "configuracion/seguridad/roles": 3.4e-05,
+      "configuracion/seguridad/users": 4.6e-05,
+      "configuracion/sucursales": 2.4e-05,
+      "procesos/historial-movimientos": 2.5e-05,
+      "procesos/transferencias": 1.7e-05,
+      "reportes/cajas": 0.492094,
+      "reportes/compras": 7.1e-05,
+      "reportes/comprobantes-anulados": 9.7e-05,
+      "reportes/correlatividad": 9.5e-05,
+      "reportes/descuento": 3.9e-05,
+      "reportes/documentos-anulados": 1.5e-05,
+      "reportes/kardex": 5.3e-05,
+      "reportes/nota-credito": 3.4e-05,
+      "reportes/stock-valorizado": 2.6e-05,
+      "reportes/ventas": 0.006201,
+      "venta/comprobante-electronico": 7.7e-05,
+      "venta/cotizaciones": 0.000349,
+      "venta/descuentos/convenio": 7.3e-05,
+      "venta/descuentos/lista": 0.000114,
+      "venta/devoluciones": 0.000108,
+      "venta/listado": 0.017074,
+      "venta/notas-credito": 0.536683,
+      "venta/notas-venta": 6.7e-05,
+      "venta/venta": 0.000286
+    },
+    "top10": [
+      {
+        "ruta": "caja/general",
+        "score": 1.922774
+      },
+      {
+        "ruta": "caja/arqueos",
+        "score": 0.671475
+      },
+      {
+        "ruta": "venta/notas-credito",
+        "score": 0.536683
+      },
+      {
+        "ruta": "reportes/cajas",
+        "score": 0.492094
+      },
+      {
+        "ruta": "caja/cuentas",
+        "score": 0.446202
+      },
+      {
+        "ruta": "caja/chica",
+        "score": 0.428268
+      },
+      {
+        "ruta": "venta/listado",
+        "score": 0.017074
+      },
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.006201
+      },
+      {
+        "ruta": "caja/diferencia-costos",
+        "score": 0.004594
+      },
+      {
+        "ruta": "caja/medio-pago",
+        "score": 0.003855
+      }
+    ]
+  },
+  "bot_Caja_22f0": {
+    "role": "Caja",
+    "scores": {
+      "almacen/almacenes": 7e-06,
+      "almacen/productos": 1.1e-05,
+      "caja/arqueos": 0.769014,
+      "caja/chica": 0.392649,
+      "caja/cuentas": 0.556773,
+      "caja/diferencia-costos": 0.006413,
+      "caja/general": 1.819692,
+      "caja/medio-pago": 0.004634,
+      "compra/estado-cuenta": 1.8e-05,
+      "compra/intercambio": 3e-06,
+      "compra/orden": 1.7e-05,
+      "compra/pagos-pendientes": 2.2e-05,
+      "compra/proveedores": 1.2e-05,
+      "compra/registrar": 1.7e-05,
+      "configuracion/atributos-producto": 4.4e-05,
+      "configuracion/catalogo-productos": 1.5e-05,
+      "configuracion/empresas": 3.3e-05,
+      "configuracion/puntos-venta": 6e-05,
+      "configuracion/seguridad/admin": 5.3e-05,
+      "configuracion/seguridad/permisos": 0.000121,
+      "configuracion/seguridad/roles": 4.1e-05,
+      "configuracion/seguridad/users": 5.9e-05,
+      "configuracion/sucursales": 3e-05,
+      "procesos/historial-movimientos": 2.3e-05,
+      "procesos/transferencias": 1.6e-05,
+      "reportes/cajas": 0.423459,
+      "reportes/compras": 5.3e-05,
+      "reportes/comprobantes-anulados": 0.000129,
+      "reportes/correlatividad": 9.6e-05,
+      "reportes/descuento": 4.2e-05,
+      "reportes/documentos-anulados": 1.3e-05,
+      "reportes/kardex": 4e-05,
+      "reportes/nota-credito": 5.1e-05,
+      "reportes/stock-valorizado": 1.7e-05,
+      "reportes/ventas": 0.005727,
+      "venta/comprobante-electronico": 6.2e-05,
+      "venta/cotizaciones": 0.000199,
+      "venta/descuentos/convenio": 5.9e-05,
+      "venta/descuentos/lista": 0.000107,
+      "venta/devoluciones": 8.6e-05,
+      "venta/listado": 0.061876,
+      "venta/notas-credito": 0.548895,
+      "venta/notas-venta": 6.4e-05,
+      "venta/venta": 0.000157
+    },
+    "top10": [
+      {
+        "ruta": "caja/general",
+        "score": 1.819692
+      },
+      {
+        "ruta": "caja/arqueos",
+        "score": 0.769014
+      },
+      {
+        "ruta": "caja/cuentas",
+        "score": 0.556773
+      },
+      {
+        "ruta": "venta/notas-credito",
+        "score": 0.548895
+      },
+      {
+        "ruta": "reportes/cajas",
+        "score": 0.423459
+      },
+      {
+        "ruta": "caja/chica",
+        "score": 0.392649
+      },
+      {
+        "ruta": "venta/listado",
+        "score": 0.061876
+      },
+      {
+        "ruta": "caja/diferencia-costos",
+        "score": 0.006413
+      },
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.005727
+      },
+      {
+        "ruta": "caja/medio-pago",
+        "score": 0.004634
+      }
+    ]
+  },
+  "bot_Compras_6cd7": {
+    "role": "Compras",
+    "scores": {
+      "almacen/almacenes": 0.000317,
+      "almacen/productos": 0.040704,
+      "caja/arqueos": 2.7e-05,
+      "caja/chica": 3.8e-05,
+      "caja/cuentas": 3.1e-05,
+      "caja/diferencia-costos": 2.8e-05,
+      "caja/general": 4e-05,
+      "caja/medio-pago": 4e-05,
+      "compra/estado-cuenta": 0.438223,
+      "compra/intercambio": 0.011119,
+      "compra/orden": 0.628667,
+      "compra/pagos-pendientes": 0.802687,
+      "compra/proveedores": 0.606196,
+      "compra/registrar": 0.669161,
+      "configuracion/atributos-producto": 0.000321,
+      "configuracion/catalogo-productos": 0.000203,
+      "configuracion/empresas": 2.2e-05,
+      "configuracion/puntos-venta": 0.000143,
+      "configuracion/seguridad/admin": 0.000415,
+      "configuracion/seguridad/permisos": 0.000341,
+      "configuracion/seguridad/roles": 0.000372,
+      "configuracion/seguridad/users": 0.000536,
+      "configuracion/sucursales": 0.000237,
+      "procesos/historial-movimientos": 0.000253,
+      "procesos/transferencias": 0.000114,
+      "reportes/cajas": 4.7e-05,
+      "reportes/compras": 0.136586,
+      "reportes/comprobantes-anulados": 2.7e-05,
+      "reportes/correlatividad": 0.00015,
+      "reportes/descuento": 7.1e-05,
+      "reportes/documentos-anulados": 1e-05,
+      "reportes/kardex": 0.000354,
+      "reportes/nota-credito": 2.2e-05,
+      "reportes/stock-valorizado": 0.12715,
+      "reportes/ventas": 0.000298,
+      "venta/comprobante-electronico": 4e-05,
+      "venta/cotizaciones": 0.00012,
+      "venta/descuentos/convenio": 1.7e-05,
+      "venta/descuentos/lista": 5.8e-05,
+      "venta/devoluciones": 0.000167,
+      "venta/listado": 8.2e-05,
+      "venta/notas-credito": 8e-06,
+      "venta/notas-venta": 1.5e-05,
+      "venta/venta": 6.2e-05
+    },
+    "top10": [
+      {
+        "ruta": "compra/pagos-pendientes",
+        "score": 0.802687
+      },
+      {
+        "ruta": "compra/registrar",
+        "score": 0.669161
+      },
+      {
+        "ruta": "compra/orden",
+        "score": 0.628667
+      },
+      {
+        "ruta": "compra/proveedores",
+        "score": 0.606196
+      },
+      {
+        "ruta": "compra/estado-cuenta",
+        "score": 0.438223
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 0.136586
+      },
+      {
+        "ruta": "reportes/stock-valorizado",
+        "score": 0.12715
+      },
+      {
+        "ruta": "almacen/productos",
+        "score": 0.040704
+      },
+      {
+        "ruta": "compra/intercambio",
+        "score": 0.011119
+      },
+      {
+        "ruta": "configuracion/seguridad/users",
+        "score": 0.000536
+      }
+    ]
+  },
+  "bot_Compras_b1d2": {
+    "role": "Compras",
+    "scores": {
+      "almacen/almacenes": 0.000386,
+      "almacen/productos": 0.039483,
+      "caja/arqueos": 1.1e-05,
+      "caja/chica": 1.6e-05,
+      "caja/cuentas": 2.2e-05,
+      "caja/diferencia-costos": 9e-06,
+      "caja/general": 1.2e-05,
+      "caja/medio-pago": 7e-06,
+      "compra/estado-cuenta": 0.356251,
+      "compra/intercambio": 0.026528,
+      "compra/orden": 0.614318,
+      "compra/pagos-pendientes": 0.707389,
+      "compra/proveedores": 0.697329,
+      "compra/registrar": 0.807248,
+      "configuracion/atributos-producto": 9.8e-05,
+      "configuracion/catalogo-productos": 0.000331,
+      "configuracion/empresas": 1.9e-05,
+      "configuracion/puntos-venta": 4.8e-05,
+      "configuracion/seguridad/admin": 0.000114,
+      "configuracion/seguridad/permisos": 0.000103,
+      "configuracion/seguridad/roles": 0.000131,
+      "configuracion/seguridad/users": 0.000149,
+      "configuracion/sucursales": 9.4e-05,
+      "procesos/historial-movimientos": 0.000328,
+      "procesos/transferencias": 0.000188,
+      "reportes/cajas": 4.1e-05,
+      "reportes/compras": 0.094349,
+      "reportes/comprobantes-anulados": 2.7e-05,
+      "reportes/correlatividad": 6.9e-05,
+      "reportes/descuento": 8.8e-05,
+      "reportes/documentos-anulados": 1.3e-05,
+      "reportes/kardex": 0.000811,
+      "reportes/nota-credito": 2.2e-05,
+      "reportes/stock-valorizado": 0.18141,
+      "reportes/ventas": 0.000389,
+      "venta/comprobante-electronico": 4.4e-05,
+      "venta/cotizaciones": 0.000151,
+      "venta/descuentos/convenio": 2.6e-05,
+      "venta/descuentos/lista": 3.2e-05,
+      "venta/devoluciones": 0.000152,
+      "venta/listado": 0.000128,
+      "venta/notas-credito": 4e-06,
+      "venta/notas-venta": 5.4e-05,
+      "venta/venta": 0.000152
+    },
+    "top10": [
+      {
+        "ruta": "compra/registrar",
+        "score": 0.807248
+      },
+      {
+        "ruta": "compra/pagos-pendientes",
+        "score": 0.707389
+      },
+      {
+        "ruta": "compra/proveedores",
+        "score": 0.697329
+      },
+      {
+        "ruta": "compra/orden",
+        "score": 0.614318
+      },
+      {
+        "ruta": "compra/estado-cuenta",
+        "score": 0.356251
+      },
+      {
+        "ruta": "reportes/stock-valorizado",
+        "score": 0.18141
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 0.094349
+      },
+      {
+        "ruta": "almacen/productos",
+        "score": 0.039483
+      },
+      {
+        "ruta": "compra/intercambio",
+        "score": 0.026528
+      },
+      {
+        "ruta": "reportes/kardex",
+        "score": 0.000811
+      }
+    ]
+  },
+  "bot_Logistica_7037": {
+    "role": "Logistica",
+    "scores": {
+      "almacen/almacenes": 0.901071,
+      "almacen/productos": 0.850384,
+      "caja/arqueos": 3e-06,
+      "caja/chica": 5e-06,
+      "caja/cuentas": 7e-06,
+      "caja/diferencia-costos": 2e-06,
+      "caja/general": 5e-06,
+      "caja/medio-pago": 3e-06,
+      "compra/estado-cuenta": 5.5e-05,
+      "compra/intercambio": 0.442195,
+      "compra/orden": 0.000125,
+      "compra/pagos-pendientes": 0.000313,
+      "compra/proveedores": 0.000528,
+      "compra/registrar": 0.000106,
+      "configuracion/atributos-producto": 0.000337,
+      "configuracion/catalogo-productos": 0.140596,
+      "configuracion/empresas": 2.9e-05,
+      "configuracion/puntos-venta": 1.2e-05,
+      "configuracion/seguridad/admin": 3.8e-05,
+      "configuracion/seguridad/permisos": 2.9e-05,
+      "configuracion/seguridad/roles": 4.8e-05,
+      "configuracion/seguridad/users": 6.9e-05,
+      "configuracion/sucursales": 5.5e-05,
+      "procesos/historial-movimientos": 0.007998,
+      "procesos/transferencias": 0.009189,
+      "reportes/cajas": 9.7e-05,
+      "reportes/compras": 0.004531,
+      "reportes/comprobantes-anulados": 0.000103,
+      "reportes/correlatividad": 8e-05,
+      "reportes/descuento": 0.003081,
+      "reportes/documentos-anulados": 4.5e-05,
+      "reportes/kardex": 1.605358,
+      "reportes/nota-credito": 4.8e-05,
+      "reportes/stock-valorizado": 1.070932,
+      "reportes/ventas": 0.000376,
+      "venta/comprobante-electronico": 9e-06,
+      "venta/cotizaciones": 0.000182,
+      "venta/descuentos/convenio": 1.9e-05,
+      "venta/descuentos/lista": 1.5e-05,
+      "venta/devoluciones": 6.8e-05,
+      "venta/listado": 0.000121,
+      "venta/notas-credito": 2e-06,
+      "venta/notas-venta": 2.3e-05,
+      "venta/venta": 0.00017
+    },
+    "top10": [
+      {
+        "ruta": "reportes/kardex",
+        "score": 1.605358
+      },
+      {
+        "ruta": "reportes/stock-valorizado",
+        "score": 1.070932
+      },
+      {
+        "ruta": "almacen/almacenes",
+        "score": 0.901071
+      },
+      {
+        "ruta": "almacen/productos",
+        "score": 0.850384
+      },
+      {
+        "ruta": "compra/intercambio",
+        "score": 0.442195
+      },
+      {
+        "ruta": "configuracion/catalogo-productos",
+        "score": 0.140596
+      },
+      {
+        "ruta": "procesos/transferencias",
+        "score": 0.009189
+      },
+      {
+        "ruta": "procesos/historial-movimientos",
+        "score": 0.007998
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 0.004531
+      },
+      {
+        "ruta": "reportes/descuento",
+        "score": 0.003081
+      }
+    ]
+  },
+  "bot_Logistica_97c4": {
+    "role": "Logistica",
+    "scores": {
+      "almacen/almacenes": 0.751701,
+      "almacen/productos": 0.80568,
+      "caja/arqueos": 4.1e-05,
+      "caja/chica": 3.9e-05,
+      "caja/cuentas": 1.8e-05,
+      "caja/diferencia-costos": 5e-06,
+      "caja/general": 3.6e-05,
+      "caja/medio-pago": 6e-06,
+      "compra/estado-cuenta": 4.5e-05,
+      "compra/intercambio": 0.392319,
+      "compra/orden": 7.8e-05,
+      "compra/pagos-pendientes": 0.000171,
+      "compra/proveedores": 0.000277,
+      "compra/registrar": 9e-05,
+      "configuracion/atributos-producto": 0.022545,
+      "configuracion/catalogo-productos": 0.21713,
+      "configuracion/empresas": 5.2e-05,
+      "configuracion/puntos-venta": 1.5e-05,
+      "configuracion/seguridad/admin": 3.5e-05,
+      "configuracion/seguridad/permisos": 3.6e-05,
+      "configuracion/seguridad/roles": 6.3e-05,
+      "configuracion/seguridad/users": 2.6e-05,
+      "configuracion/sucursales": 5.7e-05,
+      "procesos/historial-movimientos": 0.005058,
+      "procesos/transferencias": 0.004937,
+      "reportes/cajas": 0.000338,
+      "reportes/compras": 0.006801,
+      "reportes/comprobantes-anulados": 0.000334,
+      "reportes/correlatividad": 9.7e-05,
+      "reportes/descuento": 0.004261,
+      "reportes/documentos-anulados": 3.8e-05,
+      "reportes/kardex": 1.647001,
+      "reportes/nota-credito": 0.000106,
+      "reportes/stock-valorizado": 1.020673,
+      "reportes/ventas": 0.001941,
+      "venta/comprobante-electronico": 8.4e-05,
+      "venta/cotizaciones": 0.009337,
+      "venta/descuentos/convenio": 0.000178,
+      "venta/descuentos/lista": 0.000141,
+      "venta/devoluciones": 0.00052,
+      "venta/listado": 0.003272,
+      "venta/notas-credito": 3.1e-05,
+      "venta/notas-venta": 8e-05,
+      "venta/venta": 0.004307
+    },
+    "top10": [
+      {
+        "ruta": "reportes/kardex",
+        "score": 1.647001
+      },
+      {
+        "ruta": "reportes/stock-valorizado",
+        "score": 1.020673
+      },
+      {
+        "ruta": "almacen/productos",
+        "score": 0.80568
+      },
+      {
+        "ruta": "almacen/almacenes",
+        "score": 0.751701
+      },
+      {
+        "ruta": "compra/intercambio",
+        "score": 0.392319
+      },
+      {
+        "ruta": "configuracion/catalogo-productos",
+        "score": 0.21713
+      },
+      {
+        "ruta": "configuracion/atributos-producto",
+        "score": 0.022545
+      },
+      {
+        "ruta": "venta/cotizaciones",
+        "score": 0.009337
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 0.006801
+      },
+      {
+        "ruta": "procesos/historial-movimientos",
+        "score": 0.005058
+      }
+    ]
+  },
+  "bot_Reportes_8c97": {
+    "role": "Reportes",
+    "scores": {
+      "almacen/almacenes": 0.001077,
+      "almacen/productos": 0.000914,
+      "caja/arqueos": 0.00114,
+      "caja/chica": 0.000317,
+      "caja/cuentas": 0.001215,
+      "caja/diferencia-costos": 0.000291,
+      "caja/general": 0.000653,
+      "caja/medio-pago": 9.7e-05,
+      "compra/estado-cuenta": 9.9e-05,
+      "compra/intercambio": 0.00035,
+      "compra/orden": 0.000203,
+      "compra/pagos-pendientes": 0.000134,
+      "compra/proveedores": 0.000217,
+      "compra/registrar": 6.8e-05,
+      "configuracion/atributos-producto": 4.2e-05,
+      "configuracion/catalogo-productos": 0.000739,
+      "configuracion/empresas": 0.000174,
+      "configuracion/puntos-venta": 0.000118,
+      "configuracion/seguridad/admin": 9.9e-05,
+      "configuracion/seguridad/permisos": 3.8e-05,
+      "configuracion/seguridad/roles": 0.000247,
+      "configuracion/seguridad/users": 0.000265,
+      "configuracion/sucursales": 0.000254,
+      "procesos/historial-movimientos": 0.000412,
+      "procesos/transferencias": 0.000304,
+      "reportes/cajas": 0.901038,
+      "reportes/compras": 0.950835,
+      "reportes/comprobantes-anulados": 0.500932,
+      "reportes/correlatividad": 0.013914,
+      "reportes/descuento": 0.096647,
+      "reportes/documentos-anulados": 0.015323,
+      "reportes/kardex": 0.124492,
+      "reportes/nota-credito": 0.114779,
+      "reportes/stock-valorizado": 0.687101,
+      "reportes/ventas": 1.319269,
+      "venta/comprobante-electronico": 3.4e-05,
+      "venta/cotizaciones": 0.00023,
+      "venta/descuentos/convenio": 4.9e-05,
+      "venta/descuentos/lista": 6.6e-05,
+      "venta/devoluciones": 7.9e-05,
+      "venta/listado": 0.043188,
+      "venta/notas-credito": 0.000122,
+      "venta/notas-venta": 2.3e-05,
+      "venta/venta": 0.00019
+    },
+    "top10": [
+      {
+        "ruta": "reportes/ventas",
+        "score": 1.319269
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 0.950835
+      },
+      {
+        "ruta": "reportes/cajas",
+        "score": 0.901038
+      },
+      {
+        "ruta": "reportes/stock-valorizado",
+        "score": 0.687101
+      },
+      {
+        "ruta": "reportes/comprobantes-anulados",
+        "score": 0.500932
+      },
+      {
+        "ruta": "reportes/kardex",
+        "score": 0.124492
+      },
+      {
+        "ruta": "reportes/nota-credito",
+        "score": 0.114779
+      },
+      {
+        "ruta": "reportes/descuento",
+        "score": 0.096647
+      },
+      {
+        "ruta": "venta/listado",
+        "score": 0.043188
+      },
+      {
+        "ruta": "reportes/documentos-anulados",
+        "score": 0.015323
+      }
+    ]
+  },
+  "bot_Ventas_9525": {
+    "role": "Ventas",
+    "scores": {
+      "almacen/almacenes": 0.000385,
+      "almacen/productos": 0.158149,
+      "caja/arqueos": 6.1e-05,
+      "caja/chica": 3.8e-05,
+      "caja/cuentas": 5.9e-05,
+      "caja/diferencia-costos": 1.1e-05,
+      "caja/general": 6e-05,
+      "caja/medio-pago": 2e-06,
+      "compra/estado-cuenta": 4.1e-05,
+      "compra/intercambio": 0.000349,
+      "compra/orden": 6.5e-05,
+      "compra/pagos-pendientes": 6.2e-05,
+      "compra/proveedores": 7e-05,
+      "compra/registrar": 4.6e-05,
+      "configuracion/atributos-producto": 1.5e-05,
+      "configuracion/catalogo-productos": 0.465089,
+      "configuracion/empresas": 8e-06,
+      "configuracion/puntos-venta": 2e-06,
+      "configuracion/seguridad/admin": 4e-06,
+      "configuracion/seguridad/permisos": 3e-06,
+      "configuracion/seguridad/roles": 7e-06,
+      "configuracion/seguridad/users": 2e-06,
+      "configuracion/sucursales": 2e-06,
+      "procesos/historial-movimientos": 5e-05,
+      "procesos/transferencias": 6.7e-05,
+      "reportes/cajas": 0.000153,
+      "reportes/compras": 0.000853,
+      "reportes/comprobantes-anulados": 9.4e-05,
+      "reportes/correlatividad": 2.1e-05,
+      "reportes/descuento": 0.000567,
+      "reportes/documentos-anulados": 2.2e-05,
+      "reportes/kardex": 0.000532,
+      "reportes/nota-credito": 6.8e-05,
+      "reportes/stock-valorizado": 0.000269,
+      "reportes/ventas": 0.264887,
+      "venta/comprobante-electronico": 0.001421,
+      "venta/cotizaciones": 1.075484,
+      "venta/descuentos/convenio": 0.002577,
+      "venta/descuentos/lista": 0.002684,
+      "venta/devoluciones": 0.352933,
+      "venta/listado": 1.198173,
+      "venta/notas-credito": 0.004556,
+      "venta/notas-venta": 0.002607,
+      "venta/venta": 1.193641
+    },
+    "top10": [
+      {
+        "ruta": "venta/listado",
+        "score": 1.198173
+      },
+      {
+        "ruta": "venta/venta",
+        "score": 1.193641
+      },
+      {
+        "ruta": "venta/cotizaciones",
+        "score": 1.075484
+      },
+      {
+        "ruta": "configuracion/catalogo-productos",
+        "score": 0.465089
+      },
+      {
+        "ruta": "venta/devoluciones",
+        "score": 0.352933
+      },
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.264887
+      },
+      {
+        "ruta": "almacen/productos",
+        "score": 0.158149
+      },
+      {
+        "ruta": "venta/notas-credito",
+        "score": 0.004556
+      },
+      {
+        "ruta": "venta/descuentos/lista",
+        "score": 0.002684
+      },
+      {
+        "ruta": "venta/notas-venta",
+        "score": 0.002607
+      }
+    ]
+  },
+  "bot_Ventas_9a82": {
+    "role": "Ventas",
+    "scores": {
+      "almacen/almacenes": 0.000634,
+      "almacen/productos": 0.206311,
+      "caja/arqueos": 7e-05,
+      "caja/chica": 6.3e-05,
+      "caja/cuentas": 8.9e-05,
+      "caja/diferencia-costos": 2.2e-05,
+      "caja/general": 7.7e-05,
+      "caja/medio-pago": 7e-06,
+      "compra/estado-cuenta": 3.5e-05,
+      "compra/intercambio": 0.000703,
+      "compra/orden": 6.1e-05,
+      "compra/pagos-pendientes": 7.2e-05,
+      "compra/proveedores": 9.1e-05,
+      "compra/registrar": 5.7e-05,
+      "configuracion/atributos-producto": 2.9e-05,
+      "configuracion/catalogo-productos": 0.368409,
+      "configuracion/empresas": 2.4e-05,
+      "configuracion/puntos-venta": 5e-06,
+      "configuracion/seguridad/admin": 7e-06,
+      "configuracion/seguridad/permisos": 5e-06,
+      "configuracion/seguridad/roles": 1.2e-05,
+      "configuracion/seguridad/users": 4e-06,
+      "configuracion/sucursales": 5e-06,
+      "procesos/historial-movimientos": 9.9e-05,
+      "procesos/transferencias": 0.000135,
+      "reportes/cajas": 0.000453,
+      "reportes/compras": 0.001361,
+      "reportes/comprobantes-anulados": 0.000337,
+      "reportes/correlatividad": 3.4e-05,
+      "reportes/descuento": 0.001124,
+      "reportes/documentos-anulados": 4.2e-05,
+      "reportes/kardex": 0.001239,
+      "reportes/nota-credito": 0.000237,
+      "reportes/stock-valorizado": 0.000525,
+      "reportes/ventas": 0.383663,
+      "venta/comprobante-electronico": 0.001443,
+      "venta/cotizaciones": 1.073632,
+      "venta/descuentos/convenio": 0.002933,
+      "venta/descuentos/lista": 0.00291,
+      "venta/devoluciones": 0.50793,
+      "venta/listado": 1.335278,
+      "venta/notas-credito": 0.005368,
+      "venta/notas-venta": 0.002866,
+      "venta/venta": 1.193701
+    },
+    "top10": [
+      {
+        "ruta": "venta/listado",
+        "score": 1.335278
+      },
+      {
+        "ruta": "venta/venta",
+        "score": 1.193701
+      },
+      {
+        "ruta": "venta/cotizaciones",
+        "score": 1.073632
+      },
+      {
+        "ruta": "venta/devoluciones",
+        "score": 0.50793
+      },
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.383663
+      },
+      {
+        "ruta": "configuracion/catalogo-productos",
+        "score": 0.368409
+      },
+      {
+        "ruta": "almacen/productos",
+        "score": 0.206311
+      },
+      {
+        "ruta": "venta/notas-credito",
+        "score": 0.005368
+      },
+      {
+        "ruta": "venta/descuentos/convenio",
+        "score": 0.002933
+      },
+      {
+        "ruta": "venta/descuentos/lista",
+        "score": 0.00291
+      }
+    ]
+  },
+  "bot_Ventas_c334": {
+    "role": "Ventas",
+    "scores": {
+      "almacen/almacenes": 0.000274,
+      "almacen/productos": 0.266592,
+      "caja/arqueos": 0.000103,
+      "caja/chica": 4.7e-05,
+      "caja/cuentas": 9e-05,
+      "caja/diferencia-costos": 1.7e-05,
+      "caja/general": 0.000104,
+      "caja/medio-pago": 4e-06,
+      "compra/estado-cuenta": 2.7e-05,
+      "compra/intercambio": 0.000171,
+      "compra/orden": 3.5e-05,
+      "compra/pagos-pendientes": 3.7e-05,
+      "compra/proveedores": 4.3e-05,
+      "compra/registrar": 3.4e-05,
+      "configuracion/atributos-producto": 1.3e-05,
+      "configuracion/catalogo-productos": 0.360993,
+      "configuracion/empresas": 8e-06,
+      "configuracion/puntos-venta": 2e-06,
+      "configuracion/seguridad/admin": 3e-06,
+      "configuracion/seguridad/permisos": 3e-06,
+      "configuracion/seguridad/roles": 5e-06,
+      "configuracion/seguridad/users": 1e-06,
+      "configuracion/sucursales": 2e-06,
+      "procesos/historial-movimientos": 3.5e-05,
+      "procesos/transferencias": 4.9e-05,
+      "reportes/cajas": 0.000121,
+      "reportes/compras": 0.000306,
+      "reportes/comprobantes-anulados": 5.7e-05,
+      "reportes/correlatividad": 1.3e-05,
+      "reportes/descuento": 0.013876,
+      "reportes/documentos-anulados": 1.9e-05,
+      "reportes/kardex": 0.000275,
+      "reportes/nota-credito": 3.5e-05,
+      "reportes/stock-valorizado": 0.00015,
+      "reportes/ventas": 0.297591,
+      "venta/comprobante-electronico": 0.001808,
+      "venta/cotizaciones": 1.08807,
+      "venta/descuentos/convenio": 0.003605,
+      "venta/descuentos/lista": 0.003279,
+      "venta/devoluciones": 0.437419,
+      "venta/listado": 1.337714,
+      "venta/notas-credito": 0.004781,
+      "venta/notas-venta": 0.003043,
+      "venta/venta": 1.15212
+    },
+    "top10": [
+      {
+        "ruta": "venta/listado",
+        "score": 1.337714
+      },
+      {
+        "ruta": "venta/venta",
+        "score": 1.15212
+      },
+      {
+        "ruta": "venta/cotizaciones",
+        "score": 1.08807
+      },
+      {
+        "ruta": "venta/devoluciones",
+        "score": 0.437419
+      },
+      {
+        "ruta": "configuracion/catalogo-productos",
+        "score": 0.360993
+      },
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.297591
+      },
+      {
+        "ruta": "almacen/productos",
+        "score": 0.266592
+      },
+      {
+        "ruta": "reportes/descuento",
+        "score": 0.013876
+      },
+      {
+        "ruta": "venta/notas-credito",
+        "score": 0.004781
+      },
+      {
+        "ruta": "venta/descuentos/convenio",
+        "score": 0.003605
+      }
+    ]
+  },
+  "syn_Administrador_5b1d": {
+    "role": "Administrador",
+    "scores": {
+      "almacen/almacenes": 0.000452,
+      "almacen/productos": 8.5e-05,
+      "caja/arqueos": 0.000226,
+      "caja/chica": 0.000284,
+      "caja/cuentas": 5.6e-05,
+      "caja/diferencia-costos": 8.7e-05,
+      "caja/general": 0.000167,
+      "caja/medio-pago": 0.06789,
+      "compra/estado-cuenta": 0.000162,
+      "compra/intercambio": 8e-05,
+      "compra/orden": 0.000131,
+      "compra/pagos-pendientes": 0.000135,
+      "compra/proveedores": 0.000152,
+      "compra/registrar": 0.000158,
+      "configuracion/atributos-producto": 0.128246,
+      "configuracion/catalogo-productos": 0.097685,
+      "configuracion/empresas": 0.101094,
+      "configuracion/puntos-venta": 0.47381,
+      "configuracion/seguridad/admin": 0.440906,
+      "configuracion/seguridad/permisos": 0.569344,
+      "configuracion/seguridad/roles": 0.654285,
+      "configuracion/seguridad/users": 0.981464,
+      "configuracion/sucursales": 0.320597,
+      "procesos/historial-movimientos": 0.000209,
+      "procesos/transferencias": 0.000113,
+      "reportes/cajas": 0.000225,
+      "reportes/compras": 0.000401,
+      "reportes/comprobantes-anulados": 4.5e-05,
+      "reportes/correlatividad": 0.007205,
+      "reportes/descuento": 9.9e-05,
+      "reportes/documentos-anulados": 3.1e-05,
+      "reportes/kardex": 0.000178,
+      "reportes/nota-credito": 7.1e-05,
+      "reportes/stock-valorizado": 0.000136,
+      "reportes/ventas": 0.058161,
+      "venta/comprobante-electronico": 5.1e-05,
+      "venta/cotizaciones": 1.6e-05,
+      "venta/descuentos/convenio": 5.8e-05,
+      "venta/descuentos/lista": 2.9e-05,
+      "venta/devoluciones": 3.5e-05,
+      "venta/listado": 2.1e-05,
+      "venta/notas-credito": 0.000134,
+      "venta/notas-venta": 4e-05,
+      "venta/venta": 1.2e-05
+    },
+    "top10": [
+      {
+        "ruta": "configuracion/seguridad/users",
+        "score": 0.981464
+      },
+      {
+        "ruta": "configuracion/seguridad/roles",
+        "score": 0.654285
+      },
+      {
+        "ruta": "configuracion/seguridad/permisos",
+        "score": 0.569344
+      },
+      {
+        "ruta": "configuracion/puntos-venta",
+        "score": 0.47381
+      },
+      {
+        "ruta": "configuracion/seguridad/admin",
+        "score": 0.440906
+      },
+      {
+        "ruta": "configuracion/sucursales",
+        "score": 0.320597
+      },
+      {
+        "ruta": "configuracion/atributos-producto",
+        "score": 0.128246
+      },
+      {
+        "ruta": "configuracion/empresas",
+        "score": 0.101094
+      },
+      {
+        "ruta": "configuracion/catalogo-productos",
+        "score": 0.097685
+      },
+      {
+        "ruta": "caja/medio-pago",
+        "score": 0.06789
+      }
+    ]
+  },
+  "syn_Administrador_9a0c": {
+    "role": "Administrador",
+    "scores": {
+      "almacen/almacenes": 0.000357,
+      "almacen/productos": 3.1e-05,
+      "caja/arqueos": 6.3e-05,
+      "caja/chica": 0.000149,
+      "caja/cuentas": 2.9e-05,
+      "caja/diferencia-costos": 3.4e-05,
+      "caja/general": 9.4e-05,
+      "caja/medio-pago": 0.08141,
+      "compra/estado-cuenta": 0.000157,
+      "compra/intercambio": 3.7e-05,
+      "compra/orden": 6.1e-05,
+      "compra/pagos-pendientes": 8.4e-05,
+      "compra/proveedores": 0.000157,
+      "compra/registrar": 0.000182,
+      "configuracion/atributos-producto": 0.054704,
+      "configuracion/catalogo-productos": 0.073736,
+      "configuracion/empresas": 0.075391,
+      "configuracion/puntos-venta": 0.262654,
+      "configuracion/seguridad/admin": 0.471445,
+      "configuracion/seguridad/permisos": 0.716941,
+      "configuracion/seguridad/roles": 0.681478,
+      "configuracion/seguridad/users": 0.928492,
+      "configuracion/sucursales": 0.160969,
+      "procesos/historial-movimientos": 8.2e-05,
+      "procesos/transferencias": 6.2e-05,
+      "reportes/cajas": 6.2e-05,
+      "reportes/compras": 0.000336,
+      "reportes/comprobantes-anulados": 8e-06,
+      "reportes/correlatividad": 0.005384,
+      "reportes/descuento": 2.6e-05,
+      "reportes/documentos-anulados": 6e-06,
+      "reportes/kardex": 3.5e-05,
+      "reportes/nota-credito": 1.1e-05,
+      "reportes/stock-valorizado": 2.9e-05,
+      "reportes/ventas": 0.056544,
+      "venta/comprobante-electronico": 1.1e-05,
+      "venta/cotizaciones": 4e-06,
+      "venta/descuentos/convenio": 1.7e-05,
+      "venta/descuentos/lista": 1.1e-05,
+      "venta/devoluciones": 1.3e-05,
+      "venta/listado": 4e-06,
+      "venta/notas-credito": 9.9e-05,
+      "venta/notas-venta": 2.7e-05,
+      "venta/venta": 3e-06
+    },
+    "top10": [
+      {
+        "ruta": "configuracion/seguridad/users",
+        "score": 0.928492
+      },
+      {
+        "ruta": "configuracion/seguridad/permisos",
+        "score": 0.716941
+      },
+      {
+        "ruta": "configuracion/seguridad/roles",
+        "score": 0.681478
+      },
+      {
+        "ruta": "configuracion/seguridad/admin",
+        "score": 0.471445
+      },
+      {
+        "ruta": "configuracion/puntos-venta",
+        "score": 0.262654
+      },
+      {
+        "ruta": "configuracion/sucursales",
+        "score": 0.160969
+      },
+      {
+        "ruta": "caja/medio-pago",
+        "score": 0.08141
+      },
+      {
+        "ruta": "configuracion/empresas",
+        "score": 0.075391
+      },
+      {
+        "ruta": "configuracion/catalogo-productos",
+        "score": 0.073736
+      },
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.056544
+      }
+    ]
+  },
+  "syn_Caja_105a": {
+    "role": "Caja",
+    "scores": {
+      "almacen/almacenes": 3.5e-05,
+      "almacen/productos": 3.2e-05,
+      "caja/arqueos": 1.097777,
+      "caja/chica": 0.122139,
+      "caja/cuentas": 0.377085,
+      "caja/diferencia-costos": 0.10956,
+      "caja/general": 1.546627,
+      "caja/medio-pago": 0.099814,
+      "compra/estado-cuenta": 4e-05,
+      "compra/intercambio": 6e-06,
+      "compra/orden": 5.5e-05,
+      "compra/pagos-pendientes": 8e-05,
+      "compra/proveedores": 4.6e-05,
+      "compra/registrar": 6.1e-05,
+      "configuracion/atributos-producto": 5.8e-05,
+      "configuracion/catalogo-productos": 3.5e-05,
+      "configuracion/empresas": 6.3e-05,
+      "configuracion/puntos-venta": 8.8e-05,
+      "configuracion/seguridad/admin": 6.8e-05,
+      "configuracion/seguridad/permisos": 9.8e-05,
+      "configuracion/seguridad/roles": 9.5e-05,
+      "configuracion/seguridad/users": 7.2e-05,
+      "configuracion/sucursales": 4.9e-05,
+      "procesos/historial-movimientos": 8.2e-05,
+      "procesos/transferencias": 6.2e-05,
+      "reportes/cajas": 0.72214,
+      "reportes/compras": 0.000334,
+      "reportes/comprobantes-anulados": 0.000156,
+      "reportes/correlatividad": 0.000658,
+      "reportes/descuento": 0.000165,
+      "reportes/documentos-anulados": 9.6e-05,
+      "reportes/kardex": 0.000125,
+      "reportes/nota-credito": 8.2e-05,
+      "reportes/stock-valorizado": 0.000147,
+      "reportes/ventas": 0.203375,
+      "venta/comprobante-electronico": 0.000315,
+      "venta/cotizaciones": 0.000671,
+      "venta/descuentos/convenio": 0.00021,
+      "venta/descuentos/lista": 0.000299,
+      "venta/devoluciones": 0.000203,
+      "venta/listado": 0.001674,
+      "venta/notas-credito": 0.405075,
+      "venta/notas-venta": 0.000147,
+      "venta/venta": 0.000475
+    },
+    "top10": [
+      {
+        "ruta": "caja/general",
+        "score": 1.546627
+      },
+      {
+        "ruta": "caja/arqueos",
+        "score": 1.097777
+      },
+      {
+        "ruta": "reportes/cajas",
+        "score": 0.72214
+      },
+      {
+        "ruta": "venta/notas-credito",
+        "score": 0.405075
+      },
+      {
+        "ruta": "caja/cuentas",
+        "score": 0.377085
+      },
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.203375
+      },
+      {
+        "ruta": "caja/chica",
+        "score": 0.122139
+      },
+      {
+        "ruta": "caja/diferencia-costos",
+        "score": 0.10956
+      },
+      {
+        "ruta": "caja/medio-pago",
+        "score": 0.099814
+      },
+      {
+        "ruta": "venta/listado",
+        "score": 0.001674
+      }
+    ]
+  },
+  "syn_Caja_ac1c": {
+    "role": "Caja",
+    "scores": {
+      "almacen/almacenes": 1e-05,
+      "almacen/productos": 8e-06,
+      "caja/arqueos": 0.828338,
+      "caja/chica": 0.185133,
+      "caja/cuentas": 0.462219,
+      "caja/diferencia-costos": 0.077449,
+      "caja/general": 1.563592,
+      "caja/medio-pago": 0.029236,
+      "compra/estado-cuenta": 1.6e-05,
+      "compra/intercambio": 2e-06,
+      "compra/orden": 9e-06,
+      "compra/pagos-pendientes": 1.2e-05,
+      "compra/proveedores": 8e-06,
+      "compra/registrar": 1.2e-05,
+      "configuracion/atributos-producto": 4.7e-05,
+      "configuracion/catalogo-productos": 1.5e-05,
+      "configuracion/empresas": 4.2e-05,
+      "configuracion/puntos-venta": 8.9e-05,
+      "configuracion/seguridad/admin": 5.4e-05,
+      "configuracion/seguridad/permisos": 0.000138,
+      "configuracion/seguridad/roles": 3.4e-05,
+      "configuracion/seguridad/users": 7e-05,
+      "configuracion/sucursales": 3.8e-05,
+      "procesos/historial-movimientos": 2.1e-05,
+      "procesos/transferencias": 1.7e-05,
+      "reportes/cajas": 0.664017,
+      "reportes/compras": 4.1e-05,
+      "reportes/comprobantes-anulados": 0.000159,
+      "reportes/correlatividad": 9.5e-05,
+      "reportes/descuento": 4.3e-05,
+      "reportes/documentos-anulados": 1.4e-05,
+      "reportes/kardex": 4.1e-05,
+      "reportes/nota-credito": 5.7e-05,
+      "reportes/stock-valorizado": 1.4e-05,
+      "reportes/ventas": 0.243845,
+      "venta/comprobante-electronico": 6.3e-05,
+      "venta/cotizaciones": 0.000198,
+      "venta/descuentos/convenio": 6.1e-05,
+      "venta/descuentos/lista": 0.000101,
+      "venta/devoluciones": 0.000101,
+      "venta/listado": 0.001246,
+      "venta/notas-credito": 0.443091,
+      "venta/notas-venta": 6e-05,
+      "venta/venta": 0.000144
+    },
+    "top10": [
+      {
+        "ruta": "caja/general",
+        "score": 1.563592
+      },
+      {
+        "ruta": "caja/arqueos",
+        "score": 0.828338
+      },
+      {
+        "ruta": "reportes/cajas",
+        "score": 0.664017
+      },
+      {
+        "ruta": "caja/cuentas",
+        "score": 0.462219
+      },
+      {
+        "ruta": "venta/notas-credito",
+        "score": 0.443091
+      },
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.243845
+      },
+      {
+        "ruta": "caja/chica",
+        "score": 0.185133
+      },
+      {
+        "ruta": "caja/diferencia-costos",
+        "score": 0.077449
+      },
+      {
+        "ruta": "caja/medio-pago",
+        "score": 0.029236
+      },
+      {
+        "ruta": "venta/listado",
+        "score": 0.001246
+      }
+    ]
+  },
+  "syn_Caja_d197": {
+    "role": "Caja",
+    "scores": {
+      "almacen/almacenes": 1.3e-05,
+      "almacen/productos": 2.1e-05,
+      "caja/arqueos": 0.83802,
+      "caja/chica": 0.144737,
+      "caja/cuentas": 0.406738,
+      "caja/diferencia-costos": 0.124424,
+      "caja/general": 1.254809,
+      "caja/medio-pago": 0.147273,
+      "compra/estado-cuenta": 6.7e-05,
+      "compra/intercambio": 5e-06,
+      "compra/orden": 4.9e-05,
+      "compra/pagos-pendientes": 8.3e-05,
+      "compra/proveedores": 4.4e-05,
+      "compra/registrar": 5.3e-05,
+      "configuracion/atributos-producto": 5.9e-05,
+      "configuracion/catalogo-productos": 1.3e-05,
+      "configuracion/empresas": 2.4e-05,
+      "configuracion/puntos-venta": 9.7e-05,
+      "configuracion/seguridad/admin": 8e-05,
+      "configuracion/seguridad/permisos": 0.000125,
+      "configuracion/seguridad/roles": 3.1e-05,
+      "configuracion/seguridad/users": 0.000186,
+      "configuracion/sucursales": 4.7e-05,
+      "procesos/historial-movimientos": 4.4e-05,
+      "procesos/transferencias": 2e-05,
+      "reportes/cajas": 0.857618,
+      "reportes/compras": 0.000154,
+      "reportes/comprobantes-anulados": 0.000286,
+      "reportes/correlatividad": 0.000153,
+      "reportes/descuento": 7e-05,
+      "reportes/documentos-anulados": 1.8e-05,
+      "reportes/kardex": 6.8e-05,
+      "reportes/nota-credito": 9.7e-05,
+      "reportes/stock-valorizado": 9.2e-05,
+      "reportes/ventas": 0.172134,
+      "venta/comprobante-electronico": 1.8e-05,
+      "venta/cotizaciones": 3.8e-05,
+      "venta/descuentos/convenio": 1.9e-05,
+      "venta/descuentos/lista": 3.1e-05,
+      "venta/devoluciones": 1.8e-05,
+      "venta/listado": 0.001059,
+      "venta/notas-credito": 0.360523,
+      "venta/notas-venta": 2.2e-05,
+      "venta/venta": 4.5e-05
+    },
+    "top10": [
+      {
+        "ruta": "caja/general",
+        "score": 1.254809
+      },
+      {
+        "ruta": "reportes/cajas",
+        "score": 0.857618
+      },
+      {
+        "ruta": "caja/arqueos",
+        "score": 0.83802
+      },
+      {
+        "ruta": "caja/cuentas",
+        "score": 0.406738
+      },
+      {
+        "ruta": "venta/notas-credito",
+        "score": 0.360523
+      },
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.172134
+      },
+      {
+        "ruta": "caja/medio-pago",
+        "score": 0.147273
+      },
+      {
+        "ruta": "caja/chica",
+        "score": 0.144737
+      },
+      {
+        "ruta": "caja/diferencia-costos",
+        "score": 0.124424
+      },
+      {
+        "ruta": "venta/listado",
+        "score": 0.001059
+      }
+    ]
+  },
+  "syn_Compras_9e03": {
+    "role": "Compras",
+    "scores": {
+      "almacen/almacenes": 8.2e-05,
+      "almacen/productos": 0.051514,
+      "caja/arqueos": 3.9e-05,
+      "caja/chica": 8.4e-05,
+      "caja/cuentas": 0.000132,
+      "caja/diferencia-costos": 1.6e-05,
+      "caja/general": 9.1e-05,
+      "caja/medio-pago": 3.1e-05,
+      "compra/estado-cuenta": 0.380388,
+      "compra/intercambio": 0.367527,
+      "compra/orden": 0.884082,
+      "compra/pagos-pendientes": 0.730924,
+      "compra/proveedores": 0.690831,
+      "compra/registrar": 0.636611,
+      "configuracion/atributos-producto": 0.000108,
+      "configuracion/catalogo-productos": 0.000103,
+      "configuracion/empresas": 3.2e-05,
+      "configuracion/puntos-venta": 4.6e-05,
+      "configuracion/seguridad/admin": 0.000389,
+      "configuracion/seguridad/permisos": 0.00032,
+      "configuracion/seguridad/roles": 0.000402,
+      "configuracion/seguridad/users": 0.000389,
+      "configuracion/sucursales": 0.000247,
+      "procesos/historial-movimientos": 9.5e-05,
+      "procesos/transferencias": 8.8e-05,
+      "reportes/cajas": 0.000164,
+      "reportes/compras": 0.105297,
+      "reportes/comprobantes-anulados": 1.3e-05,
+      "reportes/correlatividad": 8.3e-05,
+      "reportes/descuento": 3e-05,
+      "reportes/documentos-anulados": 1.1e-05,
+      "reportes/kardex": 0.000197,
+      "reportes/nota-credito": 2.1e-05,
+      "reportes/stock-valorizado": 0.005859,
+      "reportes/ventas": 0.000107,
+      "venta/comprobante-electronico": 9.2e-05,
+      "venta/cotizaciones": 0.00014,
+      "venta/descuentos/convenio": 3.7e-05,
+      "venta/descuentos/lista": 4.8e-05,
+      "venta/devoluciones": 5.3e-05,
+      "venta/listado": 0.000101,
+      "venta/notas-credito": 2.8e-05,
+      "venta/notas-venta": 7.7e-05,
+      "venta/venta": 0.000214
+    },
+    "top10": [
+      {
+        "ruta": "compra/orden",
+        "score": 0.884082
+      },
+      {
+        "ruta": "compra/pagos-pendientes",
+        "score": 0.730924
+      },
+      {
+        "ruta": "compra/proveedores",
+        "score": 0.690831
+      },
+      {
+        "ruta": "compra/registrar",
+        "score": 0.636611
+      },
+      {
+        "ruta": "compra/estado-cuenta",
+        "score": 0.380388
+      },
+      {
+        "ruta": "compra/intercambio",
+        "score": 0.367527
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 0.105297
+      },
+      {
+        "ruta": "almacen/productos",
+        "score": 0.051514
+      },
+      {
+        "ruta": "reportes/stock-valorizado",
+        "score": 0.005859
+      },
+      {
+        "ruta": "configuracion/seguridad/roles",
+        "score": 0.000402
+      }
+    ]
+  },
+  "syn_Compras_df03": {
+    "role": "Compras",
+    "scores": {
+      "almacen/almacenes": 2.7e-05,
+      "almacen/productos": 0.051304,
+      "caja/arqueos": 2.5e-05,
+      "caja/chica": 4e-05,
+      "caja/cuentas": 0.00011,
+      "caja/diferencia-costos": 1e-05,
+      "caja/general": 3.9e-05,
+      "caja/medio-pago": 1.9e-05,
+      "compra/estado-cuenta": 0.404416,
+      "compra/intercambio": 0.24859,
+      "compra/orden": 1.110683,
+      "compra/pagos-pendientes": 0.555252,
+      "compra/proveedores": 0.981327,
+      "compra/registrar": 0.750467,
+      "configuracion/atributos-producto": 3.4e-05,
+      "configuracion/catalogo-productos": 9e-05,
+      "configuracion/empresas": 1.2e-05,
+      "configuracion/puntos-venta": 3.1e-05,
+      "configuracion/seguridad/admin": 0.000154,
+      "configuracion/seguridad/permisos": 9.7e-05,
+      "configuracion/seguridad/roles": 0.000143,
+      "configuracion/seguridad/users": 9.3e-05,
+      "configuracion/sucursales": 6.1e-05,
+      "procesos/historial-movimientos": 4.5e-05,
+      "procesos/transferencias": 6.4e-05,
+      "reportes/cajas": 8.7e-05,
+      "reportes/compras": 0.128057,
+      "reportes/comprobantes-anulados": 6e-06,
+      "reportes/correlatividad": 2.9e-05,
+      "reportes/descuento": 1.5e-05,
+      "reportes/documentos-anulados": 7e-06,
+      "reportes/kardex": 8e-05,
+      "reportes/nota-credito": 1.1e-05,
+      "reportes/stock-valorizado": 0.00556,
+      "reportes/ventas": 0.000215,
+      "venta/comprobante-electronico": 6.1e-05,
+      "venta/cotizaciones": 0.000159,
+      "venta/descuentos/convenio": 3.2e-05,
+      "venta/descuentos/lista": 3.7e-05,
+      "venta/devoluciones": 7.4e-05,
+      "venta/listado": 0.000165,
+      "venta/notas-credito": 1.9e-05,
+      "venta/notas-venta": 9.3e-05,
+      "venta/venta": 0.000257
+    },
+    "top10": [
+      {
+        "ruta": "compra/orden",
+        "score": 1.110683
+      },
+      {
+        "ruta": "compra/proveedores",
+        "score": 0.981327
+      },
+      {
+        "ruta": "compra/registrar",
+        "score": 0.750467
+      },
+      {
+        "ruta": "compra/pagos-pendientes",
+        "score": 0.555252
+      },
+      {
+        "ruta": "compra/estado-cuenta",
+        "score": 0.404416
+      },
+      {
+        "ruta": "compra/intercambio",
+        "score": 0.24859
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 0.128057
+      },
+      {
+        "ruta": "almacen/productos",
+        "score": 0.051304
+      },
+      {
+        "ruta": "reportes/stock-valorizado",
+        "score": 0.00556
+      },
+      {
+        "ruta": "venta/venta",
+        "score": 0.000257
+      }
+    ]
+  },
+  "syn_Compras_fb52": {
+    "role": "Compras",
+    "scores": {
+      "almacen/almacenes": 2.3e-05,
+      "almacen/productos": 0.098838,
+      "caja/arqueos": 1.7e-05,
+      "caja/chica": 3.1e-05,
+      "caja/cuentas": 7.2e-05,
+      "caja/diferencia-costos": 5e-06,
+      "caja/general": 2.6e-05,
+      "caja/medio-pago": 1.2e-05,
+      "compra/estado-cuenta": 0.546978,
+      "compra/intercambio": 0.248592,
+      "compra/orden": 0.835936,
+      "compra/pagos-pendientes": 0.786502,
+      "compra/proveedores": 0.671852,
+      "compra/registrar": 0.723424,
+      "configuracion/atributos-producto": 2.7e-05,
+      "configuracion/catalogo-productos": 7.9e-05,
+      "configuracion/empresas": 1.1e-05,
+      "configuracion/puntos-venta": 2.3e-05,
+      "configuracion/seguridad/admin": 0.000149,
+      "configuracion/seguridad/permisos": 8.9e-05,
+      "configuracion/seguridad/roles": 0.000138,
+      "configuracion/seguridad/users": 7.9e-05,
+      "configuracion/sucursales": 5.8e-05,
+      "procesos/historial-movimientos": 3.8e-05,
+      "procesos/transferencias": 4.9e-05,
+      "reportes/cajas": 6.5e-05,
+      "reportes/compras": 0.199459,
+      "reportes/comprobantes-anulados": 5e-06,
+      "reportes/correlatividad": 2.3e-05,
+      "reportes/descuento": 1.2e-05,
+      "reportes/documentos-anulados": 5e-06,
+      "reportes/kardex": 7.5e-05,
+      "reportes/nota-credito": 8e-06,
+      "reportes/stock-valorizado": 0.00546,
+      "reportes/ventas": 0.00019,
+      "venta/comprobante-electronico": 4.9e-05,
+      "venta/cotizaciones": 0.000122,
+      "venta/descuentos/convenio": 2.6e-05,
+      "venta/descuentos/lista": 2.9e-05,
+      "venta/devoluciones": 5.4e-05,
+      "venta/listado": 0.000137,
+      "venta/notas-credito": 1.3e-05,
+      "venta/notas-venta": 7.5e-05,
+      "venta/venta": 0.000192
+    },
+    "top10": [
+      {
+        "ruta": "compra/orden",
+        "score": 0.835936
+      },
+      {
+        "ruta": "compra/pagos-pendientes",
+        "score": 0.786502
+      },
+      {
+        "ruta": "compra/registrar",
+        "score": 0.723424
+      },
+      {
+        "ruta": "compra/proveedores",
+        "score": 0.671852
+      },
+      {
+        "ruta": "compra/estado-cuenta",
+        "score": 0.546978
+      },
+      {
+        "ruta": "compra/intercambio",
+        "score": 0.248592
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 0.199459
+      },
+      {
+        "ruta": "almacen/productos",
+        "score": 0.098838
+      },
+      {
+        "ruta": "reportes/stock-valorizado",
+        "score": 0.00546
+      },
+      {
+        "ruta": "venta/venta",
+        "score": 0.000192
+      }
+    ]
+  },
+  "syn_Logistica_0ca2": {
+    "role": "Logistica",
+    "scores": {
+      "almacen/almacenes": 0.592794,
+      "almacen/productos": 1.188883,
+      "caja/arqueos": 4e-06,
+      "caja/chica": 3e-06,
+      "caja/cuentas": 6e-06,
+      "caja/diferencia-costos": 3e-06,
+      "caja/general": 5e-06,
+      "caja/medio-pago": 5e-06,
+      "compra/estado-cuenta": 3.2e-05,
+      "compra/intercambio": 0.015464,
+      "compra/orden": 8.3e-05,
+      "compra/pagos-pendientes": 0.000116,
+      "compra/proveedores": 0.000217,
+      "compra/registrar": 4.4e-05,
+      "configuracion/atributos-producto": 0.000325,
+      "configuracion/catalogo-productos": 0.010771,
+      "configuracion/empresas": 2e-05,
+      "configuracion/puntos-venta": 2e-05,
+      "configuracion/seguridad/admin": 3.8e-05,
+      "configuracion/seguridad/permisos": 2e-05,
+      "configuracion/seguridad/roles": 6.8e-05,
+      "configuracion/seguridad/users": 4.7e-05,
+      "configuracion/sucursales": 4.1e-05,
+      "procesos/historial-movimientos": 0.125188,
+      "procesos/transferencias": 0.107365,
+      "reportes/cajas": 0.000154,
+      "reportes/compras": 0.122584,
+      "reportes/comprobantes-anulados": 6.9e-05,
+      "reportes/correlatividad": 0.000126,
+      "reportes/descuento": 0.121584,
+      "reportes/documentos-anulados": 5.4e-05,
+      "reportes/kardex": 1.569467,
+      "reportes/nota-credito": 3e-05,
+      "reportes/stock-valorizado": 1.35675,
+      "reportes/ventas": 0.00134,
+      "venta/comprobante-electronico": 5e-06,
+      "venta/cotizaciones": 0.000165,
+      "venta/descuentos/convenio": 1.9e-05,
+      "venta/descuentos/lista": 1e-05,
+      "venta/devoluciones": 6.4e-05,
+      "venta/listado": 0.0001,
+      "venta/notas-credito": 3e-06,
+      "venta/notas-venta": 3e-05,
+      "venta/venta": 0.000171
+    },
+    "top10": [
+      {
+        "ruta": "reportes/kardex",
+        "score": 1.569467
+      },
+      {
+        "ruta": "reportes/stock-valorizado",
+        "score": 1.35675
+      },
+      {
+        "ruta": "almacen/productos",
+        "score": 1.188883
+      },
+      {
+        "ruta": "almacen/almacenes",
+        "score": 0.592794
+      },
+      {
+        "ruta": "procesos/historial-movimientos",
+        "score": 0.125188
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 0.122584
+      },
+      {
+        "ruta": "reportes/descuento",
+        "score": 0.121584
+      },
+      {
+        "ruta": "procesos/transferencias",
+        "score": 0.107365
+      },
+      {
+        "ruta": "compra/intercambio",
+        "score": 0.015464
+      },
+      {
+        "ruta": "configuracion/catalogo-productos",
+        "score": 0.010771
+      }
+    ]
+  },
+  "syn_Logistica_1d0a": {
+    "role": "Logistica",
+    "scores": {
+      "almacen/almacenes": 0.783957,
+      "almacen/productos": 0.930773,
+      "caja/arqueos": 1.2e-05,
+      "caja/chica": 1.3e-05,
+      "caja/cuentas": 1.4e-05,
+      "caja/diferencia-costos": 3e-06,
+      "caja/general": 1.3e-05,
+      "caja/medio-pago": 4e-06,
+      "compra/estado-cuenta": 3.3e-05,
+      "compra/intercambio": 0.011877,
+      "compra/orden": 3e-05,
+      "compra/pagos-pendientes": 0.000102,
+      "compra/proveedores": 0.000216,
+      "compra/registrar": 2e-05,
+      "configuracion/atributos-producto": 0.000304,
+      "configuracion/catalogo-productos": 0.007193,
+      "configuracion/empresas": 1.1e-05,
+      "configuracion/puntos-venta": 6e-06,
+      "configuracion/seguridad/admin": 1e-05,
+      "configuracion/seguridad/permisos": 1.3e-05,
+      "configuracion/seguridad/roles": 1.8e-05,
+      "configuracion/seguridad/users": 3.5e-05,
+      "configuracion/sucursales": 4.1e-05,
+      "procesos/historial-movimientos": 0.245256,
+      "procesos/transferencias": 0.219556,
+      "reportes/cajas": 0.000313,
+      "reportes/compras": 0.148284,
+      "reportes/comprobantes-anulados": 0.000402,
+      "reportes/correlatividad": 9.5e-05,
+      "reportes/descuento": 0.12278,
+      "reportes/documentos-anulados": 2.9e-05,
+      "reportes/kardex": 1.853584,
+      "reportes/nota-credito": 3.5e-05,
+      "reportes/stock-valorizado": 1.4356,
+      "reportes/ventas": 0.000644,
+      "venta/comprobante-electronico": 9e-06,
+      "venta/cotizaciones": 0.000239,
+      "venta/descuentos/convenio": 1.2e-05,
+      "venta/descuentos/lista": 1.2e-05,
+      "venta/devoluciones": 5.7e-05,
+      "venta/listado": 0.000153,
+      "venta/notas-credito": 2e-06,
+      "venta/notas-venta": 6e-06,
+      "venta/venta": 0.000142
+    },
+    "top10": [
+      {
+        "ruta": "reportes/kardex",
+        "score": 1.853584
+      },
+      {
+        "ruta": "reportes/stock-valorizado",
+        "score": 1.4356
+      },
+      {
+        "ruta": "almacen/productos",
+        "score": 0.930773
+      },
+      {
+        "ruta": "almacen/almacenes",
+        "score": 0.783957
+      },
+      {
+        "ruta": "procesos/historial-movimientos",
+        "score": 0.245256
+      },
+      {
+        "ruta": "procesos/transferencias",
+        "score": 0.219556
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 0.148284
+      },
+      {
+        "ruta": "reportes/descuento",
+        "score": 0.12278
+      },
+      {
+        "ruta": "compra/intercambio",
+        "score": 0.011877
+      },
+      {
+        "ruta": "configuracion/catalogo-productos",
+        "score": 0.007193
+      }
+    ]
+  },
+  "syn_Logistica_2864": {
+    "role": "Logistica",
+    "scores": {
+      "almacen/almacenes": 0.710133,
+      "almacen/productos": 1.099945,
+      "caja/arqueos": 1e-05,
+      "caja/chica": 8e-06,
+      "caja/cuentas": 9e-06,
+      "caja/diferencia-costos": 2e-06,
+      "caja/general": 1.1e-05,
+      "caja/medio-pago": 2e-06,
+      "compra/estado-cuenta": 1.3e-05,
+      "compra/intercambio": 0.011724,
+      "compra/orden": 2.4e-05,
+      "compra/pagos-pendientes": 3.1e-05,
+      "compra/proveedores": 7.1e-05,
+      "compra/registrar": 1.3e-05,
+      "configuracion/atributos-producto": 0.000297,
+      "configuracion/catalogo-productos": 0.006963,
+      "configuracion/empresas": 8e-06,
+      "configuracion/puntos-venta": 5e-06,
+      "configuracion/seguridad/admin": 1e-05,
+      "configuracion/seguridad/permisos": 1.2e-05,
+      "configuracion/seguridad/roles": 1.8e-05,
+      "configuracion/seguridad/users": 2e-05,
+      "configuracion/sucursales": 2.6e-05,
+      "procesos/historial-movimientos": 0.124782,
+      "procesos/transferencias": 0.147357,
+      "reportes/cajas": 0.000289,
+      "reportes/compras": 0.122891,
+      "reportes/comprobantes-anulados": 0.000215,
+      "reportes/correlatividad": 6.7e-05,
+      "reportes/descuento": 0.050838,
+      "reportes/documentos-anulados": 2.3e-05,
+      "reportes/kardex": 1.732256,
+      "reportes/nota-credito": 2e-05,
+      "reportes/stock-valorizado": 1.514567,
+      "reportes/ventas": 0.000522,
+      "venta/comprobante-electronico": 7e-06,
+      "venta/cotizaciones": 0.000234,
+      "venta/descuentos/convenio": 1.1e-05,
+      "venta/descuentos/lista": 9e-06,
+      "venta/devoluciones": 3.7e-05,
+      "venta/listado": 0.000148,
+      "venta/notas-credito": 2e-06,
+      "venta/notas-venta": 7e-06,
+      "venta/venta": 0.000171
+    },
+    "top10": [
+      {
+        "ruta": "reportes/kardex",
+        "score": 1.732256
+      },
+      {
+        "ruta": "reportes/stock-valorizado",
+        "score": 1.514567
+      },
+      {
+        "ruta": "almacen/productos",
+        "score": 1.099945
+      },
+      {
+        "ruta": "almacen/almacenes",
+        "score": 0.710133
+      },
+      {
+        "ruta": "procesos/transferencias",
+        "score": 0.147357
+      },
+      {
+        "ruta": "procesos/historial-movimientos",
+        "score": 0.124782
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 0.122891
+      },
+      {
+        "ruta": "reportes/descuento",
+        "score": 0.050838
+      },
+      {
+        "ruta": "compra/intercambio",
+        "score": 0.011724
+      },
+      {
+        "ruta": "configuracion/catalogo-productos",
+        "score": 0.006963
+      }
+    ]
+  },
+  "syn_Reportes_69a4": {
+    "role": "Reportes",
+    "scores": {
+      "almacen/almacenes": 0.001268,
+      "almacen/productos": 0.000837,
+      "caja/arqueos": 0.001293,
+      "caja/chica": 0.000542,
+      "caja/cuentas": 0.000628,
+      "caja/diferencia-costos": 0.000231,
+      "caja/general": 0.000638,
+      "caja/medio-pago": 0.000553,
+      "compra/estado-cuenta": 0.000129,
+      "compra/intercambio": 0.000406,
+      "compra/orden": 0.000177,
+      "compra/pagos-pendientes": 0.000134,
+      "compra/proveedores": 0.000181,
+      "compra/registrar": 7.3e-05,
+      "configuracion/atributos-producto": 0.000174,
+      "configuracion/catalogo-productos": 0.001111,
+      "configuracion/empresas": 0.001102,
+      "configuracion/puntos-venta": 0.000563,
+      "configuracion/seguridad/admin": 0.000765,
+      "configuracion/seguridad/permisos": 0.000245,
+      "configuracion/seguridad/roles": 0.002115,
+      "configuracion/seguridad/users": 0.001599,
+      "configuracion/sucursales": 0.001628,
+      "procesos/historial-movimientos": 0.000498,
+      "procesos/transferencias": 0.00056,
+      "reportes/cajas": 0.776325,
+      "reportes/compras": 0.908977,
+      "reportes/comprobantes-anulados": 0.060123,
+      "reportes/correlatividad": 0.201097,
+      "reportes/descuento": 0.062479,
+      "reportes/documentos-anulados": 0.001101,
+      "reportes/kardex": 0.483397,
+      "reportes/nota-credito": 0.117818,
+      "reportes/stock-valorizado": 0.302996,
+      "reportes/ventas": 0.780499,
+      "venta/comprobante-electronico": 3e-05,
+      "venta/cotizaciones": 0.000139,
+      "venta/descuentos/convenio": 3.7e-05,
+      "venta/descuentos/lista": 6.9e-05,
+      "venta/devoluciones": 4.2e-05,
+      "venta/listado": 0.001313,
+      "venta/notas-credito": 0.000282,
+      "venta/notas-venta": 2.2e-05,
+      "venta/venta": 9e-05
+    },
+    "top10": [
+      {
+        "ruta": "reportes/compras",
+        "score": 0.908977
+      },
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.780499
+      },
+      {
+        "ruta": "reportes/cajas",
+        "score": 0.776325
+      },
+      {
+        "ruta": "reportes/kardex",
+        "score": 0.483397
+      },
+      {
+        "ruta": "reportes/stock-valorizado",
+        "score": 0.302996
+      },
+      {
+        "ruta": "reportes/correlatividad",
+        "score": 0.201097
+      },
+      {
+        "ruta": "reportes/nota-credito",
+        "score": 0.117818
+      },
+      {
+        "ruta": "reportes/descuento",
+        "score": 0.062479
+      },
+      {
+        "ruta": "reportes/comprobantes-anulados",
+        "score": 0.060123
+      },
+      {
+        "ruta": "configuracion/seguridad/roles",
+        "score": 0.002115
+      }
+    ]
+  },
+  "syn_Reportes_f207": {
+    "role": "Reportes",
+    "scores": {
+      "almacen/almacenes": 0.001276,
+      "almacen/productos": 0.001781,
+      "caja/arqueos": 0.00059,
+      "caja/chica": 0.000116,
+      "caja/cuentas": 0.000616,
+      "caja/diferencia-costos": 0.00015,
+      "caja/general": 0.000386,
+      "caja/medio-pago": 5e-05,
+      "compra/estado-cuenta": 0.000141,
+      "compra/intercambio": 0.00025,
+      "compra/orden": 0.000165,
+      "compra/pagos-pendientes": 0.000155,
+      "compra/proveedores": 0.000305,
+      "compra/registrar": 5.4e-05,
+      "configuracion/atributos-producto": 3.2e-05,
+      "configuracion/catalogo-productos": 0.000818,
+      "configuracion/empresas": 7.1e-05,
+      "configuracion/puntos-venta": 4.7e-05,
+      "configuracion/seguridad/admin": 6.1e-05,
+      "configuracion/seguridad/permisos": 3.3e-05,
+      "configuracion/seguridad/roles": 0.000228,
+      "configuracion/seguridad/users": 0.000149,
+      "configuracion/sucursales": 0.000125,
+      "procesos/historial-movimientos": 0.000394,
+      "procesos/transferencias": 0.000252,
+      "reportes/cajas": 0.618045,
+      "reportes/compras": 0.866054,
+      "reportes/comprobantes-anulados": 0.064536,
+      "reportes/correlatividad": 0.180835,
+      "reportes/descuento": 0.104248,
+      "reportes/documentos-anulados": 0.000554,
+      "reportes/kardex": 0.384487,
+      "reportes/nota-credito": 0.101816,
+      "reportes/stock-valorizado": 0.355353,
+      "reportes/ventas": 0.908909,
+      "venta/comprobante-electronico": 2.5e-05,
+      "venta/cotizaciones": 0.000229,
+      "venta/descuentos/convenio": 3.4e-05,
+      "venta/descuentos/lista": 3.6e-05,
+      "venta/devoluciones": 8.6e-05,
+      "venta/listado": 0.001507,
+      "venta/notas-credito": 3e-05,
+      "venta/notas-venta": 1.4e-05,
+      "venta/venta": 0.000194
+    },
+    "top10": [
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.908909
+      },
+      {
+        "ruta": "reportes/compras",
+        "score": 0.866054
+      },
+      {
+        "ruta": "reportes/cajas",
+        "score": 0.618045
+      },
+      {
+        "ruta": "reportes/kardex",
+        "score": 0.384487
+      },
+      {
+        "ruta": "reportes/stock-valorizado",
+        "score": 0.355353
+      },
+      {
+        "ruta": "reportes/correlatividad",
+        "score": 0.180835
+      },
+      {
+        "ruta": "reportes/descuento",
+        "score": 0.104248
+      },
+      {
+        "ruta": "reportes/nota-credito",
+        "score": 0.101816
+      },
+      {
+        "ruta": "reportes/comprobantes-anulados",
+        "score": 0.064536
+      },
+      {
+        "ruta": "almacen/productos",
+        "score": 0.001781
+      }
+    ]
+  },
+  "syn_Ventas_4aed": {
+    "role": "Ventas",
+    "scores": {
+      "almacen/almacenes": 0.000169,
+      "almacen/productos": 0.007967,
+      "caja/arqueos": 0.000638,
+      "caja/chica": 0.000481,
+      "caja/cuentas": 0.000565,
+      "caja/diferencia-costos": 9.9e-05,
+      "caja/general": 0.000886,
+      "caja/medio-pago": 3.2e-05,
+      "compra/estado-cuenta": 4.6e-05,
+      "compra/intercambio": 0.000197,
+      "compra/orden": 5.3e-05,
+      "compra/pagos-pendientes": 6.9e-05,
+      "compra/proveedores": 5.8e-05,
+      "compra/registrar": 0.000115,
+      "configuracion/atributos-producto": 3.1e-05,
+      "configuracion/catalogo-productos": 0.019576,
+      "configuracion/empresas": 2.6e-05,
+      "configuracion/puntos-venta": 1.3e-05,
+      "configuracion/seguridad/admin": 8e-06,
+      "configuracion/seguridad/permisos": 1.2e-05,
+      "configuracion/seguridad/roles": 1.4e-05,
+      "configuracion/seguridad/users": 4e-06,
+      "configuracion/sucursales": 6e-06,
+      "procesos/historial-movimientos": 0.000113,
+      "procesos/transferencias": 6.1e-05,
+      "reportes/cajas": 0.000277,
+      "reportes/compras": 0.000254,
+      "reportes/comprobantes-anulados": 9.4e-05,
+      "reportes/correlatividad": 1.7e-05,
+      "reportes/descuento": 0.00042,
+      "reportes/documentos-anulados": 5e-05,
+      "reportes/kardex": 0.000231,
+      "reportes/nota-credito": 7.8e-05,
+      "reportes/stock-valorizado": 8.8e-05,
+      "reportes/ventas": 0.035295,
+      "venta/comprobante-electronico": 0.049854,
+      "venta/cotizaciones": 1.06563,
+      "venta/descuentos/convenio": 0.099159,
+      "venta/descuentos/lista": 0.077681,
+      "venta/devoluciones": 0.628308,
+      "venta/listado": 1.301733,
+      "venta/notas-credito": 0.187262,
+      "venta/notas-venta": 0.098668,
+      "venta/venta": 0.780804
+    },
+    "top10": [
+      {
+        "ruta": "venta/listado",
+        "score": 1.301733
+      },
+      {
+        "ruta": "venta/cotizaciones",
+        "score": 1.06563
+      },
+      {
+        "ruta": "venta/venta",
+        "score": 0.780804
+      },
+      {
+        "ruta": "venta/devoluciones",
+        "score": 0.628308
+      },
+      {
+        "ruta": "venta/notas-credito",
+        "score": 0.187262
+      },
+      {
+        "ruta": "venta/descuentos/convenio",
+        "score": 0.099159
+      },
+      {
+        "ruta": "venta/notas-venta",
+        "score": 0.098668
+      },
+      {
+        "ruta": "venta/descuentos/lista",
+        "score": 0.077681
+      },
+      {
+        "ruta": "venta/comprobante-electronico",
+        "score": 0.049854
+      },
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.035295
+      }
+    ]
+  },
+  "syn_Ventas_6a40": {
+    "role": "Ventas",
+    "scores": {
+      "almacen/almacenes": 0.000157,
+      "almacen/productos": 0.006905,
+      "caja/arqueos": 0.000395,
+      "caja/chica": 0.000197,
+      "caja/cuentas": 0.000358,
+      "caja/diferencia-costos": 7.2e-05,
+      "caja/general": 0.000426,
+      "caja/medio-pago": 1.2e-05,
+      "compra/estado-cuenta": 4.6e-05,
+      "compra/intercambio": 0.000162,
+      "compra/orden": 7e-05,
+      "compra/pagos-pendientes": 7.4e-05,
+      "compra/proveedores": 5.7e-05,
+      "compra/registrar": 9.8e-05,
+      "configuracion/atributos-producto": 2e-05,
+      "configuracion/catalogo-productos": 0.014326,
+      "configuracion/empresas": 2e-05,
+      "configuracion/puntos-venta": 5e-06,
+      "configuracion/seguridad/admin": 6e-06,
+      "configuracion/seguridad/permisos": 1e-05,
+      "configuracion/seguridad/roles": 8e-06,
+      "configuracion/seguridad/users": 2e-06,
+      "configuracion/sucursales": 3e-06,
+      "procesos/historial-movimientos": 4e-05,
+      "procesos/transferencias": 6.4e-05,
+      "reportes/cajas": 0.000128,
+      "reportes/compras": 0.000161,
+      "reportes/comprobantes-anulados": 4.9e-05,
+      "reportes/correlatividad": 1.3e-05,
+      "reportes/descuento": 0.000303,
+      "reportes/documentos-anulados": 4e-05,
+      "reportes/kardex": 0.00013,
+      "reportes/nota-credito": 4.3e-05,
+      "reportes/stock-valorizado": 6.8e-05,
+      "reportes/ventas": 0.106039,
+      "venta/comprobante-electronico": 0.098347,
+      "venta/cotizaciones": 1.537543,
+      "venta/descuentos/convenio": 0.006283,
+      "venta/descuentos/lista": 0.077944,
+      "venta/devoluciones": 0.725177,
+      "venta/listado": 1.104655,
+      "venta/notas-credito": 0.220829,
+      "venta/notas-venta": 0.147,
+      "venta/venta": 0.999334
+    },
+    "top10": [
+      {
+        "ruta": "venta/cotizaciones",
+        "score": 1.537543
+      },
+      {
+        "ruta": "venta/listado",
+        "score": 1.104655
+      },
+      {
+        "ruta": "venta/venta",
+        "score": 0.999334
+      },
+      {
+        "ruta": "venta/devoluciones",
+        "score": 0.725177
+      },
+      {
+        "ruta": "venta/notas-credito",
+        "score": 0.220829
+      },
+      {
+        "ruta": "venta/notas-venta",
+        "score": 0.147
+      },
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.106039
+      },
+      {
+        "ruta": "venta/comprobante-electronico",
+        "score": 0.098347
+      },
+      {
+        "ruta": "venta/descuentos/lista",
+        "score": 0.077944
+      },
+      {
+        "ruta": "configuracion/catalogo-productos",
+        "score": 0.014326
+      }
+    ]
+  },
+  "syn_Ventas_a940": {
+    "role": "Ventas",
+    "scores": {
+      "almacen/almacenes": 0.000134,
+      "almacen/productos": 0.006211,
+      "caja/arqueos": 0.000836,
+      "caja/chica": 0.000406,
+      "caja/cuentas": 0.000627,
+      "caja/diferencia-costos": 0.000105,
+      "caja/general": 0.000864,
+      "caja/medio-pago": 3.3e-05,
+      "compra/estado-cuenta": 8e-05,
+      "compra/intercambio": 7.5e-05,
+      "compra/orden": 6e-05,
+      "compra/pagos-pendientes": 6.4e-05,
+      "compra/proveedores": 5.1e-05,
+      "compra/registrar": 8.8e-05,
+      "configuracion/atributos-producto": 2.8e-05,
+      "configuracion/catalogo-productos": 0.01344,
+      "configuracion/empresas": 2e-05,
+      "configuracion/puntos-venta": 8e-06,
+      "configuracion/seguridad/admin": 9e-06,
+      "configuracion/seguridad/permisos": 1.2e-05,
+      "configuracion/seguridad/roles": 1.1e-05,
+      "configuracion/seguridad/users": 2e-06,
+      "configuracion/sucursales": 6e-06,
+      "procesos/historial-movimientos": 4.4e-05,
+      "procesos/transferencias": 4.6e-05,
+      "reportes/cajas": 0.000181,
+      "reportes/compras": 0.000115,
+      "reportes/comprobantes-anulados": 6e-05,
+      "reportes/correlatividad": 1.9e-05,
+      "reportes/descuento": 0.000278,
+      "reportes/documentos-anulados": 4.6e-05,
+      "reportes/kardex": 8.8e-05,
+      "reportes/nota-credito": 4.2e-05,
+      "reportes/stock-valorizado": 4e-05,
+      "reportes/ventas": 0.011161,
+      "venta/comprobante-electronico": 0.02777,
+      "venta/cotizaciones": 1.054528,
+      "venta/descuentos/convenio": 0.100906,
+      "venta/descuentos/lista": 0.127401,
+      "venta/devoluciones": 0.822378,
+      "venta/listado": 1.172861,
+      "venta/notas-credito": 0.29508,
+      "venta/notas-venta": 0.099086,
+      "venta/venta": 0.931367
+    },
+    "top10": [
+      {
+        "ruta": "venta/listado",
+        "score": 1.172861
+      },
+      {
+        "ruta": "venta/cotizaciones",
+        "score": 1.054528
+      },
+      {
+        "ruta": "venta/venta",
+        "score": 0.931367
+      },
+      {
+        "ruta": "venta/devoluciones",
+        "score": 0.822378
+      },
+      {
+        "ruta": "venta/notas-credito",
+        "score": 0.29508
+      },
+      {
+        "ruta": "venta/descuentos/lista",
+        "score": 0.127401
+      },
+      {
+        "ruta": "venta/descuentos/convenio",
+        "score": 0.100906
+      },
+      {
+        "ruta": "venta/notas-venta",
+        "score": 0.099086
+      },
+      {
+        "ruta": "venta/comprobante-electronico",
+        "score": 0.02777
+      },
+      {
+        "ruta": "configuracion/catalogo-productos",
+        "score": 0.01344
+      }
+    ]
+  },
+  "syn_Ventas_e0e2": {
+    "role": "Ventas",
+    "scores": {
+      "almacen/almacenes": 0.000191,
+      "almacen/productos": 0.006111,
+      "caja/arqueos": 0.000196,
+      "caja/chica": 0.000117,
+      "caja/cuentas": 0.000258,
+      "caja/diferencia-costos": 7.3e-05,
+      "caja/general": 0.000262,
+      "caja/medio-pago": 1.6e-05,
+      "compra/estado-cuenta": 2.6e-05,
+      "compra/intercambio": 0.000169,
+      "compra/orden": 9e-05,
+      "compra/pagos-pendientes": 5.7e-05,
+      "compra/proveedores": 3.8e-05,
+      "compra/registrar": 0.000155,
+      "configuracion/atributos-producto": 1.5e-05,
+      "configuracion/catalogo-productos": 0.013115,
+      "configuracion/empresas": 3.1e-05,
+      "configuracion/puntos-venta": 8e-06,
+      "configuracion/seguridad/admin": 7e-06,
+      "configuracion/seguridad/permisos": 9e-06,
+      "configuracion/seguridad/roles": 6e-06,
+      "configuracion/seguridad/users": 2e-06,
+      "configuracion/sucursales": 5e-06,
+      "procesos/historial-movimientos": 4.9e-05,
+      "procesos/transferencias": 7.5e-05,
+      "reportes/cajas": 0.000117,
+      "reportes/compras": 3.8e-05,
+      "reportes/comprobantes-anulados": 3.6e-05,
+      "reportes/correlatividad": 9e-06,
+      "reportes/descuento": 0.000209,
+      "reportes/documentos-anulados": 7.8e-05,
+      "reportes/kardex": 9.7e-05,
+      "reportes/nota-credito": 3.2e-05,
+      "reportes/stock-valorizado": 9e-05,
+      "reportes/ventas": 0.03489,
+      "venta/comprobante-electronico": 0.027947,
+      "venta/cotizaciones": 1.057642,
+      "venta/descuentos/convenio": 0.153168,
+      "venta/descuentos/lista": 0.051747,
+      "venta/devoluciones": 0.772334,
+      "venta/listado": 1.323691,
+      "venta/notas-credito": 0.173049,
+      "venta/notas-venta": 0.161621,
+      "venta/venta": 1.03165
+    },
+    "top10": [
+      {
+        "ruta": "venta/listado",
+        "score": 1.323691
+      },
+      {
+        "ruta": "venta/cotizaciones",
+        "score": 1.057642
+      },
+      {
+        "ruta": "venta/venta",
+        "score": 1.03165
+      },
+      {
+        "ruta": "venta/devoluciones",
+        "score": 0.772334
+      },
+      {
+        "ruta": "venta/notas-credito",
+        "score": 0.173049
+      },
+      {
+        "ruta": "venta/notas-venta",
+        "score": 0.161621
+      },
+      {
+        "ruta": "venta/descuentos/convenio",
+        "score": 0.153168
+      },
+      {
+        "ruta": "venta/descuentos/lista",
+        "score": 0.051747
+      },
+      {
+        "ruta": "reportes/ventas",
+        "score": 0.03489
+      },
+      {
+        "ruta": "venta/comprobante-electronico",
+        "score": 0.027947
+      }
+    ]
+  }
+}

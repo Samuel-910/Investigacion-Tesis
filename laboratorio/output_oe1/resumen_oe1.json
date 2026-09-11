@@ -1,0 +1,58 @@
+{
+  "oe1_completado": true,
+  "fecha_ejecucion": "2026-06-14T19:53:32.729609",
+  "corpus": {
+    "total_eventos": 6180,
+    "total_sesiones": 761,
+    "total_usuarios": 28,
+    "roles": [
+      "Ventas",
+      "Administrador",
+      "Compras",
+      "Reportes",
+      "Caja",
+      "Logistica"
+    ],
+    "periodo": {
+      "inicio": "2026-05-01",
+      "fin": "2026-05-28"
+    }
+  },
+  "metricas_baseline": {
+    "M1_clics_prom": 2.078,
+    "M2_tiempo_s_prom": 419.829,
+    "M3_error_prom": 0.0762,
+    "por_rol": {
+      "Administrador": {
+        "M1": 2.698,
+        "M2": 454.988,
+        "M3": 0.036
+      },
+      "Caja": {
+        "M1": 2.0,
+        "M2": 324.336,
+        "M3": 0.14
+      },
+      "Compras": {
+        "M1": 2.0,
+        "M2": 384.898,
+        "M3": 0.042
+      },
+      "Logistica": {
+        "M1": 2.0,
+        "M2": 311.735,
+        "M3": 0.069
+      },
+      "Reportes": {
+        "M1": 2.0,
+        "M2": 423.962,
+        "M3": 0.039
+      },
+      "Ventas": {
+        "M1": 2.016,
+        "M2": 566.169,
+        "M3": 0.093
+      }
+    }
+  }
+}
