@@ -1,0 +1,839 @@
+user_id,role,menu_item_id,tipo,titulo,orden_final,score
+bot_Administrador_a86b,Administrador,1,GRUPO,Configuración,1,4.174
+bot_Administrador_a86b,Administrador,111,ITEM,Gestión de Usuarios,1,1.2311
+bot_Administrador_a86b,Administrador,113,ITEM,Catálogo de Permisos,2,0.7667
+bot_Administrador_a86b,Administrador,112,ITEM,Roles de Usuario,3,0.7095
+bot_Administrador_a86b,Administrador,114,ITEM,Administración avanzada,4,0.5009
+bot_Administrador_a86b,Administrador,15,ITEM,Sucursales,5,0.429
+bot_Administrador_a86b,Administrador,12,ITEM,Puntos de Venta,6,0.4806
+bot_Administrador_a86b,Administrador,16,ITEM,Catálogo,7,0.0024
+bot_Administrador_a86b,Administrador,17,ITEM,Atributos Catalogo,8,0.0074
+bot_Administrador_a86b,Administrador,14,ITEM,Datos Clinicas,9,0.0464
+bot_Administrador_a86b,Administrador,115,ITEM,Cambio de Clave,10,0.0
+bot_Administrador_a86b,Administrador,13,ITEM,Atributos Puntos,11,0.0
+bot_Administrador_a86b,Administrador,18,ITEM,Utilitarios XNO,12,0.0
+bot_Administrador_a86b,Administrador,3,GRUPO,Reportes,2,0.549
+bot_Administrador_a86b,Administrador,33,ITEM,Reporte de ventas,1,0.3148
+bot_Administrador_a86b,Administrador,32,ITEM,Reporte de compras,2,0.0137
+bot_Administrador_a86b,Administrador,34,ITEM,Reporte de cajas,3,0.0004
+bot_Administrador_a86b,Administrador,35,ITEM,Kardex,4,0.0001
+bot_Administrador_a86b,Administrador,36,ITEM,Stock valorizado,5,0.0002
+bot_Administrador_a86b,Administrador,31,ITEM,Correlatividad,6,0.2189
+bot_Administrador_a86b,Administrador,37,ITEM,Reporte descuento,7,0.0001
+bot_Administrador_a86b,Administrador,38,ITEM,Reporte anulados,8,0.0002
+bot_Administrador_a86b,Administrador,39,ITEM,Reporte nota de créditos,9,0.0004
+bot_Administrador_a86b,Administrador,310,ITEM,Reporte docs anulados,10,0.0001
+bot_Administrador_a86b,Administrador,7,GRUPO,Caja,3,0.3001
+bot_Administrador_a86b,Administrador,74,ITEM,Medio Pago,1,0.2982
+bot_Administrador_a86b,Administrador,73,ITEM,Caja General,2,0.0003
+bot_Administrador_a86b,Administrador,71,ITEM,Arqueo Caja,3,0.0005
+bot_Administrador_a86b,Administrador,75,ITEM,Diferencia de costos,4,0.0004
+bot_Administrador_a86b,Administrador,76,ITEM,Gestión de cuentas,5,0.0002
+bot_Administrador_a86b,Administrador,72,ITEM,Caja Chica,6,0.0004
+bot_Administrador_a86b,Administrador,8,GRUPO,Almacén,4,0.0137
+bot_Administrador_a86b,Administrador,81,ITEM,Gestión Almacenes,1,0.0136
+bot_Administrador_a86b,Administrador,82,ITEM,Productos,2,0.0001
+bot_Administrador_a86b,Administrador,4,GRUPO,Compra,5,0.0014
+bot_Administrador_a86b,Administrador,46,ITEM,Estado de cuenta,1,0.0003
+bot_Administrador_a86b,Administrador,43,ITEM,Intercambio de Productos,2,0.0001
+bot_Administrador_a86b,Administrador,41,ITEM,Orden de compra,3,0.0002
+bot_Administrador_a86b,Administrador,42,ITEM,Registrar compra,4,0.0004
+bot_Administrador_a86b,Administrador,44,ITEM,Proveedores,5,0.0003
+bot_Administrador_a86b,Administrador,45,ITEM,Cuentas por pagar,6,0.0003
+bot_Administrador_a86b,Administrador,5,GRUPO,Ventas,6,0.0008
+bot_Administrador_a86b,Administrador,51,ITEM,Listado de Ventas,1,0.0
+bot_Administrador_a86b,Administrador,52,ITEM,Cotización de venta,2,0.0
+bot_Administrador_a86b,Administrador,54,ITEM,Registrar venta,3,0.0
+bot_Administrador_a86b,Administrador,58,ITEM,Devoluciones,4,0.0001
+bot_Administrador_a86b,Administrador,56,ITEM,Notas de crédito,5,0.0003
+bot_Administrador_a86b,Administrador,53,ITEM,Notas de venta,6,0.0002
+bot_Administrador_a86b,Administrador,591,ITEM,Gestión de Beneficios,7,0.0001
+bot_Administrador_a86b,Administrador,592,ITEM,Convenios,8,0.0001
+bot_Administrador_a86b,Administrador,55,ITEM,Anular comprobante,9,0.0
+bot_Administrador_a86b,Administrador,57,ITEM,Clientes,10,0.0
+bot_Administrador_a86b,Administrador,2,GRUPO,Procesos,7,0.0004
+bot_Administrador_a86b,Administrador,26,ITEM,Transferencias,1,0.0001
+bot_Administrador_a86b,Administrador,21,ITEM,Ingresos y salidas,2,0.0002
+bot_Administrador_a86b,Administrador,22,ITEM,Atributos Diversos,3,0.0
+bot_Administrador_a86b,Administrador,23,ITEM,Reimprimir comprobantes,4,0.0
+bot_Administrador_a86b,Administrador,24,ITEM,Detalle de documentos,5,0.0
+bot_Administrador_a86b,Administrador,25,ITEM,Documento por paciente,6,0.0
+bot_Administrador_a86b,Administrador,27,ITEM,Solicitudes de Anulación,7,0.0
+bot_Administrador_a86b,Administrador,6,GRUPO,Facturación,8,0.0001
+bot_Administrador_a86b,Administrador,61,ITEM,Comprobantes electrónicos,1,0.0001
+bot_Administrador_a86b,Administrador,62,ITEM,Resumen de boletas,2,0.0
+bot_Administrador_a86b,Administrador,63,ITEM,Resumen de bajas,3,0.0
+bot_Administrador_a86b,Administrador,9,GRUPO,Documentos,9,0.0
+bot_Administrador_a86b,Administrador,94,ITEM,Formatos de Impresión,1,0.0
+bot_Administrador_a86b,Administrador,93,ITEM,Puntos de Emisión,2,0.0
+bot_Administrador_a86b,Administrador,91,ITEM,Plantillas,3,0.0
+bot_Administrador_a86b,Administrador,92,ITEM,Bloques de plantillas,4,0.0
+bot_Caja_1125,Caja,7,GRUPO,Caja,1,3.4772
+bot_Caja_1125,Caja,73,ITEM,Caja General,1,1.9228
+bot_Caja_1125,Caja,71,ITEM,Arqueo Caja,2,0.6715
+bot_Caja_1125,Caja,76,ITEM,Gestión de cuentas,3,0.4462
+bot_Caja_1125,Caja,72,ITEM,Caja Chica,4,0.4283
+bot_Caja_1125,Caja,74,ITEM,Medio Pago,5,0.0039
+bot_Caja_1125,Caja,75,ITEM,Diferencia de costos,6,0.0046
+bot_Caja_1125,Caja,5,GRUPO,Ventas,2,0.5548
+bot_Caja_1125,Caja,51,ITEM,Listado de Ventas,1,0.0171
+bot_Caja_1125,Caja,56,ITEM,Notas de crédito,2,0.5367
+bot_Caja_1125,Caja,52,ITEM,Cotización de venta,3,0.0003
+bot_Caja_1125,Caja,54,ITEM,Registrar venta,4,0.0003
+bot_Caja_1125,Caja,58,ITEM,Devoluciones,5,0.0001
+bot_Caja_1125,Caja,53,ITEM,Notas de venta,6,0.0001
+bot_Caja_1125,Caja,591,ITEM,Gestión de Beneficios,7,0.0001
+bot_Caja_1125,Caja,592,ITEM,Convenios,8,0.0001
+bot_Caja_1125,Caja,55,ITEM,Anular comprobante,9,0.0
+bot_Caja_1125,Caja,57,ITEM,Clientes,10,0.0
+bot_Caja_1125,Caja,3,GRUPO,Reportes,3,0.4987
+bot_Caja_1125,Caja,34,ITEM,Reporte de cajas,1,0.4921
+bot_Caja_1125,Caja,33,ITEM,Reporte de ventas,2,0.0062
+bot_Caja_1125,Caja,32,ITEM,Reporte de compras,3,0.0001
+bot_Caja_1125,Caja,35,ITEM,Kardex,4,0.0001
+bot_Caja_1125,Caja,36,ITEM,Stock valorizado,5,0.0
+bot_Caja_1125,Caja,31,ITEM,Correlatividad,6,0.0001
+bot_Caja_1125,Caja,37,ITEM,Reporte descuento,7,0.0
+bot_Caja_1125,Caja,38,ITEM,Reporte anulados,8,0.0001
+bot_Caja_1125,Caja,39,ITEM,Reporte nota de créditos,9,0.0
+bot_Caja_1125,Caja,310,ITEM,Reporte docs anulados,10,0.0
+bot_Caja_22f0,Caja,7,GRUPO,Caja,1,3.5492
+bot_Caja_22f0,Caja,73,ITEM,Caja General,1,1.8197
+bot_Caja_22f0,Caja,71,ITEM,Arqueo Caja,2,0.769
+bot_Caja_22f0,Caja,76,ITEM,Gestión de cuentas,3,0.5568
+bot_Caja_22f0,Caja,72,ITEM,Caja Chica,4,0.3926
+bot_Caja_22f0,Caja,74,ITEM,Medio Pago,5,0.0046
+bot_Caja_22f0,Caja,75,ITEM,Diferencia de costos,6,0.0064
+bot_Caja_22f0,Caja,5,GRUPO,Ventas,2,0.6114
+bot_Caja_22f0,Caja,51,ITEM,Listado de Ventas,1,0.0619
+bot_Caja_22f0,Caja,56,ITEM,Notas de crédito,2,0.5489
+bot_Caja_22f0,Caja,52,ITEM,Cotización de venta,3,0.0002
+bot_Caja_22f0,Caja,54,ITEM,Registrar venta,4,0.0002
+bot_Caja_22f0,Caja,58,ITEM,Devoluciones,5,0.0001
+bot_Caja_22f0,Caja,53,ITEM,Notas de venta,6,0.0001
+bot_Caja_22f0,Caja,591,ITEM,Gestión de Beneficios,7,0.0001
+bot_Caja_22f0,Caja,592,ITEM,Convenios,8,0.0001
+bot_Caja_22f0,Caja,55,ITEM,Anular comprobante,9,0.0
+bot_Caja_22f0,Caja,57,ITEM,Clientes,10,0.0
+bot_Caja_22f0,Caja,3,GRUPO,Reportes,3,0.4296
+bot_Caja_22f0,Caja,34,ITEM,Reporte de cajas,1,0.4235
+bot_Caja_22f0,Caja,33,ITEM,Reporte de ventas,2,0.0057
+bot_Caja_22f0,Caja,32,ITEM,Reporte de compras,3,0.0001
+bot_Caja_22f0,Caja,35,ITEM,Kardex,4,0.0
+bot_Caja_22f0,Caja,36,ITEM,Stock valorizado,5,0.0
+bot_Caja_22f0,Caja,31,ITEM,Correlatividad,6,0.0001
+bot_Caja_22f0,Caja,37,ITEM,Reporte descuento,7,0.0
+bot_Caja_22f0,Caja,38,ITEM,Reporte anulados,8,0.0001
+bot_Caja_22f0,Caja,39,ITEM,Reporte nota de créditos,9,0.0001
+bot_Caja_22f0,Caja,310,ITEM,Reporte docs anulados,10,0.0
+bot_Compras_6cd7,Compras,4,GRUPO,Compra,1,3.1561
+bot_Compras_6cd7,Compras,41,ITEM,Orden de compra,1,0.6287
+bot_Compras_6cd7,Compras,44,ITEM,Proveedores,2,0.6062
+bot_Compras_6cd7,Compras,42,ITEM,Registrar compra,3,0.6692
+bot_Compras_6cd7,Compras,45,ITEM,Cuentas por pagar,4,0.8027
+bot_Compras_6cd7,Compras,43,ITEM,Intercambio de Productos,5,0.0111
+bot_Compras_6cd7,Compras,46,ITEM,Estado de cuenta,6,0.4382
+bot_Compras_6cd7,Compras,3,GRUPO,Reportes,2,0.2647
+bot_Compras_6cd7,Compras,32,ITEM,Reporte de compras,1,0.1366
+bot_Compras_6cd7,Compras,33,ITEM,Reporte de ventas,2,0.0003
+bot_Compras_6cd7,Compras,34,ITEM,Reporte de cajas,3,0.0
+bot_Compras_6cd7,Compras,36,ITEM,Stock valorizado,4,0.1272
+bot_Compras_6cd7,Compras,35,ITEM,Kardex,5,0.0004
+bot_Compras_6cd7,Compras,31,ITEM,Correlatividad,6,0.0001
+bot_Compras_6cd7,Compras,37,ITEM,Reporte descuento,7,0.0001
+bot_Compras_6cd7,Compras,38,ITEM,Reporte anulados,8,0.0
+bot_Compras_6cd7,Compras,39,ITEM,Reporte nota de créditos,9,0.0
+bot_Compras_6cd7,Compras,310,ITEM,Reporte docs anulados,10,0.0
+bot_Compras_6cd7,Compras,8,GRUPO,Almacén,3,0.041
+bot_Compras_6cd7,Compras,82,ITEM,Productos,1,0.0407
+bot_Compras_6cd7,Compras,81,ITEM,Gestión Almacenes,2,0.0003
+bot_Compras_b1d2,Compras,4,GRUPO,Compra,1,3.2091
+bot_Compras_b1d2,Compras,41,ITEM,Orden de compra,1,0.6143
+bot_Compras_b1d2,Compras,42,ITEM,Registrar compra,2,0.8072
+bot_Compras_b1d2,Compras,44,ITEM,Proveedores,3,0.6973
+bot_Compras_b1d2,Compras,45,ITEM,Cuentas por pagar,4,0.7074
+bot_Compras_b1d2,Compras,46,ITEM,Estado de cuenta,5,0.3563
+bot_Compras_b1d2,Compras,43,ITEM,Intercambio de Productos,6,0.0265
+bot_Compras_b1d2,Compras,3,GRUPO,Reportes,2,0.2772
+bot_Compras_b1d2,Compras,36,ITEM,Stock valorizado,1,0.1814
+bot_Compras_b1d2,Compras,33,ITEM,Reporte de ventas,2,0.0004
+bot_Compras_b1d2,Compras,32,ITEM,Reporte de compras,3,0.0943
+bot_Compras_b1d2,Compras,34,ITEM,Reporte de cajas,4,0.0
+bot_Compras_b1d2,Compras,35,ITEM,Kardex,5,0.0008
+bot_Compras_b1d2,Compras,31,ITEM,Correlatividad,6,0.0001
+bot_Compras_b1d2,Compras,37,ITEM,Reporte descuento,7,0.0001
+bot_Compras_b1d2,Compras,38,ITEM,Reporte anulados,8,0.0
+bot_Compras_b1d2,Compras,39,ITEM,Reporte nota de créditos,9,0.0
+bot_Compras_b1d2,Compras,310,ITEM,Reporte docs anulados,10,0.0
+bot_Compras_b1d2,Compras,8,GRUPO,Almacén,3,0.0399
+bot_Compras_b1d2,Compras,82,ITEM,Productos,1,0.0395
+bot_Compras_b1d2,Compras,81,ITEM,Gestión Almacenes,2,0.0004
+bot_Logistica_7037,Logistica,3,GRUPO,Reportes,1,2.6847
+bot_Logistica_7037,Logistica,33,ITEM,Reporte de ventas,1,0.0004
+bot_Logistica_7037,Logistica,32,ITEM,Reporte de compras,2,0.0045
+bot_Logistica_7037,Logistica,34,ITEM,Reporte de cajas,3,0.0001
+bot_Logistica_7037,Logistica,35,ITEM,Kardex,4,1.6054
+bot_Logistica_7037,Logistica,36,ITEM,Stock valorizado,5,1.0709
+bot_Logistica_7037,Logistica,31,ITEM,Correlatividad,6,0.0001
+bot_Logistica_7037,Logistica,37,ITEM,Reporte descuento,7,0.0031
+bot_Logistica_7037,Logistica,38,ITEM,Reporte anulados,8,0.0001
+bot_Logistica_7037,Logistica,39,ITEM,Reporte nota de créditos,9,0.0
+bot_Logistica_7037,Logistica,310,ITEM,Reporte docs anulados,10,0.0
+bot_Logistica_7037,Logistica,8,GRUPO,Almacén,2,1.7515
+bot_Logistica_7037,Logistica,81,ITEM,Gestión Almacenes,1,0.9011
+bot_Logistica_7037,Logistica,82,ITEM,Productos,2,0.8504
+bot_Logistica_7037,Logistica,2,GRUPO,Procesos,3,0.0172
+bot_Logistica_7037,Logistica,26,ITEM,Transferencias,1,0.0092
+bot_Logistica_7037,Logistica,21,ITEM,Ingresos y salidas,2,0.008
+bot_Logistica_7037,Logistica,22,ITEM,Atributos Diversos,3,0.0
+bot_Logistica_7037,Logistica,23,ITEM,Reimprimir comprobantes,4,0.0
+bot_Logistica_7037,Logistica,24,ITEM,Detalle de documentos,5,0.0
+bot_Logistica_7037,Logistica,25,ITEM,Documento por paciente,6,0.0
+bot_Logistica_7037,Logistica,27,ITEM,Solicitudes de Anulación,7,0.0
+bot_Logistica_97c4,Logistica,3,GRUPO,Reportes,1,2.6816
+bot_Logistica_97c4,Logistica,33,ITEM,Reporte de ventas,1,0.0019
+bot_Logistica_97c4,Logistica,32,ITEM,Reporte de compras,2,0.0068
+bot_Logistica_97c4,Logistica,34,ITEM,Reporte de cajas,3,0.0003
+bot_Logistica_97c4,Logistica,35,ITEM,Kardex,4,1.647
+bot_Logistica_97c4,Logistica,36,ITEM,Stock valorizado,5,1.0207
+bot_Logistica_97c4,Logistica,31,ITEM,Correlatividad,6,0.0001
+bot_Logistica_97c4,Logistica,37,ITEM,Reporte descuento,7,0.0043
+bot_Logistica_97c4,Logistica,38,ITEM,Reporte anulados,8,0.0003
+bot_Logistica_97c4,Logistica,39,ITEM,Reporte nota de créditos,9,0.0001
+bot_Logistica_97c4,Logistica,310,ITEM,Reporte docs anulados,10,0.0
+bot_Logistica_97c4,Logistica,8,GRUPO,Almacén,2,1.5574
+bot_Logistica_97c4,Logistica,81,ITEM,Gestión Almacenes,1,0.7517
+bot_Logistica_97c4,Logistica,82,ITEM,Productos,2,0.8057
+bot_Logistica_97c4,Logistica,2,GRUPO,Procesos,3,0.01
+bot_Logistica_97c4,Logistica,26,ITEM,Transferencias,1,0.0049
+bot_Logistica_97c4,Logistica,21,ITEM,Ingresos y salidas,2,0.0051
+bot_Logistica_97c4,Logistica,22,ITEM,Atributos Diversos,3,0.0
+bot_Logistica_97c4,Logistica,23,ITEM,Reimprimir comprobantes,4,0.0
+bot_Logistica_97c4,Logistica,24,ITEM,Detalle de documentos,5,0.0
+bot_Logistica_97c4,Logistica,25,ITEM,Documento por paciente,6,0.0
+bot_Logistica_97c4,Logistica,27,ITEM,Solicitudes de Anulación,7,0.0
+bot_Reportes_8c97,Reportes,3,GRUPO,Reportes,1,4.7243
+bot_Reportes_8c97,Reportes,33,ITEM,Reporte de ventas,1,1.3193
+bot_Reportes_8c97,Reportes,34,ITEM,Reporte de cajas,2,0.901
+bot_Reportes_8c97,Reportes,32,ITEM,Reporte de compras,3,0.9508
+bot_Reportes_8c97,Reportes,35,ITEM,Kardex,4,0.1245
+bot_Reportes_8c97,Reportes,36,ITEM,Stock valorizado,5,0.6871
+bot_Reportes_8c97,Reportes,31,ITEM,Correlatividad,6,0.0139
+bot_Reportes_8c97,Reportes,37,ITEM,Reporte descuento,7,0.0966
+bot_Reportes_8c97,Reportes,38,ITEM,Reporte anulados,8,0.5009
+bot_Reportes_8c97,Reportes,39,ITEM,Reporte nota de créditos,9,0.1148
+bot_Reportes_8c97,Reportes,310,ITEM,Reporte docs anulados,10,0.0153
+bot_Reportes_8c97,Reportes,5,GRUPO,Ventas,2,0.0439
+bot_Reportes_8c97,Reportes,51,ITEM,Listado de Ventas,1,0.0432
+bot_Reportes_8c97,Reportes,52,ITEM,Cotización de venta,2,0.0002
+bot_Reportes_8c97,Reportes,54,ITEM,Registrar venta,3,0.0002
+bot_Reportes_8c97,Reportes,56,ITEM,Notas de crédito,4,0.0001
+bot_Reportes_8c97,Reportes,58,ITEM,Devoluciones,5,0.0001
+bot_Reportes_8c97,Reportes,53,ITEM,Notas de venta,6,0.0
+bot_Reportes_8c97,Reportes,591,ITEM,Gestión de Beneficios,7,0.0001
+bot_Reportes_8c97,Reportes,592,ITEM,Convenios,8,0.0
+bot_Reportes_8c97,Reportes,55,ITEM,Anular comprobante,9,0.0
+bot_Reportes_8c97,Reportes,57,ITEM,Clientes,10,0.0
+bot_Reportes_8c97,Reportes,8,GRUPO,Almacén,3,0.002
+bot_Reportes_8c97,Reportes,81,ITEM,Gestión Almacenes,1,0.0011
+bot_Reportes_8c97,Reportes,82,ITEM,Productos,2,0.0009
+bot_Reportes_8c97,Reportes,4,GRUPO,Compra,4,0.0011
+bot_Reportes_8c97,Reportes,46,ITEM,Estado de cuenta,1,0.0001
+bot_Reportes_8c97,Reportes,43,ITEM,Intercambio de Productos,2,0.0003
+bot_Reportes_8c97,Reportes,41,ITEM,Orden de compra,3,0.0002
+bot_Reportes_8c97,Reportes,42,ITEM,Registrar compra,4,0.0001
+bot_Reportes_8c97,Reportes,44,ITEM,Proveedores,5,0.0002
+bot_Reportes_8c97,Reportes,45,ITEM,Cuentas por pagar,6,0.0001
+bot_Ventas_9525,Ventas,5,GRUPO,Ventas,1,3.8327
+bot_Ventas_9525,Ventas,51,ITEM,Listado de Ventas,1,1.1982
+bot_Ventas_9525,Ventas,54,ITEM,Registrar venta,2,1.1936
+bot_Ventas_9525,Ventas,52,ITEM,Cotización de venta,3,1.0755
+bot_Ventas_9525,Ventas,58,ITEM,Devoluciones,4,0.3529
+bot_Ventas_9525,Ventas,56,ITEM,Notas de crédito,5,0.0046
+bot_Ventas_9525,Ventas,53,ITEM,Notas de venta,6,0.0026
+bot_Ventas_9525,Ventas,591,ITEM,Gestión de Beneficios,7,0.0027
+bot_Ventas_9525,Ventas,592,ITEM,Convenios,8,0.0026
+bot_Ventas_9525,Ventas,55,ITEM,Anular comprobante,9,0.0
+bot_Ventas_9525,Ventas,57,ITEM,Clientes,10,0.0
+bot_Ventas_9525,Ventas,3,GRUPO,Reportes,2,0.2675
+bot_Ventas_9525,Ventas,33,ITEM,Reporte de ventas,1,0.2649
+bot_Ventas_9525,Ventas,32,ITEM,Reporte de compras,2,0.0009
+bot_Ventas_9525,Ventas,34,ITEM,Reporte de cajas,3,0.0002
+bot_Ventas_9525,Ventas,36,ITEM,Stock valorizado,4,0.0003
+bot_Ventas_9525,Ventas,35,ITEM,Kardex,5,0.0005
+bot_Ventas_9525,Ventas,31,ITEM,Correlatividad,6,0.0
+bot_Ventas_9525,Ventas,37,ITEM,Reporte descuento,7,0.0006
+bot_Ventas_9525,Ventas,38,ITEM,Reporte anulados,8,0.0001
+bot_Ventas_9525,Ventas,39,ITEM,Reporte nota de créditos,9,0.0001
+bot_Ventas_9525,Ventas,310,ITEM,Reporte docs anulados,10,0.0
+bot_Ventas_9525,Ventas,8,GRUPO,Almacén,3,0.1585
+bot_Ventas_9525,Ventas,82,ITEM,Productos,1,0.1581
+bot_Ventas_9525,Ventas,81,ITEM,Gestión Almacenes,2,0.0004
+bot_Ventas_9a82,Ventas,5,GRUPO,Ventas,1,4.1246
+bot_Ventas_9a82,Ventas,51,ITEM,Listado de Ventas,1,1.3353
+bot_Ventas_9a82,Ventas,54,ITEM,Registrar venta,2,1.1937
+bot_Ventas_9a82,Ventas,52,ITEM,Cotización de venta,3,1.0736
+bot_Ventas_9a82,Ventas,58,ITEM,Devoluciones,4,0.5079
+bot_Ventas_9a82,Ventas,56,ITEM,Notas de crédito,5,0.0054
+bot_Ventas_9a82,Ventas,53,ITEM,Notas de venta,6,0.0029
+bot_Ventas_9a82,Ventas,591,ITEM,Gestión de Beneficios,7,0.0029
+bot_Ventas_9a82,Ventas,592,ITEM,Convenios,8,0.0029
+bot_Ventas_9a82,Ventas,55,ITEM,Anular comprobante,9,0.0
+bot_Ventas_9a82,Ventas,57,ITEM,Clientes,10,0.0
+bot_Ventas_9a82,Ventas,3,GRUPO,Reportes,2,0.389
+bot_Ventas_9a82,Ventas,33,ITEM,Reporte de ventas,1,0.3837
+bot_Ventas_9a82,Ventas,32,ITEM,Reporte de compras,2,0.0014
+bot_Ventas_9a82,Ventas,34,ITEM,Reporte de cajas,3,0.0005
+bot_Ventas_9a82,Ventas,36,ITEM,Stock valorizado,4,0.0005
+bot_Ventas_9a82,Ventas,35,ITEM,Kardex,5,0.0012
+bot_Ventas_9a82,Ventas,31,ITEM,Correlatividad,6,0.0
+bot_Ventas_9a82,Ventas,37,ITEM,Reporte descuento,7,0.0011
+bot_Ventas_9a82,Ventas,38,ITEM,Reporte anulados,8,0.0003
+bot_Ventas_9a82,Ventas,39,ITEM,Reporte nota de créditos,9,0.0002
+bot_Ventas_9a82,Ventas,310,ITEM,Reporte docs anulados,10,0.0
+bot_Ventas_9a82,Ventas,8,GRUPO,Almacén,3,0.2069
+bot_Ventas_9a82,Ventas,82,ITEM,Productos,1,0.2063
+bot_Ventas_9a82,Ventas,81,ITEM,Gestión Almacenes,2,0.0006
+bot_Ventas_c334,Ventas,5,GRUPO,Ventas,1,4.03
+bot_Ventas_c334,Ventas,51,ITEM,Listado de Ventas,1,1.3377
+bot_Ventas_c334,Ventas,54,ITEM,Registrar venta,2,1.1521
+bot_Ventas_c334,Ventas,52,ITEM,Cotización de venta,3,1.0881
+bot_Ventas_c334,Ventas,58,ITEM,Devoluciones,4,0.4374
+bot_Ventas_c334,Ventas,56,ITEM,Notas de crédito,5,0.0048
+bot_Ventas_c334,Ventas,53,ITEM,Notas de venta,6,0.003
+bot_Ventas_c334,Ventas,591,ITEM,Gestión de Beneficios,7,0.0033
+bot_Ventas_c334,Ventas,592,ITEM,Convenios,8,0.0036
+bot_Ventas_c334,Ventas,55,ITEM,Anular comprobante,9,0.0
+bot_Ventas_c334,Ventas,57,ITEM,Clientes,10,0.0
+bot_Ventas_c334,Ventas,3,GRUPO,Reportes,2,0.3124
+bot_Ventas_c334,Ventas,33,ITEM,Reporte de ventas,1,0.2976
+bot_Ventas_c334,Ventas,32,ITEM,Reporte de compras,2,0.0003
+bot_Ventas_c334,Ventas,36,ITEM,Stock valorizado,3,0.0001
+bot_Ventas_c334,Ventas,34,ITEM,Reporte de cajas,4,0.0001
+bot_Ventas_c334,Ventas,35,ITEM,Kardex,5,0.0003
+bot_Ventas_c334,Ventas,31,ITEM,Correlatividad,6,0.0
+bot_Ventas_c334,Ventas,37,ITEM,Reporte descuento,7,0.0139
+bot_Ventas_c334,Ventas,38,ITEM,Reporte anulados,8,0.0001
+bot_Ventas_c334,Ventas,39,ITEM,Reporte nota de créditos,9,0.0
+bot_Ventas_c334,Ventas,310,ITEM,Reporte docs anulados,10,0.0
+bot_Ventas_c334,Ventas,8,GRUPO,Almacén,3,0.2669
+bot_Ventas_c334,Ventas,82,ITEM,Productos,1,0.2666
+bot_Ventas_c334,Ventas,81,ITEM,Gestión Almacenes,2,0.0003
+syn_Administrador_5b1d,Administrador,1,GRUPO,Configuración,1,3.7674
+syn_Administrador_5b1d,Administrador,111,ITEM,Gestión de Usuarios,1,0.9815
+syn_Administrador_5b1d,Administrador,112,ITEM,Roles de Usuario,2,0.6543
+syn_Administrador_5b1d,Administrador,113,ITEM,Catálogo de Permisos,3,0.5693
+syn_Administrador_5b1d,Administrador,114,ITEM,Administración avanzada,4,0.4409
+syn_Administrador_5b1d,Administrador,12,ITEM,Puntos de Venta,5,0.4738
+syn_Administrador_5b1d,Administrador,15,ITEM,Sucursales,6,0.3206
+syn_Administrador_5b1d,Administrador,16,ITEM,Catálogo,7,0.0977
+syn_Administrador_5b1d,Administrador,17,ITEM,Atributos Catalogo,8,0.1282
+syn_Administrador_5b1d,Administrador,14,ITEM,Datos Clinicas,9,0.1011
+syn_Administrador_5b1d,Administrador,115,ITEM,Cambio de Clave,10,0.0
+syn_Administrador_5b1d,Administrador,13,ITEM,Atributos Puntos,11,0.0
+syn_Administrador_5b1d,Administrador,18,ITEM,Utilitarios XNO,12,0.0
+syn_Administrador_5b1d,Administrador,7,GRUPO,Caja,2,0.0687
+syn_Administrador_5b1d,Administrador,74,ITEM,Medio Pago,1,0.0679
+syn_Administrador_5b1d,Administrador,73,ITEM,Caja General,2,0.0002
+syn_Administrador_5b1d,Administrador,71,ITEM,Arqueo Caja,3,0.0002
+syn_Administrador_5b1d,Administrador,75,ITEM,Diferencia de costos,4,0.0001
+syn_Administrador_5b1d,Administrador,76,ITEM,Gestión de cuentas,5,0.0001
+syn_Administrador_5b1d,Administrador,72,ITEM,Caja Chica,6,0.0003
+syn_Administrador_5b1d,Administrador,3,GRUPO,Reportes,3,0.0666
+syn_Administrador_5b1d,Administrador,33,ITEM,Reporte de ventas,1,0.0582
+syn_Administrador_5b1d,Administrador,32,ITEM,Reporte de compras,2,0.0004
+syn_Administrador_5b1d,Administrador,34,ITEM,Reporte de cajas,3,0.0002
+syn_Administrador_5b1d,Administrador,36,ITEM,Stock valorizado,4,0.0001
+syn_Administrador_5b1d,Administrador,35,ITEM,Kardex,5,0.0002
+syn_Administrador_5b1d,Administrador,31,ITEM,Correlatividad,6,0.0072
+syn_Administrador_5b1d,Administrador,37,ITEM,Reporte descuento,7,0.0001
+syn_Administrador_5b1d,Administrador,38,ITEM,Reporte anulados,8,0.0
+syn_Administrador_5b1d,Administrador,39,ITEM,Reporte nota de créditos,9,0.0001
+syn_Administrador_5b1d,Administrador,310,ITEM,Reporte docs anulados,10,0.0
+syn_Administrador_5b1d,Administrador,4,GRUPO,Compra,4,0.0008
+syn_Administrador_5b1d,Administrador,46,ITEM,Estado de cuenta,1,0.0002
+syn_Administrador_5b1d,Administrador,43,ITEM,Intercambio de Productos,2,0.0001
+syn_Administrador_5b1d,Administrador,41,ITEM,Orden de compra,3,0.0001
+syn_Administrador_5b1d,Administrador,42,ITEM,Registrar compra,4,0.0002
+syn_Administrador_5b1d,Administrador,44,ITEM,Proveedores,5,0.0002
+syn_Administrador_5b1d,Administrador,45,ITEM,Cuentas por pagar,6,0.0001
+syn_Administrador_5b1d,Administrador,8,GRUPO,Almacén,5,0.0005
+syn_Administrador_5b1d,Administrador,81,ITEM,Gestión Almacenes,1,0.0005
+syn_Administrador_5b1d,Administrador,82,ITEM,Productos,2,0.0001
+syn_Administrador_5b1d,Administrador,5,GRUPO,Ventas,6,0.0003
+syn_Administrador_5b1d,Administrador,51,ITEM,Listado de Ventas,1,0.0
+syn_Administrador_5b1d,Administrador,52,ITEM,Cotización de venta,2,0.0
+syn_Administrador_5b1d,Administrador,54,ITEM,Registrar venta,3,0.0
+syn_Administrador_5b1d,Administrador,58,ITEM,Devoluciones,4,0.0
+syn_Administrador_5b1d,Administrador,56,ITEM,Notas de crédito,5,0.0001
+syn_Administrador_5b1d,Administrador,53,ITEM,Notas de venta,6,0.0
+syn_Administrador_5b1d,Administrador,591,ITEM,Gestión de Beneficios,7,0.0
+syn_Administrador_5b1d,Administrador,592,ITEM,Convenios,8,0.0001
+syn_Administrador_5b1d,Administrador,55,ITEM,Anular comprobante,9,0.0
+syn_Administrador_5b1d,Administrador,57,ITEM,Clientes,10,0.0
+syn_Administrador_5b1d,Administrador,2,GRUPO,Procesos,7,0.0003
+syn_Administrador_5b1d,Administrador,26,ITEM,Transferencias,1,0.0001
+syn_Administrador_5b1d,Administrador,21,ITEM,Ingresos y salidas,2,0.0002
+syn_Administrador_5b1d,Administrador,22,ITEM,Atributos Diversos,3,0.0
+syn_Administrador_5b1d,Administrador,23,ITEM,Reimprimir comprobantes,4,0.0
+syn_Administrador_5b1d,Administrador,24,ITEM,Detalle de documentos,5,0.0
+syn_Administrador_5b1d,Administrador,25,ITEM,Documento por paciente,6,0.0
+syn_Administrador_5b1d,Administrador,27,ITEM,Solicitudes de Anulación,7,0.0
+syn_Administrador_5b1d,Administrador,6,GRUPO,Facturación,8,0.0001
+syn_Administrador_5b1d,Administrador,61,ITEM,Comprobantes electrónicos,1,0.0001
+syn_Administrador_5b1d,Administrador,62,ITEM,Resumen de boletas,2,0.0
+syn_Administrador_5b1d,Administrador,63,ITEM,Resumen de bajas,3,0.0
+syn_Administrador_5b1d,Administrador,9,GRUPO,Documentos,9,0.0
+syn_Administrador_5b1d,Administrador,94,ITEM,Formatos de Impresión,1,0.0
+syn_Administrador_5b1d,Administrador,93,ITEM,Puntos de Emisión,2,0.0
+syn_Administrador_5b1d,Administrador,91,ITEM,Plantillas,3,0.0
+syn_Administrador_5b1d,Administrador,92,ITEM,Bloques de plantillas,4,0.0
+syn_Administrador_9a0c,Administrador,1,GRUPO,Configuración,1,3.4258
+syn_Administrador_9a0c,Administrador,111,ITEM,Gestión de Usuarios,1,0.9285
+syn_Administrador_9a0c,Administrador,112,ITEM,Roles de Usuario,2,0.6815
+syn_Administrador_9a0c,Administrador,113,ITEM,Catálogo de Permisos,3,0.7169
+syn_Administrador_9a0c,Administrador,114,ITEM,Administración avanzada,4,0.4714
+syn_Administrador_9a0c,Administrador,12,ITEM,Puntos de Venta,5,0.2627
+syn_Administrador_9a0c,Administrador,15,ITEM,Sucursales,6,0.161
+syn_Administrador_9a0c,Administrador,16,ITEM,Catálogo,7,0.0737
+syn_Administrador_9a0c,Administrador,17,ITEM,Atributos Catalogo,8,0.0547
+syn_Administrador_9a0c,Administrador,14,ITEM,Datos Clinicas,9,0.0754
+syn_Administrador_9a0c,Administrador,115,ITEM,Cambio de Clave,10,0.0
+syn_Administrador_9a0c,Administrador,13,ITEM,Atributos Puntos,11,0.0
+syn_Administrador_9a0c,Administrador,18,ITEM,Utilitarios XNO,12,0.0
+syn_Administrador_9a0c,Administrador,7,GRUPO,Caja,2,0.0818
+syn_Administrador_9a0c,Administrador,74,ITEM,Medio Pago,1,0.0814
+syn_Administrador_9a0c,Administrador,73,ITEM,Caja General,2,0.0001
+syn_Administrador_9a0c,Administrador,71,ITEM,Arqueo Caja,3,0.0001
+syn_Administrador_9a0c,Administrador,75,ITEM,Diferencia de costos,4,0.0
+syn_Administrador_9a0c,Administrador,76,ITEM,Gestión de cuentas,5,0.0
+syn_Administrador_9a0c,Administrador,72,ITEM,Caja Chica,6,0.0001
+syn_Administrador_9a0c,Administrador,3,GRUPO,Reportes,3,0.0624
+syn_Administrador_9a0c,Administrador,33,ITEM,Reporte de ventas,1,0.0565
+syn_Administrador_9a0c,Administrador,32,ITEM,Reporte de compras,2,0.0003
+syn_Administrador_9a0c,Administrador,34,ITEM,Reporte de cajas,3,0.0001
+syn_Administrador_9a0c,Administrador,36,ITEM,Stock valorizado,4,0.0
+syn_Administrador_9a0c,Administrador,35,ITEM,Kardex,5,0.0
+syn_Administrador_9a0c,Administrador,31,ITEM,Correlatividad,6,0.0054
+syn_Administrador_9a0c,Administrador,37,ITEM,Reporte descuento,7,0.0
+syn_Administrador_9a0c,Administrador,38,ITEM,Reporte anulados,8,0.0
+syn_Administrador_9a0c,Administrador,39,ITEM,Reporte nota de créditos,9,0.0
+syn_Administrador_9a0c,Administrador,310,ITEM,Reporte docs anulados,10,0.0
+syn_Administrador_9a0c,Administrador,4,GRUPO,Compra,4,0.0007
+syn_Administrador_9a0c,Administrador,46,ITEM,Estado de cuenta,1,0.0002
+syn_Administrador_9a0c,Administrador,43,ITEM,Intercambio de Productos,2,0.0
+syn_Administrador_9a0c,Administrador,41,ITEM,Orden de compra,3,0.0001
+syn_Administrador_9a0c,Administrador,42,ITEM,Registrar compra,4,0.0002
+syn_Administrador_9a0c,Administrador,44,ITEM,Proveedores,5,0.0002
+syn_Administrador_9a0c,Administrador,45,ITEM,Cuentas por pagar,6,0.0001
+syn_Administrador_9a0c,Administrador,8,GRUPO,Almacén,5,0.0004
+syn_Administrador_9a0c,Administrador,81,ITEM,Gestión Almacenes,1,0.0004
+syn_Administrador_9a0c,Administrador,82,ITEM,Productos,2,0.0
+syn_Administrador_9a0c,Administrador,5,GRUPO,Ventas,6,0.0002
+syn_Administrador_9a0c,Administrador,51,ITEM,Listado de Ventas,1,0.0
+syn_Administrador_9a0c,Administrador,52,ITEM,Cotización de venta,2,0.0
+syn_Administrador_9a0c,Administrador,54,ITEM,Registrar venta,3,0.0
+syn_Administrador_9a0c,Administrador,58,ITEM,Devoluciones,4,0.0
+syn_Administrador_9a0c,Administrador,56,ITEM,Notas de crédito,5,0.0001
+syn_Administrador_9a0c,Administrador,53,ITEM,Notas de venta,6,0.0
+syn_Administrador_9a0c,Administrador,591,ITEM,Gestión de Beneficios,7,0.0
+syn_Administrador_9a0c,Administrador,592,ITEM,Convenios,8,0.0
+syn_Administrador_9a0c,Administrador,55,ITEM,Anular comprobante,9,0.0
+syn_Administrador_9a0c,Administrador,57,ITEM,Clientes,10,0.0
+syn_Administrador_9a0c,Administrador,2,GRUPO,Procesos,7,0.0001
+syn_Administrador_9a0c,Administrador,26,ITEM,Transferencias,1,0.0001
+syn_Administrador_9a0c,Administrador,21,ITEM,Ingresos y salidas,2,0.0001
+syn_Administrador_9a0c,Administrador,22,ITEM,Atributos Diversos,3,0.0
+syn_Administrador_9a0c,Administrador,23,ITEM,Reimprimir comprobantes,4,0.0
+syn_Administrador_9a0c,Administrador,24,ITEM,Detalle de documentos,5,0.0
+syn_Administrador_9a0c,Administrador,25,ITEM,Documento por paciente,6,0.0
+syn_Administrador_9a0c,Administrador,27,ITEM,Solicitudes de Anulación,7,0.0
+syn_Administrador_9a0c,Administrador,6,GRUPO,Facturación,8,0.0
+syn_Administrador_9a0c,Administrador,61,ITEM,Comprobantes electrónicos,1,0.0
+syn_Administrador_9a0c,Administrador,62,ITEM,Resumen de boletas,2,0.0
+syn_Administrador_9a0c,Administrador,63,ITEM,Resumen de bajas,3,0.0
+syn_Administrador_9a0c,Administrador,9,GRUPO,Documentos,9,0.0
+syn_Administrador_9a0c,Administrador,94,ITEM,Formatos de Impresión,1,0.0
+syn_Administrador_9a0c,Administrador,93,ITEM,Puntos de Emisión,2,0.0
+syn_Administrador_9a0c,Administrador,91,ITEM,Plantillas,3,0.0
+syn_Administrador_9a0c,Administrador,92,ITEM,Bloques de plantillas,4,0.0
+syn_Caja_105a,Caja,7,GRUPO,Caja,1,3.353
+syn_Caja_105a,Caja,73,ITEM,Caja General,1,1.5466
+syn_Caja_105a,Caja,71,ITEM,Arqueo Caja,2,1.0978
+syn_Caja_105a,Caja,76,ITEM,Gestión de cuentas,3,0.3771
+syn_Caja_105a,Caja,72,ITEM,Caja Chica,4,0.1221
+syn_Caja_105a,Caja,74,ITEM,Medio Pago,5,0.0998
+syn_Caja_105a,Caja,75,ITEM,Diferencia de costos,6,0.1096
+syn_Caja_105a,Caja,3,GRUPO,Reportes,2,0.9273
+syn_Caja_105a,Caja,33,ITEM,Reporte de ventas,1,0.2034
+syn_Caja_105a,Caja,34,ITEM,Reporte de cajas,2,0.7221
+syn_Caja_105a,Caja,32,ITEM,Reporte de compras,3,0.0003
+syn_Caja_105a,Caja,35,ITEM,Kardex,4,0.0001
+syn_Caja_105a,Caja,36,ITEM,Stock valorizado,5,0.0001
+syn_Caja_105a,Caja,31,ITEM,Correlatividad,6,0.0007
+syn_Caja_105a,Caja,37,ITEM,Reporte descuento,7,0.0002
+syn_Caja_105a,Caja,38,ITEM,Reporte anulados,8,0.0002
+syn_Caja_105a,Caja,39,ITEM,Reporte nota de créditos,9,0.0001
+syn_Caja_105a,Caja,310,ITEM,Reporte docs anulados,10,0.0001
+syn_Caja_105a,Caja,5,GRUPO,Ventas,3,0.4088
+syn_Caja_105a,Caja,56,ITEM,Notas de crédito,1,0.4051
+syn_Caja_105a,Caja,51,ITEM,Listado de Ventas,2,0.0017
+syn_Caja_105a,Caja,52,ITEM,Cotización de venta,3,0.0007
+syn_Caja_105a,Caja,54,ITEM,Registrar venta,4,0.0005
+syn_Caja_105a,Caja,58,ITEM,Devoluciones,5,0.0002
+syn_Caja_105a,Caja,53,ITEM,Notas de venta,6,0.0001
+syn_Caja_105a,Caja,591,ITEM,Gestión de Beneficios,7,0.0003
+syn_Caja_105a,Caja,592,ITEM,Convenios,8,0.0002
+syn_Caja_105a,Caja,55,ITEM,Anular comprobante,9,0.0
+syn_Caja_105a,Caja,57,ITEM,Clientes,10,0.0
+syn_Caja_ac1c,Caja,7,GRUPO,Caja,1,3.146
+syn_Caja_ac1c,Caja,73,ITEM,Caja General,1,1.5636
+syn_Caja_ac1c,Caja,71,ITEM,Arqueo Caja,2,0.8283
+syn_Caja_ac1c,Caja,76,ITEM,Gestión de cuentas,3,0.4622
+syn_Caja_ac1c,Caja,72,ITEM,Caja Chica,4,0.1851
+syn_Caja_ac1c,Caja,74,ITEM,Medio Pago,5,0.0292
+syn_Caja_ac1c,Caja,75,ITEM,Diferencia de costos,6,0.0774
+syn_Caja_ac1c,Caja,3,GRUPO,Reportes,2,0.9083
+syn_Caja_ac1c,Caja,33,ITEM,Reporte de ventas,1,0.2438
+syn_Caja_ac1c,Caja,34,ITEM,Reporte de cajas,2,0.664
+syn_Caja_ac1c,Caja,32,ITEM,Reporte de compras,3,0.0
+syn_Caja_ac1c,Caja,35,ITEM,Kardex,4,0.0
+syn_Caja_ac1c,Caja,36,ITEM,Stock valorizado,5,0.0
+syn_Caja_ac1c,Caja,31,ITEM,Correlatividad,6,0.0001
+syn_Caja_ac1c,Caja,37,ITEM,Reporte descuento,7,0.0
+syn_Caja_ac1c,Caja,38,ITEM,Reporte anulados,8,0.0002
+syn_Caja_ac1c,Caja,39,ITEM,Reporte nota de créditos,9,0.0001
+syn_Caja_ac1c,Caja,310,ITEM,Reporte docs anulados,10,0.0
+syn_Caja_ac1c,Caja,5,GRUPO,Ventas,3,0.445
+syn_Caja_ac1c,Caja,56,ITEM,Notas de crédito,1,0.4431
+syn_Caja_ac1c,Caja,51,ITEM,Listado de Ventas,2,0.0012
+syn_Caja_ac1c,Caja,52,ITEM,Cotización de venta,3,0.0002
+syn_Caja_ac1c,Caja,54,ITEM,Registrar venta,4,0.0001
+syn_Caja_ac1c,Caja,58,ITEM,Devoluciones,5,0.0001
+syn_Caja_ac1c,Caja,53,ITEM,Notas de venta,6,0.0001
+syn_Caja_ac1c,Caja,591,ITEM,Gestión de Beneficios,7,0.0001
+syn_Caja_ac1c,Caja,592,ITEM,Convenios,8,0.0001
+syn_Caja_ac1c,Caja,55,ITEM,Anular comprobante,9,0.0
+syn_Caja_ac1c,Caja,57,ITEM,Clientes,10,0.0
+syn_Caja_d197,Caja,7,GRUPO,Caja,1,2.916
+syn_Caja_d197,Caja,73,ITEM,Caja General,1,1.2548
+syn_Caja_d197,Caja,71,ITEM,Arqueo Caja,2,0.838
+syn_Caja_d197,Caja,76,ITEM,Gestión de cuentas,3,0.4067
+syn_Caja_d197,Caja,72,ITEM,Caja Chica,4,0.1447
+syn_Caja_d197,Caja,74,ITEM,Medio Pago,5,0.1473
+syn_Caja_d197,Caja,75,ITEM,Diferencia de costos,6,0.1244
+syn_Caja_d197,Caja,3,GRUPO,Reportes,2,1.0307
+syn_Caja_d197,Caja,33,ITEM,Reporte de ventas,1,0.1721
+syn_Caja_d197,Caja,34,ITEM,Reporte de cajas,2,0.8576
+syn_Caja_d197,Caja,32,ITEM,Reporte de compras,3,0.0002
+syn_Caja_d197,Caja,35,ITEM,Kardex,4,0.0001
+syn_Caja_d197,Caja,36,ITEM,Stock valorizado,5,0.0001
+syn_Caja_d197,Caja,31,ITEM,Correlatividad,6,0.0002
+syn_Caja_d197,Caja,37,ITEM,Reporte descuento,7,0.0001
+syn_Caja_d197,Caja,38,ITEM,Reporte anulados,8,0.0003
+syn_Caja_d197,Caja,39,ITEM,Reporte nota de créditos,9,0.0001
+syn_Caja_d197,Caja,310,ITEM,Reporte docs anulados,10,0.0
+syn_Caja_d197,Caja,5,GRUPO,Ventas,3,0.3618
+syn_Caja_d197,Caja,56,ITEM,Notas de crédito,1,0.3605
+syn_Caja_d197,Caja,51,ITEM,Listado de Ventas,2,0.0011
+syn_Caja_d197,Caja,52,ITEM,Cotización de venta,3,0.0
+syn_Caja_d197,Caja,54,ITEM,Registrar venta,4,0.0
+syn_Caja_d197,Caja,58,ITEM,Devoluciones,5,0.0
+syn_Caja_d197,Caja,53,ITEM,Notas de venta,6,0.0
+syn_Caja_d197,Caja,591,ITEM,Gestión de Beneficios,7,0.0
+syn_Caja_d197,Caja,592,ITEM,Convenios,8,0.0
+syn_Caja_d197,Caja,55,ITEM,Anular comprobante,9,0.0
+syn_Caja_d197,Caja,57,ITEM,Clientes,10,0.0
+syn_Compras_9e03,Compras,4,GRUPO,Compra,1,3.6904
+syn_Compras_9e03,Compras,41,ITEM,Orden de compra,1,0.8841
+syn_Compras_9e03,Compras,42,ITEM,Registrar compra,2,0.6366
+syn_Compras_9e03,Compras,44,ITEM,Proveedores,3,0.6908
+syn_Compras_9e03,Compras,45,ITEM,Cuentas por pagar,4,0.7309
+syn_Compras_9e03,Compras,46,ITEM,Estado de cuenta,5,0.3804
+syn_Compras_9e03,Compras,43,ITEM,Intercambio de Productos,6,0.3675
+syn_Compras_9e03,Compras,3,GRUPO,Reportes,2,0.1118
+syn_Compras_9e03,Compras,32,ITEM,Reporte de compras,1,0.1053
+syn_Compras_9e03,Compras,33,ITEM,Reporte de ventas,2,0.0001
+syn_Compras_9e03,Compras,34,ITEM,Reporte de cajas,3,0.0002
+syn_Compras_9e03,Compras,35,ITEM,Kardex,4,0.0002
+syn_Compras_9e03,Compras,36,ITEM,Stock valorizado,5,0.0059
+syn_Compras_9e03,Compras,31,ITEM,Correlatividad,6,0.0001
+syn_Compras_9e03,Compras,37,ITEM,Reporte descuento,7,0.0
+syn_Compras_9e03,Compras,38,ITEM,Reporte anulados,8,0.0
+syn_Compras_9e03,Compras,39,ITEM,Reporte nota de créditos,9,0.0
+syn_Compras_9e03,Compras,310,ITEM,Reporte docs anulados,10,0.0
+syn_Compras_9e03,Compras,8,GRUPO,Almacén,3,0.0516
+syn_Compras_9e03,Compras,82,ITEM,Productos,1,0.0515
+syn_Compras_9e03,Compras,81,ITEM,Gestión Almacenes,2,0.0001
+syn_Compras_df03,Compras,4,GRUPO,Compra,1,4.0507
+syn_Compras_df03,Compras,41,ITEM,Orden de compra,1,1.1107
+syn_Compras_df03,Compras,42,ITEM,Registrar compra,2,0.7505
+syn_Compras_df03,Compras,44,ITEM,Proveedores,3,0.9813
+syn_Compras_df03,Compras,45,ITEM,Cuentas por pagar,4,0.5553
+syn_Compras_df03,Compras,46,ITEM,Estado de cuenta,5,0.4044
+syn_Compras_df03,Compras,43,ITEM,Intercambio de Productos,6,0.2486
+syn_Compras_df03,Compras,3,GRUPO,Reportes,2,0.1341
+syn_Compras_df03,Compras,32,ITEM,Reporte de compras,1,0.1281
+syn_Compras_df03,Compras,33,ITEM,Reporte de ventas,2,0.0002
+syn_Compras_df03,Compras,34,ITEM,Reporte de cajas,3,0.0001
+syn_Compras_df03,Compras,35,ITEM,Kardex,4,0.0001
+syn_Compras_df03,Compras,36,ITEM,Stock valorizado,5,0.0056
+syn_Compras_df03,Compras,31,ITEM,Correlatividad,6,0.0
+syn_Compras_df03,Compras,37,ITEM,Reporte descuento,7,0.0
+syn_Compras_df03,Compras,38,ITEM,Reporte anulados,8,0.0
+syn_Compras_df03,Compras,39,ITEM,Reporte nota de créditos,9,0.0
+syn_Compras_df03,Compras,310,ITEM,Reporte docs anulados,10,0.0
+syn_Compras_df03,Compras,8,GRUPO,Almacén,3,0.0513
+syn_Compras_df03,Compras,82,ITEM,Productos,1,0.0513
+syn_Compras_df03,Compras,81,ITEM,Gestión Almacenes,2,0.0
+syn_Compras_fb52,Compras,4,GRUPO,Compra,1,3.8133
+syn_Compras_fb52,Compras,41,ITEM,Orden de compra,1,0.8359
+syn_Compras_fb52,Compras,42,ITEM,Registrar compra,2,0.7234
+syn_Compras_fb52,Compras,44,ITEM,Proveedores,3,0.6719
+syn_Compras_fb52,Compras,45,ITEM,Cuentas por pagar,4,0.7865
+syn_Compras_fb52,Compras,46,ITEM,Estado de cuenta,5,0.547
+syn_Compras_fb52,Compras,43,ITEM,Intercambio de Productos,6,0.2486
+syn_Compras_fb52,Compras,3,GRUPO,Reportes,2,0.2053
+syn_Compras_fb52,Compras,32,ITEM,Reporte de compras,1,0.1995
+syn_Compras_fb52,Compras,33,ITEM,Reporte de ventas,2,0.0002
+syn_Compras_fb52,Compras,34,ITEM,Reporte de cajas,3,0.0001
+syn_Compras_fb52,Compras,35,ITEM,Kardex,4,0.0001
+syn_Compras_fb52,Compras,36,ITEM,Stock valorizado,5,0.0055
+syn_Compras_fb52,Compras,31,ITEM,Correlatividad,6,0.0
+syn_Compras_fb52,Compras,37,ITEM,Reporte descuento,7,0.0
+syn_Compras_fb52,Compras,38,ITEM,Reporte anulados,8,0.0
+syn_Compras_fb52,Compras,39,ITEM,Reporte nota de créditos,9,0.0
+syn_Compras_fb52,Compras,310,ITEM,Reporte docs anulados,10,0.0
+syn_Compras_fb52,Compras,8,GRUPO,Almacén,3,0.0989
+syn_Compras_fb52,Compras,82,ITEM,Productos,1,0.0988
+syn_Compras_fb52,Compras,81,ITEM,Gestión Almacenes,2,0.0
+syn_Logistica_0ca2,Logistica,3,GRUPO,Reportes,1,3.1722
+syn_Logistica_0ca2,Logistica,33,ITEM,Reporte de ventas,1,0.0013
+syn_Logistica_0ca2,Logistica,34,ITEM,Reporte de cajas,2,0.0002
+syn_Logistica_0ca2,Logistica,32,ITEM,Reporte de compras,3,0.1226
+syn_Logistica_0ca2,Logistica,35,ITEM,Kardex,4,1.5695
+syn_Logistica_0ca2,Logistica,31,ITEM,Correlatividad,5,0.0001
+syn_Logistica_0ca2,Logistica,36,ITEM,Stock valorizado,6,1.3567
+syn_Logistica_0ca2,Logistica,37,ITEM,Reporte descuento,7,0.1216
+syn_Logistica_0ca2,Logistica,38,ITEM,Reporte anulados,8,0.0001
+syn_Logistica_0ca2,Logistica,39,ITEM,Reporte nota de créditos,9,0.0
+syn_Logistica_0ca2,Logistica,310,ITEM,Reporte docs anulados,10,0.0001
+syn_Logistica_0ca2,Logistica,8,GRUPO,Almacén,2,1.7817
+syn_Logistica_0ca2,Logistica,81,ITEM,Gestión Almacenes,1,0.5928
+syn_Logistica_0ca2,Logistica,82,ITEM,Productos,2,1.1889
+syn_Logistica_0ca2,Logistica,2,GRUPO,Procesos,3,0.2326
+syn_Logistica_0ca2,Logistica,26,ITEM,Transferencias,1,0.1074
+syn_Logistica_0ca2,Logistica,21,ITEM,Ingresos y salidas,2,0.1252
+syn_Logistica_0ca2,Logistica,22,ITEM,Atributos Diversos,3,0.0
+syn_Logistica_0ca2,Logistica,23,ITEM,Reimprimir comprobantes,4,0.0
+syn_Logistica_0ca2,Logistica,24,ITEM,Detalle de documentos,5,0.0
+syn_Logistica_0ca2,Logistica,25,ITEM,Documento por paciente,6,0.0
+syn_Logistica_0ca2,Logistica,27,ITEM,Solicitudes de Anulación,7,0.0
+syn_Logistica_1d0a,Logistica,3,GRUPO,Reportes,1,3.5618
+syn_Logistica_1d0a,Logistica,33,ITEM,Reporte de ventas,1,0.0006
+syn_Logistica_1d0a,Logistica,34,ITEM,Reporte de cajas,2,0.0003
+syn_Logistica_1d0a,Logistica,32,ITEM,Reporte de compras,3,0.1483
+syn_Logistica_1d0a,Logistica,35,ITEM,Kardex,4,1.8536
+syn_Logistica_1d0a,Logistica,31,ITEM,Correlatividad,5,0.0001
+syn_Logistica_1d0a,Logistica,36,ITEM,Stock valorizado,6,1.4356
+syn_Logistica_1d0a,Logistica,37,ITEM,Reporte descuento,7,0.1228
+syn_Logistica_1d0a,Logistica,38,ITEM,Reporte anulados,8,0.0004
+syn_Logistica_1d0a,Logistica,39,ITEM,Reporte nota de créditos,9,0.0
+syn_Logistica_1d0a,Logistica,310,ITEM,Reporte docs anulados,10,0.0
+syn_Logistica_1d0a,Logistica,8,GRUPO,Almacén,2,1.7147
+syn_Logistica_1d0a,Logistica,81,ITEM,Gestión Almacenes,1,0.784
+syn_Logistica_1d0a,Logistica,82,ITEM,Productos,2,0.9308
+syn_Logistica_1d0a,Logistica,2,GRUPO,Procesos,3,0.4648
+syn_Logistica_1d0a,Logistica,26,ITEM,Transferencias,1,0.2196
+syn_Logistica_1d0a,Logistica,21,ITEM,Ingresos y salidas,2,0.2453
+syn_Logistica_1d0a,Logistica,22,ITEM,Atributos Diversos,3,0.0
+syn_Logistica_1d0a,Logistica,23,ITEM,Reimprimir comprobantes,4,0.0
+syn_Logistica_1d0a,Logistica,24,ITEM,Detalle de documentos,5,0.0
+syn_Logistica_1d0a,Logistica,25,ITEM,Documento por paciente,6,0.0
+syn_Logistica_1d0a,Logistica,27,ITEM,Solicitudes de Anulación,7,0.0
+syn_Logistica_2864,Logistica,3,GRUPO,Reportes,1,3.4217
+syn_Logistica_2864,Logistica,33,ITEM,Reporte de ventas,1,0.0005
+syn_Logistica_2864,Logistica,34,ITEM,Reporte de cajas,2,0.0003
+syn_Logistica_2864,Logistica,32,ITEM,Reporte de compras,3,0.1229
+syn_Logistica_2864,Logistica,36,ITEM,Stock valorizado,4,1.5146
+syn_Logistica_2864,Logistica,35,ITEM,Kardex,5,1.7323
+syn_Logistica_2864,Logistica,31,ITEM,Correlatividad,6,0.0001
+syn_Logistica_2864,Logistica,37,ITEM,Reporte descuento,7,0.0508
+syn_Logistica_2864,Logistica,38,ITEM,Reporte anulados,8,0.0002
+syn_Logistica_2864,Logistica,39,ITEM,Reporte nota de créditos,9,0.0
+syn_Logistica_2864,Logistica,310,ITEM,Reporte docs anulados,10,0.0
+syn_Logistica_2864,Logistica,8,GRUPO,Almacén,2,1.8101
+syn_Logistica_2864,Logistica,81,ITEM,Gestión Almacenes,1,0.7101
+syn_Logistica_2864,Logistica,82,ITEM,Productos,2,1.0999
+syn_Logistica_2864,Logistica,2,GRUPO,Procesos,3,0.2721
+syn_Logistica_2864,Logistica,26,ITEM,Transferencias,1,0.1474
+syn_Logistica_2864,Logistica,21,ITEM,Ingresos y salidas,2,0.1248
+syn_Logistica_2864,Logistica,22,ITEM,Atributos Diversos,3,0.0
+syn_Logistica_2864,Logistica,23,ITEM,Reimprimir comprobantes,4,0.0
+syn_Logistica_2864,Logistica,24,ITEM,Detalle de documentos,5,0.0
+syn_Logistica_2864,Logistica,25,ITEM,Documento por paciente,6,0.0
+syn_Logistica_2864,Logistica,27,ITEM,Solicitudes de Anulación,7,0.0
+syn_Reportes_69a4,Reportes,3,GRUPO,Reportes,1,3.6948
+syn_Reportes_69a4,Reportes,33,ITEM,Reporte de ventas,1,0.7805
+syn_Reportes_69a4,Reportes,32,ITEM,Reporte de compras,2,0.909
+syn_Reportes_69a4,Reportes,34,ITEM,Reporte de cajas,3,0.7763
+syn_Reportes_69a4,Reportes,36,ITEM,Stock valorizado,4,0.303
+syn_Reportes_69a4,Reportes,31,ITEM,Correlatividad,5,0.2011
+syn_Reportes_69a4,Reportes,35,ITEM,Kardex,6,0.4834
+syn_Reportes_69a4,Reportes,37,ITEM,Reporte descuento,7,0.0625
+syn_Reportes_69a4,Reportes,38,ITEM,Reporte anulados,8,0.0601
+syn_Reportes_69a4,Reportes,39,ITEM,Reporte nota de créditos,9,0.1178
+syn_Reportes_69a4,Reportes,310,ITEM,Reporte docs anulados,10,0.0011
+syn_Reportes_69a4,Reportes,8,GRUPO,Almacén,2,0.0021
+syn_Reportes_69a4,Reportes,81,ITEM,Gestión Almacenes,1,0.0013
+syn_Reportes_69a4,Reportes,82,ITEM,Productos,2,0.0008
+syn_Reportes_69a4,Reportes,5,GRUPO,Ventas,3,0.002
+syn_Reportes_69a4,Reportes,51,ITEM,Listado de Ventas,1,0.0013
+syn_Reportes_69a4,Reportes,52,ITEM,Cotización de venta,2,0.0001
+syn_Reportes_69a4,Reportes,54,ITEM,Registrar venta,3,0.0001
+syn_Reportes_69a4,Reportes,58,ITEM,Devoluciones,4,0.0
+syn_Reportes_69a4,Reportes,56,ITEM,Notas de crédito,5,0.0003
+syn_Reportes_69a4,Reportes,53,ITEM,Notas de venta,6,0.0
+syn_Reportes_69a4,Reportes,591,ITEM,Gestión de Beneficios,7,0.0001
+syn_Reportes_69a4,Reportes,592,ITEM,Convenios,8,0.0
+syn_Reportes_69a4,Reportes,55,ITEM,Anular comprobante,9,0.0
+syn_Reportes_69a4,Reportes,57,ITEM,Clientes,10,0.0
+syn_Reportes_69a4,Reportes,4,GRUPO,Compra,4,0.0011
+syn_Reportes_69a4,Reportes,46,ITEM,Estado de cuenta,1,0.0001
+syn_Reportes_69a4,Reportes,43,ITEM,Intercambio de Productos,2,0.0004
+syn_Reportes_69a4,Reportes,41,ITEM,Orden de compra,3,0.0002
+syn_Reportes_69a4,Reportes,42,ITEM,Registrar compra,4,0.0001
+syn_Reportes_69a4,Reportes,44,ITEM,Proveedores,5,0.0002
+syn_Reportes_69a4,Reportes,45,ITEM,Cuentas por pagar,6,0.0001
+syn_Reportes_f207,Reportes,3,GRUPO,Reportes,1,3.5848
+syn_Reportes_f207,Reportes,33,ITEM,Reporte de ventas,1,0.9089
+syn_Reportes_f207,Reportes,32,ITEM,Reporte de compras,2,0.8661
+syn_Reportes_f207,Reportes,34,ITEM,Reporte de cajas,3,0.618
+syn_Reportes_f207,Reportes,35,ITEM,Kardex,4,0.3845
+syn_Reportes_f207,Reportes,31,ITEM,Correlatividad,5,0.1808
+syn_Reportes_f207,Reportes,36,ITEM,Stock valorizado,6,0.3554
+syn_Reportes_f207,Reportes,37,ITEM,Reporte descuento,7,0.1042
+syn_Reportes_f207,Reportes,38,ITEM,Reporte anulados,8,0.0645
+syn_Reportes_f207,Reportes,39,ITEM,Reporte nota de créditos,9,0.1018
+syn_Reportes_f207,Reportes,310,ITEM,Reporte docs anulados,10,0.0006
+syn_Reportes_f207,Reportes,8,GRUPO,Almacén,2,0.0031
+syn_Reportes_f207,Reportes,81,ITEM,Gestión Almacenes,1,0.0013
+syn_Reportes_f207,Reportes,82,ITEM,Productos,2,0.0018
+syn_Reportes_f207,Reportes,5,GRUPO,Ventas,3,0.0021
+syn_Reportes_f207,Reportes,51,ITEM,Listado de Ventas,1,0.0015
+syn_Reportes_f207,Reportes,52,ITEM,Cotización de venta,2,0.0002
+syn_Reportes_f207,Reportes,54,ITEM,Registrar venta,3,0.0002
+syn_Reportes_f207,Reportes,58,ITEM,Devoluciones,4,0.0001
+syn_Reportes_f207,Reportes,56,ITEM,Notas de crédito,5,0.0
+syn_Reportes_f207,Reportes,53,ITEM,Notas de venta,6,0.0
+syn_Reportes_f207,Reportes,591,ITEM,Gestión de Beneficios,7,0.0
+syn_Reportes_f207,Reportes,592,ITEM,Convenios,8,0.0
+syn_Reportes_f207,Reportes,55,ITEM,Anular comprobante,9,0.0
+syn_Reportes_f207,Reportes,57,ITEM,Clientes,10,0.0
+syn_Reportes_f207,Reportes,4,GRUPO,Compra,4,0.0011
+syn_Reportes_f207,Reportes,46,ITEM,Estado de cuenta,1,0.0001
+syn_Reportes_f207,Reportes,43,ITEM,Intercambio de Productos,2,0.0003
+syn_Reportes_f207,Reportes,41,ITEM,Orden de compra,3,0.0002
+syn_Reportes_f207,Reportes,42,ITEM,Registrar compra,4,0.0001
+syn_Reportes_f207,Reportes,44,ITEM,Proveedores,5,0.0003
+syn_Reportes_f207,Reportes,45,ITEM,Cuentas por pagar,6,0.0002
+syn_Ventas_4aed,Ventas,5,GRUPO,Ventas,1,4.2392
+syn_Ventas_4aed,Ventas,51,ITEM,Listado de Ventas,1,1.3017
+syn_Ventas_4aed,Ventas,52,ITEM,Cotización de venta,2,1.0656
+syn_Ventas_4aed,Ventas,54,ITEM,Registrar venta,3,0.7808
+syn_Ventas_4aed,Ventas,56,ITEM,Notas de crédito,4,0.1873
+syn_Ventas_4aed,Ventas,58,ITEM,Devoluciones,5,0.6283
+syn_Ventas_4aed,Ventas,53,ITEM,Notas de venta,6,0.0987
+syn_Ventas_4aed,Ventas,591,ITEM,Gestión de Beneficios,7,0.0777
+syn_Ventas_4aed,Ventas,592,ITEM,Convenios,8,0.0992
+syn_Ventas_4aed,Ventas,55,ITEM,Anular comprobante,9,0.0
+syn_Ventas_4aed,Ventas,57,ITEM,Clientes,10,0.0
+syn_Ventas_4aed,Ventas,3,GRUPO,Reportes,2,0.0368
+syn_Ventas_4aed,Ventas,33,ITEM,Reporte de ventas,1,0.0353
+syn_Ventas_4aed,Ventas,32,ITEM,Reporte de compras,2,0.0003
+syn_Ventas_4aed,Ventas,34,ITEM,Reporte de cajas,3,0.0003
+syn_Ventas_4aed,Ventas,36,ITEM,Stock valorizado,4,0.0001
+syn_Ventas_4aed,Ventas,35,ITEM,Kardex,5,0.0002
+syn_Ventas_4aed,Ventas,31,ITEM,Correlatividad,6,0.0
+syn_Ventas_4aed,Ventas,37,ITEM,Reporte descuento,7,0.0004
+syn_Ventas_4aed,Ventas,38,ITEM,Reporte anulados,8,0.0001
+syn_Ventas_4aed,Ventas,39,ITEM,Reporte nota de créditos,9,0.0001
+syn_Ventas_4aed,Ventas,310,ITEM,Reporte docs anulados,10,0.0001
+syn_Ventas_4aed,Ventas,8,GRUPO,Almacén,3,0.0081
+syn_Ventas_4aed,Ventas,81,ITEM,Gestión Almacenes,1,0.0002
+syn_Ventas_4aed,Ventas,82,ITEM,Productos,2,0.008
+syn_Ventas_6a40,Ventas,5,GRUPO,Ventas,1,4.8188
+syn_Ventas_6a40,Ventas,51,ITEM,Listado de Ventas,1,1.1047
+syn_Ventas_6a40,Ventas,52,ITEM,Cotización de venta,2,1.5375
+syn_Ventas_6a40,Ventas,54,ITEM,Registrar venta,3,0.9993
+syn_Ventas_6a40,Ventas,56,ITEM,Notas de crédito,4,0.2208
+syn_Ventas_6a40,Ventas,58,ITEM,Devoluciones,5,0.7252
+syn_Ventas_6a40,Ventas,53,ITEM,Notas de venta,6,0.147
+syn_Ventas_6a40,Ventas,591,ITEM,Gestión de Beneficios,7,0.0779
+syn_Ventas_6a40,Ventas,592,ITEM,Convenios,8,0.0063
+syn_Ventas_6a40,Ventas,55,ITEM,Anular comprobante,9,0.0
+syn_Ventas_6a40,Ventas,57,ITEM,Clientes,10,0.0
+syn_Ventas_6a40,Ventas,3,GRUPO,Reportes,2,0.107
+syn_Ventas_6a40,Ventas,33,ITEM,Reporte de ventas,1,0.106
+syn_Ventas_6a40,Ventas,32,ITEM,Reporte de compras,2,0.0002
+syn_Ventas_6a40,Ventas,34,ITEM,Reporte de cajas,3,0.0001
+syn_Ventas_6a40,Ventas,36,ITEM,Stock valorizado,4,0.0001
+syn_Ventas_6a40,Ventas,35,ITEM,Kardex,5,0.0001
+syn_Ventas_6a40,Ventas,31,ITEM,Correlatividad,6,0.0
+syn_Ventas_6a40,Ventas,37,ITEM,Reporte descuento,7,0.0003
+syn_Ventas_6a40,Ventas,38,ITEM,Reporte anulados,8,0.0
+syn_Ventas_6a40,Ventas,39,ITEM,Reporte nota de créditos,9,0.0
+syn_Ventas_6a40,Ventas,310,ITEM,Reporte docs anulados,10,0.0
+syn_Ventas_6a40,Ventas,8,GRUPO,Almacén,3,0.0071
+syn_Ventas_6a40,Ventas,81,ITEM,Gestión Almacenes,1,0.0002
+syn_Ventas_6a40,Ventas,82,ITEM,Productos,2,0.0069
+syn_Ventas_a940,Ventas,5,GRUPO,Ventas,1,4.6036
+syn_Ventas_a940,Ventas,51,ITEM,Listado de Ventas,1,1.1729
+syn_Ventas_a940,Ventas,52,ITEM,Cotización de venta,2,1.0545
+syn_Ventas_a940,Ventas,54,ITEM,Registrar venta,3,0.9314
+syn_Ventas_a940,Ventas,56,ITEM,Notas de crédito,4,0.2951
+syn_Ventas_a940,Ventas,58,ITEM,Devoluciones,5,0.8224
+syn_Ventas_a940,Ventas,53,ITEM,Notas de venta,6,0.0991
+syn_Ventas_a940,Ventas,591,ITEM,Gestión de Beneficios,7,0.1274
+syn_Ventas_a940,Ventas,592,ITEM,Convenios,8,0.1009
+syn_Ventas_a940,Ventas,55,ITEM,Anular comprobante,9,0.0
+syn_Ventas_a940,Ventas,57,ITEM,Clientes,10,0.0
+syn_Ventas_a940,Ventas,3,GRUPO,Reportes,2,0.012
+syn_Ventas_a940,Ventas,33,ITEM,Reporte de ventas,1,0.0112
+syn_Ventas_a940,Ventas,32,ITEM,Reporte de compras,2,0.0001
+syn_Ventas_a940,Ventas,34,ITEM,Reporte de cajas,3,0.0002
+syn_Ventas_a940,Ventas,35,ITEM,Kardex,4,0.0001
+syn_Ventas_a940,Ventas,36,ITEM,Stock valorizado,5,0.0
+syn_Ventas_a940,Ventas,31,ITEM,Correlatividad,6,0.0
+syn_Ventas_a940,Ventas,37,ITEM,Reporte descuento,7,0.0003
+syn_Ventas_a940,Ventas,38,ITEM,Reporte anulados,8,0.0001
+syn_Ventas_a940,Ventas,39,ITEM,Reporte nota de créditos,9,0.0
+syn_Ventas_a940,Ventas,310,ITEM,Reporte docs anulados,10,0.0
+syn_Ventas_a940,Ventas,8,GRUPO,Almacén,3,0.0063
+syn_Ventas_a940,Ventas,81,ITEM,Gestión Almacenes,1,0.0001
+syn_Ventas_a940,Ventas,82,ITEM,Productos,2,0.0062
+syn_Ventas_e0e2,Ventas,5,GRUPO,Ventas,1,4.7249
+syn_Ventas_e0e2,Ventas,51,ITEM,Listado de Ventas,1,1.3237
+syn_Ventas_e0e2,Ventas,52,ITEM,Cotización de venta,2,1.0576
+syn_Ventas_e0e2,Ventas,54,ITEM,Registrar venta,3,1.0316
+syn_Ventas_e0e2,Ventas,56,ITEM,Notas de crédito,4,0.173
+syn_Ventas_e0e2,Ventas,58,ITEM,Devoluciones,5,0.7723
+syn_Ventas_e0e2,Ventas,53,ITEM,Notas de venta,6,0.1616
+syn_Ventas_e0e2,Ventas,591,ITEM,Gestión de Beneficios,7,0.0517
+syn_Ventas_e0e2,Ventas,592,ITEM,Convenios,8,0.1532
+syn_Ventas_e0e2,Ventas,55,ITEM,Anular comprobante,9,0.0
+syn_Ventas_e0e2,Ventas,57,ITEM,Clientes,10,0.0
+syn_Ventas_e0e2,Ventas,3,GRUPO,Reportes,2,0.0356
+syn_Ventas_e0e2,Ventas,33,ITEM,Reporte de ventas,1,0.0349
+syn_Ventas_e0e2,Ventas,32,ITEM,Reporte de compras,2,0.0
+syn_Ventas_e0e2,Ventas,34,ITEM,Reporte de cajas,3,0.0001
+syn_Ventas_e0e2,Ventas,36,ITEM,Stock valorizado,4,0.0001
+syn_Ventas_e0e2,Ventas,35,ITEM,Kardex,5,0.0001
+syn_Ventas_e0e2,Ventas,31,ITEM,Correlatividad,6,0.0
+syn_Ventas_e0e2,Ventas,37,ITEM,Reporte descuento,7,0.0002
+syn_Ventas_e0e2,Ventas,38,ITEM,Reporte anulados,8,0.0
+syn_Ventas_e0e2,Ventas,39,ITEM,Reporte nota de créditos,9,0.0
+syn_Ventas_e0e2,Ventas,310,ITEM,Reporte docs anulados,10,0.0001
+syn_Ventas_e0e2,Ventas,8,GRUPO,Almacén,3,0.0063
+syn_Ventas_e0e2,Ventas,81,ITEM,Gestión Almacenes,1,0.0002
+syn_Ventas_e0e2,Ventas,82,ITEM,Productos,2,0.0061

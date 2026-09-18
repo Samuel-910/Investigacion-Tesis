@@ -1,0 +1,46 @@
+{
+  "oe1_completado": true,
+  "fecha_ejecucion": "2026-09-11T13:33:28.954100",
+  "corpus": {
+    "total_eventos": 87465,
+    "total_sesiones": 1206,
+    "total_usuarios": 8,
+    "roles": [
+      "Administrador",
+      "Ventas",
+      "Compras",
+      "Almacen"
+    ],
+    "periodo": {
+      "inicio": "2026-01-01",
+      "fin": "2026-04-02"
+    }
+  },
+  "metricas_baseline": {
+    "M1_clics_prom": 2.978,
+    "M2_tiempo_s_prom": 302.286,
+    "M3_error_prom": 0.2888,
+    "por_rol": {
+      "Administrador": {
+        "M1": 2.996,
+        "M2": 458.167,
+        "M3": 0.314
+      },
+      "Almacen": {
+        "M1": 3.0,
+        "M2": 390.557,
+        "M3": 0.249
+      },
+      "Compras": {
+        "M1": 2.903,
+        "M2": 313.582,
+        "M3": 0.263
+      },
+      "Ventas": {
+        "M1": 3.0,
+        "M2": 90.738,
+        "M3": 0.347
+      }
+    }
+  }
+}

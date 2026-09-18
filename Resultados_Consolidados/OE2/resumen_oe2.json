@@ -1,0 +1,10 @@
+{
+  "oe2_completado": true,
+  "fecha": "2026-06-15T10:44:25.607354",
+  "modelo_secuencial": "GRU",
+  "gru_acc_top1": 0.3838,
+  "tf_acc_top1": 0.3543,
+  "gru_acc_top3": 0.7294,
+  "tf_acc_top3": 0.7101,
+  "nota": "Score compuesto listo. El agente DQN de reestructuracion esta en OE3."
+}

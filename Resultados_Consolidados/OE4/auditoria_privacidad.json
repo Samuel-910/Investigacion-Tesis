@@ -1,0 +1,25 @@
+{
+  "verificaciones": [
+    {
+      "nombre": "Anonimizacion SHA-256 de user_ids",
+      "ok": false,
+      "detalle": "11/28 perfiles anonimizados"
+    },
+    {
+      "nombre": "Sin referencias externas en outputs",
+      "ok": true,
+      "detalle": "Sin referencias externas"
+    },
+    {
+      "nombre": "Almacenamiento en rutas locales",
+      "ok": true,
+      "detalle": "Todos los datos en disco local"
+    },
+    {
+      "nombre": "Sin conexiones de red del proceso",
+      "ok": true,
+      "detalle": "0 conexiones activas"
+    }
+  ],
+  "cumple": false
+}

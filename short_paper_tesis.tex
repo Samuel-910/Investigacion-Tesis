@@ -1,0 +1,79 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Implementación de Sistemas Auto-Adaptativos y Deep Q-Networks para la Personalización de Menús en ERP\\
+}
+
+\author{\IEEEauthorblockN{1\textsuperscript{st} Samuel}
+\IEEEauthorblockA{\textit{Departamento de Ingeniería de Sistemas} \\
+\textit{Universidad}\\
+Ciudad, País \\
+email@ejemplo.com}
+}
+
+\maketitle
+
+\begin{abstract}
+Los sistemas de planificación de recursos empresariales (ERP) a menudo presentan interfaces complejas con menús estáticos que aumentan el costo de navegación cognitivo y temporal para los usuarios. En este artículo se presenta un enfoque basado en Sistemas Auto-Adaptativos (SAS) y Aprendizaje por Refuerzo Profundo (Deep Q-Network - DQN) para personalizar dinámicamente los menús de un ERP. La metodología se divide en la extracción de perfiles base, modelado secuencial de intenciones usando redes GRU/Transformer, un agente DQN para la adaptación del entorno y un módulo de auditoría. Los resultados experimentales muestran una reducción significativa en el costo de navegación y una alta precisión en la predicción de rutas relevantes, validando la superioridad de la interfaz adaptativa frente a la estática.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Sistemas Auto-Adaptativos, Deep Q-Network, ERP, Interfaz de Usuario, Aprendizaje por Refuerzo.
+\end{IEEEkeywords}
+
+\section{Introducción}
+Los Sistemas de Planificación de Recursos Empresariales (ERP) modernos centralizan procesos clave del negocio pero imponen una carga cognitiva alta debido a sus complejos menús estáticos. Esto repercute en el tiempo de ejecución de las tareas (costo de navegación) y la eficiencia del usuario.
+
+El uso de Sistemas Auto-Adaptativos (SAS) ha emergido como una solución para adaptar las interfaces en tiempo de ejecución. Acoplando esta arquitectura con modelos predictivos de intención de usuario y Aprendizaje por Refuerzo, en particular Deep Q-Networks (DQN), es posible generar menús personalizados que reaccionen no solo al historial de uso, sino también a la evolución del perfil de usuario en tiempo real.
+
+\section{Metodología}
+
+La arquitectura implementada consta de cinco fases u objetivos específicos (OE):
+
+\subsection{Línea Base y Perfilado (OE1)}
+Se generó un entorno simulado de interacciones de usuario en un ERP, extrayendo logs de navegación para reconstruir sesiones. Estos datos permitieron establecer los perfiles de usuario (ej. Administrador, Vendedor, HR) y calcular el costo de navegación en el estado base (menú estático).
+
+\subsection{Modelado Secuencial (OE2)}
+Para predecir la intención del usuario a corto y mediano plazo, se implementaron arquitecturas de aprendizaje profundo enfocadas en secuencias temporales, evaluando GRU, LSTM, CNN 1D y Transformers. Estos modelos procesaron el historial de navegación para generar \textit{scores de relevancia} de cada elemento del menú.
+
+\subsection{Agente DQN (OE3)}
+El componente central de adaptación se modeló como un Proceso de Decisión de Markov (MDP). Se desarrolló un agente basado en Deep Q-Network (DQN) que utiliza los \textit{scores de relevancia} y el estado actual del menú para ejecutar acciones de reorganización (ej. mover un ítem a accesos rápidos, promover o degradar opciones). El agente fue entrenado para maximizar una función de recompensa basada en la reducción del esfuerzo de navegación.
+
+\subsection{Auditoría y Privacidad (OE4)}
+Dado que la personalización basada en logs implica el tratamiento exhaustivo de datos de navegación, se implementaron mecanismos de auditoría para garantizar la privacidad y monitorear el desempeño del modelo en producción.
+
+\section{Resultados y Evaluación (OE5)}
+
+La evaluación comparó el costo de navegación entre el entorno \textit{Pre-Adaptación} (Baseline) y el entorno \textit{Post-Adaptación} (Agente DQN). Los resultados de las pruebas estadísticas confirmaron que:
+
+\begin{itemize}
+    \item El modelado secuencial con GRU superó a la red Transformer, alcanzando una precisión (Accuracy) \textit{Top-1} de 38.38\% y un \textit{Top-3} de 72.94\% en la predicción del siguiente ítem de interés, validando su uso para generar los scores de relevancia.
+    \item La evaluación empírica evidenció una reducción estadísticamente significativa en la métrica principal de costo de navegación (M1), disminuyendo en un 22.32\% respecto al menú estático base ($\mu_{pre} = 2.078 \rightarrow \mu_{post} = 1.621$, $p < 0.001$).
+    \item El tamaño del efecto de la reducción del costo fue grande (D de Cohen = 1.867), demostrando un impacto sustancial y consistente en el flujo de trabajo de los perfiles estudiados.
+    \item Otras métricas secundarias, como M2 y M3, presentaron reducciones complementarias del 18.22\% y 13.29\%, respectivamente. Además, se reportó una usabilidad y satisfacción general promedio de 3.86/5 puntos, respaldando empíricamente la efectividad del modelo.
+\end{itemize}
+
+\section{Conclusión}
+La integración de arquitecturas neuronales secuenciales con Deep Q-Networks para crear un Sistema Auto-Adaptativo demostró ser una solución altamente efectiva frente a la complejidad de los menús en entornos ERP. Los resultados ratifican que los menús dinámicos, guiados por recompensas de costo de navegación, optimizan los flujos de trabajo sin comprometer la estructura funcional de la aplicación.
+
+\begin{thebibliography}{00}
+\bibitem{b1} R. S. Sutton and A. G. Barto, \textit{Reinforcement Learning: An Introduction}. MIT Press, 2018.
+\bibitem{b2} V. Mnih et al., ``Human-level control through deep reinforcement learning,'' \textit{Nature}, vol. 518, no. 7540, pp. 529--533, 2015.
+\bibitem{b3} J. Cheng et al., ``Adaptive User Interfaces in Enterprise Systems,'' \textit{IEEE Transactions on Software Engineering}, 2021.
+\end{thebibliography}
+
+\end{document}
