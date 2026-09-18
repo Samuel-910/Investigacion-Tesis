@@ -1,0 +1,224 @@
+/* Importar el CSS base de la librería */
+@import 'grapesjs/dist/css/grapes.min.css';
+
+#gjs {
+  border: 3px solid #444;
+  height: calc(100vh - 80px) !important; /* Ajusta según el header */
+  overflow: hidden;
+}
+
+.change-theme-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 5px;
+}
+
+.change-theme-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2pt #c5c5c575;
+}
+
+/* Configurar el contenedor de bloques para 2 columnas */
+.gjs-blocks-c {
+  /* No forzamos display flex aquí para no romper el abrir/cerrar de GrapesJS */
+  padding: 5px !important;
+}
+
+/* Ajustar los bloques para que ocupen media columna */
+.gjs-block {
+  width: calc(50% - 13px) !important; /* 2 columnas con márgenes */
+  min-height: 60px !important;
+  margin: 4px !important;
+  float: left; /* Usamos float para que fluyan en 2 columnas sin romper el contenedor */
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-size: 11px !important;
+}
+
+.gjs-block svg {
+  width: 50% !important;
+  margin-bottom: 5px;
+}
+
+/* Estilos para jerarquía de VARIABLES */
+
+/* Header principal inyectado por CSS antes de la primera subcategoría */
+.gjs-block-category[data-is-variable='true'][data-first-variable='true']::before {
+  content: 'VARIABLES';
+  display: block;
+  padding: 15px 10px 5px 10px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #3b82f6;
+  letter-spacing: 1px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Sub-categorías de variables (identificadas por el atributo) */
+.gjs-block-category[data-is-variable='true'] .gjs-title {
+  padding-left: 30px !important; /* Indentación */
+  font-size: 13px !important;
+  background-color: rgba(255, 255, 255, 0.02) !important;
+  border-left: 3px solid #3b82f6 !important;
+  margin-left: 5px;
+}
+
+/* Ocultamos el icono para cualquier bloque dentro de variables */
+.gjs-block-category[data-is-variable='true'] .gjs-block svg {
+  display: none !important;
+}
+
+.gjs-block-category[data-is-variable='true'] .gjs-block {
+  min-height: 30px !important;
+  width: calc(100% - 15px) !important;
+  padding: 4px 10px !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  margin-left: 10px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.gjs-block-category {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gjs-title {
+  color: #eee !important;
+  background-color: transparent !important;
+  font-weight: 600 !important;
+  padding: 12px 10px !important;
+}
+
+.gjs-caret-icon {
+  margin-right: 8px;
+}
+#gjs .gjs-pn-devices-c select {
+  background-color: #333 !important;
+  color: #fff !important;
+  border: 1px solid #555 !important;
+  padding: 2px 5px !important;
+  height: 30px !important;
+  font-size: 14px !important;
+  width: auto !important;
+  min-width: 150px !important;
+  display: none !important;
+}
+
+#gjs .gjs-pn-devices-c {
+  display: none !important;
+  align-items: center !important;
+  height: 40px !important;
+  overflow: hidden !important;
+  box-shadow: none !important;
+}
+
+#gjs .gjs-pn-devices-c .gjs-pn-label {
+  white-space: nowrap !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin: 0 10px 0 0 !important;
+}
+
+::ng-deep .gjs-cv-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  top: 0 !important;
+  overflow: auto !important;
+  background-color: #0f172a !important;
+  /* Centrado del frame */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  padding: 50px !important;
+  box-sizing: border-box !important;
+}
+
+::ng-deep .gjs-frame {
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid #334155 !important;
+  background-color: white !important;
+  flex-shrink: 0 !important; /* No encoger el frame */
+}
+
+/* Añade un espacio al final para que el scroll no quede pegado al borde */
+::ng-deep .gjs-editor-cont {
+  padding-bottom: 50px !important;
+}
+
+/* Variables Dinámicas */
+.variable-token {
+  background-color: #e0f2fe; /* Azul claro / Sky 100 */
+  border: 1px dashed #0ea5e9; /* Sky 500 */
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #0369a1; /* Sky 700 */
+  font-weight: bold;
+  cursor: grab;
+  display: inline-block;
+  font-family: monospace;
+  font-size: 0.85em;
+  user-select: none;
+}
+
+.variable-token:hover {
+  background-color: #bae6fd; /* Sky 200 */
+  border-color: #0284c7; /* Sky 600 */
+}
+
+/* --- Feedback Visual para Tablas --- */
+
+/* Resaltar la celda cuando algo está pasando por encima (selector nativo de GrapesJS para drop target) */
+::ng-deep .gjs-drop-target {
+    outline: 2px solid #4caf50 !important;
+    outline-offset: -2px !important;
+    background-color: rgba(76, 175, 80, 0.1) !important;
+}
+
+/* Forzar cursor de "celda/añadir" cuando estamos sobre un target de drop */
+::ng-deep .gjs-drop-target {
+    cursor: cell !important;
+}
+
+/* Resaltado cuando el ratón pasa por encima sin arrastrar */
+::ng-deep .cell-pro.gjs-hovered, 
+::ng-deep .cell-content.gjs-hovered {
+    background-color: rgba(33, 150, 243, 0.1) !important;
+    outline: 2px dashed #3b82f6 !important;
+    outline-offset: -2px !important;
+}
+
+/* Variable Token Cursor */
+.variable-token {
+    cursor: grab !important;
+}
+.variable-token:active {
+    cursor: grabbing !important;
+}
+
+/* Filas Iterativas (Datos Dinámicos) */
+[data-iterativa='true'] {
+  outline: 2px dashed #3b82f6 !important;
+  outline-offset: -2px;
+  position: relative;
+  background-color: rgba(59, 130, 246, 0.05) !important;
+}
+
+[data-iterativa='true']::after {
+  content: 'FILA ITERATIVA (SE REPITE)';
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  background: #3b82f6;
+  color: white;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  z-index: 10;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+}

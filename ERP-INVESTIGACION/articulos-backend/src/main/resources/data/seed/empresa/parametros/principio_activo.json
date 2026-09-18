@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "descripcion": "ACEITE DE HIGADO DE BACALAO 525MG",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.478308",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.478308",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 2,
+    "descripcion": "ACETAMINOFEN 500MG",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.480425",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.480425",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 3,
+    "descripcion": "ACETATO DE MEDROXIPROGESTERONA",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.481946",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.481946",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 4,
+    "descripcion": "ACETILCISTEINA 100 MG/5ML",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.482952",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.482952",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 5,
+    "descripcion": "ACETILCISTEINA 200 MG",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.482952",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.482952",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 6,
+    "descripcion": "ACETILCISTEINA 600MG",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.48395",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.48395",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 7,
+    "descripcion": "ACICLOVIR 5% CREMA",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.484955",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.484955",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 8,
+    "descripcion": "ACICLOVIR 200MG TABLETAS",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.485951",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.485951",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 9,
+    "descripcion": "ACICLOVIR 400 MG TABLETAS",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.486458",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.486458",
+    "usuarioModificacion": null
+  }
+]

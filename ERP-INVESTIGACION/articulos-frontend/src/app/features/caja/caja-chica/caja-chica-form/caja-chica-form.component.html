@@ -1,0 +1,57 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-5 p-1">
+    <div class="space-y-4">
+        <!-- Monto -->
+        <div class="space-y-1.5">
+            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Monto (S/)</label>
+            <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold">S/</span>
+                <input type="number" formControlName="monto" step="0.01"
+                    class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-slate-900 dark:text-white"
+                    placeholder="0.00">
+            </div>
+            <p *ngIf="form.get('monto')?.touched && form.get('monto')?.invalid"
+                class="text-xs text-rose-500 font-medium">
+                El monto es requerido y debe ser mayor a 0
+            </p>
+        </div>
+
+        <!-- Método de Pago -->
+        <div class="space-y-1.5">
+            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Método de Pago</label>
+            <select formControlName="metodoPago"
+                class="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-slate-900 dark:text-white">
+                <option *ngFor="let metodo of metodosPago()" [value]="metodo">{{ metodo | titlecase }}</option>
+            </select>
+        </div>
+
+        <!-- Descripción -->
+        <div class="space-y-1.5">
+            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Descripción / Motivo</label>
+            <textarea formControlName="descripcion" rows="3"
+                class="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-slate-900 dark:text-white resize-none"
+                placeholder="Ejemplo: Compra de útiles de limpieza, Pasajes, etc."></textarea>
+            <p *ngIf="form.get('descripcion')?.touched && form.get('descripcion')?.invalid"
+                class="text-xs text-rose-500 font-medium">
+                Debe ingresar una descripción válida (mínimo 5 caracteres)
+            </p>
+        </div>
+
+        <!-- Referecia -->
+        <div class="space-y-1.5">
+            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Referencia (Opcional)</label>
+            <input type="text" formControlName="referencia"
+                class="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-slate-900 dark:text-white"
+                placeholder="Nro de recibo, boleta, etc.">
+        </div>
+    </div>
+
+    <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-700">
+        <button type="button" (click)="onCancel()"
+            class="px-6 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-400 font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+            Cancelar
+        </button>
+        <app-primary-button [label]="'Registrar ' + (tipo === 'INGRESO' ? 'Ingreso' : 'Egreso')" icon="save"
+            [color]="tipo === 'INGRESO' ? 'brand' : 'red'" [loading]="loading()" type="submit">
+        </app-primary-button>
+    </div>
+</form>

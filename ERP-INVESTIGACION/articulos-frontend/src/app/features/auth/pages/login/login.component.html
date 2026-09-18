@@ -1,0 +1,98 @@
+<div class="min-h-screen flex items-center justify-center relative">
+    <!-- Fondo con gradiente moderno -->
+    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#1E293B] via-[#0F172A] to-[#1E293B]">
+    </div>
+
+    <!-- Contenido centrado (tu card de login) -->
+    <div class="relative z-10 w-full px-4">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md mx-auto">
+            <h1 class="text-center pt-6 text-[#0F172A] text-2xl font-bold mb-6 uppercase tracking-widest">
+                Artículos
+            </h1>
+
+            <p class="text-center text-[#475569] text-sm mb-6 font-medium">
+                SISTEMA DE GESTIÓN
+            </p>
+
+            <form (ngSubmit)="onSubmit($event)" class="space-y-5 px-2">
+                <!-- Campo Usuario -->
+                <app-form-input 
+                    [(ngModel)]="usuario" 
+                    name="usuario" 
+                    label="Usuario"
+                    [disabled]="isBlocked"
+                    [error]="error ? 'Usuario inválido' : null"
+                    [hasIcon]="true">
+                    <i icon class="fa-solid fa-user"></i>
+                </app-form-input>
+
+                <!-- Campo Contraseña -->
+                <app-form-input 
+                    [(ngModel)]="contrasena" 
+                    name="contrasena" 
+                    label="Contraseña"
+                    type="password"
+                    [disabled]="isBlocked"
+                    [error]="error ? 'Contraseña incorrecta' : null"
+                    [hasIcon]="true">
+                    <i icon class="fa-solid fa-key"></i>
+                </app-form-input>
+
+                <!-- Enlace Olvidé mi contraseña -->
+                <div class="text-right">
+                    <a href="#" class="text-[#1D4ED8] text-sm hover:underline hover:text-[#1E40AF] transition-colors">
+                        Olvidé mi contraseña
+                    </a>
+                </div>
+
+                <!-- Botón de Login -->
+                <button type="submit" [disabled]="cargando"
+                    class="w-full bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-medium py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md">
+                    <span *ngIf="!cargando">Ingresar</span>
+                    <span *ngIf="cargando" class="flex items-center justify-center">
+                        <svg class="animate-spin h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        Cargando...
+                    </span>
+                </button>
+
+                <!-- Mensaje de bloqueo con contador -->
+                <div *ngIf="isBlocked" class="mt-3 p-3 bg-red-100 border border-red-300 rounded-lg">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-red-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                            </path>
+                        </svg>
+                        <div>
+                            <p class="text-red-800 text-sm font-medium">
+                                ⏱️ Bloqueado por intentos excesivos
+                            </p>
+                            <p class="text-red-600 text-xs mt-1">
+                                Podrás intentar nuevamente en: <span class="font-bold">{{ remainingTimeString }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Decoración inferior -->
+            <div class="absolute -bottom-3 left-1/2 -translate-x-1/2
+              w-6 h-6 bg-white rotate-45 shadow-xl">
+            </div>
+        </div>
+    </div>
+
+    <!-- Indicador de carga flotante -->
+    <div *ngIf="cargando" class="absolute inset-0 bg-[#0F172A]/90 flex items-center justify-center z-50">
+        <div class="text-center">
+            <div class="inline-block animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-white mb-4"></div>
+            <p class="text-white text-lg">Cargando...</p>
+        </div>
+    </div>
+</div>

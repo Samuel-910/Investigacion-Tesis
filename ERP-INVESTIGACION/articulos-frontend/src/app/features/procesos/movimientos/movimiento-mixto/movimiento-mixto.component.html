@@ -1,0 +1,296 @@
+<app-header />
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar />
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems" />
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <app-page-header title="Gestión de Movimientos Mixtos"
+                subtitle="Registre entradas y salidas de inventario en lote" [counterValue]="movimientos().length">
+
+            </app-page-header>
+
+
+            <div class="flex gap-2 justify-end mb-5">
+                <app-primary-button *ngIf="!tipoFijo() || tipoFijo() === 'INGRESO'" label="Añadir Entrada" icon="plus"
+                    color="green" (click)="abrirModalAdd('INGRESO')" />
+                <app-primary-button *ngIf="!tipoFijo() || tipoFijo() === 'SALIDA'" label="Añadir Salida"
+                    icon="add_circle" (click)="abrirModalAdd('SALIDA')" color="red" />
+            </div>
+            <!-- Lista de Movimientos Pendientes -->
+            <div
+                class="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 overflow-hidden shadow-sm">
+                <div
+                    class="p-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-900/30">
+                    <h3 class="font-bold text-slate-800 dark:text-slate-200 tracking-tight">Items en la lista
+                        ({{movimientos().length}})</h3>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full shadow-sm">
+                        <thead
+                            class="bg-slate-50 dark:bg-slate-900/50 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                            <tr>
+                                <th class="px-6 py-4">Tipo</th>
+                                <th class="px-6 py-4">Producto</th>
+                                <th class="px-6 py-4">Lote</th>
+                                <th class="px-6 py-4">Cantidad</th>
+                                <th class="px-6 py-4">Costo Unit.</th>
+                                <th class="px-6 py-4">Clasificación</th>
+                                <th class="px-6 py-4 text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                            @for (item of movimientos(); track item.idInterno) {
+                            <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+                                <td class="px-6 py-4">
+                                    <span
+                                        [ngClass]="item.tipo === 'INGRESO' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400'"
+                                        class="px-2.5 py-1 rounded text-[10px] font-black uppercase tracking-wider shadow-sm">
+                                        {{item.tipo}}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 font-bold text-slate-900 dark:text-white text-sm">
+                                    {{item.nombreProducto}}</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase">{{
+                                            item.nroLote }}</span>
+                                        <span class="text-[10px] text-slate-500 dark:text-slate-400">Vence: {{
+                                            item.fechaVenc || 'S/V' }}</span>
+                                        <span *ngIf="item.observacion"
+                                            class="text-[10px] text-blue-500 font-medium mt-1 truncate max-w-[150px]"
+                                            [title]="item.observacion">
+                                            Obs: {{ item.observacion }}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-blue-600 dark:text-blue-400 font-black text-base">
+                                    {{item.cantidad}}</td>
+                                <td class="px-6 py-4 text-slate-600 dark:text-slate-400 font-medium">S/
+                                    {{item.costoUnitario | number:'1.2-2'}}</td>
+                                <td class="px-6 py-4">
+                                    <span
+                                        class="text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">{{item.nombreClasificacion}}</span>
+                                </td>
+                                <td class="px-6 py-4 text-right flex justify-end gap-2">
+                                    <button (click)="editarItem(item)"
+                                        class="p-2.5 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-all"
+                                        title="Editar item">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                    </button>
+                                    <button (click)="eliminarDeLista(item.idInterno)"
+                                        class="p-2.5 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-xl transition-all"
+                                        title="Eliminar de lista">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                            } @empty {
+                            <tr class="animate-pulse">
+                                <td colspan="7" class="px-6 py-20 text-center">
+                                    <div class="flex flex-col items-center justify-center space-y-3 opacity-30">
+                                        <svg class="w-20 h-20 text-slate-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                        </svg>
+                                        <span
+                                            class="text-lg font-bold text-slate-500 dark:text-slate-400 tracking-tighter uppercase">No
+                                            hay movimientos en la lista</span>
+                                        <p class="text-sm text-slate-400 dark:text-slate-500 max-w-xs mx-auto">Comience
+                                            añadiendo una entrada o salida utilizando los botones superiores.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Cabecera de Datos Generales -->
+            <div class="bg-slate-50 dark:bg-slate-800 rounded-xl p-6 my-6 transition-colors">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    <div class="md:col-span-6">
+                        <app-form-textarea [(ngModel)]="motivoGeneral" label="Motivo General del Movimiento" [rows]="2"
+                            placeholder="Ej: Ajuste de inventario semanal..." />
+                    </div>
+
+                    <!-- Plantilla de Impresión (Estilo Venta) -->
+                    <div class="md:col-span-6 flex flex-col pt-1">
+                        <div class="flex justify-end mb-1">
+                            <span *ngIf="puntoDocSeleccionado()"
+                                class="text-[10px] font-black text-blue-600 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded border border-blue-100 dark:border-blue-800">
+                                SIGUIENTE: {{ puntoDocSeleccionado().serie }}-{{ (puntoDocSeleccionado().numero ||
+                                0).toString().padStart(7, '0') }}
+                            </span>
+                        </div>
+                        <app-form-select [options]="plantillaOptions()" label="Plantilla de Impresión"
+                            [value]="plantillaSeleccionadaId()"
+                            (valueChange)="plantillaSeleccionadaId.set($event); onPlantillaChange()"
+                            [required]="true" />
+                    </div>
+
+                    <div class="md:col-span-12 flex items-center justify-end gap-3 w-full mt-2">
+                        <button (click)="cancelar()"
+                            class="md:w-40 px-6 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all font-bold text-xs whitespace-nowrap">
+                            Cancelar
+                        </button>
+                        <app-primary-button [label]="loading() ? 'Procesando...' : 'Como Borrador'" icon="save" color="blue"
+                            [loading]="loading()" size="lg" class="md:w-40" [fullWidth]="true"
+                            (click)="guardarGeneral(true)" [disabled]="loading() || movimientos().length === 0" />
+                        <app-primary-button [label]="loading() ? 'Procesando...' : 'Guardar General'" [icon]="'save'"
+                            [loading]="loading()" size="lg" class="md:w-40" [fullWidth]="true"
+                            (click)="guardarGeneral()" [disabled]="loading() || movimientos().length === 0" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-modal [isOpen]="showModal()" (modalClose)="showModal.set(false)"
+    [title]="(idEditando() ? 'Editar ' : 'Añadir ') + (tipoModal() === 'INGRESO' ? 'Entrada' : 'Salida')" size="lg">
+    <form [formGroup]="formItem" (ngSubmit)="agregarALista()" class="space-y-6">
+        <!-- Badge de Tipo en Modal -->
+        <div class="flex justify-center -mt-2">
+            <span
+                [ngClass]="tipoModal() === 'INGRESO' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30' : 'bg-rose-100 text-rose-700 dark:bg-rose-900/30'"
+                class="px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest shadow-sm border border-white dark:border-slate-700">
+                Detalle de {{tipoModal() === 'INGRESO' ? 'Ingreso' : 'Egreso'}}
+            </span>
+        </div>
+
+        <!-- Detalle de Producto Seleccionado (Ficha) -->
+        <div *ngIf="formItem.get('idCatalogo')?.value && selectedCatalogo()"
+            class="flex items-center gap-4 p-4 bg-blue-50/50 dark:bg-blue-900/20 rounded-2xl border border-blue-100 dark:border-blue-800/50 transition-all animate-in fade-in slide-in-from-top-2">
+            <div
+                class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+            </div>
+            <div class="flex-1">
+                <h3 class="font-bold text-slate-900 dark:text-white leading-tight">{{ selectedCatalogo()?.nombre }}</h3>
+                <div class="flex items-center gap-3 mt-1">
+                    <span class="text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                        Cód: <span class="text-slate-800 dark:text-slate-200">{{ selectedCatalogo()?.codigo || 'S/C'
+                            }}</span>
+                    </span>
+                    <span class="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600"></span>
+                    <span class="text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                        Presentación: <span class="text-slate-800 dark:text-slate-200">{{
+                            selectedCatalogo()?.presentacion || 'UNIDAD' }}</span>
+                    </span>
+                    <ng-container *ngIf="selectedCatalogo()?.manejaLotes === false">
+                        <span class="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600"></span>
+                        <span
+                            class="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                            Stock Total Disp: <span class="font-bold">{{ stockDisponibleTotal() }}</span>
+                        </span>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Selector de Catálogo -->
+            <div class="col-span-full">
+                <app-searchable-select [data]="catalogos()" label="Artículo / Producto" bindLabel="nombre"
+                    bindValue="id" formControlName="idCatalogo" [required]="true"
+                    [error]="getErrorMessage('idCatalogo')" placeholder="Busque el producto..." />
+            </div>
+
+            <!-- Selector de modo de lote (Solo para ingresos) -->
+            <div *ngIf="tipoModal() === 'INGRESO' && formItem.get('idCatalogo')?.value && selectedCatalogo()?.manejaLotes !== false"
+                class="col-span-full flex gap-3 p-1 bg-slate-100 dark:bg-slate-900/50 rounded-2xl w-fit border border-slate-200 dark:border-slate-700 animate-in fade-in duration-300">
+                <button type="button" (click)="cambiarModoLote('EXISTENTE')"
+                    [ngClass]="modoLote() === 'EXISTENTE' ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-md' : 'text-slate-500 hover:text-slate-700'"
+                    class="px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">
+                    Lote Existente
+                </button>
+                <button type="button" (click)="cambiarModoLote('NUEVO')"
+                    [ngClass]="modoLote() === 'NUEVO' ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-md' : 'text-slate-500 hover:text-slate-700'"
+                    class="px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">
+                    Nuevo Lote
+                </button>
+            </div>
+
+            <!-- Selector de Lotes (Para SALIDA o INGRESO modo EXISTENTE) -->
+            <div class="col-span-full"
+                *ngIf="(tipoModal() === 'SALIDA' || (tipoModal() === 'INGRESO' && modoLote() === 'EXISTENTE')) && formItem.get('idCatalogo')?.value && selectedCatalogo()?.manejaLotes !== false">
+                <app-searchable-select [data]="lotes()" label="Lote / Fecha Venc. / Stock" bindLabel="displayLabel"
+                    bindValue="idProducto" formControlName="idProducto" [required]="true"
+                    [error]="getErrorMessage('idProducto')" placeholder="Seleccione el lote..." />
+            </div>
+
+            <!-- Lote y Fecha Manual (Para INGRESO modo NUEVO o visualización en EXISTENTE) -->
+            <ng-container
+                *ngIf="formItem.get('idCatalogo')?.value && (modoLote() === 'NUEVO' || formItem.get('idProducto')?.value) && selectedCatalogo()?.manejaLotes !== false">
+
+                <app-form-input formControlName="nroLote" label="Nro. Lote" [readonly]="modoLote() === 'EXISTENTE'"
+                    [required]="true" [error]="getErrorMessage('nroLote')" placeholder="EJ: L-123456" />
+
+                <app-form-input formControlName="fechaVenc" label="Fecha Vencimiento"
+                    [required]="tipoModal() === 'INGRESO'" [error]="getErrorMessage('fechaVenc')" type="date" />
+            </ng-container>
+
+            <!-- Cantidad y Costo -->
+            <app-form-input formControlName="cantidad"
+                [label]="tipoModal() === 'SALIDA' ? 'Cantidad a Transar' : 'Cantidad'" type="number" [step]="0.01"
+                [required]="true" [error]="getErrorMessage('cantidad')" placeholder="0.00" />
+
+            <div class="relative">
+                <app-form-input formControlName="costoUnitario" label="Costo Unitario (S/)" type="number" [step]="0.01"
+                    [required]="true" [error]="getErrorMessage('costoUnitario')"
+                    [readonly]="tipoModal() === 'SALIDA'" />
+
+                <!-- Costo Anterior -->
+                <div *ngIf="tipoModal() === 'INGRESO' && costoPrevio() !== null"
+                    class="absolute -bottom-1 left-1 flex items-center gap-1 animate-in fade-in duration-500 z-20">
+                    <span class="text-[9px] font-bold text-slate-400 uppercase">Costo previo:</span>
+                    <span class="text-[9px] font-black text-blue-500">S/ {{ costoPrevio() | number:'1.2-2' }}</span>
+                </div>
+            </div>
+
+            <!-- Clasificación y Almacén -->
+            <div>
+                <app-form-select [options]="clasificacionOptions()" label="Nombre de Clasificación"
+                    formControlName="idClasificacion" [required]="true" [error]="getErrorMessage('idClasificacion')" />
+            </div>
+            <div>
+                <app-form-select [options]="almacenOptions()" label="Almacén de Destino" formControlName="idAlmacen"
+                    [required]="true" [error]="getErrorMessage('idAlmacen')" />
+            </div>
+
+            <!-- Observación del Item -->
+            <div class="col-span-full">
+                <app-form-textarea formControlName="observacion" label="Observación / Motivo del Item" [rows]="3"
+                    placeholder="Ej: Muestra médica, Ajuste de inventario, etc."
+                    [error]="getErrorMessage('observacion')" />
+            </div>
+        </div>
+
+        <div class="flex justify-end gap-3 mt-8 pt-6 border-t border-slate-100 dark:border-slate-700">
+            <button type="button" (click)="showModal.set(false)"
+                class="px-6 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl font-bold transition-all">
+                Cerrar
+            </button>
+            <app-primary-button [label]="idEditando() ? 'Actualizar item' : 'Añadir a la lista'" icon="plus"
+                type="submit" size="lg" />
+        </div>
+    </form>
+</app-modal>

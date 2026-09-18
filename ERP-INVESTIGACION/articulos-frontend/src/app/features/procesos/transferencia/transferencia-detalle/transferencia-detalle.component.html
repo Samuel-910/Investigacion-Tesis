@@ -1,0 +1,144 @@
+<div *ngIf="transferencia() as t" class="space-y-6">
+    <!-- Header Modal Estilo Proveedor -->
+    <div
+        class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-700">
+        <div>
+            <h3 class="text-sm font-black text-slate-700 dark:text-white uppercase tracking-widest">Transferencia #{{
+                t.id }}</h3>
+            <p class="text-[10px] text-slate-400 font-bold">Solicitada el {{ t.fechaSolicitud | date:'dd/MM/yyyy HH:mm'
+                }}</p>
+        </div>
+
+        <span [ngClass]="{
+            'bg-amber-100 text-amber-700': getEstadoNombre(t.estado) === 'SOLICITADO',
+            'bg-blue-100 text-blue-700': getEstadoNombre(t.estado) === 'ENVIADO',
+            'bg-emerald-100 text-emerald-700': getEstadoNombre(t.estado) === 'RECIBIDO',
+            'bg-rose-100 text-rose-700': getEstadoNombre(t.estado) === 'CANCELADO'
+        }" class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">
+            {{ getEstadoNombre(t.estado) }}
+        </span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="space-y-1">
+            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest pl-1">Solicitado por</label>
+            <div
+                class="px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-xl">
+                <p class="text-xs font-bold text-slate-700 dark:text-slate-400">{{ t.usuarioSolicitaNombre ||
+                    t.idUsuarioSolicita }}</p>
+                <p class="text-[9px] text-slate-400 font-bold mt-0.5">{{ t.fechaSolicitud | date:'dd/MM/yyyy HH:mm' }}
+                </p>
+            </div>
+        </div>
+        <div class="space-y-1" *ngIf="t.idUsuarioEnvia">
+            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest pl-1">Enviado por</label>
+            <div
+                class="px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-xl">
+                <p class="text-xs font-bold text-blue-700 dark:text-blue-400">{{ t.usuarioEnviaNombre ||
+                    t.idUsuarioEnvia }}</p>
+                <p class="text-[9px] text-slate-400 font-bold mt-0.5">{{ t.fechaEnvio | date:'dd/MM/yyyy HH:mm' }}</p>
+            </div>
+        </div>
+        <div class="space-y-1" *ngIf="t.idUsuarioRecibe">
+            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest pl-1">Recibido por</label>
+            <div
+                class="px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-xl">
+                <p class="text-xs font-bold text-emerald-700 dark:text-emerald-400">{{ t.usuarioRecibeNombre ||
+                    t.idUsuarioRecibe }}</p>
+                <p class="text-[9px] text-slate-400 font-bold mt-0.5">{{ t.fechaRecepcion | date:'dd/MM/yyyy HH:mm' }}
+                </p>
+            </div>
+        </div>
+        <div class="space-y-1" *ngIf="t.idUsuarioCancela">
+            <label class="text-[9px] font-black text-rose-400 uppercase tracking-widest pl-1">Cancelado por</label>
+            <div
+                class="px-4 py-2.5 bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-900/20 rounded-xl">
+                <p class="text-xs font-bold text-rose-700 dark:text-rose-400">{{ t.usuarioCancelaNombre ||
+                    t.idUsuarioCancela }}</p>
+                <p class="text-[9px] text-rose-400/80 font-bold mt-0.5">{{ t.fechaCancelacion | date:'dd/MM/yyyy HH:mm'
+                    }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla de Productos -->
+    <div class="space-y-3">
+        <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-widest pl-1">Detalle de Artículos</h4>
+        <div
+            class="overflow-hidden rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800/40 shadow-sm">
+            <table class="w-full text-left border-collapse">
+                <thead
+                    class="bg-slate-50 dark:bg-slate-900/50 text-[9px] font-black text-slate-500 uppercase tracking-tighter">
+                    <tr>
+                        <th class="px-4 py-3">Producto</th>
+                        <th class="px-4 py-3 text-center">Cant. Sol.</th>
+                        <th class="px-4 py-3 text-center" *ngIf="getEstadoNombre(t.estado) !== 'SOLICITADO'">Cant. Env/Rec</th>
+                        <th class="px-4 py-3 text-center" *ngIf="getEstadoNombre(t.estado) === 'SOLICITADO' && esOrigen()">Lote para
+                            Enviar</th>
+                        <th class="px-4 py-3 text-center" *ngIf="getEstadoNombre(t.estado) !== 'SOLICITADO'">Lote Info</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50 dark:divide-slate-700">
+                    <tr *ngFor="let d of t.detalles"
+                        class="hover:bg-slate-50/50 dark:hover:bg-slate-900/20 transition-colors">
+                        <td class="px-4 py-3">
+                            <p class="text-xs font-bold text-slate-700 dark:text-white">{{ d.productoNombre }}</p>
+                            <p class="text-[9px] text-slate-400 font-black uppercase">{{ d.productoCodigo }}</p>
+                        </td>
+                        <td class="px-4 py-3 text-center font-bold text-xs">{{ d.cantidadSolicitada }}</td>
+                        <td class="px-4 py-3 text-center font-black text-blue-600 text-xs"
+                            *ngIf="getEstadoNombre(t.estado) !== 'SOLICITADO'">
+                            {{ d.cantidadEnviada || d.cantidadRecibida }}
+                        </td>
+
+                        <!-- Selector de Lote para Envío -->
+                        <td class="px-4 py-2 text-center" *ngIf="getEstadoNombre(t.estado) === 'SOLICITADO' && esOrigen()">
+                            <select [ngModel]="d.nroLote" (ngModelChange)="seleccionarLote(d, $event)"
+                                class="w-full px-2 py-1.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-[10px] font-bold outline-none focus:ring-1 focus:ring-blue-500">
+                                <option value="">Seleccionar...</option>
+                                <option *ngFor="let lote of lotesDisponibles.get(d.idCatalogo)" [value]="lote.nroLote">
+                                    {{ lote.nroLote }} (Stock: {{ lote.stock }})
+                                </option>
+                            </select>
+                        </td>
+
+                        <td class="px-4 py-3 text-center" *ngIf="getEstadoNombre(t.estado) !== 'SOLICITADO'">
+                            <span
+                                class="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 rounded text-[10px] font-black uppercase text-slate-600 dark:text-slate-300">
+                                {{ d.nroLote }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer Acciones -->
+    <div class="pt-6 border-t border-slate-100 dark:border-slate-700 flex justify-between gap-3">
+        <button (click)="onClose()"
+            class="px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all">
+            Cerrar
+        </button>
+
+        <div class="flex gap-2">
+            <!-- Botón Enviar (Solo para origen si está solicitado) -->
+            <app-primary-button *ngIf="getEstadoNombre(t.estado) === 'SOLICITADO' && esOrigen()"
+                [label]="loading() ? 'Procesando...' : 'Registrar Envío'" (btnClick)="confirmarEnvio()"
+                [loading]="loading()" [color]="'green'">
+            </app-primary-button>
+
+            <!-- Botón Recibir (Solo para destino si está enviado) -->
+            <app-primary-button *ngIf="getEstadoNombre(t.estado) === 'ENVIADO' && esDestino()"
+                [label]="loading() ? 'Procesando...' : 'Registrar Recepción'" [color]="'green'"
+                (btnClick)="confirmarRecepcion()" [loading]="loading()">
+            </app-primary-button>
+
+            <!-- Botón Rechazar (Solo para origen si está solicitado) -->
+            <app-primary-button *ngIf="getEstadoNombre(t.estado) === 'SOLICITADO' && esOrigen()" 
+                [label]="loading() ? 'Procesando...' : 'Rechazar Solicitud'" (btnClick)="rechazarTransferencia()"
+                [disabled]="loading()" [color]="'red'">
+            </app-primary-button>
+        </div>
+    </div>
+</div>

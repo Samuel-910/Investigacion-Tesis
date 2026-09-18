@@ -1,0 +1,64 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 mt-4">
+
+            <app-page-header title="Clasificaciones de Movimiento"
+                subtitle="Gestión de clasificaciones para movimientos de almacén"
+                [counterValue]="totalElements()">
+            </app-page-header>
+
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 my-6">
+                <div class="flex-1 md:w-80">
+
+                    <app-search-generic [options]="searchOptions" placeholder="Buscar clasificación..."
+                        (onSearch)="onSearch($event)">
+                    </app-search-generic>
+                </div>
+                <app-primary-button label="Nueva Clasificación" icon="plus" color="brand"
+                    (btnClick)="abrirModalNuevo()">
+                </app-primary-button>
+            </div>
+
+            <div class="overflow-hidden">
+                <div *ngIf="loading()" class="flex justify-center items-center h-64">
+                    <div class="text-center">
+                        <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-brand"></div>
+                        <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium tracking-tight">Cargando
+                            clasificaciones...</p>
+                    </div>
+                </div>
+
+                <div *ngIf="!loading()">
+                    <app-tabla-general [datos]="clasificaciones()" [columnas]="columns" [showEdit]="true"
+                        [showDelete]="true" (onEdit)="abrirModalEditar($event)" (onDelete)="eliminar($event)">
+                    </app-tabla-general>
+
+                    <!-- Paginación -->
+                    <div class="mt-4 border-t border-slate-100 dark:border-slate-800 pt-4">
+                        <app-pagination [currentPage]="page()" [totalPages]="totalPages()" [pageSize]="size()"
+                            (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)">
+                        </app-pagination>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<app-modal [isOpen]="showModal()" [title]="(selectedClasificacion() ? 'Editar ' : 'Nueva ') + 'Clasificación'"
+    [size]="'md'" (modalClose)="cerrarModal()">
+
+    <app-clasificacion-form *ngIf="showModal()" [clasificacion]="selectedClasificacion()" (cerrar)="cerrarModal()"
+        (guardado)="onGuardado()">
+    </app-clasificacion-form>
+</app-modal>

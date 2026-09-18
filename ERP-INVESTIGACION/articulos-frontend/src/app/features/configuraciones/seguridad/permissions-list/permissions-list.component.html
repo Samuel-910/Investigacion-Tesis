@@ -1,0 +1,150 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-[#0f172a] pt-16 transition-all duration-300">
+  <app-sidebar></app-sidebar>
+
+  <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+    class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+    <app-breadcrumb [items]="breadcrumbItems" [showIcon]="true" class="mb-4 block"></app-breadcrumb>
+
+    <div class="w-full bg-white dark:bg-slate-800/40 dark:backdrop-blur-md rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 transition-all">
+
+      <div class="px-8 pt-8 pb-4">
+        <app-page-header
+          title="Diccionario de Permisos"
+          subtitle="Catálogo técnico de privilegios y capacidades del sistema."
+          [counterValue]="totalPermissions"
+          counterLabel="Capacidades"
+          [showCounter]="true">
+        </app-page-header>
+      </div>
+
+      <div class="px-8 pb-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div class="bg-blue-600 dark:bg-blue-600 rounded-2xl p-5 text-white shadow-lg shadow-blue-200 dark:shadow-none">
+            <p class="text-blue-100/70 text-[9px] font-black uppercase tracking-widest">Total Global</p>
+            <div class="flex items-center justify-between mt-1">
+              <p class="text-3xl font-black tracking-tighter">{{ totalPermissions }}</p>
+              <span class="text-xl opacity-40">🔑</span>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-100 dark:border-slate-800 shadow-sm">
+            <p class="text-indigo-500 text-[9px] font-black uppercase tracking-widest">Módulos</p>
+            <div class="flex items-center justify-between mt-1">
+              <p class="text-3xl font-black text-slate-800 dark:text-white tracking-tighter">{{ totalModules }}</p>
+              <span class="text-xl opacity-20">📦</span>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-100 dark:border-slate-800 shadow-sm">
+            <p class="text-emerald-500 text-[9px] font-black uppercase tracking-widest">Resultados</p>
+            <div class="flex items-center justify-between mt-1">
+              <p class="text-3xl font-black text-slate-800 dark:text-white tracking-tighter">{{ filteredGroups.length }}</p>
+              <span class="text-xl opacity-20">🔍</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700">
+            <p class="text-slate-400 text-[9px] font-black uppercase tracking-widest">Modo Vista</p>
+            <p class="text-xs font-black text-slate-600 dark:text-slate-300 uppercase mt-2 tracking-tighter">Catálogo Expandido</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col xl:flex-row gap-4 mb-8 items-stretch justify-between">
+          <div class="flex flex-col sm:flex-row gap-3 flex-1">
+            <div class="flex-1 max-w-md">
+              <app-search-generic [options]="[
+                  { label: 'Todos', value: 'ALL' },
+                  { label: 'Nombre', value: 'name' },
+                  { label: 'Descripción', value: 'description' }
+                ]" placeholder="Buscar por capacidad..." (onSearch)="handleSearch($event)">
+              </app-search-generic>
+            </div>
+
+            <div class="w-64">
+              <app-searchable-select
+                [data]="moduleOptions"
+                bindLabel="label"
+                bindValue="value"
+                [(ngModel)]="selectedModule"
+                (selected)="onModuleSelected($event)"
+                label="Módulo"
+                placeholder="📦 Todos los módulos">
+              </app-searchable-select>
+            </div>
+          </div>
+
+          <div class="flex gap-2">
+            <button (click)="expandAll()"
+              class="px-5 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
+              <i class="fas fa-expand-alt"></i> Expandir
+            </button>
+            <button (click)="collapseAll()"
+              class="px-5 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
+              <i class="fas fa-compress-alt"></i> Colapsar
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="!loading" class="space-y-4">
+          <div *ngFor="let group of filteredGroups"
+            class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 transition-all overflow-hidden shadow-sm">
+            
+            <button (click)="toggleModule(group)"
+              class="w-full bg-slate-50 dark:bg-slate-800 rounded-xl p-4 flex justify-between items-center cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700 transition shadow-sm border border-slate-200 dark:border-slate-700/50">
+              
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-indigo-50 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-xl">
+                  {{ group.icon }}
+                </div>
+                <div class="text-left">
+                  <h3 class="font-bold text-lg text-slate-800 dark:text-white uppercase tracking-tight">
+                    {{ group.displayName }}
+                  </h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">REF: {{ group.module }}</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-semibold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 px-3 py-1 rounded-lg border border-slate-200 dark:border-slate-800">
+                  {{ group.permissions.length }} permisos
+                </span>
+                <i class="fas fa-chevron-down text-slate-500 transition-transform duration-300" [class.rotate-180]="group.expanded"></i>
+              </div>
+            </button>
+
+            <div *ngIf="group.expanded" class="p-6 bg-transparent">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div *ngFor="let permission of group.permissions"
+                  class="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4 hover:border-indigo-400 dark:hover:border-indigo-500/50 transition-all group cursor-pointer hover:bg-white dark:hover:bg-slate-800 shadow-sm text-left">
+                  
+                  <div class="flex justify-between items-center mb-2">
+                    <h4 class="font-bold text-slate-800 dark:text-slate-200 capitalize">
+                      {{ getPermissionActionLabel(permission.name) }}
+                    </h4>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md uppercase"
+                      [ngClass]="getActionColor(getPermissionActionType(permission.name))">
+                      {{ getPermissionActionType(permission.name) }}
+                    </span>
+                  </div>
+                  
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mb-3 font-mono">{{ permission.name }}</p>
+                  <p class="text-sm text-slate-600 dark:text-slate-300">{{ permission.description }}</p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 pt-8 border-t border-slate-50 dark:border-slate-800">
+          <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" [pageSize]="pageSize"
+            (pageChange)="changePage($event)" (pageSizeChange)="changePageSize($event)">
+          </app-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

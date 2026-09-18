@@ -1,0 +1,26 @@
+<form [formGroup]="form" (ngSubmit)="guardar()" class="space-y-6">
+
+    <div>
+        <app-form-input label="Nombre" formControlName="descripcion" [required]="true" [hasIcon]="true"
+            [error]="getError('descripcion')" placeholder="Ingrese nombre" class="uppercase">
+            <i icon class="fas fa-tag text-xs"></i>
+        </app-form-input>
+    </div>
+
+    <!-- Estado -->
+    <div class="px-1">
+        <app-form-switch label="Estado del Registro" formControlName="estado" onLabel="Activo" offLabel="Inactivo">
+        </app-form-switch>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex justify-end gap-3 pt-6 border-t border-slate-100 dark:border-slate-800">
+        <button type="button" (click)="cerrar()"
+            class="px-5 py-2.5 rounded-xl text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors uppercase tracking-widest">
+            Cancelar
+        </button>
+        <app-primary-button [label]="loading() ? 'Guardando...' : 'Guardar'" [loading]="loading()"
+            [disabled]="form.invalid || loading()" type="submit" color="brand">
+        </app-primary-button>
+    </div>
+</form>

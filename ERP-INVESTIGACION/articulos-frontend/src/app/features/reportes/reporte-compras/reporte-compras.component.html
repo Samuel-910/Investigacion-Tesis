@@ -1,0 +1,134 @@
+<app-reporte-base #reporte title="Reporte de Compras"
+    subtitle="Gestión de libros electrónicos SIRE RCE y análisis de gastos" moduleLabel="Módulo Tributario SIRE"
+    description="Prepare su archivo TXT/Excel para el reemplazo de propuesta RCE siguiendo los estándares de SUNAT 2024."
+    [breadcrumbItems]="breadcrumbItems" [loading]="loading()" [data]="listaSireCompras()"
+    [columnConfigs]="columnConfigs" [searchFields]="['proveedor', 'nroDocProv', 'serie', 'numero', 'periodo']"
+    previewTitle="Tabla de Compras SIRE" reportKey="SIRE_RCE" dashboardCategory="Compras"
+    mainIcon="fas fa-file-invoice-dollar" (onFiltroChange)="onFiltroChange($event)" (onExportar)="exportarExcel($event)">
+
+    <div table class="overflow-x-auto custom-scrollbar-container">
+        <table class="w-full text-left border-collapse min-w-[2500px]">
+            <thead>
+                <tr
+                    class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-10 border-b border-slate-100 dark:border-slate-800">
+                    <th
+                        class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center w-16">
+                        #</th>
+                    <th *ngFor="let col of columnConfigs" [hidden]="!reporte.isColumnVisible(col.key)"
+                        class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">
+                        <div class="flex items-center gap-2">
+                            {{col.label}}
+                            <i class="fas fa-sort-down opacity-20 group-hover:opacity-100 transition-opacity"></i>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800/50">
+                <tr *ngFor="let c of reporte.paginatedData(); let i = index"
+                    class="hover:bg-sky-50/30 dark:hover:bg-sky-900/5 transition-all duration-300 group">
+
+                    <!-- Índice -->
+                    <td class="px-6 py-4 text-[10px] font-black text-slate-400 text-center">
+                        {{ (reporte.currentPage() * reporte.itemsPerPage()) + i + 1 }}
+                    </td>
+
+                    <!-- Columnas Dinámicas -->
+                    <ng-container *ngFor="let col of columnConfigs">
+                        <td *ngIf="reporte.isColumnVisible(col.key)" class="px-6 py-4 whitespace-nowrap">
+
+                            <!-- Formato para importes -->
+                            <div *ngIf="['total', 'baseImponible', 'igv', 'exonerado', 'inafecto', 'isc', 'icbper', 'otrosConceptos', 'exportacion', 'descuentoBase', 'descuentoIgv', 'baseArroz', 'igvArroz', 'tipoCambio'].includes(col.key)"
+                                class="text-sm font-black text-slate-900 dark:text-sky-400/90 text-right tabular-nums">
+                                {{ c[col.key] | number:'1.2-2' }}
+                            </div>
+
+                            <!-- Formato para Documentos (Serie-Numero) -->
+                            <div *ngIf="col.key === 'numero'" class="flex items-center gap-2">
+                                <span
+                                    class="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] font-black rounded-md border border-slate-200 dark:border-slate-700">
+                                    {{c.serie}}
+                                </span>
+                                <span class="text-sm font-black text-slate-900 dark:text-white">{{c.numero}}</span>
+                            </div>
+
+                            <!-- Formato para Proveedor -->
+                            <div *ngIf="col.key === 'proveedor'" class="max-w-xs truncate">
+                                <div class="text-xs font-black text-slate-700 dark:text-slate-200 uppercase">
+                                    {{c.proveedor}}</div>
+                                <div class="text-[10px] font-bold text-slate-400 flex items-center gap-1.5 mt-0.5">
+                                    <i class="far fa-id-card"></i>
+                                    {{c.nroDocProv}}
+                                </div>
+                            </div>
+
+                            <!-- Formato para Periodo/CAR -->
+                            <div *ngIf="['periodo', 'carSunat'].includes(col.key)"
+                                class="text-[10px] font-black text-slate-500 dark:text-slate-400 tracking-tighter">
+                                {{ c[col.key] || '-' }}
+                            </div>
+
+                            <!-- Formato para Fechas -->
+                            <div *ngIf="['fecha', 'fechaVencimiento', 'fechaRef'].includes(col.key)"
+                                class="text-xs font-bold text-slate-600 dark:text-slate-300">
+                                {{ c[col.key] ? (c[col.key] | date:'dd/MM/yyyy') : '-' }}
+                            </div>
+
+                            <!-- Formato para Tipo Doc -->
+                            <div *ngIf="col.key === 'tipoDoc'">
+                                <span
+                                    class="px-2.5 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-[10px] font-black rounded-lg border border-blue-100 dark:border-blue-800/30">
+                                    {{ c.tipoDoc }}
+                                </span>
+                            </div>
+
+                            <!-- Formato para Moneda -->
+                            <div *ngIf="col.key === 'moneda'" class="text-center">
+                                <span
+                                    class="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] font-black rounded-md">
+                                    {{c.moneda}}
+                                </span>
+                            </div>
+
+                            <!-- Formato para Estado -->
+                            <div *ngIf="col.key === 'estado'" class="flex items-center justify-center gap-3">
+                                <div class="relative flex items-center justify-center w-8 h-8">
+                                    <div class="absolute inset-0 rounded-full animate-ping opacity-20"
+                                        [class]="isVigente(c.estado) ? 'bg-sky-500' : 'bg-rose-500'"></div>
+                                    <div class="relative w-2.5 h-2.5 rounded-full shadow-sm"
+                                        [class]="isVigente(c.estado) ? 'bg-sky-500' : 'bg-rose-500'"></div>
+                                </div>
+                                <span class="text-[10px] font-black uppercase tracking-widest"
+                                    [class]="isVigente(c.estado) ? 'text-sky-600 dark:text-sky-400' : 'text-rose-600 dark:text-rose-400'">
+                                    {{isVigente(c.estado) ? 'Vigente' : 'Anulado'}}
+                                </span>
+                            </div>
+
+                            <!-- Default -->
+                            <div *ngIf="!['total', 'baseImponible', 'igv', 'exonerado', 'inafecto', 'isc', 'icbper', 'otrosConceptos', 'exportacion', 'descuentoBase', 'descuentoIgv', 'baseArroz', 'igvArroz', 'tipoCambio', 'numero', 'proveedor', 'periodo', 'carSunat', 'fecha', 'fechaVencimiento', 'fechaRef', 'tipoDoc', 'moneda', 'estado'].includes(col.key)"
+                                class="text-xs font-bold text-slate-600 dark:text-slate-300">
+                                {{ c[col.key] || '-' }}
+                            </div>
+                        </td>
+                    </ng-container>
+                </tr>
+                <tr *ngIf="reporte.paginatedData().length === 0">
+                    <td [attr.colspan]="columnConfigs.length + 1" class="px-8 py-24 text-center">
+                        <div class="flex flex-col items-center gap-4">
+                            <div
+                                class="w-20 h-20 rounded-full bg-slate-50 dark:bg-slate-900/50 flex items-center justify-center text-slate-300 dark:text-slate-700">
+                                <i class="fas fa-folder-open text-4xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 dark:text-slate-400 font-black text-lg">No se encontraron
+                                    registros</p>
+                                <p class="text-slate-400 dark:text-slate-500 text-sm mt-1">Ajuste los filtros o el
+                                    buscador para ver resultados</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</app-reporte-base>

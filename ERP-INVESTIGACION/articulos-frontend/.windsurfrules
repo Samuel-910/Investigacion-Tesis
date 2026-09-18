@@ -1,0 +1,32 @@
+# Reglas de Desarrollo - Frontend (Angular)
+
+## General
+
+- Responde siempre en Español.
+- **NO** compiles ni ejecutes comandos de construcción (build/serve) automáticamente, a menos que se te pida explícitamente.
+
+## Desarrollo del Frontend (Angular)
+
+- **Componentes Reutilizables**: Prioriza siempre el uso de los componentes compartidos en `src/app/shared/components`:
+  - `<app-page-header>`: Para el título de la página, subtítulos y contadores.
+  - `<app-search-generic>`: Para todas las barras de búsqueda.
+  - `<app-tabla-general>`: Para mostrar listados de datos.
+  - `<app-primary-button>`: Para acciones principales (Nuevo, Guardar, etc.).
+  - `<app-pagination>`: Para la paginación de tablas.
+  - `<app-modal>`: Para ventanas modales.
+  - `<app-forms-input>`: Para los inputs de form.
+
+- **Implementación de Referencia**:
+  - Usa siempre **`features/documentos/punto-documento`** (tanto `list` como `form`) como la guía definitiva para el diseño y la estructura de código de nuevos módulos.
+  - Replica su estructura HTML, uso de clases CSS (Tailwind), y lógica de TypeScript (Signals, interactividad, control de estado).
+
+- **Diseño y Layout**:
+  - Usa `SidebarService` para ajustar el padding izquierdo del contenido principal (`[style.padding-left]`).
+  - **Filtros (Pills)**: Si hay filtros de estado o tipo, úsalos como botones estilo "pill" (redondeados) ubicados inmediatamente debajo del `<app-page-header>`.
+  - **Buscador y Acciones**: Coloca el buscador a la izquierda y los botones de acción a la derecha, dentro de un contenedor flex común, debajo de los filtros.
+  - **Homogeneización de Paginación**: Utiliza siempre los nombres homólogos de señales y métodos de catálogo:
+    - Señales: `currentPage`, `pageSize`, `totalElements`, `totalPages`, `searchTerm`, `searchType`
+    - Métodos: `onSearch()`, `cambiarPagina()`, `cambiarTamanoPagina()`
+
+- **Comentarios**:
+  - Nunca pongas comentarios en el código y si ves que hay comentarios donde editas, bórralos.

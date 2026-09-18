@@ -1,0 +1,50 @@
+/* Sidebar styles */
+aside {
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Transición suave para el menú expandible */
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+/* Animación del submenú */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    max-height: 500px;
+    transform: translateY(0);
+  }
+}
+
+/* Hover effects suaves */
+button {
+  transition: all 0.2s ease;
+}
+
+/* Sombra suave en botones activos de la nueva paleta */
+.bg-blue-600 {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Efecto de punto activo en submenús */
+.w-2.h-2 {
+  transition: all 0.2s ease;
+}
+
+button:hover .w-2.h-2 {
+  transform: scale(1.2);
+}

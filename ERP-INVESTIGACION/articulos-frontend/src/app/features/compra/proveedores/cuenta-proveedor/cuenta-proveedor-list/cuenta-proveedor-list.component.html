@@ -1,0 +1,191 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems()"></app-breadcrumb>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <!-- Resumen de Cuenta -->
+            <div
+                class="lg:col-span-1 bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Resumen de Cuenta</h3>
+                <div class="flex flex-col gap-4">
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/50">
+                        <p class="text-xs text-slate-500 dark:text-slate-400 uppercase font-black mb-1">Saldo Pendiente
+                        </p>
+                        <p class="text-3xl font-black"
+                            [ngClass]="(cuenta()?.saldoTotal > 0) ? 'text-rose-600' : 'text-emerald-600'">
+                            S/ {{ Math.abs(cuenta()?.saldoTotal || 0) | number:'1.2-2' }}
+                        </p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button (click)="abrirModalAbono()"
+                            class="flex-1 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition-colors">
+                            <i class="fas fa-hand-holding-usd mr-2"></i>Abonar
+                        </button>
+                        <button (click)="abrirModalCargo()"
+                            class="flex-1 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm transition-colors">
+                            <i class="fas fa-file-invoice-dollar mr-2"></i>Cargar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información del Proveedor -->
+            <div
+                class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Información del Proveedor</h3>
+                    <button (click)="regresar()"
+                        class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
+                        <i class="fas fa-arrow-left mr-1"></i>Volver
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Razón Social</p>
+                        <p class="text-sm font-medium dark:text-slate-200">{{ proveedor()?.razonSocial }}</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Documento</p>
+                        <p class="text-sm font-medium dark:text-slate-200">{{ proveedor()?.tipoDocIdent }}: {{
+                            proveedor()?.numDocIdent }}</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Teléfono</p>
+                        <p class="text-sm font-medium dark:text-slate-200">{{ proveedor()?.telefono || '-' }}</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Email</p>
+                        <p class="text-sm font-medium dark:text-slate-200">{{ proveedor()?.email || '-' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deudas Pendientes -->
+        <div *ngIf="deudas().length > 0"
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 mb-6">
+            <app-page-header title="Facturas y Deudas Pendientes" subtitle="Desglose detallado de las obligaciones"
+                [showCounter]="true" counterLabel="Pendientes" [counterValue]="deudas().length">
+            </app-page-header>
+
+            <div class="overflow-x-auto mt-4 rounded-xl border border-slate-100 dark:border-slate-700">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-slate-50 dark:bg-slate-700/50">
+                        <tr>
+                            <th class="px-4 py-3 text-xs font-black text-slate-500 uppercase">Emisión</th>
+                            <th class="px-4 py-3 text-xs font-black text-slate-500 uppercase">Referencia</th>
+                            <th class="px-4 py-3 text-xs font-black text-slate-500 uppercase text-right">Original</th>
+                            <th class="px-4 py-3 text-xs font-black text-slate-500 uppercase text-right">Pendiente</th>
+                            <th class="px-4 py-3 text-xs font-black text-slate-500 uppercase text-center">Vencimiento
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                        <tr *ngFor="let d of deudas()"
+                            class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+                            <td class="px-4 py-3 text-sm font-medium text-slate-600 dark:text-slate-300">
+                                {{ d.fechaEmision | date:'dd/MM/yyyy HH:mm' }}
+                            </td>
+                            <td class="px-4 py-3 text-sm font-bold text-slate-800 dark:text-slate-200">
+                                {{ d.referenciaCargo || 'Cargo Generado' }}
+                            </td>
+                            <td class="px-4 py-3 text-sm font-medium text-slate-500 text-right">
+                                S/ {{ d.montoOriginal | number:'1.2-2' }}
+                            </td>
+                            <td class="px-4 py-3 text-sm font-black text-rose-600 dark:text-rose-400 text-right">
+                                S/ {{ d.saldoPendiente | number:'1.2-2' }}
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="px-2 py-1 text-xs font-bold rounded-lg"
+                                    [ngClass]="{'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400': true}">
+                                    <i class="far fa-calendar-alt mr-1"></i>
+                                    {{ d.fechaVencimiento | date:'dd/MM/yyyy' }}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Historial de Movimientos -->
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <app-page-header title="Historial de Movimientos" subtitle="Registro de cargos y abonos"
+                [showCounter]="true" counterLabel="Movimientos" [counterValue]="totalElements()">
+            </app-page-header>
+
+            <div class="overflow-hidden mt-6">
+                <div *ngIf="loading()" class="flex justify-center items-center h-48">
+                    <div class="text-center">
+                        <div
+                            class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 transition-colors">
+                        </div>
+                        <p class="mt-2 text-slate-500 text-xs font-medium">Cargando movimientos...</p>
+                    </div>
+                </div>
+
+                <div *ngIf="!loading()">
+                    <app-tabla-general [datos]="movimientos()" [columnas]="columns" [showEdit]="false"
+                        [showDelete]="false" [currentPage]="currentPage()" [pageSize]="pageSize()">
+                    </app-tabla-general>
+
+                    <div *ngIf="totalElements() > 0" class="p-4 border-t border-slate-100 dark:border-slate-700">
+                        <app-pagination [currentPage]="currentPage()" [totalPages]="totalPages()"
+                            [pageSize]="pageSize()" (pageChange)="cambiarPagina($event)"
+                            (pageSizeChange)="cambiarTamanoPagina($event)">
+                        </app-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-modal [isOpen]="showModalMovimiento()"
+    [title]="tipoMovimiento() === 'ABONO' ? 'Registrar Abono (Pago)' : 'Registrar Cargo (Deuda)'" size="xl"
+    (modalClose)="cerrarModal()">
+    <form [formGroup]="formMovimiento" (ngSubmit)="guardarMovimiento()" class="space-y-4">
+        <app-form-input label="Monto" type="number" [step]="'0.01'" formControlName="monto" [required]="true"
+            [error]="formMovimiento.get('monto')?.invalid && formMovimiento.get('monto')?.touched ? 'Requerido y mayor a 0' : null">
+        </app-form-input>
+
+        <div *ngIf="tipoMovimiento() === 'ABONO'"
+            class="flex items-center mt-4 p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+            <input type="checkbox" id="pagarDesdeCajaGeneral" formControlName="pagarDesdeCajaGeneral"
+                class="w-4 h-4 text-emerald-600 bg-white border-slate-300 rounded focus:ring-emerald-500 dark:focus:ring-emerald-600 dark:ring-offset-slate-800 focus:ring-2 dark:bg-slate-700 dark:border-slate-600">
+            <label for="pagarDesdeCajaGeneral" class="ml-2 text-sm font-medium text-slate-900 dark:text-slate-300">
+                Pagar o debitar desde la Caja General
+            </label>
+        </div>
+
+        <div *ngIf="formMovimiento.get('pagarDesdeCajaGeneral')?.value" class="mt-4 animate-fadeIn">
+            <app-form-select label="Método de Pago" formControlName="metodoPago" [options]="metodosPago">
+            </app-form-select>
+        </div>
+
+        <div class="mt-4">
+            <app-form-input label="Descripción" type="text" formControlName="descripcion" [required]="true"
+                placeholder="Ej: Pago de factura, anticipo..."
+                [error]="formMovimiento.get('descripcion')?.invalid && formMovimiento.get('descripcion')?.touched ? 'Requerido' : null">
+            </app-form-input>
+        </div>
+
+        <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+            <button type="button" (click)="cerrarModal()"
+                class="px-4 py-2 text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 font-medium">
+                Cancelar
+            </button>
+            <button type="submit" [disabled]="formMovimiento.invalid || loading()"
+                class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                Guardar {{ tipoMovimiento() === 'ABONO' ? 'Abono' : 'Cargo' }}
+            </button>
+        </div>
+    </form>
+</app-modal>

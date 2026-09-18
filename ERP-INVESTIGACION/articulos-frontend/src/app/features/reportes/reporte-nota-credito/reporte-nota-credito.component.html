@@ -1,0 +1,84 @@
+<app-reporte-base #reporte
+    title="Notas de Crédito"
+    subtitle="Relación de documentos emitidos por devoluciones o ajustes"
+    moduleLabel="Post-Venta"
+    description="Consulte las notas de crédito emitidas y sus documentos de referencia para cuadrar devoluciones."
+    [breadcrumbItems]="breadcrumbItems"
+    [loading]="loading()"
+    [data]="listaNotas()"
+    [columnConfigs]="columnConfigs"
+    [searchFields]="['cliente', 'nc', 'docRef', 'motivo']"
+    previewTitle="Registros de Crédito"
+    reportKey="NC_GENERAL"
+    dashboardCategory="Ventas"
+    mainIcon="fas fa-undo"
+    (onFiltroChange)="onFiltroChange($event)"
+    (onExportar)="exportarExcel($event)">
+
+    <div table class="overflow-x-auto custom-scrollbar-container">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-10 border-b border-slate-100 dark:border-slate-800">
+                    <th class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center w-16">#</th>
+                    <th *ngFor="let col of columnConfigs"
+                        [hidden]="!reporte.isColumnVisible(col.key)"
+                        class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">
+                        {{col.label}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800/50">
+                <tr *ngFor="let n of reporte.paginatedData(); let i = index" 
+                    class="hover:bg-sky-50/30 dark:hover:bg-sky-900/10 transition-all duration-300 group">
+                    
+                    <td class="px-6 py-4 text-[10px] font-black text-slate-400 text-center">
+                        {{ (reporte.currentPage() * reporte.itemsPerPage()) + i + 1 }}
+                    </td>
+
+                    <ng-container *ngFor="let col of columnConfigs">
+                        <td *ngIf="reporte.isColumnVisible(col.key)" class="px-6 py-4 whitespace-nowrap">
+                            
+                            <!-- Fecha -->
+                            <div *ngIf="col.key === 'fecha'" class="text-xs font-bold text-slate-600 dark:text-slate-300">
+                                {{ n.fecha }}
+                            </div>
+
+                            <!-- Nro Nota -->
+                            <div *ngIf="col.key === 'nc'">
+                                <span class="text-sm font-black text-sky-600 dark:text-sky-400">{{ n.nc }}</span>
+                            </div>
+
+                            <!-- Doc Ref -->
+                            <div *ngIf="col.key === 'docRef'">
+                                <span class="text-xs font-bold text-slate-500 uppercase">{{ n.docRef }}</span>
+                            </div>
+
+                            <!-- Cliente -->
+                            <div *ngIf="col.key === 'cliente'" class="max-w-xs truncate">
+                                <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase">{{ n.cliente }}</span>
+                            </div>
+
+                            <!-- Motivo -->
+                            <div *ngIf="col.key === 'motivo'" class="max-w-sm">
+                                <span class="text-xs text-slate-500 italic dark:text-slate-400">{{n.motivo}}</span>
+                            </div>
+
+                            <!-- Importe -->
+                            <div *ngIf="col.key === 'monto'" class="text-right">
+                                <span class="text-sm font-black text-slate-900 dark:text-white tabular-nums">
+                                    S/ {{n.monto | number:'1.2-2'}}
+                                </span>
+                            </div>
+
+                            <!-- Default -->
+                            <div *ngIf="!['fecha', 'nc', 'docRef', 'cliente', 'motivo', 'monto'].includes(col.key)" class="text-xs font-bold text-slate-600 dark:text-slate-300">
+                                {{ n[col.key] || '-' }}
+                            </div>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</app-reporte-base>

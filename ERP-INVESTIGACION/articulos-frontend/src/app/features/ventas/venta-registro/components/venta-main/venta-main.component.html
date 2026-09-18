@@ -1,0 +1,704 @@
+<div class="flex flex-col h-full space-y-4">
+
+    <!-- Header Title -->
+    <div class="flex items-center gap-4">
+        <h1 class="text-xl font-bold text-slate-800 dark:text-white">Nueva Venta</h1>
+    </div>
+
+    <!-- Main Content Card -->
+    <div
+        class="flex-1 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 overflow-y-auto flex flex-col relative min-h-0">
+
+        <!-- Empty State (No Patient Selected) -->
+        <div *ngIf="!selectedPatient"
+            class="flex-1 flex flex-col items-center justify-center text-center max-w-md mx-auto">
+            <div
+                class="bg-slate-50 dark:bg-slate-700/50 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
+                <svg class="h-12 w-12 text-slate-300 dark:text-slate-500" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-2">
+                Selecciona un paciente
+            </h3>
+            <p class="text-slate-500 dark:text-slate-400">
+                Selecciona un paciente de la lista de pendientes para ver los artículos o recetas disponibles para
+                venta.
+            </p>
+        </div>
+
+        <!-- Patient Selected View -->
+        <div *ngIf="selectedPatient" class="flex flex-col space-y-6">
+            <!-- Patient Info Header -->
+            <div
+                class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700">
+                <div class="flex items-center gap-4">
+                    <div
+                        class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-lg">
+                        {{ selectedPatient.firstName.charAt(0) }}{{ selectedPatient.lastName.charAt(0) }}
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-800 dark:text-white">
+                            {{ selectedPatient.nombreCompleto }}
+                        </h2>
+                        <div class="flex flex-wrap gap-2 mt-1">
+                            <span class="text-xs text-slate-500 font-medium">DNI: {{ selectedPatient.numdoc || 'N/A'
+                                }}</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">•</span>
+                            <span class="text-xs text-slate-500 font-medium">{{ selectedPatient.email }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span
+                        class="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 text-xs font-bold rounded-full border border-green-200 dark:border-green-800/50">
+                        PACIENTE ACTIVO
+                    </span>
+                </div>
+            </div>
+
+            <!-- Search Area -->
+            <div class="relative search-area-container">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1 relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </span>
+                        <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()"
+                            (focus)="onSearchFocus()" (keydown)="onSearchKeyDown($event)"
+                            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/50 border-2 border-slate-200 dark:border-slate-700 rounded-xl text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-sm"
+                            placeholder="Buscar producto por nombre o código...">
+                    </div>
+
+                </div>
+
+                <!-- Search Results Dropdown -->
+                <div *ngIf="busquedaRealizada"
+                    class="absolute z-50 w-full mt-1 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 max-h-64 overflow-y-auto">
+                    <div *ngIf="cargandoSearch" class="p-4 text-center text-slate-500">
+                        <div
+                            class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2 align-middle">
+                        </div>
+                        Buscando...
+                    </div>
+                    <ul *ngIf="!cargandoSearch">
+                        <li *ngFor="let prod of searchResults; let i = index" (click)="agregarAlCarrito(prod)"
+                            [ngClass]="i === selectedIndex ? 'bg-blue-50 dark:bg-slate-700 search-item-selected' : ''"
+                            class="p-4 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer border-b border-slate-100 dark:border-slate-700 last:border-0 transition-colors">
+                            <div class="flex justify-between items-start gap-3">
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="font-bold text-slate-900 dark:text-white truncate text-sm">
+                                            {{ prod.catalogo?.nombre }}
+                                        </span>
+                                        <span *ngIf="prod.catalogo?.laboratorio"
+                                            class="shrink-0 px-2 py-0.5 bg-indigo-50 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-300 text-[9px] font-black rounded uppercase border border-indigo-100 dark:border-indigo-800">
+                                            {{ prod.catalogo?.laboratorio }}
+                                        </span>
+                                    </div>
+
+                                    <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1 text-[10px]">
+                                        @if (prod.catalogo?.manejaLotes !== false) {
+                                        <div class="flex items-center text-slate-500">
+                                            <i class="fas fa-barcode mr-1 opacity-70"></i>
+                                            <span>LOTE: <span class="font-bold text-slate-700 dark:text-slate-300">{{
+                                                    prod.nroLote || 'N/A' }}</span></span>
+                                        </div>
+                                        <div class="flex items-center"
+                                            [ngClass]="{'text-red-600 dark:text-red-400': prod.fechaVencimiento, 'text-slate-400': !prod.fechaVencimiento}">
+                                            <i class="fas fa-calendar-alt mr-1 opacity-70"></i>
+                                            <span>VENCE: <span class="font-bold">{{ (prod.fechaVencimiento |
+                                                    date:'dd/MM/yyyy') || 'N/A' }}</span></span>
+                                        </div>
+                                        } @else {
+                                        <div class="flex items-center text-indigo-600 dark:text-indigo-400">
+                                            <i class="fas fa-flask mr-1 opacity-70"></i>
+                                            <span>LAB: <span class="font-bold">{{ prod.catalogo?.laboratorio || 'N/A'
+                                                    }}</span></span>
+                                        </div>
+                                        <div class="flex items-center text-slate-500">
+                                            <i class="fas fa-box mr-1 opacity-70"></i>
+                                            <span>PRES: <span class="font-bold text-slate-700 dark:text-slate-300">{{
+                                                    prod.catalogo?.presentacion || 'N/A' }}</span></span>
+                                        </div>
+                                        }
+                                        <div *ngIf="prod.catalogo?.codDigemid" class="flex items-center text-slate-500">
+                                            <i class="fas fa-file-medical mr-1 opacity-70"></i>
+                                            <span>DIGEMID: <span class="font-bold">{{ prod.catalogo?.codDigemid
+                                                    }}</span></span>
+                                        </div>
+                                        <div *ngIf="prod.catalogo?.regSanitario"
+                                            class="flex items-center text-slate-500">
+                                            <i class="fas fa-shield-alt mr-1 opacity-70"></i>
+                                            <span>R.S.: <span class="font-bold">{{ prod.catalogo?.regSanitario
+                                                    }}</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-1 flex items-center gap-2">
+                                        <i class="fas fa-info-circle text-[10px] text-slate-400"></i>
+                                        <span class="text-[10px] text-slate-400 italic truncate max-w-[250px]">{{
+                                            prod.catalogo?.detalle || 'Sin detalle adicional' }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="text-right flex flex-col items-end gap-1 shrink-0">
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-sm font-black text-blue-600 dark:text-blue-400">
+                                            S/ {{ prod.precioVentaUnitario | number:'1.2-2' }}
+                                        </span>
+                                        <span
+                                            class="text-[9px] text-slate-400 uppercase font-bold tracking-tighter">Venta
+                                            Unidad</span>
+
+                                        <div *ngIf="getProfitLabel(prod)"
+                                            class="flex items-center gap-1.5 mt-0.5 px-2 py-0.5 bg-emerald-500/10 rounded border border-emerald-500/20">
+                                            <span
+                                                class="text-[9px] font-black text-emerald-600 dark:text-emerald-400">G:
+                                                {{ getProfitLabel(prod) }}</span>
+                                        </div>
+
+                                        <div *ngIf="prod.pmp" class="mt-1 flex flex-col items-end opacity-60">
+                                            <span class="text-[9px] font-bold text-slate-500">PMP: S/ {{ prod.pmp |
+                                                number:'1.2-2' }}</span>
+                                        </div>
+                                    </div>
+                                    <button
+                                        class="px-3 py-1 bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 text-[10px] font-black rounded-lg border border-blue-100 dark:border-blue-800 hover:bg-blue-600 hover:text-white transition-all uppercase shadow-sm">
+                                        Seleccionar
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="mt-2 flex items-center justify-between">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span
+                                        class="text-[10px] font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-2.5 py-1 rounded-lg border border-emerald-100 dark:border-emerald-800/50 uppercase tracking-tighter shadow-sm">
+                                        <i class="fas fa-layer-group mr-1.5 opacity-70"></i>
+                                        SALDO KARDEX: {{ formatearStockProducto(prod) }}
+                                    </span>
+                                    <span *ngIf="prod.idUbicacion"
+                                        class="text-[9px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700">
+                                        <i class="fas fa-map-marker-alt mr-1 text-slate-400"></i>UBIC: {{
+                                        prod.idUbicacion }}
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <!-- Mensaje de No Resultados -->
+                    <div *ngIf="busquedaRealizada && !cargandoSearch && searchResults.length === 0"
+                        class="p-8 text-center animate-fadeIn">
+                        <div
+                            class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 mb-3">
+                            <i class="fas fa-search text-slate-400 text-xl"></i>
+                        </div>
+                        <h4 class="text-slate-900 dark:text-white font-bold text-sm">Producto no encontrado / No
+                            disponible</h4>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs mt-1">
+                            Asegúrate de haber escrito correctamente el nombre o que el producto tenga stock.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Split (Carrito and Summary) -->
+            <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Cart Items Table - 8 Cols -->
+                <div class="lg:col-span-8 flex flex-col overflow-hidden">
+                    <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-3">
+                        Artículos seleccionados
+                    </h3>
+                    <div
+                        class="border border-slate-100 dark:border-slate-700/50 rounded-2xl bg-white dark:bg-slate-900/50 tabla-articulos">
+                        <table class="w-full text-sm text-left">
+                            <thead
+                                class="text-[10px] text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-900/80 sticky top-0 backdrop-blur-md">
+                                <tr>
+                                    <th class="px-4 py-4 font-black tracking-wider">Producto</th>
+                                    <th class="px-4 py-4 font-black tracking-wider text-center">Stock</th>
+                                    <th class="px-4 py-4 font-black tracking-wider text-center">Und.</th>
+                                    <th class="px-4 py-4 font-black tracking-wider text-center">Cant.</th>
+                                    <th class="px-4 py-4 font-black tracking-wider text-right">Venta Unidad</th>
+                                    <th class="px-4 py-4 font-black tracking-wider text-right">Total</th>
+                                    <th class="px-4 py-4 font-black tracking-wider text-center"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                                <tr *ngIf="carrito.length === 0">
+                                    <td colspan="6" class="px-4 py-8 text-center text-slate-400 italic">
+                                        No hay productos en el carrito. Utiliza el buscador arriba para agregar.
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let item of carrito; let i = index" (click)="seleccionarItem(item)"
+                                    class="group border-b border-slate-100 dark:border-slate-800/50 last:border-0 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-all cursor-pointer"
+                                    [ngClass]="{'bg-blue-50/50 dark:bg-blue-900/10 ring-1 ring-inset ring-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.1)]': itemActivo === item}">
+                                    <td class="px-4 py-3">
+                                        <div class="flex flex-col">
+                                            <span class="font-bold text-slate-800 dark:text-white text-sm">
+                                                {{ item.producto.catalogo?.nombre || 'Producto' }}
+                                            </span>
+                                            <span
+                                                class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">
+                                                @if (item.producto.catalogo?.manejaLotes !== false) {
+                                                LOTE: {{ item.producto.nroLote || 'N/A' }} •
+                                                VENCE: {{ (item.producto.fechaVencimiento | date:'dd/MM/yyyy') || '-' }}
+                                                } @else {
+                                                {{ item.producto.catalogo?.laboratorio || 'SIN LABORATORIO' }} •
+                                                {{ item.producto.catalogo?.presentacion || 'SIN PRESENTACION' }}
+                                                }
+                                            </span>
+                                            <div class="mt-1">
+                                                <span class="text-[9px] text-blue-600 dark:text-blue-400 font-black tracking-tight bg-blue-50 dark:bg-blue-900/30 px-1.5 py-0.5 rounded inline-block border border-blue-100 dark:border-blue-800/50">
+                                                    <i class="fas fa-boxes mr-1 opacity-70"></i> Quedan: {{ getRemainingStockSummary(item) }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <span
+                                            class="text-[10px] font-black text-slate-600 dark:text-indigo-300 bg-slate-100 dark:bg-indigo-900/40 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-indigo-800/50 block whitespace-nowrap shadow-sm">
+                                            {{ formatearStock(item) }}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="inline-block relative">
+                                            <select [(ngModel)]="item.unidadSeleccionada"
+                                                (change)="cambiarUnidad(item, item.unidadSeleccionada)"
+                                                class="custom-select bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg py-1.5 pl-2 text-[10px] font-black uppercase tracking-tighter text-slate-700 dark:text-white focus:ring-2 focus:ring-blue-500/50 outline-none cursor-pointer transition-all hover:border-blue-400 dark:hover:border-blue-500 min-w-[70px]">
+                                                <option *ngIf="item.producto.manejaUnidad" value="UNIDAD">{{ getAbrevUnidad(item.producto, 'UNIDAD') }}</option>
+                                                <option *ngIf="item.producto.manejaBlister" value="BLISTER">{{ getAbrevUnidad(item.producto, 'BLISTER') }}</option>
+                                                <option *ngIf="item.producto.manejaCaja" value="CAJA">{{ getAbrevUnidad(item.producto, 'CAJA') }}</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-center" (click)="$event.stopPropagation()">
+                                        <div class="flex items-center justify-center">
+                                            <div
+                                                class="flex items-center bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-600 p-1 shadow-sm overflow-hidden group/qty">
+                                                <button (click)="ajustarCantidad(item, -1)"
+                                                    class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-slate-700 text-slate-500 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 transition-all">
+                                                    <i class="fas fa-minus text-[10px]"></i>
+                                                </button>
+                                                <input type="number"
+                                                    class="quantity-input w-10 text-center bg-transparent border-0 font-black text-sm text-slate-800 dark:text-white focus:ring-0"
+                                                    [(ngModel)]="item.cantidad" (change)="actualizarFila(item)">
+                                                <button (click)="ajustarCantidad(item, 1)"
+                                                    class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-slate-700 text-slate-500 dark:text-slate-300 hover:text-emerald-500 dark:hover:text-emerald-400 transition-all">
+                                                    <i class="fas fa-plus text-[10px]"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-right">
+                                        <div class="flex flex-col items-end">
+                                            <span *ngIf="item.descuentoSeleccionado"
+                                                class="text-[10px] text-slate-400 line-through">
+                                                S/ {{ item.precioUnitario | number:'1.2-2' }}
+                                            </span>
+                                            <span class="font-medium text-slate-900 dark:text-white"
+                                                [ngClass]="{'text-green-600 dark:text-green-400': item.descuentoSeleccionado}">
+                                                S/ {{ getPrecioConDescuento(item) | number:'1.2-2' }}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-right font-bold text-blue-600 dark:text-blue-400">
+                                        S/ {{ item.total | number:'1.2-2' }}
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <button (click)="eliminarItem(i)"
+                                                class="text-slate-400 hover:text-red-500 transition-colors">
+                                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-4v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Side Panel: Resumen o Descuentos Contextuales -->
+                <div class="col-span-12 lg:col-span-4 sticky top-4 self-start space-y-4">
+
+                    <!-- Panel de Descuentos (Solo si hay item activo) -->
+                    <div *ngIf="itemActivo"
+                        class="bg-white dark:bg-slate-900/50 rounded-2xl border-2 border-blue-100 dark:border-slate-700 p-5 shadow-xl animate-scaleIn relative panel-descuentos">
+                        <button (click)="cerrarDescuentos()"
+                            class="absolute top-3 right-3 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="mb-4">
+                            <h3 class="text-xs font-black text-blue-900 dark:text-blue-100 uppercase tracking-tighter">
+                                Descuentos Disponibles
+                            </h3>
+                            <p class="text-[9px] text-blue-600 dark:text-blue-400 font-bold uppercase truncate">
+                                PARA: {{ itemActivo.producto.catalogo?.nombre }}
+                            </p>
+                        </div>
+
+                        <div class="p-5 space-y-4">
+                            <div *ngIf="itemActivo.descuentosSugeridos.length === 0" class="py-10 text-center">
+                                <div
+                                    class="w-12 h-12 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <i class="bi bi-tag text-slate-300 dark:text-slate-500 text-xl"></i>
+                                </div>
+                                <p class="text-sm text-slate-400">No hay descuentos disponibles para este producto.</p>
+                            </div>
+
+                            <div *ngFor="let d of itemActivo.descuentosSugeridos"
+                                (click)="seleccionarDescuento(itemActivo, d)"
+                                class="p-4 rounded-xl border transition-all cursor-pointer group relative" [ngClass]="{
+                                    'bg-blue-600 border-blue-600 text-white shadow-lg': itemActivo.descuentoSeleccionado?.id === d.id,
+                                    'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500': itemActivo.descuentoSeleccionado?.id !== d.id,
+                                    'opacity-40 grayscale pointer-events-none': d.matchingDetail?.tipoDescuento === 'CANTIDAD' && itemActivo.cantidad < d.matchingDetail?.cantidad
+                                }">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="flex-1">
+                                        <h3 class="font-bold text-sm mb-1"
+                                            [ngClass]="itemActivo.descuentoSeleccionado?.id === d.id ? 'text-white' : 'text-slate-800 dark:text-white'">
+                                            {{ d.nombre || 'Descuento General' }}
+                                        </h3>
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded border"
+                                                [ngClass]="itemActivo.descuentoSeleccionado?.id === d.id
+                                                    ? 'bg-white/20 border-white/30 text-white'
+                                                    : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500'">
+                                                {{ d.matchingDetail?.tipoDescuento || 'DESCUENTO' }}
+                                            </span>
+                                            <span
+                                                *ngIf="d.matchingDetail?.tipoDescuento === 'CANTIDAD' && itemActivo.cantidad < d.matchingDetail?.cantidad"
+                                                class="text-[9px] font-bold text-red-500 uppercase tracking-tighter">
+                                                Faltan {{ d.matchingDetail?.cantidad - itemActivo.cantidad }} und.
+                                            </span>
+                                        </div>
+                                        <p class="text-[10px]"
+                                            [ngClass]="itemActivo.descuentoSeleccionado?.id === d.id ? 'text-blue-100' : 'text-slate-400'">
+                                            {{ d.descripcion || 'Sin descripción adicional' }}
+                                        </p>
+                                    </div>
+                                    <div class="shrink-0 flex flex-col items-end">
+                                        <span class="text-sm font-black uppercase tracking-tighter"
+                                            [ngClass]="itemActivo.descuentoSeleccionado?.id === d.id ? 'text-white' : 'text-blue-600 dark:text-blue-400'">
+                                            <ng-container *ngIf="d.matchingDetail?.tipoDescuento === 'CANTIDAD'">
+                                                Lleva {{ d.matchingDetail?.cantidad }} Regala {{
+                                                d.matchingDetail?.valorDescuento }}
+                                            </ng-container>
+                                            <ng-container *ngIf="d.matchingDetail?.tipoDescuento !== 'CANTIDAD'">
+                                                {{ d.matchingDetail?.valorDescuento }}{{ d.matchingDetail?.tipoDescuento
+                                                === 'PORCENTAJE' ? '%' : ' SOL' }}
+                                            </ng-container>
+                                        </span>
+                                        <div class="w-5 h-5 rounded-full border-2 mt-2 flex items-center justify-center"
+                                            [ngClass]="itemActivo.descuentoSeleccionado?.id === d.id ? 'border-white bg-white' : 'border-slate-200 dark:border-slate-700'">
+                                            <i *ngIf="itemActivo.descuentoSeleccionado?.id === d.id"
+                                                class="bi bi-check text-blue-600 font-bold"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="itemActivo.descuentoSeleccionado"
+                            class="p-5 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-700/50">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-slate-500">Ahorro Aplicado:</span>
+                                <span class="font-bold text-green-600 dark:text-green-400">
+                                    - S/ {{ (itemActivo.precioUnitario * itemActivo.cantidad - itemActivo.total) |
+                                    number:'1.2-2' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resumen de Venta (Solo si NO hay item activo) -->
+                    <div *ngIf="!itemActivo"
+                        class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden animate-in slide-in-from-right duration-300">
+                        <div
+                            class="p-5 border-b border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/50">
+                            <h2 class="font-bold text-slate-800 dark:text-white uppercase tracking-wider text-sm">
+                                Resumen de Venta</h2>
+                        </div>
+                        <div class="p-6 space-y-5">
+                            <!-- Valores Principales -->
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center text-xs">
+                                    <span class="text-slate-500 dark:text-slate-400 font-medium">Base Imponible</span>
+                                    <span class="font-bold text-slate-700 dark:text-slate-200">S/ {{ subTotal |
+                                        number:'1.2-2' }}</span>
+                                </div>
+                                <div class="flex justify-between items-center text-xs">
+                                    <span class="text-slate-500 dark:text-slate-400 font-medium">IGV (18%)</span>
+                                    <span class="font-bold text-slate-700 dark:text-slate-200">S/ {{ igv |
+                                        number:'1.2-2' }}</span>
+                                </div>
+                                <div *ngIf="valorExo > 0" class="flex justify-between items-center text-xs">
+                                    <span class="text-slate-500 dark:text-slate-400 font-medium">Exonerado</span>
+                                    <span class="font-bold text-slate-700 dark:text-slate-200">S/ {{ valorExo |
+                                        number:'1.2-2' }}</span>
+                                </div>
+                                <div *ngIf="valorInaf > 0" class="flex justify-between items-center text-xs">
+                                    <span class="text-slate-500 dark:text-slate-400 font-medium">Inafecto</span>
+                                    <span class="font-bold text-slate-700 dark:text-slate-200">S/ {{ valorInaf |
+                                        number:'1.2-2' }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Descuentos Aplicados -->
+                            <div *ngIf="descuentoTotal > 0"
+                                class="pt-4 border-t border-dashed border-slate-200 dark:border-slate-700">
+                                <h3
+                                    class="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-3">
+                                    Descuentos Aplicados</h3>
+                                <div class="space-y-2">
+                                    <div *ngFor="let det of descuentosDetalle"
+                                        class="flex justify-between items-center text-xs">
+                                        <span class="flex items-center gap-2 text-slate-500">
+                                            <div class="w-1.5 h-1.5 rounded-full"
+                                                [ngClass]="det.colorClass || 'bg-blue-500'"></div>
+                                            {{ det.nombre }}
+                                        </span>
+                                        <span class="font-bold text-green-600 dark:text-green-400">- S/ {{ det.ahorro |
+                                            number:'1.2-2' }}</span>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex justify-between items-center mt-3 pt-3 border-t border-slate-100 dark:border-slate-700">
+                                    <span class="text-sm font-bold text-slate-800 dark:text-white">Total
+                                        Descuentos</span>
+                                    <span class="text-sm font-black text-green-600 dark:text-green-400">- S/ {{
+                                        descuentoTotal | number:'1.2-2' }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Métodos de Pago y Plantilla -->
+                            <div class="pt-4 border-t border-slate-100 dark:border-slate-700 space-y-4">
+                                <!-- Tipo de Documento -->
+                                <div class="flex flex-col gap-1">
+                                    <label
+                                        class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Comprobante</label>
+                                    <select [(ngModel)]="plantillaSeleccionadaId" (change)="onPlantillaChange()"
+                                        class="block w-full py-2 px-3 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-white text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer">
+                                        <option *ngFor="let p of plantillas" [value]="p.id">
+                                            {{ p.tipoDocumento?.nombre || p.nombre }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <!-- Método de Pago -->
+                                <div class="flex flex-col gap-1">
+                                    <label
+                                        class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Método
+                                        de Pago</label>
+                                    <select [(ngModel)]="metodoPagoSeleccionado"
+                                        class="block w-full py-2.5 px-3 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-white text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer">
+                                        <option *ngFor="let m of metodosPago" [value]="m">{{ m | titlecase }}</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <!-- Calculadora de Pago -->
+                            <div class="pt-4 border-t border-slate-100 dark:border-slate-700 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Pagó
+                                        con:</span>
+                                    <div class="relative w-32">
+                                        <span
+                                            class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none text-slate-400 text-xs font-bold">S/</span>
+                                        <input type="number" [(ngModel)]="pagoCon"
+                                            class="block w-full pl-7 pr-3 py-1.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-right"
+                                            placeholder="0.00">
+                                    </div>
+                                </div>
+
+                                <div *ngIf="pagoCon && vuelto > 0"
+                                    class="flex justify-between items-center animate-in fade-in slide-in-from-top-1 duration-200">
+                                    <span
+                                        class="text-xs font-bold text-green-600 dark:text-green-400 uppercase tracking-wider">Su
+                                        Vuelto:</span>
+                                    <span class="text-lg font-black text-green-600 dark:text-green-400">S/ {{ vuelto |
+                                        number:'1.2-2' }}</span>
+                                </div>
+
+                                <div *ngIf="pagoCon && falta > 0"
+                                    class="flex justify-between items-center animate-in fade-in slide-in-from-top-1 duration-200">
+                                    <span
+                                        class="text-xs font-bold text-red-500 dark:text-red-400 uppercase tracking-wider">Falta:</span>
+                                    <span class="text-lg font-black text-red-500 dark:text-red-400">S/ {{ falta |
+                                        number:'1.2-2' }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Total Final -->
+                            <div class="pt-4 mt-2">
+                                <div
+                                    class="bg-blue-600 dark:bg-blue-600/90 rounded-2xl p-5 text-white shadow-lg shadow-blue-500/20">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="text-xs font-medium text-blue-100 uppercase tracking-widest">Total
+                                            Final</span>
+                                    </div>
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="text-xl font-medium">S/</span>
+                                        <span class="text-4xl font-black">{{ total | number:'1.2-2' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Botones de Acción -->
+                            <div class="grid grid-cols-2 gap-3 pt-2">
+                                <button (click)="registrarVenta('COTIZACION')"
+                                    class="py-3.5 px-4 rounded-xl border border-slate-200 dark:border-slate-700 font-bold text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+                                    Cotización
+                                </button>
+                                <button (click)="registrarVenta('VENTA')"
+                                    class="py-3.5 px-4 rounded-xl bg-slate-900 dark:bg-blue-600 font-bold text-sm text-white hover:bg-slate-800 dark:hover:bg-blue-500 shadow-lg shadow-slate-200 dark:shadow-none transition-all">
+                                    {{ getNombreComprobante() }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <app-caja-apertura-modal [isOpen]="showModalCaja"
+            (modalClose)="onCajaCerrada($event)"></app-caja-apertura-modal>
+
+        <!-- MODAL DE ÉXITO POST-VENTA -->
+        <app-modal [isOpen]="showModalExito" title="¡Venta registrada con éxito!" [showCloseButton]="true"
+            iconType="success" size="md" (modalClose)="nuevaEmision()">
+
+            <div *ngIf="ventaReciente" class="animate-fadeIn">
+
+                <!-- Detalles SUNAT -->
+                <div
+                    class="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 mb-6 font-sans">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Detalles SUNAT</h4>
+                        <div
+                            class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full text-[10px] font-bold flex items-center gap-1.5 border border-emerald-200 dark:border-emerald-800/50">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            ACEPTADO
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[9px] text-slate-400 uppercase font-black mb-1">Documento</label>
+                            <p class="text-xl font-black text-slate-800 dark:text-white tracking-tighter">
+                                {{ventaReciente.numeroDocumento || (ventaReciente.serie + '-' + ventaReciente.numero)}}
+                            </p>
+                        </div>
+                        <div class="text-right">
+                            <label
+                                class="block text-[9px] text-slate-400 uppercase font-black mb-1 tracking-tighter">Fecha
+                                Emisión CDR</label>
+                            <p class="text-[11px] font-bold text-slate-600 dark:text-slate-300">
+                                {{ (ventaReciente.createdAt || today) | date:'MMM d, y, h:mm:ss a' }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 flex gap-3">
+                        <button (click)="descargarArchivo('XML')"
+                            class="flex-1 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-file-code text-indigo-500 text-sm"></i>
+                            Descargar XML
+                        </button>
+                        <button (click)="descargarArchivo('HTML')"
+                            class="flex-1 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-file-alt text-indigo-500 text-sm"></i>
+                            Descargar HTML
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Plantilla de Impresión (Post-Venta) -->
+                <div class="mb-6">
+                    <h4
+                        class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
+                        <i class="fas fa-print text-indigo-500"></i>
+                        Plantilla de Impresión
+                    </h4>
+                    <div class="flex gap-3 justify-center">
+                        <button (click)="imprimirEnFormato('SELECCIONADO')"
+                            class="px-8 py-3 w-full bg-indigo-600 dark:bg-indigo-500 border-2 border-indigo-600 dark:border-indigo-400 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fas fa-print"></i>
+                            Imprimir {{ getNombreComprobante().replace('Generar ', '') }}
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Compartir -->
+                <div class="mb-8 p-1">
+                    <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4">Compartir
+                        Comprobante</h4>
+                    <!-- Inputs para Correo/WhatsApp -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 mt-2">
+                        <div class="relative">
+                            <label class="block text-[9px] text-slate-400 uppercase font-black mb-1 ml-1">WhatsApp
+                                (Celular)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fab fa-whatsapp text-slate-400 text-xs"></i>
+                                </span>
+                                <input type="tel" [(ngModel)]="telefonoDestino"
+                                    class="w-full pl-8 pr-4 py-2.5 bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 rounded-xl text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition-all text-[11px] font-bold"
+                                    placeholder="987654321">
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <label class="block text-[9px] text-slate-400 uppercase font-black mb-1 ml-1">Email de
+                                Envío</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-envelope text-slate-400 text-xs"></i>
+                                </span>
+                                <input type="email" [(ngModel)]="emailDestino"
+                                    class="w-full pl-8 pr-4 py-2.5 bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 rounded-xl text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition-all text-[11px] font-bold"
+                                    placeholder="correo@ejemplo.com">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button (click)="compartir('WHATSAPP')"
+                            class="flex-1 py-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl text-slate-600 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-600 dark:hover:text-emerald-400 border border-transparent hover:border-emerald-200 dark:hover:border-emerald-800 transition-all flex flex-col items-center gap-2 group">
+                            <i
+                                class="fab fa-whatsapp text-green-500 text-xl group-hover:scale-110 transition-transform"></i>
+                            <span class="text-[9px] font-black uppercase tracking-tighter">Enviar WhatsApp</span>
+                        </button>
+                        <button (click)="compartir('CORREO')"
+                            class="flex-1 py-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl text-slate-600 dark:text-slate-300 hover:bg-rose-50 dark:hover:bg-rose-900/20 hover:text-rose-600 dark:hover:text-rose-400 border border-transparent hover:border-rose-200 dark:hover:border-rose-800 transition-all flex flex-col items-center gap-2 group">
+                            <i
+                                class="fas fa-envelope text-red-400 text-xl group-hover:scale-110 transition-transform"></i>
+                            <span class="text-[9px] font-black uppercase tracking-tighter">Enviar Email</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Botón Nueva Emisión -->
+                <button (click)="nuevaEmision()"
+                    class="w-full py-4 bg-indigo-600 dark:bg-indigo-500 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-indigo-700 dark:hover:bg-indigo-400 transition-all shadow-xl shadow-indigo-200 dark:shadow-none transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3">
+                    <i class="fas fa-plus"></i>
+                    Nueva Emisión
+                </button>
+
+            </div>
+        </app-modal>
+    </div>
+</div>

@@ -1,0 +1,317 @@
+<div class="flex flex-col h-full bg-slate-50/50 dark:bg-slate-900/20">
+    @if (loading()) {
+    <div class="flex justify-center items-center py-20">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600"></div>
+    </div>
+    } @else {
+    <div class="p-4 md:p-6 flex-1">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- COLUMNA IZQUIERDA (Info principal, Ítems, Cronograma) -->
+            <div class="lg:col-span-8 space-y-6">
+
+                <!-- Inline Header Info -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-sky-50 dark:border-slate-700 shadow-sm shadow-sky-100/50 dark:shadow-none p-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center text-white shadow-lg shadow-sky-200 dark:shadow-none shrink-0">
+                                <i class="fas fa-file-invoice text-2xl"></i>
+                            </div>
+                            <div>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                                        {{ compra()?.tipoComprobante }}
+                                    </span>
+                                    <span class="px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border" [ngClass]="{
+                                            'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800': getEstadoNombre(compra()?.estado) === 'REGISTRADO' || getEstadoNombre(compra()?.estado) === 'ACTIVA' || getEstadoNombre(compra()?.estado) === 'VALIDADO',
+                                            'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800': getEstadoNombre(compra()?.estado) === 'ANULADO'
+                                        }">
+                                        ESTADO: {{ getEstadoNombre(compra()?.estado) }}
+                                    </span>
+                                </div>
+                                <h2 class="text-3xl font-black text-slate-900 dark:text-white tracking-tighter mt-1.5 font-mono">
+                                    {{ compra()?.serie }}-{{ compra()?.correlativo }}
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button (click)="imprimirFisico()" title="Imprimir" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl shadow-lg transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-print"></i>
+                                <span class="hidden sm:inline">Imprimir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Grid Info -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-sky-50 dark:border-slate-700 shadow-sm shadow-sky-100/50 dark:shadow-none">
+                        <p class="text-[10px] font-black text-sky-400 dark:text-slate-400 uppercase tracking-[0.2em] mb-2">Proveedor</p>
+                        <h4 class="text-slate-900 dark:text-white font-bold text-base leading-tight truncate">{{ compra()?.proveedor?.razonSocial }}</h4>
+                        <div class="flex items-center gap-2 mt-1.5 text-slate-500">
+                            <i class="fas fa-id-card text-xs"></i>
+                            <span class="text-xs font-mono tracking-tighter">{{ compra()?.proveedor?.numDocIdent }}</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-sky-50 dark:border-slate-700 shadow-sm shadow-sky-100/50 dark:shadow-none">
+                        <p class="text-[10px] font-black text-sky-400 dark:text-slate-400 uppercase tracking-[0.2em] mb-2">Emisión</p>
+                        <h4 class="text-slate-900 dark:text-white font-black text-lg">{{ compra()?.fechaEmision | date:'dd MMM, yyyy' }}</h4>
+                        <p class="text-[10px] text-slate-500 mt-0.5">Fecha registrada</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-sky-50 dark:border-slate-700 shadow-sm shadow-sky-100/50 dark:shadow-none">
+                        <p class="text-[10px] font-black text-sky-400 dark:text-slate-400 uppercase tracking-[0.2em] mb-2">Condición</p>
+                        <div class="flex items-center gap-3">
+                            <div class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold uppercase text-xs tracking-wider">
+                                {{ compra()?.condicionPago }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Catalog Items Table -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-sky-50 dark:border-slate-700 shadow-xl shadow-sky-100/30 dark:shadow-none overflow-hidden">
+                    <div class="px-6 py-5 border-b border-sky-50 dark:border-slate-700 flex justify-between items-center">
+                        <h3 class="text-lg font-black text-slate-900 dark:text-white">Ítems del Comprobante</h3>
+                        <span class="px-3 py-1 bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 rounded-full text-[10px] font-bold">
+                            {{ compra()?.detalles?.length }} registros
+                        </span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-sky-50/50 dark:bg-slate-900/50 text-[9px] text-sky-600 dark:text-slate-400 uppercase font-black tracking-widest">
+                                <tr>
+                                    <th class="px-6 py-4">Descripción</th>
+                                    <th class="px-3 py-4 text-center">UM</th>
+                                    <th class="px-3 py-4 text-center">Cant.</th>
+                                    <th class="px-3 py-4 text-right">P. Unit.</th>
+                                    <th class="px-3 py-4 text-center">Desc.</th>
+                                    <th class="px-3 py-4 text-center">Afec.</th>
+                                    <th class="px-6 py-4 text-right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                                @for (item of compra()?.detalles; track item.id) {
+                                <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-700/20 transition-all group">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-1.5 h-8 rounded-full bg-sky-100 dark:bg-slate-700 group-hover:bg-sky-400 transition-all"></div>
+                                            <div>
+                                                <h5 class="text-slate-900 dark:text-white text-sm font-bold leading-tight">{{ item.producto.nombre }}</h5>
+                                                <div class="flex items-center gap-3 mt-1">
+                                                    <span class="text-[9px] font-bold text-slate-400 uppercase">Lote: <span class="text-sky-500 font-mono">{{ item.lote || 'N/A' }}</span></span>
+                                                    <span class="text-[9px] font-bold text-slate-400 uppercase">Venc: <span class="text-amber-500 font-mono">{{ item.fechaVencimiento | date:'dd/MM/yy' }}</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-3 py-4 text-center">
+                                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded text-[10px] font-black text-slate-500">{{ item.unidad }}</span>
+                                    </td>
+                                    <td class="px-3 py-4 text-center text-slate-900 dark:text-white text-sm font-black">{{ item.cantidad }}</td>
+                                    <td class="px-3 py-4 text-right text-slate-600 dark:text-slate-400 font-mono text-xs">{{ item.precioUnitario | number:'1.2-2' }}</td>
+                                    <td class="px-3 py-4 text-center">
+                                        @if(item.porcentajeDescuento > 0) {
+                                        <span class="px-2 py-0.5 bg-red-50 text-red-600 rounded-full text-[9px] font-black">-{{ item.porcentajeDescuento }}%</span>
+                                        } @else {
+                                        <span class="text-slate-300">--</span>
+                                        }
+                                    </td>
+                                    <td class="px-3 py-4 text-center">
+                                        <span class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase"
+                                            [ngClass]="item.esBonificacion ? 'bg-purple-100 text-purple-700' : 'bg-slate-100 text-slate-500'">
+                                            {{ item.esBonificacion ? 'BONIF' : getTipoAfectacionNombre(item.tipoAfectacion) }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <span class="text-sm font-black text-slate-900 dark:text-white font-mono">{{ item.valorVenta | number:'1.2-2' }}</span>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Cronograma de Pagos Section -->
+                @if (compra()?.cronograma && (compra()?.cronograma?.length || 0) > 0) {
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-xl overflow-hidden mt-6">
+                    <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600">
+                                <i class="fas fa-calendar-check text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-black text-slate-900 dark:text-white">Cronograma de Pagos</h3>
+                                <p class="text-[9px] text-slate-500 font-bold uppercase tracking-wider">Cuotas y vencimientos</p>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-full text-[10px] font-bold">
+                            {{ compra()?.cronograma?.length }} Cuotas
+                        </span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-slate-50/30 dark:bg-slate-900/30 text-[9px] text-slate-400 uppercase font-black tracking-widest">
+                                <tr>
+                                    <th class="px-6 py-3">Nº Cuota</th>
+                                    <th class="px-3 py-3 text-center">Vencimiento</th>
+                                    <th class="px-3 py-3 text-right">Monto</th>
+                                    <th class="px-3 py-3 text-center">Estado</th>
+                                    <th class="px-3 py-3 text-center">Info Pago</th>
+                                    <th class="px-6 py-3 text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                                @for (cuota of compra()?.cronograma; track cuota.idCronograma) {
+                                <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-700/20 transition-all group">
+                                    <td class="px-6 py-4">
+                                        <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-[10px] font-black text-slate-600 dark:text-slate-300">
+                                            {{ cuota.numeroCuota }}
+                                        </span>
+                                    </td>
+                                    <td class="px-3 py-4 text-center">
+                                        <span class="text-xs font-bold text-slate-700 dark:text-slate-300">
+                                            {{ cuota.fechaVencimiento | date:'dd/MM/yyyy' }}
+                                        </span>
+                                    </td>
+                                    <td class="px-3 py-4 text-right">
+                                        <span class="text-sm font-black text-slate-900 dark:text-white font-mono">
+                                            {{ compra()?.moneda === 'PEN' ? 'S/' : '$' }} {{ cuota.montoCuota | number:'1.2-2' }}
+                                        </span>
+                                    </td>
+                                    <td class="px-3 py-4 text-center">
+                                        <span class="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider border"
+                                            [ngClass]="{
+                                                'bg-amber-50 text-amber-700 border-amber-200': getEstadoNombre(cuota.estado) === 'ACTIVO' || getEstadoNombre(cuota.estado) === 'PENDIENTE',
+                                                'bg-blue-50 text-blue-700 border-blue-200': getEstadoNombre(cuota.estado) === 'SOLICITADO',
+                                                'bg-emerald-50 text-emerald-700 border-emerald-200': getEstadoNombre(cuota.estado) === 'PAGADO'
+                                            }">
+                                            {{ getEstadoNombre(cuota.estado) }}
+                                        </span>
+                                    </td>
+                                    <td class="px-3 py-4 text-center">
+                                        <span class="text-[9px] text-slate-500 font-medium italic">
+                                            {{ cuota.comprobantePago || '--' }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="flex justify-center gap-1.5">
+                                            @if (getEstadoNombre(cuota.estado) === 'ACTIVO' || getEstadoNombre(cuota.estado) === 'PENDIENTE') {
+                                                <button (click)="solicitarPago(cuota)"
+                                                    class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-[9px] font-black hover:bg-indigo-700 transition-all shadow-sm flex items-center gap-1.5">
+                                                    <i class="fas fa-paper-plane"></i> Solicitar
+                                                </button>
+                                            }
+                                            @if (getEstadoNombre(cuota.estado) === 'SOLICITADO') {
+                                                <button (click)="abrirModalPago(cuota)"
+                                                    class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-[9px] font-black hover:bg-emerald-700 transition-all shadow-sm flex items-center gap-1.5">
+                                                    <i class="fas fa-check-circle"></i> Confirmar
+                                                </button>
+                                            }
+                                            @if (getEstadoNombre(cuota.estado) === 'PAGADO') {
+                                                <span class="text-emerald-500 font-bold text-[9px]">
+                                                    <i class="fas fa-check-double mr-1"></i> Completado
+                                                </span>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                }
+            </div>
+
+            <!-- COLUMNA DERECHA (Resumen Financiero y Auditoría) -->
+            <div class="lg:col-span-4 space-y-6">
+
+                <!-- Resumen Financiero -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 text-slate-800 dark:text-white shadow-xl shadow-sky-100/50 dark:shadow-none border border-sky-100 dark:border-slate-700 relative overflow-hidden">
+                    <!-- Deco element -->
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-sky-50 dark:bg-slate-700 rounded-full blur-2xl opacity-60 pointer-events-none"></div>
+
+                    <div class="flex items-center gap-3 mb-8 relative z-10">
+                        <div class="w-10 h-10 rounded-xl bg-sky-50 dark:bg-slate-700 flex items-center justify-center text-sky-600 dark:text-sky-400 shrink-0">
+                            <i class="fas fa-file-invoice-dollar text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-base font-bold text-slate-900 dark:text-white">Resumen Financiero</h4>
+                            <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">Liquidación final</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 relative z-10">
+                        <div class="flex justify-between items-center bg-slate-50 dark:bg-slate-900/50 px-4 py-3 rounded-xl border border-slate-100 dark:border-slate-700/50">
+                            <span class="text-xs font-bold text-slate-600 dark:text-slate-400">Base Imponible</span>
+                            <span class="text-sm font-black font-mono text-slate-900 dark:text-white">{{ compra()?.moneda === 'PEN' ? 'S/' : '$' }} {{ compra()?.valorVentaGravado | number:'1.2-2' }}</span>
+                        </div>
+                        
+                        @if((compra()?.valorVentaExonerado || 0) > 0) {
+                        <div class="flex justify-between items-center bg-slate-50 dark:bg-slate-900/50 px-4 py-3 rounded-xl border border-slate-100 dark:border-slate-700/50">
+                            <span class="text-xs font-bold text-slate-600 dark:text-slate-400">Op. Exonerada</span>
+                            <span class="text-sm font-black font-mono text-slate-900 dark:text-white">{{ compra()?.moneda === 'PEN' ? 'S/' : '$' }} {{ compra()?.valorVentaExonerado | number:'1.2-2' }}</span>
+                        </div>
+                        }
+                        
+                        @if((compra()?.valorVentaInafecto || 0) > 0) {
+                        <div class="flex justify-between items-center bg-slate-50 dark:bg-slate-900/50 px-4 py-3 rounded-xl border border-slate-100 dark:border-slate-700/50">
+                            <span class="text-xs font-bold text-slate-600 dark:text-slate-400">Op. Inafecta</span>
+                            <span class="text-sm font-black font-mono text-slate-900 dark:text-white">{{ compra()?.moneda === 'PEN' ? 'S/' : '$' }} {{ compra()?.valorVentaInafecto | number:'1.2-2' }}</span>
+                        </div>
+                        }
+                        
+                        <div class="flex justify-between items-center bg-slate-50 dark:bg-slate-900/50 px-4 py-3 rounded-xl border border-slate-100 dark:border-slate-700/50">
+                            <span class="text-xs font-bold text-slate-600 dark:text-slate-400">Impuesto (IGV)</span>
+                            <span class="text-sm font-black font-mono text-slate-900 dark:text-white">{{ compra()?.moneda === 'PEN' ? 'S/' : '$' }} {{ compra()?.igv | number:'1.2-2' }}</span>
+                        </div>
+
+                        <div class="pt-6 mt-6 border-t border-dashed border-slate-200 dark:border-slate-700 flex flex-col items-center">
+                            <span class="text-[10px] font-black text-sky-500 uppercase tracking-[0.2em] mb-2">Total a Liquidar</span>
+                            <div class="flex items-baseline gap-2 text-slate-900 dark:text-white bg-sky-50 dark:bg-slate-700 px-6 py-4 rounded-2xl border border-sky-100 dark:border-slate-600 w-full justify-center">
+                                <span class="text-xl font-black text-sky-500 dark:text-sky-400">{{ compra()?.moneda === 'PEN' ? 'S/' : '$' }}</span>
+                                <span class="text-3xl font-black tracking-tighter font-mono">{{ compra()?.totalPagar | number:'1.2-2' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Auditoría y Configuraciones -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 text-slate-800 dark:text-white shadow-xl shadow-sky-100/50 dark:shadow-none border border-sky-100 dark:border-slate-700 relative overflow-hidden">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 shrink-0">
+                            <i class="fas fa-shield-alt text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-900 dark:text-white">Auditoría</h4>
+                            <p class="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">Trazabilidad del registro</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-700/50">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Divisa de Registro</p>
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-sky-600 dark:text-sky-400">
+                                    {{ compra()?.moneda === 'PEN' ? 'S/' : '$' }}
+                                </div>
+                                <span class="text-sm font-bold text-slate-700 dark:text-slate-300">{{ compra()?.moneda }}</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-700/50">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1"><i class="fas fa-clock mr-1"></i> Fecha de Registro</p>
+                            <p class="text-sm text-slate-700 dark:text-slate-300 font-bold">{{ compra()?.fechaRegistro | date:'medium' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    }
+</div>

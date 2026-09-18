@@ -1,0 +1,175 @@
+<div class="min-h-screen bg-gray-50 p-4 md:p-8">
+  <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+    
+    <!-- Header del Perfil -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 sm:p-10 text-white flex items-center gap-6">
+      <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center text-4xl font-bold border-4 border-white/30 backdrop-blur-sm">
+        {{ userProfile?.firstName?.charAt(0) || 'U' }}{{ userProfile?.lastName?.charAt(0) || '' }}
+      </div>
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-bold">{{ userProfile?.firstName }} {{ userProfile?.lastName }}</h1>
+        <p class="text-blue-100 mt-1 flex items-center gap-2">
+          <i class="fa-solid fa-envelope text-sm"></i>
+          {{ userProfile?.email }}
+        </p>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <span *ngFor="let role of userProfile?.roles" class="px-3 py-1 bg-white/20 rounded-full text-xs font-medium backdrop-blur-sm">
+            {{ role }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navegación por Tabs -->
+    <div class="flex border-b border-gray-200">
+      <button 
+        (click)="activeTab = 'datos'"
+        [class]="activeTab === 'datos' ? 'border-blue-600 text-blue-600 font-semibold' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+        class="flex-1 py-4 px-6 text-center border-b-2 transition-colors duration-200">
+        <i class="fa-solid fa-user mr-2"></i> Mis Datos
+      </button>
+      <button 
+        (click)="activeTab = 'permisos'"
+        [class]="activeTab === 'permisos' ? 'border-blue-600 text-blue-600 font-semibold' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+        class="flex-1 py-4 px-6 text-center border-b-2 transition-colors duration-200">
+        <i class="fa-solid fa-shield-halved mr-2"></i> Mis Accesos y Permisos
+      </button>
+    </div>
+
+    <div class="p-6 sm:p-10">
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="flex justify-center items-center py-12">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+
+      <!-- Tab: Mis Datos -->
+      <div *ngIf="!isLoading && activeTab === 'datos'" class="animate-fade-in">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-xl font-bold text-gray-800">Información Personal</h2>
+          <button (click)="openChangePassword()" class="text-sm px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors font-medium flex items-center gap-2">
+            <i class="fa-solid fa-key"></i> Cambiar Contraseña
+          </button>
+        </div>
+
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Nombres -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Nombres</label>
+              <input type="text" formControlName="firstName" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                [class.border-red-500]="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched">
+              <span class="text-xs text-red-500 mt-1" *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched">
+                El nombre es requerido
+              </span>
+            </div>
+            
+            <!-- Apellidos -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
+              <input type="text" formControlName="lastName" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                [class.border-red-500]="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched">
+              <span class="text-xs text-red-500 mt-1" *ngIf="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched">
+                Los apellidos son requeridos
+              </span>
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+              <input type="email" formControlName="email" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-gray-50"
+                readonly>
+              <span class="text-xs text-gray-500 mt-1">El correo no puede ser modificado</span>
+            </div>
+
+            <!-- Teléfono -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+              <input type="text" formControlName="phone" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+            </div>
+          </div>
+
+          <div class="pt-4 flex justify-end">
+            <button type="submit" [disabled]="profileForm.invalid || isSaving"
+              class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 flex items-center gap-2">
+              <span *ngIf="!isSaving"><i class="fa-solid fa-save"></i> Guardar Cambios</span>
+              <span *ngIf="isSaving">
+                <i class="fa-solid fa-circle-notch fa-spin"></i> Guardando...
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tab: Permisos -->
+      <div *ngIf="!isLoading && activeTab === 'permisos'" class="animate-fade-in">
+        <h2 class="text-xl font-bold text-gray-800 mb-6">Roles y Permisos Activos</h2>
+        
+        <div class="mb-8" *ngIf="userProfile?.roles?.length">
+          <h3 class="text-sm uppercase tracking-wider text-gray-500 font-semibold mb-3">Roles Asignados</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div *ngFor="let role of userProfile?.roles" class="bg-indigo-50 border border-indigo-100 rounded-lg p-4 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
+                <i class="fa-solid fa-user-tag"></i>
+              </div>
+              <div class="font-medium text-indigo-900">{{ role }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-sm uppercase tracking-wider text-gray-500 font-semibold mb-3">Permisos Detallados</h3>
+          
+          <div *ngIf="!userProfile?.effectivePermissions?.length && !userProfile?.permissions?.length" class="text-gray-500 italic p-4 bg-gray-50 rounded-lg text-center">
+            No tienes permisos específicos asignados.
+          </div>
+
+          <!-- Si el backend devuelve una lista de strings en permissions -->
+          <div *ngIf="userProfile?.permissions?.length" class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+            <ul class="divide-y divide-gray-200">
+              <li *ngFor="let perm of userProfile?.permissions" class="p-4 hover:bg-gray-50 flex justify-between items-center transition-colors">
+                <div class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-green-500"></i>
+                  <span class="text-gray-700 font-medium">{{ perm }}</span>
+                </div>
+                <span class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full font-semibold">Activo</span>
+              </li>
+            </ul>
+          </div>
+          
+          <!-- Si el backend devuelve directPermissions con fechas -->
+          <div *ngIf="userProfile?.directPermissions?.length" class="mt-6">
+             <h3 class="text-sm uppercase tracking-wider text-gray-500 font-semibold mb-3">Permisos Directos Adicionales</h3>
+             <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+                <ul class="divide-y divide-gray-200">
+                  <li *ngFor="let dp of userProfile?.directPermissions" class="p-4 hover:bg-gray-50 flex justify-between items-center transition-colors">
+                    <div class="flex flex-col">
+                      <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-plus-circle text-blue-500"></i>
+                        <span class="text-gray-700 font-medium">{{ dp.permission.name }}</span>
+                      </div>
+                      <span class="text-xs text-gray-500 mt-1 ml-7" *ngIf="dp.expiresAt">
+                        Vence: {{ dp.expiresAt | date:'mediumDate' }}
+                      </span>
+                    </div>
+                    <span class="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full font-semibold">
+                      Permiso Directo
+                    </span>
+                  </li>
+                </ul>
+             </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<app-cambio-clave-modal
+  *ngIf="showCambioClave"
+  (onClose)="closeChangePassword()">
+</app-cambio-clave-modal>

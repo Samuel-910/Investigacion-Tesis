@@ -1,0 +1,58 @@
+[
+  {
+    "codTipoDoc": "01",
+    "seriePrefix": "F",
+    "idDocimp": 1,
+    "plantillaNombre": "defecto_factura_venta_a4",
+    "modulo": "VENTA",
+    "ip": "asd"
+  },
+  {
+    "codTipoDoc": "03",
+    "seriePrefix": "B",
+    "idDocimp": 1,
+    "plantillaNombre": "defecto_factura_venta_a4",
+    "modulo": "VENTA",
+    "ip": "asd"
+  },
+  {
+    "codTipoDoc": "12",
+    "seriePrefix": "T",
+    "idDocimp": 2,
+    "plantillaNombre": "defecto_venta_ticket",
+    "modulo": "VENTA",
+    "ip": "123"
+  },
+  {
+    "codTipoDoc": "12",
+    "seriePrefix": "ID",
+    "idDocimp": 4,
+    "plantillaNombre": "defecto_movimientos_ingresos_ticket",
+    "modulo": "INGRESOS_DIVERSOS",
+    "ip": "123"
+  },
+  {
+    "codTipoDoc": "12",
+    "seriePrefix": "SD",
+    "idDocimp": 4,
+    "plantillaNombre": "defecto_movimientos_salidas_ticket",
+    "modulo": "SALIDAS_DIVERSAS",
+    "ip": "123"
+  },
+  {
+    "codTipoDoc": "07",
+    "seriePrefix": "FC",
+    "idDocimp": 1,
+    "plantillaNombre": "defecto_nota_credito_a4",
+    "modulo": "VENTA",
+    "ip": "localhost"
+  },
+  {
+    "codTipoDoc": "07",
+    "seriePrefix": "BC",
+    "idDocimp": 1,
+    "plantillaNombre": "defecto_nota_credito_a4",
+    "modulo": "VENTA",
+    "ip": "localhost"
+  }
+]

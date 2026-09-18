@@ -1,0 +1,152 @@
+<form [formGroup]="clinicaForm" (ngSubmit)="submit()" class="space-y-8">
+    <!-- SECCIÓN DE LOGOS -->
+    <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700">
+        <!-- Logo Cuadrado -->
+        <div class="flex flex-col items-center gap-4">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Logo Cuadrado</span>
+            <div class="relative group">
+                <div
+                    class="w-32 h-32 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center overflow-hidden shadow-md transition-all group-hover:border-blue-500">
+                    <img *ngIf="logoCuadradoPreview()" [src]="logoCuadradoPreview()" class="w-full h-full object-cover">
+                    <div *ngIf="!logoCuadradoPreview()" class="flex flex-col items-center text-slate-300">
+                        <i class="fas fa-image text-3xl mb-2"></i>
+                        <span class="text-[10px] font-bold">1:1</span>
+                    </div>
+                </div>
+                <!-- Badge Principal -->
+                <div *ngIf="clinicaForm.get('logoPrincipal')?.value === 'CUADRADO'"
+                    class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-[10px] shadow-lg animate-bounce">
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <label
+                    class="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
+                    <i class="fas fa-upload mr-2"></i>Subir
+                    <input type="file" (change)="onFileSelected($event, 'CUADRADO')" class="hidden" accept="image/*">
+                </label>
+                <button type="button" *ngIf="logoCuadradoPreview()" (click)="removeLogo('CUADRADO')"
+                    class="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+                <button type="button" [class.bg-blue-600]="clinicaForm.get('logoPrincipal')?.value === 'CUADRADO'"
+                    [class.text-white]="clinicaForm.get('logoPrincipal')?.value === 'CUADRADO'"
+                    [class.bg-white]="clinicaForm.get('logoPrincipal')?.value !== 'CUADRADO'"
+                    (click)="seleccionarPrincipal('CUADRADO')"
+                    class="px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold transition-all shadow-sm">
+                    Principal
+                </button>
+            </div>
+        </div>
+
+        <!-- Logo Rectangular -->
+        <div class="flex flex-col items-center gap-4">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Logo Rectangular</span>
+            <div class="relative group">
+                <div
+                    class="w-64 h-32 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center overflow-hidden shadow-md transition-all group-hover:border-blue-500">
+                    <img *ngIf="logoRectangularPreview()" [src]="logoRectangularPreview()"
+                        class="w-full h-full object-contain">
+                    <div *ngIf="!logoRectangularPreview()" class="flex flex-col items-center text-slate-300">
+                        <i class="fas fa-image text-3xl mb-2"></i>
+                        <span class="text-[10px] font-bold">3:1 / 4:1</span>
+                    </div>
+                </div>
+                <!-- Badge Principal -->
+                <div *ngIf="clinicaForm.get('logoPrincipal')?.value === 'RECTANGULAR'"
+                    class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-[10px] shadow-lg animate-bounce">
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <label
+                    class="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
+                    <i class="fas fa-upload mr-2"></i>Subir
+                    <input type="file" (change)="onFileSelected($event, 'RECTANGULAR')" class="hidden" accept="image/*">
+                </label>
+                <button type="button" *ngIf="logoRectangularPreview()" (click)="removeLogo('RECTANGULAR')"
+                    class="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+                <button type="button" [class.bg-blue-600]="clinicaForm.get('logoPrincipal')?.value === 'RECTANGULAR'"
+                    [class.text-white]="clinicaForm.get('logoPrincipal')?.value === 'RECTANGULAR'"
+                    [class.bg-white]="clinicaForm.get('logoPrincipal')?.value !== 'RECTANGULAR'"
+                    (click)="seleccionarPrincipal('RECTANGULAR')"
+                    class="px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold transition-all shadow-sm">
+                    Principal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DATOS BÁSICOS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <app-form-input label="Razón Social" formControlName="razonSocial" [required]="true" [hasIcon]="true"
+            [error]="clinicaForm.get('razonSocial')?.invalid && clinicaForm.get('razonSocial')?.touched ? 'Campo requerido' : null">
+            <i icon class="fas fa-building"></i>
+        </app-form-input>
+
+        <app-form-input label="RUC" formControlName="ruc" [required]="true" [hasIcon]="true"
+            [error]="clinicaForm.get('ruc')?.invalid && clinicaForm.get('ruc')?.touched ? 'RUC debe tener 11 dígitos' : null">
+            <i icon class="fas fa-id-card"></i>
+        </app-form-input>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <app-form-input label="Nombre Comercial / Abrev." formControlName="abrev" [hasIcon]="true">
+            <i icon class="fas fa-tag"></i>
+        </app-form-input>
+
+        <app-form-input label="Código Institucional" formControlName="codigo" [hasIcon]="true">
+            <i icon class="fas fa-hashtag"></i>
+        </app-form-input>
+    </div>
+
+    <!-- El campo Dirección Legal ha sido removido porque ahora se jala de la Sucursal -->
+
+    <!-- CONTACTO (Solo Email y Web, teléfonos removidos) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <app-form-input label="Email Corporativo" formControlName="email" type="email" [hasIcon]="true"
+            placeholder="Ej. contacto@clinica.com">
+            <i icon class="fas fa-envelope text-xs"></i>
+        </app-form-input>
+
+        <app-form-input label="Sitio Web (URL)" formControlName="web" [hasIcon]="true"
+            placeholder="Ej. www.clinica.com">
+            <i icon class="fas fa-globe text-xs"></i>
+        </app-form-input>
+    </div>
+
+    <!-- PERSONAL RESPONSABLE -->
+    <div class="pt-6 border-t border-slate-200 dark:border-slate-700">
+        <h4 class="text-xs font-black text-blue-600 uppercase tracking-widest mb-6">Personal Responsable</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <app-form-input label="Representante Legal" formControlName="representante" [hasIcon]="true">
+                <i icon class="fas fa-user-tie"></i>
+            </app-form-input>
+
+            <app-form-input label="Auditor Médico" formControlName="auditor" [hasIcon]="true">
+                <i icon class="fas fa-user-md"></i>
+            </app-form-input>
+
+            <app-form-input label="Liquidador" formControlName="liquidador" [hasIcon]="true">
+                <i icon class="fas fa-gavel"></i>
+            </app-form-input>
+
+            <app-form-input label="Responsable Financiero" formControlName="financiero" [hasIcon]="true">
+                <i icon class="fas fa-hand-holding-usd"></i>
+            </app-form-input>
+        </div>
+    </div>
+
+    <!-- BOTONES DE ACCIÓN -->
+    <div class="flex justify-end gap-3 pt-8 border-t border-transparent">
+        <button type="button" (click)="cancel()"
+            class="px-6 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition-all">
+            Cancelar
+        </button>
+        <app-primary-button label="Guardar Cambios" icon="save" color="brand" [disabled]="clinicaForm.invalid"
+            (btnClick)="submit()"></app-primary-button>
+    </div>
+</form>

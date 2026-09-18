@@ -1,0 +1,66 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6 bg-white dark:bg-slate-800 rounded-3xl">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Punto de Venta -->
+        <div class="md:col-span-2">
+            <app-searchable-select [data]="puntos()" label="Punto de Venta" placeholder="Buscar punto..."
+                bindLabel="nombre" bindValue="punto" formControlName="puntoId" iconBgColor="bg-indigo-500"
+                [required]="true" [error]="getError('puntoId')" [hasIcon]="true">
+                <i icon class="fas fa-store text-xs"></i>
+            </app-searchable-select>
+        </div>
+
+        <!-- Módulo (Tipo) -->
+        <div>
+            <app-searchable-select [data]="modulos" label="Tipo" placeholder="Seleccionar módulo..." bindLabel="label"
+                bindValue="value" formControlName="modulo" iconBgColor="bg-blue-500" [required]="true"
+                [error]="getError('modulo')" [hasIcon]="true">
+                <i icon class="fas fa-layer-group text-xs"></i>
+            </app-searchable-select>
+        </div>
+
+        <!-- Tipo Documento (Sucursal) -->
+        <div>
+            <app-searchable-select [data]="tiposDocFiltrados" label="Documento" placeholder="Seleccionar documento..."
+                bindLabel="label" bindValue="value" formControlName="tipoDoc" iconBgColor="bg-emerald-500"
+                [required]="true" [error]="getError('tipoDoc')" [hasIcon]="true">
+                <i icon class="fas fa-file-invoice text-xs"></i>
+            </app-searchable-select>
+        </div>
+
+        <!-- Plantilla -->
+        <div class="md:col-span-2">
+            <app-searchable-select [data]="plantillas()" label="Plantilla" placeholder="Buscar plantilla..."
+                bindLabel="nombre" bindValue="id" formControlName="idPlantilla" iconBgColor="bg-amber-500"
+                [required]="true" [error]="getError('idPlantilla')" [hasIcon]="true">
+                <i icon class="fas fa-file-code text-xs"></i>
+            </app-searchable-select>
+        </div>
+
+        <!-- Serie -->
+        <app-form-input formControlName="serie" label="Serie" placeholder="F001" [required]="true" [hasIcon]="true"
+            [error]="getError('serie')">
+            <i icon class="fas fa-barcode text-xs"></i>
+        </app-form-input>
+
+        <!-- Número (Correlativo) -->
+        <app-form-input type="number" formControlName="numero" label="Número" [required]="true" [hasIcon]="true"
+            [min]="0" [error]="getError('numero')">
+            <i icon class="fas fa-list-ol text-xs"></i>
+        </app-form-input>
+
+        <!-- IP -->
+        <app-form-input formControlName="ip" label="IP Máquina" placeholder="192.168.1.10" [hasIcon]="true">
+            <i icon class="fas fa-desktop text-xs"></i>
+        </app-form-input>
+    </div>
+
+    <div class="flex items-center justify-end gap-3 pt-6 border-t border-slate-100 dark:border-slate-700">
+        <button type="button" (click)="onCancel.emit()"
+            class="text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors uppercase tracking-widest">
+            Cancelar
+        </button>
+        <app-primary-button [label]="loading() ? 'Guardando...' : (documento ? 'ACTUALIZAR' : 'GUARDAR')"
+            [loading]="loading()" color="blue" type="submit">
+        </app-primary-button>
+    </div>
+</form>

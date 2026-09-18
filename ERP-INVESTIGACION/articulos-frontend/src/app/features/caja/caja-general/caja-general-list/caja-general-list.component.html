@@ -1,0 +1,158 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+    <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 p-6 md:p-8 flex flex-col gap-6 md:gap-8">
+        <app-page-header title="Caja General" subtitle="Gestión y control del fondo central de la sucursal"
+            [showCounter]="true" counterLabel="Total Movimientos" [counterValue]="totalElements()" iconType="chart">
+            <app-primary-button (click)="abrirModalMovimiento()" icon="plus" color="brand">
+                Nuevo Movimiento
+            </app-primary-button>
+
+            <button (click)="refresh()"
+                class="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm flex items-center justify-center">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </app-page-header>
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <div (click)="seleccionarMetodo(null)"
+                class="lg:col-span-2 relative overflow-hidden bg-linear-to-br from-blue-600 to-indigo-700 dark:from-blue-700 dark:to-indigo-900 rounded-3xl p-8 shadow-xl shadow-blue-200 dark:shadow-none transition-all hover:scale-[1.02] cursor-pointer"
+                [class.ring-4]="!metodoPagoSeleccionado()" [class.ring-blue-400]="!metodoPagoSeleccionado()">
+                <div class="absolute top-0 right-0 p-6 opacity-20">
+                    <i class="fas fa-wallet text-8xl text-white"></i>
+                </div>
+                <div class="relative z-10 text-white">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center">
+                            <i class="fas fa-cash-register text-xl"></i>
+                        </div>
+                        <span class="text-sm font-bold uppercase tracking-widest opacity-80">Saldo Total Disponible</span>
+                    </div>
+                    <div class="flex items-end justify-between">
+                        <div class="space-y-1">
+                            <p class="text-xs font-medium opacity-70">Sucursal: {{ caja()?.nombre || 'General' }}</p>
+                            <h3 class="text-5xl font-black tracking-tight">
+                                {{ (caja()?.saldoActual || 0) | currency:'PEN':'S/ ' }}
+                            </h3>
+                        </div>
+                        <div *ngIf="!metodoPagoSeleccionado()" class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
+                            Viendo Todos
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 flex flex-col gap-4">
+                <div class="relative w-full">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-slate-400">
+                        <i class="fas fa-search text-xs"></i>
+                    </span>
+                    <input type="text" [ngModel]="filtroMetodoPago()" (ngModelChange)="filtrarMetodos($event)"
+                        class="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all shadow-xs"
+                        placeholder="Buscar método de pago (Efectivo, Tarjeta, Yape...)">
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button *ngIf="metodosFiltrados().length > 4"
+                        (click)="prevSaldos()" [disabled]="startIndex() === 0"
+                        class="p-3.5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-30 disabled:pointer-events-none transition-all shadow-sm flex items-center justify-center shrink-0 cursor-pointer">
+                        <i class="fas fa-chevron-left text-sm"></i>
+                    </button>
+
+                    <div class="grow grid grid-cols-2 gap-4">
+                        @for (item of saldosPaginados(); track item.metodoPago) {
+                            <div (click)="seleccionarMetodo(item.metodoPago)"
+                                class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border cursor-pointer flex flex-col justify-between transition-all group min-h-[90px]"
+                                [class.border-blue-500]="metodoPagoSeleccionado() === item.metodoPago"
+                                [class.bg-blue-50]="metodoPagoSeleccionado() === item.metodoPago"
+                                [class.dark:bg-blue-900/20]="metodoPagoSeleccionado() === item.metodoPago"
+                                [class.border-slate-100]="metodoPagoSeleccionado() !== item.metodoPago"
+                                [class.dark:border-slate-700]="metodoPagoSeleccionado() !== item.metodoPago">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-[10px] font-black uppercase tracking-widest"
+                                        [class.text-blue-600]="metodoPagoSeleccionado() === item.metodoPago"
+                                        [class.text-slate-400]="metodoPagoSeleccionado() !== item.metodoPago">
+                                        {{ item.metodoPago }}
+                                    </span>
+                                    <div class="w-2.5 h-2.5 rounded-full" 
+                                        [class.bg-blue-500]="metodoPagoSeleccionado() === item.metodoPago"
+                                        [class.bg-slate-200]="metodoPagoSeleccionado() !== item.metodoPago"
+                                        [class.animate-pulse]="metodoPagoSeleccionado() === item.metodoPago"></div>
+                                </div>
+                                <p class="text-xl font-bold"
+                                    [class.text-blue-900]="metodoPagoSeleccionado() === item.metodoPago"
+                                    [class.dark:text-blue-100]="metodoPagoSeleccionado() === item.metodoPago"
+                                    [class.text-slate-800]="metodoPagoSeleccionado() !== item.metodoPago"
+                                    [class.dark:text-slate-100]="metodoPagoSeleccionado() !== item.metodoPago">
+                                    {{ item.saldo | currency:'PEN':'S/ ' }}
+                                </p>
+                            </div>
+                        }
+                        <div *ngIf="metodosFiltrados().length === 0" class="col-span-2 text-center py-6 text-slate-400 text-xs italic">
+                            No se encontraron métodos de pago.
+                        </div>
+                    </div>
+
+                    <button *ngIf="metodosFiltrados().length > 4"
+                        (click)="nextSaldos()" [disabled]="startIndex() + 4 >= metodosFiltrados().length"
+                        class="p-3.5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-30 disabled:pointer-events-none transition-all shadow-sm flex items-center justify-center shrink-0 cursor-pointer">
+                        <i class="fas fa-chevron-right text-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-slate-100 dark:border-slate-700"></div>
+
+        <div class="flex flex-col min-h-[500px]">
+            <div class="pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-3 h-8 bg-blue-600 rounded-full shadow-lg shadow-blue-200 dark:shadow-blue-900/40"></div>
+                    <div>
+                        <h2 class="text-xl font-black text-slate-800 dark:text-white tracking-tight">
+                            Historial {{ metodoPagoSeleccionado() ? 'de ' + (metodoPagoSeleccionado() | titlecase) : 'General' }}
+                        </h2>
+                        <p class="text-xs font-medium text-slate-400 dark:text-slate-500">
+                            {{ metodoPagoSeleccionado() ? 'Registro específico para este método de pago' : 'Registro detallado de todos los movimientos' }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="w-full sm:w-80 shrink-0">
+                    <app-search-generic [options]="searchOptions" [placeholder]="'Buscar movimientos...'"
+                        (onSearch)="onSearch($event)">
+                    </app-search-generic>
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-auto relative py-6">
+                <app-tabla-general [columnas]="columns" [datos]="movimientosFiltrados()" [loading]="loading()"
+                    [showEdit]="false" [showDelete]="true" [deleteIcon]="'fa-ban'" [deleteTooltip]="'Anular'"
+                    (onDelete)="anularMovimiento($event)">
+                </app-tabla-general>
+            </div>
+
+            <div class="pt-6 border-t border-slate-100 dark:border-slate-700">
+                <app-pagination [currentPage]="currentPage()" [totalPages]="totalPages()"
+                    [pageSize]="pageSize()" (pageChange)="cambiarPagina($event)"
+                    (pageSizeChange)="cambiarTamanoPagina($event)">
+                </app-pagination>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- Modal Unificado -->
+<app-modal [isOpen]="showModal()" [title]="movimientoSeleccionado() ? 'Editar Movimiento' : 'Registrar Gestión de Fondos'"
+    [size]="'md'" (modalClose)="cerrarModal()">
+    <app-caja-general-form [idSucursal]="idSucursal" [movimientoSeleccionado]="movimientoSeleccionado()"
+        (cerrar)="cerrarModal()" (guardado)="onGuardado()">
+    </app-caja-general-form>
+</app-modal>

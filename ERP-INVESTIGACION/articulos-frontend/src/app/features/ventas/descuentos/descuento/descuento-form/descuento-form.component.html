@@ -1,0 +1,643 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="space-y-6">
+        <!-- Card: Información Básica -->
+        <div class="rounded-xl bg-white dark:bg-slate-800 shadow-sm ring-1 ring-gray-200 dark:ring-slate-700">
+            <div class="border-b border-gray-200 dark:border-slate-700 px-6 py-4">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                    <i class="bi bi-info-circle text-indigo-600 dark:text-indigo-400"></i>
+                    Información Básica
+                </h2>
+            </div>
+            <div class="p-6 space-y-2">
+                <!-- Nombre -->
+                <app-form-input formControlName="nombre" label="Nombre del Descuento"
+                    placeholder="Ej: Descuento Navidad 2026" [required]="true"
+                    [error]="isFieldInvalid('nombre') ? 'El nombre es obligatorio' : null">
+                </app-form-input>
+
+                <!-- Descripción -->
+                <app-form-textarea formControlName="descripcion" label="Descripción"
+                    placeholder="Descripción opcional del descuento..." [rows]="3">
+                </app-form-textarea>
+
+                <!-- Fechas y Estado -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-2">
+                    <app-form-input formControlName="fechaInicio" type="date" label="Fecha Inicio" [required]="true"
+                        [error]="isFieldInvalid('fechaInicio') ? 'La fecha de inicio es obligatoria' : null">
+                    </app-form-input>
+                    <app-form-input formControlName="fechaFin" type="date" label="Fecha Fin" [required]="true"
+                        [error]="isFieldInvalid('fechaFin') ? 'La fecha de fin es obligatoria' : null">
+                    </app-form-input>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Aplicación del Descuento (Maestro-Detalle) -->
+        <div class="rounded-xl bg-white dark:bg-slate-800 shadow-sm ring-1 ring-gray-200 dark:ring-slate-700">
+            <div
+                class="border-b border-gray-200 dark:border-slate-700 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                        <i class="bi bi-box-seam text-indigo-600 dark:text-indigo-400"></i>
+                        Aplicación y Beneficios
+                    </h2>
+
+                    <div class="flex p-1 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-inner">
+                        <button type="button" (click)="form.get('tipoAlcance')?.setValue('GLOBAL')"
+                            class="px-4 py-1.5 text-xs font-bold rounded-md transition-all uppercase tracking-wider"
+                            [class.bg-white]="form.get('tipoAlcance')?.value === 'GLOBAL'"
+                            [class.dark:bg-slate-700]="form.get('tipoAlcance')?.value === 'GLOBAL'"
+                            [class.shadow-sm]="form.get('tipoAlcance')?.value === 'GLOBAL'"
+                            [class.text-indigo-600]="form.get('tipoAlcance')?.value === 'GLOBAL'"
+                            [class.dark:text-indigo-300]="form.get('tipoAlcance')?.value === 'GLOBAL'"
+                            [class.text-gray-500]="form.get('tipoAlcance')?.value !== 'GLOBAL'"
+                            [class.dark:text-slate-400]="form.get('tipoAlcance')?.value !== 'GLOBAL'">
+                            Global
+                        </button>
+                        <button type="button" (click)="form.get('tipoAlcance')?.setValue('POR_PRODUCTO')"
+                            class="px-4 py-1.5 text-xs font-bold rounded-md transition-all uppercase tracking-wider"
+                            [class.bg-white]="form.get('tipoAlcance')?.value === 'POR_PRODUCTO'"
+                            [class.dark:bg-slate-700]="form.get('tipoAlcance')?.value === 'POR_PRODUCTO'"
+                            [class.shadow-sm]="form.get('tipoAlcance')?.value === 'POR_PRODUCTO'"
+                            [class.text-indigo-600]="form.get('tipoAlcance')?.value === 'POR_PRODUCTO'"
+                            [class.dark:text-indigo-300]="form.get('tipoAlcance')?.value === 'POR_PRODUCTO'"
+                            [class.text-gray-500]="form.get('tipoAlcance')?.value !== 'POR_PRODUCTO'"
+                            [class.dark:text-slate-400]="form.get('tipoAlcance')?.value !== 'POR_PRODUCTO'">
+                            Personalizada
+                        </button>
+                    </div>
+                </div>
+
+                <div *ngIf="form.get('tipoAlcance')?.value === 'POR_PRODUCTO'" class="w-full sm:w-80">
+                    <app-searchable-select #productSearch [data]="productos()" bindLabel="nombre"
+                        placeholder="Buscar y agregar producto..." (selected)="onProductSelected($event)"
+                        iconBgColor="bg-indigo-600">
+                        <i icon class="bi bi-plus-lg text-white"></i>
+                    </app-searchable-select>
+                </div>
+            </div>
+
+            <div class="p-6">
+                <!-- MODO GLOBAL -->
+                <div *ngIf="form.get('tipoAlcance')?.value === 'GLOBAL'"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
+                    <div
+                        class="bg-indigo-50/50 dark:bg-indigo-900/10 p-6 rounded-2xl border border-indigo-100 dark:border-indigo-900/30">
+                        <app-form-select [value]="globalModeDetail().tipoDescuento"
+                            (valueChange)="onGlobalDetailChange('tipoDescuento', $event)"
+                            label="Tipo de Descuento (PARA TODO)" [options]="globalModeDiscountOptions"
+                            [required]="true">
+                        </app-form-select>
+                    </div>
+
+                    <!-- PORCENTAJE O MONTO FIJO -->
+                    <div *ngIf="globalModeDetail().tipoDescuento === TipoDescuento.PORCENTAJE || globalModeDetail().tipoDescuento === TipoDescuento.MONTO_FIJO"
+                        class="bg-indigo-50/50 dark:bg-indigo-900/10 p-6 rounded-2xl border border-indigo-100 dark:border-indigo-900/30">
+                        <app-form-input type="number" [value]="globalModeDetail().valorDescuento"
+                            (valueChange)="onGlobalDetailChange('valorDescuento', $event)" label="Valor del Descuento"
+                            [prefix]="globalModeDetail().tipoDescuento === TipoDescuento.PORCENTAJE ? '%' : 'S/'"
+                            placeholder="0.00">
+                        </app-form-input>
+                    </div>
+
+                    <!-- POR CANTIDAD (LLEVA X PAGA Y) -->
+                    <div *ngIf="globalModeDetail().tipoDescuento === TipoDescuento.CANTIDAD"
+                        class="bg-indigo-50/50 dark:bg-indigo-900/10 p-6 rounded-2xl border border-indigo-100 dark:border-indigo-900/30 grid grid-cols-2 gap-4">
+                        <app-form-input type="number" [value]="globalModeDetail().cantidad"
+                            (valueChange)="onGlobalDetailChange('cantidad', $event)" label="Lleva (Unid.)"
+                            placeholder="Cant.">
+                        </app-form-input>
+                        <app-form-input type="number" [value]="globalModeDetail().valorDescuento"
+                            (valueChange)="onGlobalDetailChange('valorDescuento', $event)" label="Regala"
+                            placeholder="Ej: 1">
+                        </app-form-input>
+                    </div>
+                </div>
+
+                <!-- Botón Calcular (Global) -->
+                <div *ngIf="form.get('tipoAlcance')?.value === 'GLOBAL'" class="mt-4 flex justify-end">
+                    <button type="button" (click)="recalcularTodo()"
+                        class="px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-xs font-bold transition-all flex items-center gap-2">
+                        <i class="bi bi-calculator"></i>
+                        VALIDAR CONFIGURACIÓN
+                    </button>
+                </div>
+
+                <!-- MODO PERSONALIZADA (Tabla de Detalles) -->
+                <div *ngIf="form.get('tipoAlcance')?.value === 'POR_PRODUCTO'"
+                    class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                        <thead class="bg-slate-50 dark:bg-slate-900/50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Producto</th>
+                                <th class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase">Tipo</th>
+                                <th class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase">Valor /
+                                    Lleva</th>
+                                <th
+                                    class="px-6 py-3 text-center text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                                    Regala</th>
+                                <th class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase">Estado</th>
+                                <th class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase">Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
+                            <tr *ngFor="let item of selectedDetails(); let i = index; trackBy: trackByIndex"
+                                class="hover:bg-indigo-50/30 transition-colors">
+                                <td class="px-6 py-4">
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-bold text-slate-900 dark:text-white">{{
+                                            item.producto.catalogo?.nombre }}</span>
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4">
+                                    <select [value]="item.tipoDescuento"
+                                        (change)="onDetailChange(i, 'tipoDescuento', $any($event.target).value)"
+                                        class="w-full text-xs font-medium rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 py-2 px-3 text-slate-700 dark:text-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all cursor-pointer">
+                                        <option value="PORCENTAJE">Porcentaje (%)</option>
+                                        <option value="MONTO_FIJO">Monto Fijo (S/)</option>
+                                        <option value="CANTIDAD">Cantidad (Lleva/Paga)</option>
+                                    </select>
+                                </td>
+
+                                <!-- PARÁMETRO 1: Valor (%, S/ o Lleva) -->
+                                <td class="px-6 py-4">
+                                    <div class="relative w-full min-w-[100px]">
+                                        <span
+                                            class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs font-bold">
+                                            <ng-container [ngSwitch]="item.tipoDescuento">
+                                                <span *ngSwitchCase="'PORCENTAJE'">%</span>
+                                                <span *ngSwitchCase="'MONTO_FIJO'">S/</span>
+                                                <span *ngSwitchCase="'CANTIDAD'"><i class="fas fa-box"></i></span>
+                                            </ng-container>
+                                        </span>
+                                        <input type="number"
+                                            [ngModel]="item.tipoDescuento === 'CANTIDAD' ? item.cantidad : item.valorDescuento"
+                                            (ngModelChange)="onDetailChange(i, item.tipoDescuento === 'CANTIDAD' ? 'cantidad' : 'valorDescuento', $event)"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [placeholder]="item.tipoDescuento === 'CANTIDAD' ? 'Lleva' : 'Valor'"
+                                            class="w-full text-sm text-right pl-8 pr-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white font-semibold focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all">
+                                    </div>
+                                </td>
+
+                                <!-- PARÁMETRO 2: Paga (S/) o Regala (Cant.) -->
+                                <td class="px-6 py-4">
+                                    <div *ngIf="item.tipoDescuento === 'CANTIDAD'"
+                                        class="relative w-full min-w-[100px]">
+                                        <span
+                                            class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs">
+                                            <i class="fas fa-gift"></i>
+                                        </span>
+                                        <input type="number" [ngModel]="item.valorDescuento"
+                                            (ngModelChange)="onDetailChange(i, 'valorDescuento', $event)"
+                                            [ngModelOptions]="{standalone: true}" placeholder="Regala"
+                                            class="w-full text-sm text-right pl-8 pr-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white font-semibold focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all">
+                                    </div>
+                                    <div *ngIf="item.tipoDescuento !== 'CANTIDAD'" class="text-center">
+                                        <span class="text-gray-300">---</span>
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4 text-center">
+                                    <div class="flex justify-center items-center">
+                                        <i *ngIf="item.valido" class="fas fa-check-circle text-green-500 text-xl font-bold drop-shadow-sm" title="Margen Correcto"></i>
+                                        <i *ngIf="!item.valido" class="fas fa-times-circle text-red-500 text-xl font-bold drop-shadow-sm" title="Alerta Margen"></i>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button type="button" (click)="openLotesModal(i)"
+                                            class="p-2 bg-indigo-50 text-indigo-700 dark:bg-indigo-500/30 dark:text-indigo-300 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-500/50 transition-colors shadow-sm flex items-center justify-center" title="Ver Lotes">
+                                            <i class="fas fa-eye text-lg"></i>
+                                        </button>
+                                        <button type="button" (click)="removeProduct(i)"
+                                            class="p-2 bg-red-50 text-red-700 dark:bg-red-500/30 dark:text-red-300 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/50 transition-colors shadow-sm flex items-center justify-center" title="Quitar">
+                                            <i class="fas fa-trash text-lg"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="selectedDetails().length === 0">
+                                <td colspan="6" class="px-6 py-12 text-center">
+                                    <div class="flex flex-col items-center opacity-30 text-gray-400">
+                                        <i class="fas fa-box-open text-4xl mb-2"></i>
+                                        <p class="text-sm font-medium">No hay productos en el detalle.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Segmentación de Usuarios -->
+        <div
+            class="rounded-xl bg-white dark:bg-slate-800 shadow-sm ring-1 ring-gray-200 dark:ring-slate-700 overflow-hidden">
+            <div
+                class="border-b border-gray-200 dark:border-slate-700 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                    <i class="bi bi-person-check text-indigo-600 dark:text-indigo-400"></i>
+                    Segmentación de Usuarios
+                </h2>
+                <div class="flex p-1 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-inner">
+                    <button type="button" (click)="!idCompaniaPreset && setSegmentMode('ALL')"
+                        [disabled]="!!idCompaniaPreset"
+                        class="px-4 py-1.5 text-xs font-bold rounded-md transition-all uppercase tracking-wider disabled:opacity-40 disabled:cursor-not-allowed"
+                        [class.bg-white]="selectedSegmentMode() === 'ALL'"
+                        [class.dark:bg-slate-700]="selectedSegmentMode() === 'ALL'"
+                        [class.shadow-sm]="selectedSegmentMode() === 'ALL'"
+                        [class.text-indigo-600]="selectedSegmentMode() === 'ALL'"
+                        [class.dark:text-indigo-300]="selectedSegmentMode() === 'ALL'"
+                        [class.text-gray-500]="selectedSegmentMode() !== 'ALL'"
+                        [class.dark:text-slate-400]="selectedSegmentMode() !== 'ALL'">
+                        Todos
+                    </button>
+                    <button type="button" (click)="!idCompaniaPreset && setSegmentMode('MANUAL')"
+                        [disabled]="!!idCompaniaPreset"
+                        class="px-4 py-1.5 text-xs font-bold rounded-md transition-all uppercase tracking-wider disabled:opacity-40 disabled:cursor-not-allowed"
+                        [class.bg-white]="selectedSegmentMode() === 'MANUAL'"
+                        [class.dark:bg-slate-700]="selectedSegmentMode() === 'MANUAL'"
+                        [class.shadow-sm]="selectedSegmentMode() === 'MANUAL'"
+                        [class.text-indigo-600]="selectedSegmentMode() === 'MANUAL'"
+                        [class.dark:text-indigo-300]="selectedSegmentMode() === 'MANUAL'"
+                        [class.text-gray-500]="selectedSegmentMode() !== 'MANUAL'"
+                        [class.dark:text-slate-400]="selectedSegmentMode() !== 'MANUAL'">
+                        Manual
+                    </button>
+                    <button type="button" (click)="!idCompaniaPreset && setSegmentMode('EXCEL')"
+                        [disabled]="!!idCompaniaPreset"
+                        class="px-4 py-1.5 text-xs font-bold rounded-md transition-all uppercase tracking-wider disabled:opacity-40 disabled:cursor-not-allowed"
+                        [class.bg-white]="selectedSegmentMode() === 'EXCEL'"
+                        [class.dark:bg-slate-700]="selectedSegmentMode() === 'EXCEL'"
+                        [class.shadow-sm]="selectedSegmentMode() === 'EXCEL'"
+                        [class.text-indigo-600]="selectedSegmentMode() === 'EXCEL'"
+                        [class.dark:text-indigo-300]="selectedSegmentMode() === 'EXCEL'"
+                        [class.text-gray-500]="selectedSegmentMode() !== 'EXCEL'"
+                        [class.dark:text-slate-400]="selectedSegmentMode() !== 'EXCEL'">
+                        Excel
+                    </button>
+                    <button type="button" (click)="!idCompaniaPreset && setSegmentMode('CONVENIO')"
+                        [disabled]="!!idCompaniaPreset"
+                        class="px-4 py-1.5 text-xs font-bold rounded-md transition-all uppercase tracking-wider disabled:opacity-40 disabled:cursor-not-allowed"
+                        [class.bg-white]="selectedSegmentMode() === 'CONVENIO'"
+                        [class.dark:bg-slate-700]="selectedSegmentMode() === 'CONVENIO'"
+                        [class.shadow-sm]="selectedSegmentMode() === 'CONVENIO'"
+                        [class.text-indigo-600]="selectedSegmentMode() === 'CONVENIO'"
+                        [class.dark:text-indigo-300]="selectedSegmentMode() === 'CONVENIO'"
+                        [class.text-gray-500]="selectedSegmentMode() !== 'CONVENIO'"
+                        [class.dark:text-slate-400]="selectedSegmentMode() !== 'CONVENIO'">
+                        Convenio
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-6">
+                <!-- Segmentación Global -->
+                <div *ngIf="selectedSegmentMode() === 'ALL'"
+                    class="py-12 flex flex-col items-center justify-center text-center space-y-3 opacity-60">
+                    <div class="p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-full">
+                        <i class="bi bi-people text-4xl text-indigo-600 dark:text-indigo-400"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 dark:text-white">Aplicación Global</h3>
+                        <p class="text-sm text-gray-500">Este descuento será visible para todos los clientes
+                            registrados.</p>
+                    </div>
+                </div>
+
+                <!-- Segmentación Manual -->
+                <div *ngIf="selectedSegmentMode() === 'MANUAL'" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Selector de Usuarios -->
+                        <div class="space-y-4">
+                            <app-search-generic [options]="searchOptionsUsers"
+                                placeholder="Buscar usuarios para agregar..."
+                                (onSearch)="onUserSearch($event)"></app-search-generic>
+                            <div
+                                class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden bg-gray-50 dark:bg-gray-900">
+                                <div class="max-h-80 overflow-y-auto p-2 space-y-2">
+                                    <div *ngFor="let user of usuariosPaginados()" (click)="toggleUserSelection(user.id)"
+                                        class="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 cursor-pointer hover:border-indigo-400 transition-all flex items-center justify-between group">
+                                        <div class="flex-1 min-w-0 pr-4">
+                                            <p class="text-sm font-bold truncate text-gray-800 dark:text-gray-200">
+                                                {{
+                                                user.nombreCompleto }}</p>
+                                            <p class="text-[10px] text-gray-500 font-mono">DNI: {{ user.numdoc }}
+                                            </p>
+                                        </div>
+                                        <i *ngIf="isUserSelected(user.id)"
+                                            class="bi bi-check-circle-fill text-indigo-600"></i>
+                                        <i *ngIf="!isUserSelected(user.id)"
+                                            class="bi bi-plus-circle text-gray-300 group-hover:text-indigo-400"></i>
+                                    </div>
+                                </div>
+                                <div class="px-4 py-2 border-t bg-white dark:bg-gray-950">
+                                    <app-pagination [currentPage]="currentUsersPage()" [totalPages]="totalUsersPages()"
+                                        (pageChange)="onUserPageChange($event)"></app-pagination>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Lista de Seleccionados -->
+                        <div class="space-y-4 flex flex-col h-full">
+                            <div class="flex items-center justify-between px-2">
+                                <h4 class="text-xs font-black text-gray-400 uppercase tracking-widest">
+                                    Seleccionados: {{
+                                    usuariosCargados().length }}</h4>
+                                <button type="button"
+                                    (click)="selectedUserIds.set([]); usuariosCargados.set([]); syncUsuariosAfectados()"
+                                    class="text-[10px] font-bold text-red-500 hover:underline uppercase">Limpiar
+                                    Todo</button>
+                            </div>
+                            <div
+                                class="flex-1 rounded-xl border-2 border-dashed border-indigo-100 dark:border-indigo-900/50 p-2 overflow-y-auto max-h-[400px]">
+                                <div *ngFor="let user of usuariosCargados(); let i = index"
+                                    class="flex items-center gap-3 p-3 bg-indigo-50/50 dark:bg-indigo-950/20 rounded-lg border border-indigo-100/50 dark:border-indigo-900/30 mb-2">
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-xs font-bold truncate text-gray-900 dark:text-white">{{
+                                            user.nombre }}</p>
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <span class="text-[9px] font-mono text-gray-500">DNI: {{ user.dni
+                                                }}</span>
+                                            <span
+                                                class="text-[9px] px-1.5 py-0.5 bg-indigo-600 text-white rounded font-bold uppercase">{{
+                                                user.tipo }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="shrink-0 flex items-center gap-2">
+                                        <select [value]="user.tipo"
+                                            (change)="updateBeneficiarioType(i, $any($event.target).value)"
+                                            class="text-[9px] font-bold bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-lg py-0.5">
+                                            <option *ngFor="let t of tiposBeneficiario" [value]="t">{{ t }}</option>
+                                        </select>
+                                        <button type="button" (click)="removeBeneficiario(i)"
+                                            class="text-red-400 hover:text-red-600 p-1 transition-colors">
+                                            <i class="bi bi-trash3 text-xs"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div *ngIf="usuariosCargados().length === 0"
+                                    class="h-full flex flex-col items-center justify-center py-12 opacity-30 italic text-xs text-gray-400">
+                                    No hay usuarios seleccionados.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segmentación por Excel -->
+                <div *ngIf="selectedSegmentMode() === 'EXCEL'" class="max-w-xl mx-auto py-8 space-y-6">
+                    <!-- Advertencia de Seguridad -->
+                    <div
+                        class="p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/50 rounded-2xl flex items-start gap-3">
+                        <i
+                            class="bi bi-exclamation-triangle text-amber-600 dark:text-amber-400 text-lg mt-0.5 shrink-0"></i>
+                        <div class="space-y-1">
+                            <h5 class="text-xs font-bold text-amber-800 dark:text-amber-300 uppercase tracking-wider">
+                                Advertencia de Seguridad</h5>
+                            <p class="text-[11px] text-amber-700 dark:text-amber-400 leading-relaxed">
+                                El archivo Excel debe ser válido y contener al menos una columna con la cabecera
+                                <strong>DNI</strong>, <strong>Documento</strong> o <strong>RUC</strong>.
+                                Si sube un archivo vacío o con formato incorrecto, <strong>el descuento no se
+                                    guardará</strong> para prevenir que se aplique involuntariamente a todos los
+                                usuarios.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- El código de carga de excel se mantiene similar al diseño funcional -->
+                    <label
+                        class="group flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-2xl p-10 hover:border-indigo-500 hover:bg-indigo-50/50 cursor-pointer transition-all">
+                        <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" class="sr-only" />
+                        <div
+                            class="p-4 bg-indigo-100 dark:bg-indigo-900 rounded-2xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="bi bi-file-earmark-excel text-4xl text-indigo-600 dark:text-indigo-400"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 dark:text-white">Importar Beneficiarios desde Excel</h4>
+                        <p class="text-xs text-gray-500 mt-2 text-center">Selecciona un archivo con formato (DNI,
+                            Nombre, Tipo) para cargar beneficiarios masivamente.</p>
+                    </label>
+
+                    <div class="flex justify-center">
+                        <button type="button" (click)="descargarPlantillaExcel()"
+                            class="flex items-center gap-2 px-4 py-2 bg-indigo-50 text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400 rounded-xl font-bold text-xs hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-all border border-indigo-100 dark:border-indigo-900/50">
+                            <i class="bi bi-download"></i>
+                            Descargar Plantilla de Ejemplo
+                        </button>
+                    </div>
+
+                    <!-- Listado de Beneficiarios Importados -->
+                    <div *ngIf="usuariosCargados().length > 0" class="space-y-4">
+                        <div class="flex items-center justify-between px-2">
+                            <h4 class="text-xs font-black text-gray-400 uppercase tracking-widest">
+                                Beneficiarios Importados: {{ usuariosCargados().length }}
+                            </h4>
+                            <button type="button"
+                                (click)="selectedUserIds.set([]); usuariosCargados.set([]); syncUsuariosAfectados()"
+                                class="text-[10px] font-bold text-red-500 hover:underline uppercase">
+                                Limpiar Importación
+                            </button>
+                        </div>
+                        <div
+                            class="rounded-xl border border-gray-200 dark:border-gray-800 p-2 overflow-y-auto max-h-[300px] bg-gray-50 dark:bg-gray-900">
+                            <div *ngFor="let user of usuariosCargados(); let i = index"
+                                class="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 mb-2">
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-xs font-bold truncate text-gray-900 dark:text-white">{{ user.nombre
+                                        }}</p>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <span class="text-[9px] font-mono text-gray-500">DNI: {{ user.dni }}</span>
+                                        <span
+                                            class="text-[9px] px-1.5 py-0.5 bg-indigo-600 text-white rounded font-bold uppercase">{{
+                                            user.tipo }}</span>
+                                    </div>
+                                </div>
+                                <div class="shrink-0 flex items-center gap-2">
+                                    <select [value]="user.tipo"
+                                        (change)="updateBeneficiarioType(i, $any($event.target).value)"
+                                        class="text-[9px] font-bold bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-lg py-0.5">
+                                        <option *ngFor="let t of tiposBeneficiario" [value]="t">{{ t }}</option>
+                                    </select>
+                                    <button type="button" (click)="removeBeneficiario(i)"
+                                        class="text-red-400 hover:text-red-600 p-1 transition-colors">
+                                        <i class="bi bi-trash3 text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segmentación por Convenio -->
+                <div *ngIf="selectedSegmentMode() === 'CONVENIO'" class="space-y-4">
+                    <div class="flex items-center justify-between px-2">
+                        <h4 class="text-xs font-black text-gray-400 uppercase tracking-widest">Seleccionar Convenio /
+                            Compañía</h4>
+                    </div>
+
+                    <!-- Loading -->
+                    <div *ngIf="loadingCompanias()" class="flex flex-col items-center justify-center py-10 space-y-3">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                        <span class="text-xs font-bold text-gray-500 uppercase tracking-tighter">Cargando
+                            compañías...</span>
+                    </div>
+
+                    <!-- Lista Vacía -->
+                    <div *ngIf="!loadingCompanias() && companias().length === 0"
+                        class="flex flex-col items-center justify-center py-10 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border-2 border-dashed border-gray-100 dark:border-gray-800">
+                        <i class="bi bi-building-exclamation text-3xl text-gray-300 mb-3"></i>
+                        <span class="text-xs font-bold text-gray-400 uppercase">No se encontraron compañías
+                            disponibles</span>
+                    </div>
+
+                    <!-- Grid de Compañías -->
+                    <div *ngIf="!loadingCompanias() && companias().length > 0"
+                        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3"
+                        [class.pointer-events-none]="!!idCompaniaPreset">
+                        <div *ngFor="let comp of companias()" (click)="!idCompaniaPreset && onCompaniaSelected(comp)"
+                            class="p-4 rounded-xl border-2 transition-all cursor-pointer flex flex-col items-center text-center space-y-2 group"
+                            [class.border-indigo-600]="selectedCompaniaId() === comp.id"
+                            [class.bg-indigo-50]="selectedCompaniaId() === comp.id"
+                            [class.dark:bg-indigo-900/20]="selectedCompaniaId() === comp.id"
+                            [class.border-gray-100]="selectedCompaniaId() !== comp.id"
+                            [class.dark:border-gray-800]="selectedCompaniaId() !== comp.id"
+                            [class.hover:border-indigo-300]="selectedCompaniaId() !== comp.id"
+                            [class.opacity-50]="!!idCompaniaPreset && selectedCompaniaId() !== comp.id">
+                            <div
+                                class="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm group-hover:scale-110 transition-transform">
+                                <i class="bi bi-building text-xl text-indigo-600"></i>
+                            </div>
+                            <span class="text-xs font-bold text-gray-900 dark:text-white uppercase line-clamp-1">{{
+                                comp.nombre }}</span>
+                            <span class="text-[9px] text-gray-500 font-mono">{{ comp.ruc || comp.documento || 'S/N'
+                                }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de Acción -->
+    <div class="mt-8 flex items-center justify-end gap-3 pb-6">
+        <button type="button" (click)="cerrar.emit()"
+            class="px-6 py-2.5 text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all">
+            CANCELAR
+        </button>
+        <button type="submit" [disabled]="loading() || isSaveDisabled()"
+            class="px-8 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-black shadow-lg shadow-indigo-600/20 hover:bg-indigo-500 active:scale-95 disabled:opacity-50 transition-all flex items-center gap-2">
+            <span *ngIf="loading()"
+                class="animate-spin border-2 border-white border-t-transparent rounded-full h-4 w-4"></span>
+            <i *ngIf="!loading()" class="bi bi-check2-circle text-lg"></i>
+            {{ descuento?.id ? 'ACTUALIZAR DESCUENTO' : 'GUARDAR DESCUENTO' }}
+        </button>
+    </div>
+</form>
+
+<!-- Modal Detalle de Lotes -->
+<div *ngIf="showLotesModal()" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <!-- Overlay con desenfoque -->
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" (click)="closeLotesModal()"></div>
+
+    <!-- Panel del Modal -->
+    <div
+        class="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+
+        <!-- Cabecera -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+            <div class="flex items-center gap-3">
+                <div
+                    class="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400">
+                    <i class="bi bi-box-seam text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white">
+                        Lotes Activos
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">
+                        {{ lotesModalTitle() }}
+                    </p>
+                </div>
+            </div>
+            <button (click)="closeLotesModal()"
+                class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+                <i class="bi bi-x-lg text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Contenido (Tabla) -->
+        <div class="p-6 overflow-y-auto">
+            <div class="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                <table class="w-full whitespace-nowrap">
+                    <thead class="bg-slate-50 dark:bg-slate-800/50">
+                        <tr>
+                            <th
+                                class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                Lote / Vencimiento</th>
+                            <th
+                                class="px-4 py-3 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                P. Compra</th>
+                            <th
+                                class="px-4 py-3 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                P. Base (Venta)</th>
+                            <th
+                                class="px-4 py-3 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                P. Final</th>
+                            <th
+                                class="px-4 py-3 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                Margen</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-800">
+                        <tr *ngFor="let loteVal of lotesValidadosSeleccionados()" [class.bg-red-50]="!loteVal.valido"
+                            [class.dark:bg-red-900/10]="!loteVal.valido">
+                            <td class="px-4 py-3">
+                                <div class="flex flex-col">
+                                    <span class="text-sm font-medium text-slate-900 dark:text-white">Lote: {{
+                                        loteVal.producto.nroLote || 'N/A' }}</span>
+                                    <span class="text-xs text-slate-500">Venc: {{ loteVal.producto.fechaVencimiento ?
+                                        (loteVal.producto.fechaVencimiento | date:'dd/MM/yyyy') : 'N/A' }}</span>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-center text-sm text-slate-600 dark:text-slate-400">
+                                S/ {{ (loteVal.producto.precioCompra || 0) | number:'1.2-2' }}
+                            </td>
+                            <td class="px-4 py-3 text-center text-sm text-slate-600 dark:text-slate-400">
+                                S/ {{ (loteVal.producto.precioVentaUnitario || 0) | number:'1.2-2' }}
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="text-sm font-bold" [class.text-green-600]="loteVal.valido"
+                                    [class.text-red-600]="!loteVal.valido">
+                                    S/ {{ loteVal.precioFinal | number:'1.2-2' }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="px-2 py-1 rounded text-xs font-bold" [class.bg-green-100]="loteVal.valido"
+                                    [class.text-green-700]="loteVal.valido" [class.bg-red-100]="!loteVal.valido"
+                                    [class.text-red-700]="!loteVal.valido">
+                                    {{ loteVal.ganancia | number:'1.2-2' }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr *ngIf="lotesValidadosSeleccionados().length === 0">
+                            <td colspan="5" class="px-4 py-8 text-center text-slate-500">
+                                No hay lotes activos para este catálogo.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div
+            class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 flex justify-end">
+            <button (click)="closeLotesModal()"
+                class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm">
+                Cerrar
+            </button>
+        </div>
+    </div>
+</div>

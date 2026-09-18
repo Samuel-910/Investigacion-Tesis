@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "descripcion": "3M PERU S.A",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.462193",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.462193",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 2,
+    "descripcion": "ABBOTT",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.46531",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.46531",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 3,
+    "descripcion": "ABF ARIAL PERUBIOFARMACEUTICA S.A.C.",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.46531",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.46531",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 4,
+    "descripcion": "ABLPHARMA",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.466817",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.466817",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 5,
+    "descripcion": "AC FARMA",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.468338",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.468338",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 6,
+    "descripcion": "ACCORD",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.469344",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.469344",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 7,
+    "descripcion": "ADVANCE SCIENTIF MEDIC SAC",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.470346",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.470346",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 8,
+    "descripcion": "AJEPER SA.",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.472277",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.472277",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 9,
+    "descripcion": "ALFA",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.472277",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.472277",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 10,
+    "descripcion": "ALFY MEDICA E.I.R.L",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.473794",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.473794",
+    "usuarioModificacion": null
+  }
+]

@@ -1,0 +1,485 @@
+<!-- src/app/components/user-permission-management/user-permission-management.component.html -->
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems" [showIcon]="true"></app-breadcrumb>
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+
+
+            <div class="px-8 pt-8 pb-4">
+                <app-page-header class="mb-6" title="{{tituloPagina}}"
+                    subtitle="Asigna permisos especiales a usuarios específicos." iconType="users"
+                    [showCounter]="false">
+                </app-page-header>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6 px-8 pb-8">
+                <div class="lg:col-span-1">
+                    <div
+                        class="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden h-fit transition-all duration-300">
+
+                        <div
+                            class="bg-slate-50 dark:bg-slate-950/40 p-6 border-b border-slate-100 dark:border-slate-800">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="p-2.5 bg-blue-600 dark:bg-blue-500 rounded-2xl shadow-lg shadow-blue-500/20 text-white">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h2
+                                        class="text-[11px] font-black text-slate-800 dark:text-slate-100 uppercase tracking-[0.2em] leading-none">
+                                        Directorio
+                                    </h2>
+                                    <p
+                                        class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-1">
+                                        Sistemas UPeU</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-5 space-y-4 bg-white dark:bg-slate-900 transition-colors">
+                            <div class="relative group">
+                                <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar integrante..."
+                                    class="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all text-xs font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500">
+                                <span
+                                    class="absolute left-4 top-3.5 text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="3" />
+                                    </svg>
+                                </span>
+                            </div>
+
+                            <div class="flex items-center justify-between px-1">
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <div class="relative">
+                                        <input type="checkbox" [(ngModel)]="showActiveOnly"
+                                            (ngModelChange)="toggleActiveFilter()" class="sr-only peer">
+                                        <div
+                                            class="w-9 h-5 bg-slate-200 dark:bg-slate-700 rounded-full peer peer-checked:after:translate-x-4 after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-500 shadow-inner">
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Solo
+                                        Personal Activo</span>
+                                </label>
+                                <span
+                                    class="text-[9px] font-black text-blue-500 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded-md">{{
+                                    filteredUsers.length }}</span>
+                            </div>
+                        </div>
+
+                        <div class="px-3 pb-5 space-y-2 max-h-[500px] overflow-y-auto custom-scrollbar">
+
+                            <div *ngIf="loading" class="flex flex-col items-center py-12">
+                                <div class="relative w-10 h-10">
+                                    <div
+                                        class="absolute inset-0 border-4 border-slate-100 dark:border-slate-800 rounded-full">
+                                    </div>
+                                    <div
+                                        class="absolute inset-0 border-4 border-blue-500 rounded-full border-t-transparent animate-spin">
+                                    </div>
+                                </div>
+                                <p
+                                    class="mt-4 text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest animate-pulse">
+                                    Sincronizando...</p>
+                            </div>
+
+                            <div *ngFor="let user of filteredUsers" (click)="selectUser(user)"
+                                class="p-4 rounded-3xl border-2 transition-all duration-300 cursor-pointer relative group overflow-hidden"
+                                [ngClass]="{
+          'border-blue-500/50 dark:border-blue-500/60 bg-blue-50/50 dark:bg-blue-400/5 shadow-lg shadow-blue-500/5': selectedUser?.id === user.id,
+          'border-transparent hover:bg-slate-50 dark:hover:bg-slate-800/80': selectedUser?.id !== user.id
+        }">
+
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <h3
+                                        class="font-black text-slate-800 dark:text-slate-200 text-[13px] leading-tight transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                                        {{ user.firstName }} {{ user.lastName }}
+                                    </h3>
+                                    <span
+                                        class="px-2 py-0.5 text-[8px] rounded-lg font-black uppercase tracking-tighter border shadow-sm transition-colors"
+                                        [ngClass]="user.active 
+              ? 'text-emerald-600 bg-emerald-50 border-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20' 
+              : 'text-rose-600 bg-rose-50 border-rose-100 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/20'">
+                                        {{ user.active ? 'ACTIVO' : 'INACTIVO' }}
+                                    </span>
+                                </div>
+
+                                <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 font-mono mb-3">@{{
+                                    user.username }}</p>
+
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700 shadow-xs">
+                                        <span class="text-[9px]">🔑</span>
+                                        <span
+                                            class="text-[9px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-tighter">{{
+                                            user.permissions.length }}</span>
+                                    </div>
+                                    <div *ngIf="user.roles.length"
+                                        class="flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700 shadow-xs">
+                                        <span class="text-[9px]">🔐</span>
+                                        <span
+                                            class="text-[9px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-tighter">{{
+                                            user.roles.length }}</span>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="selectedUser?.id === user.id"
+                                    class="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-600 dark:bg-blue-400 rounded-r-full shadow-[2px_0_12px_rgba(59,130,246,0.3)]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden transition-colors">
+
+                        <div *ngIf="!selectedUser" class="p-12 text-center">
+                            <span class="text-8xl mb-4 block">👈</span>
+                            <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">Selecciona un usuario
+                            </h3>
+                            <p class="text-slate-600 dark:text-slate-400">Elige un usuario de la lista para gestionar
+                                sus permisos
+                                directos
+                            </p>
+                        </div>
+
+
+                        <form *ngIf="selectedUser" #permissionsForm="ngForm" (ngSubmit)="savePermissions(permissionsForm)">
+                            <!-- Header del panel -->
+                            <div class="bg-slate-800 dark:bg-slate-900 p-8 text-white relative transition-colors">
+                                <div
+                                    class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
+                                    <div>
+                                        <p
+                                            class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em] mb-2">
+                                            Perfil de Seguridad</p>
+                                        <h2 class="text-3xl font-black tracking-tight leading-none">{{
+                                            selectedUser.fullName }}</h2>
+                                        <div
+                                            class="flex items-center gap-3 mt-4 text-slate-400 dark:text-slate-500 text-xs font-bold">
+                                            <span
+                                                class="bg-white/10 dark:bg-white/5 px-3 py-1 rounded-lg border border-white/5 font-mono">{{
+                                                selectedUser.email }}</span>
+                                            <span
+                                                class="px-3 py-1 bg-indigo-500/20 text-indigo-300 dark:text-indigo-400 rounded-lg border border-indigo-500/20 uppercase tracking-widest text-[9px]">Modo:
+                                                {{ selectedUser.permissionMode }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full md:w-auto">
+                                        <div
+                                            class="bg-white/5 dark:bg-white/10 p-3 rounded-2xl border border-white/10 dark:border-white/5 text-center min-w-20">
+                                            <p
+                                                class="text-[8px] font-black text-slate-500 dark:text-slate-600 uppercase mb-1">
+                                                Roles</p>
+                                            <p class="text-xl font-black">{{ selectedUser.roles.length || 0 }}</p>
+                                        </div>
+                                        <div
+                                            class="bg-white/5 dark:bg-white/10 p-3 rounded-2xl border border-white/10 dark:border-white/5 text-center min-w-20">
+                                            <p
+                                                class="text-[8px] font-black text-slate-500 dark:text-slate-600 uppercase mb-1">
+                                                Del Rol</p>
+                                            <p class="text-xl font-black">{{ selectedUser.rolePermissions.length || 0 }}
+                                            </p>
+                                        </div>
+                                        <div
+                                            class="bg-white/5 dark:bg-white/10 p-3 rounded-2xl border border-white/10 dark:border-white/5 text-center min-w-20">
+                                            <p
+                                                class="text-[8px] font-black text-slate-500 dark:text-slate-600 uppercase mb-1">
+                                                Directos</p>
+                                            <p class="text-xl font-black text-indigo-400">{{
+                                                selectedUser.activeDirectPermissionsCount || 0 }}</p>
+                                        </div>
+                                        <div
+                                            class="bg-indigo-500 dark:bg-indigo-600 p-3 rounded-2xl border border-indigo-400 dark:border-indigo-500 text-center min-w-20 shadow-lg">
+                                            <p
+                                                class="text-[8px] font-black text-indigo-100 dark:text-indigo-200 uppercase mb-1">
+                                                Efectivos</p>
+                                            <p class="text-xl font-black">{{ selectedUser.effectivePermissionsCount || 0
+                                                }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Controles -->
+                            <div
+                                class="p-6 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 transition-colors">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex gap-2">
+                                        <button type="button" (click)="toggleMode()"
+                                            class="px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all flex items-center gap-2 shadow-sm border"
+                                            [ngClass]="useDirectPermissions ? 'bg-indigo-600 dark:bg-indigo-700 text-white border-indigo-700 dark:border-indigo-600' : 'bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600'">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+                                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                            {{ useDirectPermissions ? 'Usar Solo Roles' : 'Activar Modo Híbrido' }}
+                                        </button>
+
+                                        <button type="button"
+                                            *ngIf="useDirectPermissions && selectedUser.directPermissions.length > 0"
+                                            (click)="openClearConfirm()"
+                                            class="px-5 py-2.5 bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 border border-rose-100 dark:border-rose-800 hover:bg-rose-100 dark:hover:bg-rose-900/50 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all">
+                                            Limpiar Directos
+                                        </button>
+                                    </div>
+
+                                    <div class="flex gap-2">
+                                        <button type="button" *ngIf="hasChanges()" (click)="cancelChanges()" [disabled]="saving"
+                                            class="px-5 py-2.5 text-slate-400 dark:text-slate-500 font-black text-[10px] uppercase tracking-widest hover:text-slate-600 dark:hover:text-slate-400">
+                                            Descartar
+                                        </button>
+                                        <button type="submit" [disabled]="!hasChanges() || saving"
+                                            class="px-8 py-2.5 bg-slate-800 dark:bg-blue-600 text-white rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-slate-200 dark:shadow-blue-900/50 disabled:opacity-30 disabled:shadow-none active:scale-95 transition-all flex items-center gap-2">
+                                            <span *ngIf="!saving">Actualizar Privilegios</span>
+                                            <div *ngIf="saving"
+                                                class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent">
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Campos adicionales para permisos directos -->
+                                <div
+                                    class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+                                    <app-form-input
+                                        label="Motivo del ajuste extraordinario"
+                                        type="text"
+                                        [required]="useDirectPermissions"
+                                        [(ngModel)]="permissionReason"
+                                        name="permissionReason"
+                                        #reasonModel="ngModel"
+                                        [error]="useDirectPermissions && reasonModel.invalid && (reasonModel.touched || permissionsForm.submitted) ? 'Debe proporcionar un motivo' : null"
+                                        placeholder="Describa la justificación técnica...">
+                                    </app-form-input>
+                                    <app-form-input
+                                        label="Fecha de caducidad (Autocierre)"
+                                        type="datetime-local"
+                                        [(ngModel)]="expirationDate"
+                                        name="expirationDate"
+                                        placeholder="">
+                                    </app-form-input>
+                                </div>
+
+                                <!-- Mensaje informativo según modo -->
+                                <div *ngIf="!useDirectPermissions && selectedUser.roles && selectedUser.roles.length > 0"
+                                    class="mt-4 p-3 bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500 dark:border-blue-600 rounded transition-colors">
+                                    <p class="text-sm text-blue-800 dark:text-blue-300">
+                                        ℹ️ Este usuario está usando permisos de sus roles. Los
+                                        permisos directos que
+                                        configures aquí no se aplicarán hasta que cambies a modo
+                                        DIRECTO.
+                                    </p>
+                                </div>
+
+                                <div *ngIf="useDirectPermissions"
+                                    class="mt-4 p-3 bg-purple-50 dark:bg-purple-900/30 border-l-4 border-purple-500 dark:border-purple-600 rounded transition-colors">
+                                    <p class="text-sm text-purple-800 dark:text-purple-300">
+                                        🔑 Este usuario usa permisos hibridos. Los permisos de
+                                        sus roles y los permisos
+                                        directos están activos mientras esté en este modo.
+                                    </p>
+                                </div>
+
+                                <div *ngIf="!selectedUser.roles || selectedUser.roles.length === 0"
+                                    class="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 dark:border-yellow-600 rounded transition-colors">
+                                    <p class="text-sm text-yellow-800 dark:text-yellow-300">
+                                        ⚠️ Este usuario no tiene roles asignados. Solo puede
+                                        usar permisos directos.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Grid de módulos con permisos -->
+                            <div class="p-6">
+                                <!-- Contador total -->
+                                <div
+                                    class="mb-6 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-800 transition-colors">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-blue-800 dark:text-blue-300">
+                                            <span class="text-2xl">📊</span>
+                                            <span class="font-semibold">Permisos
+                                                seleccionados:</span>
+                                        </div>
+                                        <span class="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                                            {{ selectedPermissions.size }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Grid de módulos -->
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div *ngFor="let moduleGroup of moduleGroups"
+                                        class="border-2 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300"
+                                        [ngClass]="{
+                       'border-blue-400 dark:border-blue-600 bg-blue-50 dark:bg-blue-900/20': areAllModulePermissionsSelected(moduleGroup),
+                       'border-yellow-400 dark:border-yellow-600 bg-yellow-50 dark:bg-yellow-900/20': areSomeModulePermissionsSelected(moduleGroup),
+                       'border-slate-200 dark:border-slate-700': !areAllModulePermissionsSelected(moduleGroup) && !areSomeModulePermissionsSelected(moduleGroup)
+                     }">
+
+                                        <!-- Header del módulo -->
+                                        <div class="bg-slate-700 dark:bg-slate-800 p-3">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="text-2xl">{{ moduleGroup.icon
+                                                        }}</span>
+                                                    <div>
+                                                        <h3 class="font-bold text-white">{{
+                                                            moduleGroup.displayName }}
+                                                        </h3>
+                                                        <p class="text-xs text-slate-300 dark:text-slate-400">{{
+                                                            moduleGroup.permissions.length }}
+                                                            permisos</p>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Checkbox para seleccionar todos del módulo -->
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input type="checkbox"
+                                                        [checked]="areAllModulePermissionsSelected(moduleGroup)"
+                                                        [indeterminate]="areSomeModulePermissionsSelected(moduleGroup)"
+                                                        (change)="toggleAllPermissionsInModule(moduleGroup, $event)"
+                                                        class="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500">
+                                                    <span class="text-xs text-white font-semibold">Todos</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Lista de permisos -->
+                                        <div
+                                            class="p-3 space-y-1 max-h-64 overflow-y-auto bg-white dark:bg-slate-800 transition-colors">
+                                            <!-- Info del módulo si tiene permisos de rol -->
+                                            <div *ngIf="hasRolePermissionsInModule(moduleGroup)"
+                                                class="mb-2 p-2 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg text-xs transition-colors">
+                                                <div class="flex items-center gap-2 text-blue-700 dark:text-blue-400">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                    <span class="font-semibold">
+                                                        {{ getRolePermissionsCount(moduleGroup) }} permisos heredados
+                                                        del rol
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <label *ngFor="let permission of moduleGroup.permissions"
+                                                class="flex items-start gap-3 p-2 rounded-lg transition-colors group"
+                                                [ngClass]="{
+               'bg-blue-50 dark:bg-blue-900/30 border-2 border-blue-300 dark:border-blue-700': isPermissionFromRole(permission.id),
+               'hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer': !isPermissionFromRole(permission.id),
+               'cursor-not-allowed': isPermissionFromRole(permission.id)
+           }">
+
+                                                <!-- Checkbox -->
+                                                <input type="checkbox"
+                                                    [checked]="hasPermission(permission.id) || isPermissionFromRole(permission.id)"
+                                                    [disabled]="isPermissionDisabled(permission.id)"
+                                                    (change)="togglePermission(permission.id)"
+                                                    class="mt-0.5 w-4 h-4 rounded focus:ring-2 transition-all"
+                                                    [ngClass]="{
+                   'text-blue-600 focus:ring-blue-500': getPermissionActionType(permission.name) === 'read',
+                   'text-green-600 focus:ring-green-500': getPermissionActionType(permission.name) === 'create',
+                   'text-yellow-600 focus:ring-yellow-500': getPermissionActionType(permission.name) === 'update',
+                   'text-red-600 focus:ring-red-500': getPermissionActionType(permission.name) === 'delete',
+                   'text-purple-600 focus:ring-purple-500': getPermissionActionType(permission.name) === 'validate',
+                   'text-indigo-600 focus:ring-indigo-500': getPermissionActionType(permission.name) === 'entry',
+                   'text-gray-600 focus:ring-gray-500': getPermissionActionType(permission.name) === 'other',
+                   'opacity-60 cursor-not-allowed': isPermissionFromRole(permission.id)
+               }">
+
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="flex items-center gap-2 flex-wrap">
+                                                        <span
+                                                            class="font-medium text-sm text-slate-800 dark:text-slate-200 group-hover:text-slate-900 dark:group-hover:text-slate-100"
+                                                            [ngClass]="{'text-blue-700 dark:text-blue-400': isPermissionFromRole(permission.id)}">
+                                                            {{ getPermissionShortName(permission.name) }}
+                                                        </span>
+
+                                                        <!-- Badge de acción -->
+                                                        <span
+                                                            class="px-1.5 py-0.5 text-[10px] rounded-full font-semibold">
+                                                            {{ permission.name }}
+                                                        </span>
+
+                                                        <!-- Badge de origen del permiso -->
+                                                        <span *ngIf="getPermissionOrigin(permission.id) !== 'NINGUNO'"
+                                                            class="px-2 py-0.5 text-[10px] rounded-full font-bold flex items-center gap-1"
+                                                            [ngClass]="{
+                                                                'bg-blue-600 dark:bg-blue-700 text-white': getPermissionOrigin(permission.id) === 'ROL',
+                                                                'bg-purple-600 dark:bg-purple-700 text-white': getPermissionOrigin(permission.id) === 'DIRECTO',
+                                                                'bg-linear-to-r from-blue-600 to-purple-600 text-white': getPermissionOrigin(permission.id) === 'AMBOS'
+                                                            }">
+                                                            <!-- Iconos según origen -->
+                                                            <svg *ngIf="getPermissionOrigin(permission.id) === 'ROL'"
+                                                                class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                                <path fill-rule="evenodd"
+                                                                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                                                    clip-rule="evenodd" />
+                                                            </svg>
+                                                            <svg *ngIf="getPermissionOrigin(permission.id) === 'DIRECTO'"
+                                                                class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                                <path fill-rule="evenodd"
+                                                                    d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z"
+                                                                    clip-rule="evenodd" />
+                                                            </svg>
+                                                            <svg *ngIf="getPermissionOrigin(permission.id) === 'AMBOS'"
+                                                                class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                                                                <path fill-rule="evenodd"
+                                                                    d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                                    clip-rule="evenodd" />
+                                                            </svg>
+
+                                                            <span>{{ getPermissionOrigin(permission.id) }}</span>
+                                                        </span>
+                                                    </div>
+
+                                                    <!-- Descripción -->
+                                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1"
+                                                        [ngClass]="{'text-blue-600 dark:text-blue-400': isPermissionFromRole(permission.id)}"
+                                                        [title]="permission.description">
+                                                        {{ permission.description }}
+                                                    </p>
+
+                                                    <!-- Mensaje de permiso heredado -->
+                                                    <div *ngIf="isPermissionFromRole(permission.id)"
+                                                        class="mt-1 flex items-center gap-1.5 text-[10px] text-blue-600 dark:text-blue-400">
+                                                        <svg class="w-3 h-3" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                                        </svg>
+                                                        <span class="font-semibold">Heredado del rol - No se puede
+                                                            modificar</span>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

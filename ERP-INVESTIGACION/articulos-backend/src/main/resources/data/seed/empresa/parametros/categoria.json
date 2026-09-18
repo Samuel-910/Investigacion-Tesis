@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "descripcion": "ACCESORIOS MÉDICOS",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.447382",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.447382",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 2,
+    "descripcion": "ALIMENTOS Y DIETETICOS",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.449523",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.449523",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 3,
+    "descripcion": "ANALGÉSICOS",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.45004",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.45004",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 4,
+    "descripcion": "ANTIALÉRGICOS",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.451066",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.451066",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 5,
+    "descripcion": "ANTIBIÓTICOS",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.453066",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.453066",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 6,
+    "descripcion": "ANTICONCEPTIVOS",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.454065",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.454065",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 7,
+    "descripcion": "ANTIGRIPALES",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.455063",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.455063",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 8,
+    "descripcion": "ANTIINFECCIOSOS PARA USO SISTEMICO",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.455569",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.455569",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 9,
+    "descripcion": "ANTIINFLAMATORIOS",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.455569",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.455569",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 10,
+    "descripcion": "ANTIMICÓTICOS",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.457075",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.457075",
+    "usuarioModificacion": null
+  }
+]

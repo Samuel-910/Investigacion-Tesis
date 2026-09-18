@@ -1,0 +1,47 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Nombre -->
+        <div class="md:col-span-2">
+            <app-form-input formControlName="nombre" label="Nombre del Formato" placeholder="Ej: A4, Ticket 80mm..."
+                [required]="true" [hasIcon]="true" [error]="getError('nombre')">
+                <i icon class="fas fa-file-alt text-xs"></i>
+            </app-form-input>
+        </div>
+
+        <!-- Ancho -->
+        <div>
+            <app-form-input formControlName="anchoPx" type="number" label="Ancho (px)" placeholder="Ej: 794"
+                [required]="true" [hasIcon]="true" [error]="getError('anchoPx')">
+                <i icon class="fas fa-arrows-alt-h text-xs"></i>
+            </app-form-input>
+        </div>
+
+        <!-- Alto -->
+        <div>
+            <app-form-input formControlName="altoPx" type="number" label="Alto (px - opcional)" placeholder="Ej: 1123"
+                [hasIcon]="true" [error]="getError('altoPx')">
+                <i icon class="fas fa-arrows-alt-v text-xs"></i>
+            </app-form-input>
+            <p class="text-[10px] text-slate-500 mt-1 ml-1 font-medium">Dejar vacío para altura infinita (ej: tickets)
+            </p>
+        </div>
+
+        <!-- Descripción -->
+        <div class="md:col-span-2 mt-2">
+            <app-form-textarea formControlName="descripcion" label="Descripción adicional"
+                placeholder="Notas adicionales..." [rows]="2">
+            </app-form-textarea>
+        </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="flex justify-end gap-3 pt-6 border-t border-slate-100 dark:border-slate-700">
+        <button type="button" (click)="onCancelar()"
+            class="px-6 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all">
+            Cancelar
+        </button>
+        <app-primary-button [label]="loading ? 'Guardando...' : 'Guardar Formato'" [loading]="loading" type="submit"
+            color="brand">
+        </app-primary-button>
+    </div>
+</form>

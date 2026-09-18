@@ -1,0 +1,237 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+        <!-- Cabecera de Saldo -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div
+                class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 flex items-center gap-4">
+                <div
+                    class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                    <i class="fas fa-wallet text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Saldo
+                        Actual</h3>
+                    <p class="text-2xl font-bold text-slate-900 dark:text-white">S/ {{ cajaActual()?.saldoActual || 0 |
+                        number:'1.2-2' }}</p>
+                </div>
+            </div>
+
+            <div
+                class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 md:col-span-2">
+                <div class="flex items-center justify-between h-full">
+                    <div>
+                        <h3 class="font-bold text-slate-900 dark:text-white">{{ cajaActual()?.nombre ||
+                            'Cargando caja...' }}</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Estado:
+                            <span [class]="cajaActual()?.estado === 'ABIERTA' ? 'text-emerald-500' : 'text-rose-500'"
+                                class="font-bold">
+                                {{ cajaActual()?.estado }}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="flex gap-2">
+                        <ng-container *ngIf="cajaActual()?.estado === 'ABIERTA'; else noCajaBtn">
+                            <app-primary-button label="Ingreso" icon="plus" color="green"
+                                (btnClick)="abrirModalMovimiento('INGRESO')"></app-primary-button>
+                            <app-primary-button label="Egreso" icon="cancel" color="red"
+                                (btnClick)="abrirModalMovimiento('EGRESO')"></app-primary-button>
+                            <app-primary-button label="Cerrar Caja" [icon]="null" color="slate"
+                                (btnClick)="cerrarCaja()"></app-primary-button>
+                        </ng-container>
+                        <ng-template #noCajaBtn>
+                            <app-primary-button label="Abrir Caja" icon="plus" color="blue"
+                                *ngIf="!cajaActual() || cajaActual()?.estado === 'CERRADA'"
+                                (btnClick)="abrirModalCrearCaja()"></app-primary-button>
+                            <span *ngIf="cajaActual()?.estado === 'CERRADA'"
+                                class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-500 rounded-xl font-bold uppercase text-xs">
+                                <i class="fas fa-lock mr-2"></i>Caja Cerrada
+                            </span>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 mt-6">
+            <div class="mb-6">
+                <app-page-header title="Movimientos de Caja" subtitle="Historial de ingresos y egresos de caja chica"
+                    [showCounter]="true" counterLabel="Movimientos" [counterValue]="totalElements()">
+                </app-page-header>
+
+                <div class="overflow-hidden mt-6">
+                    <div *ngIf="loading()" class="flex justify-center items-center h-64">
+                        <div class="text-center">
+                            <div
+                                class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400">
+                            </div>
+                            <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium">Cargando
+                                movimientos...</p>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!loading()">
+                        <app-tabla-general [datos]="movimientos()" [columnas]="columns" [showEdit]="false"
+                            [showDelete]="true" [showActions]="true" [deleteIcon]="'fa-ban'" [deleteTooltip]="'Anular'"
+                            (onDelete)="anularMovimiento($event)">
+                        </app-tabla-general>
+
+                        <!-- Paginación inmediatamente abajo de la tabla -->
+                        <div *ngIf="totalElements() > 0" class="p-4 border-b border-slate-100 dark:border-slate-700">
+                            <app-pagination [currentPage]="currentPage()" [totalPages]="totalPages()"
+                                [pageSize]="pageSize()" (pageChange)="cambiarPagina($event)"
+                                (pageSizeChange)="cambiarTamanoPagina($event)">
+                            </app-pagination>
+                        </div>
+
+                        <!-- Resumen de Totales ERP -->
+                        <div *ngIf="movimientos().length > 0" class="mt-8 space-y-4">
+                            <!-- Toggle de Expansión -->
+                            <div (click)="resumenExpandido.set(!resumenExpandido())"
+                                class="flex items-center justify-between cursor-pointer group p-2 hover:bg-slate-50 dark:hover:bg-slate-700/30 rounded-xl transition-all border border-transparent hover:border-slate-100 dark:hover:border-slate-600">
+                                <h4
+                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">
+                                    <i class="fas fa-chart-line text-blue-500"></i>
+                                    Resumen por Métodos de Pago
+                                </h4>
+                                <div class="flex items-center gap-2">
+                                    <span
+                                        class="text-[10px] text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        {{ resumenExpandido() ? 'Click para contraer' : 'Click para
+                                        expandir' }}
+                                    </span>
+                                    <i class="fas transition-transform duration-300"
+                                        [class.fa-chevron-down]="!resumenExpandido()"
+                                        [class.fa-chevron-up]="resumenExpandido()"
+                                        [class.rotate-180]="!resumenExpandido()"
+                                        class="text-slate-300 group-hover:text-blue-500"></i>
+                                </div>
+                            </div>
+
+                            <!-- Totales por Método de Pago (Dinámico) -->
+                            <div *ngIf="resumenExpandido()"
+                                class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                                <div *ngFor="let mp of metodosPago()"
+                                    class="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm transition-all hover:shadow-md hover:border-blue-100 dark:hover:border-blue-900/50 group/card">
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter mb-1 truncate"
+                                        [title]="mp.descripcion">
+                                        {{ mp.descripcion }}
+                                    </p>
+                                    <p class="text-xl font-black transition-transform group-hover/card:scale-105 origin-left"
+                                        [ngClass]="{
+                                            'text-slate-700 dark:text-slate-200': mp.descripcion.toUpperCase() === 'EFECTIVO',
+                                            'text-blue-600': mp.descripcion.toUpperCase() === 'YAPE',
+                                            'text-purple-600': mp.descripcion.toUpperCase() === 'PLIN',
+                                            'text-orange-600': mp.descripcion.toUpperCase() === 'TRANSFERENCIA',
+                                            'text-indigo-600': mp.descripcion.toUpperCase() === 'TARJETA'
+                                        }">
+                                        S/ {{ (totalesPorMetodo()[mp.descripcion.toUpperCase()] || 0) |
+                                        number:'1.2-2' }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Totales Generales -->
+                            <div
+                                class="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100/50 dark:border-blue-800/50 shadow-inner">
+                                <div class="relative overflow-hidden group">
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
+                                        Total Ingresos</p>
+                                    <p class="text-2xl font-black text-emerald-600 dark:text-emerald-400">
+                                        S/ {{
+                                        totalIngresos() | number:'1.2-2' }}</p>
+                                    <div
+                                        class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                                        <i class="fas fa-arrow-trend-up text-6xl text-emerald-600"></i>
+                                    </div>
+                                </div>
+                                <div class="relative overflow-hidden group">
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
+                                        Total Egresos</p>
+                                    <p class="text-2xl font-black text-rose-600 dark:text-rose-400">S/
+                                        {{
+                                        totalEgresos() |
+                                        number:'1.2-2' }}</p>
+                                    <div
+                                        class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                                        <i class="fas fa-arrow-trend-down text-6xl text-rose-600"></i>
+                                    </div>
+                                </div>
+                                <div class="relative overflow-hidden group">
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
+                                        Saldo Final Estimado</p>
+                                    <p class="text-2xl font-black text-blue-600 dark:text-blue-400">S/
+                                        {{
+                                        saldoFinal() |
+                                        number:'1.2-2' }}</p>
+                                    <p class="text-[10px] text-slate-400 italic">Incluye fondo inicial
+                                        de S/ {{
+                                        cajaActual()?.saldoInicial || 0 | number:'1.2-2' }}</p>
+                                    <div
+                                        class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                                        <i class="fas fa-calculator text-6xl text-blue-600"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <app-modal [isOpen]="showModalMovimiento()"
+            [title]="'Registrar ' + (tipoMovimientoSeleccionado() === 'INGRESO' ? 'Ingreso' : 'Egreso')" [size]="'md'"
+            (modalClose)="cerrarModal()">
+            <app-caja-chica-form [cajaId]="cajaActual()?.id!" [tipo]="tipoMovimientoSeleccionado()"
+                (cerrar)="cerrarModal()" (guardado)="onMovimientoGuardado()">
+            </app-caja-chica-form>
+        </app-modal>
+
+        <!-- Modal Arqueo y Cierre -->
+        <app-caja-arqueo-modal [isOpen]="showArqueoModal()" [cajaId]="selectedCajaId()"
+            (modalClose)="onArqueoDone($event)">
+        </app-caja-arqueo-modal>
+
+        <!-- Modal Nueva Caja -->
+        <app-modal [isOpen]="showModalCrearCaja()" [title]="'Abrir Nueva Caja'" [size]="'sm'"
+            (modalClose)="showModalCrearCaja.set(false)">
+            <div class="p-6">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre de la
+                        Caja</label>
+                    <input type="text" [(ngModel)]="nombreNuevaCaja"
+                        class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                        placeholder="Ej. Caja General">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Saldo Inicial
+                        (Fondo)</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">S/</span>
+                        <input type="number" [(ngModel)]="saldoInicialCaja"
+                            class="w-full pl-8 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                            placeholder="0.00">
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-1">Efectivo para sencillo/cambio al iniciar.</p>
+                </div>
+                <div class="flex justify-end gap-3 mt-6">
+                    <button (click)="showModalCrearCaja.set(false)"
+                        class="px-4 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                        Cancelar
+                    </button>
+                    <app-primary-button label="Confirmar Apertura" (btnClick)="confirmarAbrirCaja()"
+                        [loading]="loading()"></app-primary-button>
+                </div>
+            </div>
+        </app-modal>

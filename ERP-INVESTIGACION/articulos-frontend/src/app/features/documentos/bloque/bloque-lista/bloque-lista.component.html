@@ -1,0 +1,106 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <div class="mb-6">
+                <app-page-header title="Gestión de Bloques"
+                    subtitle="Crea bloques HTML/CSS dinámicos para tus plantillas" [showCounter]="true"
+                    counterLabel="Total" [counterValue]="totalRegistros()">
+                </app-page-header>
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 my-6">
+                    <div class="w-full md:w-auto">
+                        <app-search-generic [options]="searchOptions" placeholder="Buscar en bloques..."
+                            (onSearch)="onSearch($event)">
+                        </app-search-generic>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <app-primary-button label="Nuevo Bloque" icon="plus" color="brand"
+                            (btnClick)="abrirModalNuevo()">
+                        </app-primary-button>
+                    </div>
+
+
+                </div>
+
+                <div class="overflow-hidden">
+                    @if (loading()) {
+                    <div class="flex justify-center items-center h-64">
+                        <div class="text-center">
+                            <div
+                                class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400">
+                            </div>
+                            <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium">Cargando bloques...</p>
+                        </div>
+                    </div>
+                    } @else {
+                    <app-tabla-general [datos]="paginatedBloques()" [columnas]="columns" [showEdit]="true"
+                        [showDelete]="true" (onEdit)="abrirModalEditar($event)" (onDelete)="eliminar($event)"
+                        [accionesTemplate]="tableActions">
+                    </app-tabla-general>
+
+                    <ng-template #tableActions let-item>
+                        <button (click)="abrirPreview(item)"
+                            class="p-1 text-blue-600 dark:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded transition-colors"
+                            title="Previsualizar">
+                            <i class="fas fa-eye text-sm"></i>
+                        </button>
+                    </ng-template>
+
+                    <div class="mt-6">
+                        <app-pagination [totalPages]="totalPages()" [pageSize]="tamanoPagina()"
+                            [currentPage]="paginaActual()" (pageChange)="cambiarPagina($event)"
+                            (pageSizeChange)="cambiarTamanoPagina($event)">
+                        </app-pagination>
+                    </div>
+
+                    @if (filteredBloques().length === 0) {
+                    <div class="text-center py-16">
+                        <div
+                            class="bg-slate-50 dark:bg-slate-700/50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                            <svg class="h-10 w-10 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-medium text-slate-900 dark:text-white">No hay bloques</h3>
+                        <p class="text-slate-500 dark:text-slate-400">Comienza creando bloques para usar en el editor
+                            visual.</p>
+                    </div>
+                    }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-modal [showSucursal]="true" [isOpen]="showModal()" [title]="selectedBloque() ? 'Editar Bloque' : 'Nuevo Bloque'"
+    [size]="'xl'" (modalClose)="cerrarModal()">
+    <app-bloque-form [bloque]="selectedBloque()" (cerrar)="cerrarModal()" (guardado)="onGuardado()">
+    </app-bloque-form>
+</app-modal>
+
+<!-- Modal de Previsualización Rápida -->
+<app-modal [showSucursal]="true" [isOpen]="showModalPreview()" [title]="'Previsualización: ' + selectedBloque()?.nombre"
+    [size]="'lg'" (modalClose)="cerrarModal()">
+    <div class="p-6 bg-slate-50 dark:bg-slate-900/50 min-h-[300px]">
+        <div
+            class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-auto max-h-[60vh] relative">
+            <div class="relative" [innerHTML]="previewHtml()"></div>
+        </div>
+        <div class="mt-6 flex justify-end">
+            <button (click)="cerrarModal()"
+                class="px-6 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl font-bold hover:bg-slate-300 transition-colors">
+                Cerrar Vista
+            </button>
+        </div>
+    </div>
+</app-modal>

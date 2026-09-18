@@ -1,0 +1,335 @@
+﻿                    class="hidden lg:block overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800/60 min-h-[350px]">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr
+                                class="bg-slate-50/80 dark:bg-slate-800/50 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
+                                <th
+                                    class="py-4 px-4 text-center align-middle text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest w-24 border-r border-slate-200 dark:border-slate-800/60">
+                                    CÃ³digo
+                                </th>
+                                <th
+                                    class="py-4 px-4 text-center align-middle text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest border-r border-slate-200 dark:border-slate-800/60">
+                                    Producto
+                                </th>
+                                <th
+                                    class="py-4 px-4 text-center align-middle text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest w-32 border-r border-slate-200 dark:border-slate-800/60">
+                                    PresentaciÃ³n
+                                </th>
+                                <th
+                                    class="py-4 px-4 text-center align-middle text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest w-28 border-r border-slate-200 dark:border-slate-800/60">
+                                    Cantidad
+                                </th>
+                                <th
+                                    class="py-4 px-4 text-center align-middle text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest w-32 border-r border-slate-200 dark:border-slate-800/60">
+                                    Precio Compra
+                                </th>
+                                <th
+                                    class="py-4 px-4 text-center align-middle text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest w-36 border-r border-slate-200 dark:border-slate-800/60">
+                                    Lote / Venc.
+                                </th>
+                                <th
+                                    class="py-4 px-4 text-center align-middle text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest w-32 border-r border-slate-200 dark:border-slate-800/60">
+                                    Dscto %
+                                </th>
+                                <th
+                                    class="py-4 px-4 text-center align-middle text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest w-36 border-r border-slate-200 dark:border-slate-800/60">
+                                    AfectaciÃ³n
+                                </th>
+                                <th
+                                    class="py-4 px-4 text-center text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest w-20 border-r border-slate-200 dark:border-slate-800/60">
+                                    Bonif.
+                                </th>
+                                <th
+                                    class="py-4 px-4 text-center align-middle text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest w-32 border-r border-slate-200 dark:border-slate-800/60">
+                                    Total
+                                </th>
+                                <th class="py-4 px-4 w-12 text-center align-middle"></th>
+                            </tr>
+                        </thead>
+                        <tbody formArrayName="detalles" class="divide-y divide-gray-200 dark:divide-slate-700">
+                            @for (item of detalles.controls; track item; let i = $index) {
+                            <tr [formGroupName]="i"
+                                class="group hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+                                <td
+                                    class="py-4 px-4 border border-slate-200 dark:border-slate-800/50 text-center align-middle">
+                                    <span
+                                        class="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-1 rounded">
+                                        {{ item.get('codigo')?.value }}
+                                    </span>
+                                </td>
+                                <td
+                                    class="py-4 px-4 border border-slate-200 dark:border-slate-800/50 text-center align-middle">
+                                    <span
+                                        class="text-sm font-semibold text-gray-900 dark:text-white block whitespace-normal text-center"
+                                        title="{{ item.get('nombreProducto')?.value }}">
+                                        {{ item.get('nombreProducto')?.value }}
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4 text-center border border-slate-200 dark:border-slate-800/50">
+                                    <div class="inline-block relative">
+                                        <select formControlName="idUnidadMedida"
+                                            class="custom-select bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800/50 rounded-lg py-1.5 pl-2 pr-6 text-[10px] font-black uppercase tracking-tighter text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500/50 outline-none cursor-pointer transition-all hover:border-indigo-400 dark:hover:border-indigo-500 min-w-[70px]">
+                                            @for (opt of getUnitOptions(i); track $index) {
+                                            <option class="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100" [value]="opt.id">{{ opt.name }}</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <input type="hidden" formControlName="factorConversion">
+                                </td>
+                                <td
+                                    class="py-4 px-4 border border-slate-200 dark:border-slate-800/50 text-center align-middle">
+                                    <app-form-input type="number" formControlName="cantidad" [min]="1" placeholder="0"
+                                        class="w-full text-center" [id]="'input-' + i + '-0'"
+                                        (keydown)="navegarTeclado($event, i, 0)">
+                                    </app-form-input>
+                                </td>
+                                <td
+                                    class="py-4 px-4 border border-slate-200 dark:border-slate-800/50 text-center align-middle">
+                                    <div class="relative group/price w-full">
+                                        <app-form-input type="number" formControlName="precioUnitario" [min]="0"
+                                            [step]="0.0001" placeholder="0.00" [id]="'input-' + i + '-1'"
+                                            (keydown)="navegarTeclado($event, i, 1)">
+                                        </app-form-input>
+
+                                        <!-- NUEVO: Desglose por niveles (Tooltip) -->
+                                        @let data = getDesgloseTooltip($index);
+                                        <div class="absolute z-50 invisible group-hover/price:visible opacity-0 group-hover/price:opacity-100
+                                               transition-all duration-300 transform translate-x-2 group-hover/price:translate-x-0
+                                               bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-800/50
+                                               text-slate-900 dark:text-white text-[10px] p-4 rounded-2xl shadow-2xl
+                                               left-full top-1/2 -translate-y-1/2 ml-4 w-52 pointer-events-none">
+
+                                            <!-- SECCIÃ“N 1: Desglose Estimado (Basado en la compra actual) -->
+                                            <div class="mb-4">
+                                                <div
+                                                    class="flex items-center gap-2 mb-2 pb-1.5 border-b border-slate-100 dark:border-white/10">
+                                                    <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                                                    <p
+                                                        class="font-bold text-emerald-600 dark:text-emerald-400 tracking-tight uppercase">
+                                                        Desglose Estimado
+                                                    </p>
+                                                </div>
+                                                <div class="space-y-1">
+                                                    @for (nivel of data.estimacion; track $index) {
+                                                    <div
+                                                        class="flex justify-between items-center gap-3 py-1 rounded-lg px-2 hover:bg-slate-50 dark:hover:bg-white/5">
+                                                        <span
+                                                            class="text-slate-500 dark:text-slate-400 font-medium capitalize">{{nivel.nombre}}</span>
+                                                        <span
+                                                            class="font-mono font-bold text-slate-800 dark:text-slate-100 bg-slate-100 dark:bg-slate-700/50 px-1.5 py-0.5 rounded">
+                                                            {{nivel.precio | number:'1.1-3'}}
+                                                        </span>
+                                                    </div>
+                                                    }
+                                                </div>
+                                            </div>
+
+                                            <!-- SECCIÃ“N 2: Precios CatÃ¡logo (Referencia HistÃ³rica/Configurada) -->
+                                            <div class="mt-4 pt-4 border-t border-slate-100 dark:border-white/10">
+                                                <div class="flex items-center gap-2 mb-2">
+                                                    <div
+                                                        class="w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.5)]">
+                                                    </div>
+                                                    <p
+                                                        class="font-bold text-indigo-600 dark:text-indigo-400 tracking-tight uppercase text-[9px]">
+                                                        Precios CatÃ¡logo
+                                                    </p>
+                                                </div>
+                                                <div class="space-y-1">
+                                                    @if (data.catalogo.length > 0) {
+                                                    @for (cItem of data.catalogo; track $index) {
+                                                    <div
+                                                        class="flex justify-between items-center gap-3 py-1 rounded-lg px-2 hover:bg-indigo-50/50 dark:hover:bg-indigo-500/10 transition-colors">
+                                                        <span
+                                                            class="text-slate-500 dark:text-slate-400 font-medium capitalize">{{cItem.nombre}}</span>
+                                                        <span
+                                                            class="font-mono font-bold text-indigo-600 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-900/40 px-1.5 py-0.5 rounded">
+                                                            {{cItem.precio | number:'1.2-2'}}
+                                                        </span>
+                                                    </div>
+                                                    }
+                                                    } @else {
+                                                    <div
+                                                        class="py-3 px-2 text-center bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-dashed border-slate-200 dark:border-slate-800/50">
+                                                        <p class="text-slate-400 dark:text-slate-500 italic text-[9px]">
+                                                            Sin
+                                                            precios registrados</p>
+                                                    </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td
+                                    class="py-4 px-4 border border-slate-200 dark:border-slate-800/50 text-center align-middle">
+                                    <div class="flex flex-col gap-2">
+                                        <app-form-input type="text" formControlName="lote" placeholder="Lote"
+                                            [readonly]="!item.get('manejaLotes')?.value" [id]="'input-' + i + '-2'"
+                                            (keydown)="navegarTeclado($event, i, 2)">
+                                        </app-form-input>
+                                        <app-form-input type="date" formControlName="fechaVencimiento"
+                                            [readonly]="!item.get('manejaLotes')?.value" [id]="'input-' + i + '-3'"
+                                            (keydown)="navegarTeclado($event, i, 3)">
+                                        </app-form-input>
+                                    </div>
+                                </td>
+                                <td
+                                    class="py-4 px-4 border border-slate-200 dark:border-slate-800/50 text-center align-middle">
+                                    <div class="flex flex-col gap-2">
+                                        <app-form-input type="number" formControlName="porcentajeDescuento" [min]="0"
+                                            [max]="100" [step]="0.01" placeholder="D1" suffix="%"
+                                            [id]="'input-' + i + '-4'" (keydown)="navegarTeclado($event, i, 4)">
+                                        </app-form-input>
+                                        <app-form-input type="number" formControlName="porcentajeDescuento2" [min]="0"
+                                            [max]="100" [step]="0.01" placeholder="D2" suffix="%"
+                                            [id]="'input-' + i + '-5'" (keydown)="navegarTeclado($event, i, 5)">
+                                        </app-form-input>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 text-center border border-slate-200 dark:border-slate-800/50">
+                                      <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase" [ngClass]="{
+                                          'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400': item.get('tipoAfectacion')?.value === '10' || item.get('tipoAfectacion')?.value === 'GRAVADO',
+                                          'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400': item.get('tipoAfectacion')?.value === '20' || item.get('tipoAfectacion')?.value === 'EXONERADO',
+                                          'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400': item.get('tipoAfectacion')?.value === '30' || item.get('tipoAfectacion')?.value === 'INAFECTO'
+                                      }">
+                                          {{
+                                          (item.get('tipoAfectacion')?.value === '10' || item.get('tipoAfectacion')?.value
+                                          === 'GRAVADO') ? 'Gravado' :
+                                          (item.get('tipoAfectacion')?.value === '20' || item.get('tipoAfectacion')?.value
+                                          === 'EXONERADO') ? 'Exo' :
+                                          (item.get('tipoAfectacion')?.value === '30' || item.get('tipoAfectacion')?.value
+                                          === 'INAFECTO') ? 'Inaf' : 'Otro'
+                                          }}
+                                      </span>
+                                      <input type="hidden" formControlName="tipoAfectacion">
+                                  </td>
+                                <td
+                                    class="py-4 px-4 border border-slate-200 dark:border-slate-800/50 text-center align-middle">
+                                    <div class="flex justify-center">
+                                        <input type="checkbox" formControlName="esBonificacion"
+                                            class="w-5 h-5 rounded border-gray-300 dark:border-slate-500 text-indigo-600 focus:ring-indigo-500 bg-white dark:bg-slate-700 transition-all cursor-pointer">
+                                    </div>
+                                </td>
+                                <td
+                                    class="py-4 px-4 text-center align-middle border border-slate-200 dark:border-slate-800/50">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <div class="flex items-center justify-center gap-2 group/total relative">
+                                            <span
+                                                class="text-sm font-bold text-gray-900 dark:text-white font-mono block text-center">
+                                                {{ item.get('totalItem')?.value | number:'1.2-2' }}
+                                            </span>
+
+                                            <!-- Desglose por niveles (Tooltip) -->
+                                            <div class="absolute z-50 invisible group-hover/total:visible opacity-0 group-hover/total:opacity-100
+                                                   transition-all duration-300 transform -translate-x-2 group-hover/total:translate-x-0
+                                                   bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-800/50
+                                                   text-slate-900 dark:text-white text-[10px] p-3 rounded-2xl shadow-2xl
+                                                   right-full top-1/2 -translate-y-1/2 mr-4 w-48 pointer-events-none">
+
+                                                <div
+                                                    class="flex items-center gap-2 mb-2 pb-1.5 border-b border-slate-100 dark:border-white/10">
+                                                    <div class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse">
+                                                    </div>
+                                                    <p
+                                                        class="font-bold text-indigo-600 dark:text-indigo-400 tracking-tight uppercase">
+                                                        Desglose Fiscal
+                                                    </p>
+                                                </div>
+
+                                                @if (getItemCalculationBreakdown($index); as b) {
+                                                <div class="mt-3 pt-3 border-t border-slate-100 dark:border-white/10">
+                                                    <div class="space-y-1 text-[9px]">
+                                                        <div class="flex justify-between"><span>Subtotal:</span><span
+                                                                class="font-bold">{{b.bruto | number:'1.2-2'}}</span>
+                                                        </div>
+                                                        <div class="flex justify-between text-red-500"
+                                                            *ngIf="b.descuento1 > 0">
+                                                            <span>Dscto 1:</span><span class="font-bold">-{{b.descuento1
+                                                                |
+                                                                number:'1.2-2'}}</span>
+                                                        </div>
+                                                        <div class="flex justify-between text-red-500"
+                                                            *ngIf="b.descuento2 > 0">
+                                                            <span>Dscto 2:</span><span class="font-bold">-{{b.descuento2
+                                                                |
+                                                                number:'1.2-2'}}</span>
+                                                        </div>
+                                                        <div
+                                                            class="flex justify-between border-t border-slate-50 dark:border-white/5 pt-1">
+                                                            <span>Valor Neto:</span><span class="font-bold">{{b.neto |
+                                                                number:'1.2-2'}}</span>
+                                                        </div>
+                                                        <div class="flex justify-between"><span>IGV:</span><span
+                                                                class="font-bold">{{b.igv | number:'1.2-2'}}</span>
+                                                        </div>
+                                                        <div
+                                                            class="flex justify-between text-indigo-500 font-bold border-t border-slate-50 dark:border-white/5 pt-1">
+                                                            <span>TOTAL:</span><span>{{b.total | number:'1.2-2'}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                }
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Selector IGV -->
+                                        @if (item.get('tipoAfectacion')?.value === 'GRAVADO') {
+                                        <div class="flex justify-center mt-1 scale-[0.65] origin-center -mb-2">
+                                            <app-form-switch formControlName="incluyeIgv" [description]="true"
+                                                [onLabel]="'Con IGV'" [offLabel]="'Sin IGV'">
+                                            </app-form-switch>
+                                        </div>
+                                        }
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 text-center border border-slate-200 dark:border-slate-800/50">
+                                    <div class="flex items-center justify-center gap-1">
+                                        <!-- BotÃ³n CÃ¡lculo Inverso (Calculadora) -->
+                                        <button type="button" (click)="abrirCalculadora($index)"
+                                            
+                                            class="text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors p-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                                            title="CÃ¡lculo Inverso">
+                                            <i class="fas fa-calculator"></i>
+                                        </button>
+
+                                        <button type="button" (click)="eliminarDetalle($index)"
+                                            
+                                            class="text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                                            title="Eliminar producto">
+                                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                            @if (detalles.length === 0) {
+                            <tr>
+                                <td colspan="11" class="py-16 text-center">
+                                    <div class="flex flex-col items-center justify-center gap-4">
+                                        <div
+                                            class="w-20 h-20 rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center">
+                                            <svg class="w-10 h-10 text-gray-400 dark:text-gray-500" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-500 dark:text-gray-400 font-medium">No hay productos en
+                                                el
+                                                detalle</p>
+                                            <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Usa el buscador de
+                                                arriba para aÃ±adir Ã­tems</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>

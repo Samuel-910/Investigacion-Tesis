@@ -1,0 +1,185 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <div class="mb-6">
+                <app-page-header title="Notas de Venta" subtitle="Gestión y control de las notas de venta emitidas" iconType="document" counterLabel="Notas"
+                    [counterValue]="totalElements()" [showCounter]="true">
+                </app-page-header>
+                <!-- Barra de Acciones Secundaria -->
+                <div
+                    class="flex items-center justify-between mb-6 pb-6 border-b border-slate-100 dark:border-slate-700/50">
+                    <div class="flex items-center gap-3">
+                        <button (click)="isDrawerOpen.set(true)"
+                            class="relative flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl text-sm font-bold transition-all border border-slate-200 dark:border-slate-700">
+                            <i class="fas fa-filter text-blue-500"></i>
+                            Filtros Avanzados
+                            <span *ngIf="activeFiltersLabels().length > 0"
+                                class="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-blue-600 text-[10px] text-white shadow-lg animate-fadeIn">
+                                {{ activeFiltersLabels().length }}
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                    </div>
+                </div>
+
+                <!-- Chips de Filtros Activos -->
+                <div *ngIf="hasActiveFilters()"
+                    class="flex flex-wrap items-center gap-2 mb-6 animate-fadeIn transition-all">
+                    <div *ngFor="let filter of activeFiltersLabels()"
+                        class="flex items-center gap-2 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-xl text-[11px] font-bold border border-blue-100 dark:border-blue-800/50 transition-all hover:bg-blue-100 dark:hover:bg-blue-900/50">
+                        <span class="opacity-70">{{ filter.label.split(':')[0] }}:</span>
+                        <span>{{ filter.label.split(':')[1] }}</span>
+                        <button (click)="eliminarFiltro(filter.key)"
+                            class="ml-1 text-blue-400 hover:text-rose-500 transition-colors">
+                            <i class="fas fa-times-circle"></i>
+                        </button>
+                    </div>
+                    <button (click)="limpiarFiltros()"
+                        class="px-3 py-1.5 text-[11px] font-bold text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-xl transition-all">
+                        <i class="fas fa-trash-alt mr-1"></i>
+                        LIMPIAR TODO
+                    </button>
+                </div>
+
+                <!-- Drawer de Filtros -->
+                <app-drawer [isOpen]="isDrawerOpen()" title="Filtros de Búsqueda" (onClose)="isDrawerOpen.set(false)">
+                    <div slot="body" class="space-y-6 pt-4">
+                        <div class="space-y-5">
+                            <app-searchable-select label="Serie" [(ngModel)]="serie" [data]="seriesOptions()"
+                                bindLabel="label" bindValue="value">
+                            </app-searchable-select>
+
+                            <app-form-input label="Número de Comprobante" [(ngModel)]="numero"
+                                placeholder="Escriba el número...">
+                                <i icon class="fas fa-hashtag"></i>
+                            </app-form-input>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <app-form-input label="Fecha Desde" type="date" [(ngModel)]="fechaDesde">
+                                </app-form-input>
+
+                                <app-form-input label="Fecha Hasta" type="date" [(ngModel)]="fechaHasta">
+                                </app-form-input>
+                            </div>
+
+                            <app-searchable-select label="Vendedor" [(ngModel)]="vendedor" [data]="vendedorOptions()"
+                                bindLabel="label" bindValue="value" [hasIcon]="true">
+                                <i icon class="fas fa-user-tie"></i>
+                            </app-searchable-select>
+
+                            <app-searchable-select label="Condición de Pago" [(ngModel)]="condicionPago" [data]="[
+                                    { label: 'TODOS', value: 'TODOS' },
+                                    { label: 'CONTADO', value: 'CONTADO' },
+                                    { label: 'CRÉDITO', value: 'CREDITO' }
+                                ]" bindLabel="label" bindValue="value">
+                            </app-searchable-select>
+
+                            <app-searchable-select label="Estado" [(ngModel)]="estado" [data]="[
+                                    { label: 'TODOS', value: 'TODOS' },
+                                    { label: 'VIGENTE', value: 'VIGENTE' },
+                                    { label: 'PENDIENTE ANUL.', value: 'PENDIENTE_ANULACION' },
+                                    { label: 'ANULADO', value: 'ANULADO' }
+                                ]" bindLabel="label" bindValue="value">
+                            </app-searchable-select>
+                        </div>
+                    </div>
+
+                    <div slot="footer" class="flex gap-3">
+                        <button (click)="isDrawerOpen.set(false)"
+                            class="flex-1 px-4 py-3 border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                            Cancelar
+                        </button>
+                        <button (click)="onFiltrar()"
+                            class="flex-1 px-4 py-3 bg-blue-600 text-white font-bold rounded-xl text-sm hover:bg-blue-700 shadow-lg shadow-blue-500/30 transition-all">
+                            Aplicar Filtros
+                        </button>
+                    </div>
+                </app-drawer>
+
+                <!-- Espaciador tras eliminación de Nota Crédito -->
+                <div class="mb-6"></div>
+
+                <div class="overflow-hidden">
+                    <div *ngIf="loading()" class="flex justify-center items-center h-64">
+                        <div class="text-center">
+                            <div
+                                class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400">
+                            </div>
+                            <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium">Cargando ventas...</p>
+                        </div>
+                    </div>
+
+                    <app-tabla-general [datos]="ventas()" [columnas]="columns" [showEdit]="false" [showDelete]="true"
+                        deleteIcon="fa-ban" deleteTooltip="Anular Venta" [showLinkAction]="true" linkActionIcon="fa-eye"
+                        linkActionLabel="Ver Detalle" [showPrint]="true" (onPrint)="imprimir($event)"
+                        [currentPage]="currentPage()" [pageSize]="pageSize()" (onLinkAction)="verDetalleAction($event)"
+                        (onDelete)="anular($event)" [accionesTemplate]="accionesAdicionales">
+                    </app-tabla-general>
+
+                    <ng-template #accionesAdicionales let-item>
+                        <!-- Mostrar botón de canje SOLO si es Nota de Venta (NV) y está Vigente -->
+                        <button *ngIf="item.tipoDoc === 'NV' && item.estado === 'VIGENTE'"
+                            (click)="canjearNotaVenta(item)"
+                            class="p-1 text-orange-600 dark:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/30 rounded transition-colors"
+                            title="Canjear por Factura/Boleta">
+                            <i class="fas fa-exchange-alt w-4 h-4 flex items-center justify-center text-[11px]"></i>
+                        </button>
+                    </ng-template>
+
+                    <!-- Footer de Totales -->
+                    <div
+                        class="flex flex-col md:flex-row justify-end items-center gap-6 mt-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <div class="flex flex-col items-center">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Subtotal</span>
+                            <span class="text-sm font-bold text-slate-700 dark:text-slate-200">{{
+                                subtotalGeneral()
+                                | currency:'PEN':'S/ ' }}</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Descuento</span>
+                            <span class="text-sm font-bold text-rose-500">{{ descuentoGeneral() |
+                                currency:'PEN':'S/ ' }}</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">I.G.V.</span>
+                            <span class="text-sm font-bold text-slate-700 dark:text-slate-200">{{ igvGeneral() |
+                                currency:'PEN':'S/ ' }}</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Total</span>
+                            <span class="text-lg font-black text-blue-600 dark:text-blue-400">{{ totalGeneral()
+                                |
+                                currency:'PEN':'S/ ' }}</span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="totalElements() > 0" class="p-4 border-t border-slate-100 dark:border-slate-700">
+                        <app-pagination [currentPage]="currentPage()" [totalPages]="totalPages()"
+                            [pageSize]="pageSize()" (pageChange)="cambiarPagina($event)"
+                            (pageSizeChange)="cambiarPageSize($event)">
+                        </app-pagination>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalles -->
+    <app-venta-detalle-modal [isOpen]="isModalOpen()" [venta]="selectedVenta()" (onClose)="cerrarModal()">
+    </app-venta-detalle-modal>
+</div>

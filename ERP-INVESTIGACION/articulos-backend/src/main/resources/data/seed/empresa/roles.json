@@ -1,0 +1,40 @@
+[
+  {
+    "name": "ADMINISTRADOR",
+    "description": "Acceso total al sistema",
+    "acceso": "Articulos",
+    "permissions": ["*"]
+  },
+  {
+    "name": "VENDEDOR",
+    "description": "Atención al cliente y registro de ventas",
+    "acceso": "Articulos",
+    "permissions": [
+      "VENTA_CREAR", "VENTA_LEER", "PRODUCTO_LEER", "CAJA_CREAR", "CAJA_LEER"
+    ]
+  },
+  {
+    "name": "ALMACENERO",
+    "description": "Gestión de inventario y almacén",
+    "acceso": "Articulos",
+    "permissions": [
+      "PRODUCTO_CREAR", "PRODUCTO_LEER", "PRODUCTO_ACTUALIZAR", "ALMACEN_LEER", "MOVIMIENTO_CREAR", "MOVIMIENTO_LEER", "REPORTE_VER"
+    ]
+  },
+  {
+    "name": "COMPRADOR",
+    "description": "Gestión de proveedores y compras",
+    "acceso": "Articulos",
+    "permissions": [
+      "COMPRA_CREAR", "COMPRA_LEER", "PROVEEDOR_CREAR", "PROVEEDOR_LEER", "PRODUCTO_LEER", "ALMACEN_LEER"
+    ]
+  },
+  {
+    "name": "CAJERO",
+    "description": "Gestión de caja y cobros",
+    "acceso": "Articulos",
+    "permissions": [
+      "CAJA_CREAR", "CAJA_LEER", "VENTA_LEER", "ARQUEO_CAJA_LEER", "MEDIO_PAGO_LEER"
+    ]
+  }
+]

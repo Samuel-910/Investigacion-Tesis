@@ -1,0 +1,195 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300 font-sans">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-8 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+
+            <app-page-header title="Intercambio de Productos"
+                subtitle="Seleccione un producto del stock para intercambiar con el proveedor original">
+            </app-page-header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-6">
+
+                <!-- SECCIÓN: PRODUCTO DE ORIGEN (STOCK) -->
+                <div class="space-y-6 lg:col-span-1">
+                    <div
+                        class="bg-white dark:bg-slate-900/40 dark:backdrop-blur-xl rounded-2xl shadow-sm border border-gray-200 dark:border-slate-800/60 p-6 md:p-8 transition-all duration-200 hover:shadow-md">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-4">
+                            <span
+                                class="w-10 h-10 shrink-0 rounded-xl bg-linear-to-br from-indigo-500 to-indigo-600 text-white flex items-center justify-center text-sm font-bold shadow-lg shadow-indigo-200 dark:shadow-indigo-500/20">1</span>
+                            Seleccionar Producto del Stock
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <app-form-input label="Nombre / Código" [ngModel]="searchNombre()"
+                                (ngModelChange)="onSearchNombreChange($event)"
+                                placeholder="Buscar por nombre o código...">
+                            </app-form-input>
+                            <app-form-input label="Filtrar por Lote" [ngModel]="searchLote()"
+                                (ngModelChange)="onSearchLoteChange($event)" placeholder="Lote...">
+                            </app-form-input>
+                        </div>
+
+                        <div class="mt-6 space-y-3 max-h-[400px] overflow-y-auto custom-scrollbar pr-2">
+                            <div *ngFor="let p of productosStock()" (click)="seleccionarProductoFrom(p)"
+                                class="p-4 rounded-2xl border transition-all cursor-pointer group"
+                                [ngClass]="selectedProductoFrom()?.idProducto === p.idProducto 
+                                ? 'bg-blue-600 border-blue-600 shadow-lg shadow-blue-500/20' 
+                                : 'bg-slate-50 dark:bg-slate-900/50 border-slate-100 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500'">
+
+                                <div class="flex justify-between items-start">
+                                    <div class="min-w-0 flex-1">
+                                        <h4 class="font-bold text-sm truncate"
+                                            [ngClass]="selectedProductoFrom()?.idProducto === p.idProducto ? 'text-white' : 'text-slate-800 dark:text-slate-200'">
+                                            {{ p.catalogo?.nombre }}
+                                        </h4>
+                                        <p class="text-[10px] mt-1 font-medium"
+                                            [ngClass]="selectedProductoFrom()?.idProducto === p.idProducto ? 'text-blue-100' : 'text-slate-500 dark:text-slate-400'">
+                                            Cód: {{ p.catalogo?.codigo }} | Lote: {{ p.nroLote }}
+                                        </p>
+                                    </div>
+                                    <div class="text-right ml-4">
+                                        <span class="text-xs font-black"
+                                            [ngClass]="selectedProductoFrom()?.idProducto === p.idProducto ? 'text-white' : 'text-blue-600 dark:text-blue-400'">
+                                            Stock: {{ p.stock }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="productosStock().length === 0 && !loading()"
+                                class="text-center py-10 opacity-50">
+                                <i class="fas fa-box-open text-4xl mb-3"></i>
+                                <p class="text-sm font-medium">No se encontraron productos en stock</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- INFO PROVEEDOR ORIGINAL -->
+                    <div *ngIf="selectedProductoFrom()"
+                        class="rounded-3xl p-6 shadow-xl text-white animate-fadeIn transition-colors"
+                        [ngClass]="proveedorOriginal() && !proveedorOriginal()?.id ? 'bg-red-500' : 'bg-indigo-600'">
+                        <h3 class="text-sm font-bold uppercase tracking-widest opacity-80 mb-4 flex items-center gap-2">
+                            <i class="fas fa-truck"></i>
+                            Proveedor Original
+                        </h3>
+                        <div *ngIf="proveedorOriginal(); else loadingProv">
+                            <p class="text-xl font-black">{{ proveedorOriginal()?.razonSocial }}</p>
+                            <p class="text-xs font-bold opacity-80 mt-1">RUC: {{ proveedorOriginal()?.numeroDocumento }}
+                            </p>
+                        </div>
+                        <ng-template #loadingProv>
+                            <div class="flex items-center gap-3 py-2">
+                                <div class="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white">
+                                </div>
+                                <span class="text-xs font-medium italic">Localizando proveedor original...</span>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN: PRODUCTO DE DESTINO (NUEVO) -->
+                <div class="space-y-6 lg:col-span-2">
+                    <div class="bg-white dark:bg-slate-900/40 dark:backdrop-blur-xl rounded-2xl shadow-sm border border-gray-200 dark:border-slate-800/60 p-6 md:p-8 transition-all duration-200 hover:shadow-md"
+                        [ngClass]="{'opacity-50 pointer-events-none': !selectedProductoFrom() || !proveedorOriginal()?.id}">
+
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-4">
+                            <span
+                                class="w-10 h-10 shrink-0 rounded-xl bg-linear-to-br from-emerald-500 to-emerald-600 text-white flex items-center justify-center text-sm font-bold shadow-lg shadow-emerald-200 dark:shadow-emerald-500/20">2</span>
+                            Detalles del Producto a Recibir
+                        </h3>
+
+                        <div class="space-y-6">
+                            <div class="relative w-full">
+                                <app-searchable-select label="Producto de Intercambio"
+                                    placeholder="Buscar en el catálogo..." [data]="catalogos()" bindLabel="nombre"
+                                    bindValue="id" [(ngModel)]="idCatalogoTo"
+                                    (selected)="seleccionarCatalogoTo($event)">
+                                    <i icon class="fas fa-search text-slate-400"></i>
+                                </app-searchable-select>
+                            </div>
+
+                            <div *ngIf="selectedCatalogoTo()"
+                                class="p-6 bg-emerald-500/10 rounded-2xl border border-emerald-500/20 animate-fadeIn flex flex-col gap-2">
+                                <div>
+                                    <p class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase">
+                                        Seleccionado:</p>
+                                    <p class="text-lg font-black text-slate-800 dark:text-white">{{
+                                        selectedCatalogoTo()?.nombre }}</p>
+                                </div>
+
+                                <div *ngIf="selectedProductoFrom()"
+                                    class="mt-2 p-3 bg-white/50 dark:bg-slate-900/50 rounded-xl border border-emerald-500/10 flex items-center gap-4">
+                                    <div class="flex-1">
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase">Entregarás</p>
+                                        <p class="text-sm font-bold text-red-500">-{{ cantidadEntregar() }} uds. <span
+                                                class="text-xs text-slate-500 font-medium">de {{
+                                                selectedProductoFrom()?.catalogo?.nombre }}</span></p>
+                                    </div>
+                                    <div class="text-emerald-500">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase">Recibirás</p>
+                                        <p class="text-sm font-bold text-emerald-500">+{{ cantidadRecibir() }} uds.
+                                            <span class="text-xs text-slate-500 font-medium">de {{
+                                                selectedCatalogoTo()?.nombre }}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                                <app-form-input label="Cantidad a Entregar (Uds.)" type="number"
+                                    [ngModel]="cantidadEntregar()" (ngModelChange)="onCantidadEntregarChange($event)"
+                                    [min]="1" [max]="selectedProductoFrom()?.stock" [required]="true"
+                                    [error]="showErrors() && !cantidadEntregar() ? 'Requerido' : null"></app-form-input>
+                                <app-form-input label="Cantidad a Recibir (Uds.)" type="number"
+                                    [(ngModel)]="cantidadRecibir" [min]="1" [required]="true"
+                                    [error]="showErrors() && !cantidadRecibir() ? 'Requerido' : null"></app-form-input>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                                <app-form-input label="Precio Compra Destino (S/)" type="number" [step]="'0.01'"
+                                    [(ngModel)]="precioCompraDestino" [min]="0" [required]="true"
+                                    [error]="showErrors() && precioCompraDestino() === null ? 'Requerido' : null"></app-form-input>
+                            </div>
+
+                            <div *ngIf="selectedCatalogoTo()?.manejaLotes !== false"
+                                class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fadeIn mt-6">
+                                <app-form-input label="Nuevo Lote" [(ngModel)]="nuevoLote" placeholder="Ej: LOTE-123"
+                                    [required]="true"
+                                    [error]="showErrors() && !nuevoLote() ? 'Requerido' : null"></app-form-input>
+                                <app-form-input label="Fecha Vencimiento" type="date"
+                                    [(ngModel)]="nuevaFechaVencimiento"></app-form-input>
+                            </div>
+
+                            <div class="mt-2">
+                                <app-form-input label="Motivo del Intercambio" [(ngModel)]="motivo"
+                                    placeholder="Ej: Cambio por lote próximo a vencer, Error en despacho..."
+                                    [required]="true"
+                                    [error]="showErrors() && !motivo() ? 'Requerido' : null"></app-form-input>
+                            </div>
+
+                            <div class="pt-6">
+                                <button (click)="procesarIntercambio()" 
+                                    [disabled]="loading() || !selectedCatalogoTo() || (!nuevoLote() && selectedCatalogoTo()?.manejaLotes !== false) || !proveedorOriginal()?.id || !cantidadEntregar() || !cantidadRecibir() || !motivo()"
+                                    class="w-full py-4 bg-linear-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 disabled:from-slate-400 disabled:to-slate-300 dark:disabled:from-slate-700 dark:disabled:to-slate-600 text-white rounded-xl font-bold text-lg shadow-xl shadow-emerald-200 dark:shadow-emerald-900/50 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:hover:scale-100 disabled:active:scale-100 flex items-center justify-center gap-3 group">
+                                    <i
+                                        class="fas fa-exchange-alt transition-transform group-hover:rotate-180 duration-500"></i>
+                                    PROCESAR INTERCAMBIO
+                                    <i *ngIf="loading()" class="fas fa-spinner fa-spin ml-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

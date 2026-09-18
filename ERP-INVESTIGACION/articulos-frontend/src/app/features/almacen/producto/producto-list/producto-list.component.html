@@ -1,0 +1,489 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <app-page-header title="Productos y Servicios" subtitle="Administra el catálogo de productos y servicios"
+                [showCounter]="true" counterLabel="Total Catálogos" [counterValue]="totalCatalogs()">
+            </app-page-header>
+
+            <!-- Controles Globales (Buscador, Filtros, Botones) -->
+            <div class="mt-2">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 my-6">
+                    <div class="w-full md:w-auto flex-1 max-w-lg">
+                        <app-search-generic [placeholder]="'Buscar por nombre, código...'" [options]="searchOptions"
+                            (onSearch)="onSearch($event)">
+                        </app-search-generic>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <!-- Botón de filtros avanzados -->
+                        <button (click)="isDrawerOpen.set(true)"
+                            class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm">
+                            <i class="fas fa-filter text-slate-400"></i>
+                            <span>Filtros</span>
+                            <span *ngIf="hasActiveFilters()" class="flex h-2 w-2 rounded-full bg-blue-600"></span>
+                        </button>
+
+                        <app-primary-button label="Nuevo" icon="plus" color="brand" (btnClick)="abrirModalNuevo()">
+                        </app-primary-button>
+
+                        <app-primary-button icon="print" color="slate" title="Imprimir lista">
+                        </app-primary-button>
+                    </div>
+                </div>
+
+                <!-- Filtros Activos -->
+                <div *ngIf="hasActiveFilters()" class="flex flex-wrap gap-2 mb-6">
+                    <div *ngFor="let filter of activeFiltersLabels()"
+                        class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border border-blue-100 dark:border-blue-800/50 rounded-lg text-xs font-semibold animate-in fade-in slide-in-from-left-2">
+                        {{ filter.label }}
+                        <button (click)="eliminarFiltro(filter.key)"
+                            class="hover:bg-blue-200 dark:hover:bg-blue-800 rounded-full w-4 h-4 flex items-center justify-center transition-colors">
+                            <i class="fas fa-times text-[10px]"></i>
+                        </button>
+                    </div>
+                    <button (click)="limpiarFiltros()"
+                        class="text-xs text-slate-500 hover:text-blue-600 font-medium px-2 py-1.5 transition-colors">
+                        Limpiar todos los filtros
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex flex-wrap border-b border-slate-200 dark:border-slate-700 mb-6">
+                <button *ngFor="let tab of tabs" (click)="setActiveTab(tab.id)"
+                    class="mr-2 px-4 py-2 text-sm font-medium transition-colors relative" [ngClass]="{
+                        'text-blue-600 dark:text-blue-400': activeTab() === tab.id,
+                        'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300': activeTab() !== tab.id
+                    }">
+                    {{ tab.label }}
+                    <div *ngIf="activeTab() === tab.id"
+                        class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-400 rounded-t-full">
+                    </div>
+                </button>
+            </div>
+
+            <div>
+                <!-- VISTA: POR PRODUCTO -->
+                <div *ngIf="activeTab() === 'POR_PRODUCTO'">
+
+
+                        <div class="overflow-hidden">
+                            <div *ngIf="loading()" class="flex justify-center items-center h-64">
+                                <div class="text-center">
+                                    <div
+                                        class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400">
+                                    </div>
+                                    <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium">Cargando productos...</p>
+                                </div>
+                            </div>
+
+                            <div *ngIf="!loading()">
+                                <div class="space-y-6 pb-8">
+                                    <!-- LOOP DE CATÁLOGOS (Paginación principal) -->
+                                    <ng-container *ngFor="let group of pagedGroups()">
+                                        <div
+                                            class="bg-white dark:bg-slate-900/30 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all overflow-hidden group">
+
+                                            <!-- Cabecera del Catálogo (Clickable si tiene detalles) -->
+                                            <div [ngClass]="{'cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/40': group.detalles.length > 0}"
+                                                class="p-4 md:p-5 flex flex-col xl:flex-row xl:items-center justify-between gap-4 transition-colors"
+                                                (click)="group.detalles.length > 0 && toggleGroup(group.idCatalogo)">
+
+                                                <div class="flex items-center gap-3 relative mr-2 md:mr-6 flex-1">
+                                                    <span
+                                                        class="bg-blue-600/10 dark:bg-blue-600/20 text-blue-600 dark:text-blue-400 text-[10px] font-black px-2.5 py-1 rounded-lg border border-blue-500/20 uppercase tracking-tighter">
+                                                        {{ group.catalogo?.codigo }}
+                                                    </span>
+                                                    <h3
+                                                        class="text-lg md:text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight line-clamp-1">
+                                                        {{ group.catalogo?.nombre }}
+                                                    </h3>
+                                                </div>
+
+                                                <div
+                                                    class="flex items-center justify-between xl:justify-end gap-3 w-full xl:w-auto">
+                                                    <div class="flex flex-wrap items-center gap-2">
+                                                        <!-- Presentación -->
+                                                        <div
+                                                            class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase bg-slate-50 dark:bg-slate-800/40 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700/50">
+                                                            <i class="fas fa-box-open text-blue-500"></i> {{
+                                                            group.catalogo?.presentacion || 'Unidad' }}
+                                                        </div>
+                                                        <!-- Stock Global -->
+                                                        <div
+                                                            class="flex items-center gap-2 text-slate-700 dark:text-slate-200 text-[10px] font-black uppercase bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800/50">
+                                                            <i class="fas fa-cubes text-emerald-500"></i> Stock Global: <span
+                                                                class="text-sm font-black text-emerald-600 dark:text-emerald-400">{{
+                                                                group.stockTotal }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Chevron Indicador -->
+                                                    <div *ngIf="group.detalles.length > 0"
+                                                        class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 transition-transform">
+                                                        <i class="fas"
+                                                            [ngClass]="group.expanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Grid de Lotes (Visible solo si está expandido) -->
+                                            <div *ngIf="group.expanded && group.detalles.length > 0"
+                                                class="p-5 border-t border-slate-200 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-900/10 animate-in fade-in slide-in-from-top-2 duration-200">
+
+                                                <!-- LOOP DE LOTES (Paginación interna 10 por "sub-página") -->
+                                                <div
+                                                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+                                                    <div *ngFor="let det of getLotsForGroup(group)"
+                                                        class="w-full h-44 rounded-[1.5rem] border p-5 flex flex-col justify-between group/lote transition-all cursor-pointer relative shadow-sm hover:shadow-md"
+                                                        [ngClass]="{
+                                                            'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-blue-500/30': getVencimientoStatus(det) === 'NORMAL',
+                                                            'bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700/50 hover:border-amber-500': getVencimientoStatus(det) === 'ALERTA',
+                                                            'bg-rose-50 dark:bg-rose-900/20 border-rose-300 dark:border-rose-700/50 hover:border-rose-500': getVencimientoStatus(det) === 'PELIGRO',
+                                                            'bg-purple-50 dark:bg-purple-900/20 border-purple-300 dark:border-purple-700/50 hover:border-purple-500': getVencimientoStatus(det) === 'VENCIDO'
+                                                        }" (click)="abrirModalDetalle(det)">
+
+                                                        <!-- Botones flotantes -->
+                                                        <div class="absolute top-3 right-3 flex gap-1 isolate"
+                                                            [ngClass]="{'opacity-0 group-hover/lote:opacity-100 transition-opacity': getVencimientoStatus(det) !== 'VENCIDO'}">
+                                                            <ng-container
+                                                                *ngIf="getVencimientoStatus(det) !== 'VENCIDO'">
+                                                                <button (click)="abrirModalEditar(det); $event.stopPropagation()"
+                                                                    class="w-6 h-6 flex justify-center items-center bg-blue-100 dark:bg-blue-900/40 hover:bg-blue-600 text-blue-600 dark:text-blue-400 hover:text-white rounded-full transition-colors shadow-sm"
+                                                                    title="Editar">
+                                                                    <i class="fas fa-edit text-[10px]"></i>
+                                                                </button>
+                                                                <button (click)="eliminar(det)"
+                                                                    class="w-6 h-6 flex justify-center items-center bg-rose-100 dark:bg-rose-900/40 hover:bg-rose-600 text-rose-600 dark:text-rose-400 hover:text-white rounded-full transition-colors shadow-sm"
+                                                                    title="Eliminar">
+                                                                    <i class="fas fa-trash text-[10px]"></i>
+                                                                </button>
+                                                            </ng-container>
+
+                                                            <button *ngIf="getVencimientoStatus(det) === 'VENCIDO'"
+                                                                (click)="hacerSalidaPorVencimiento(det)"
+                                                                class="px-3 h-7 flex items-center gap-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-[9px] font-black transition-all shadow-lg shadow-purple-500/30"
+                                                                title="Hacer Salida Diversa">
+                                                                <i class="fas fa-sign-out-alt"></i> SALIDA
+                                                            </button>
+                                                        </div>
+
+                                                        <div class="flex justify-between items-start">
+                                                            <div class="flex flex-col pr-12">
+                                                                <span
+                                                                    class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase">Lote</span>
+                                                                <span
+                                                                    class="text-xs font-mono font-bold break-words line-clamp-1"
+                                                                    [ngClass]="{
+                                                                          'text-slate-700 dark:text-slate-200': getVencimientoStatus(det) === 'NORMAL',
+                                                                          'text-amber-900 dark:text-amber-100': getVencimientoStatus(det) === 'ALERTA',
+                                                                          'text-rose-900 dark:text-rose-100': getVencimientoStatus(det) === 'PELIGRO',
+                                                                          'text-purple-900 dark:text-purple-100': getVencimientoStatus(det) === 'VENCIDO'
+                                                                      }" [title]="det.nroLote">{{ det.nroLote || 'SIN LOTE'
+                                                                    }}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="flex items-center justify-between mt-2 gap-2">
+                                                            <div class="flex items-center gap-1.5 flex-1 line-clamp-1">
+                                                                <i class="fas fa-clock text-[10px]" [ngClass]="{
+                                                                       'text-slate-400': getVencimientoStatus(det) === 'NORMAL',
+                                                                       'text-amber-500': getVencimientoStatus(det) === 'ALERTA',
+                                                                       'text-rose-500': getVencimientoStatus(det) === 'PELIGRO',
+                                                                       'text-purple-500': getVencimientoStatus(det) === 'VENCIDO'
+                                                                   }"></i>
+                                                                <span class="text-xs font-bold" [ngClass]="{
+                                                                        'text-slate-500 dark:text-slate-400': getVencimientoStatus(det) === 'NORMAL',
+                                                                        'text-amber-700 dark:text-amber-400': getVencimientoStatus(det) === 'ALERTA',
+                                                                        'text-rose-700 dark:text-rose-400': getVencimientoStatus(det) === 'PELIGRO',
+                                                                        'text-purple-700 dark:text-purple-400': getVencimientoStatus(det) === 'VENCIDO'
+                                                                    }">
+                                                                    {{ det.fechaVencimiento ? (det.fechaVencimiento | date:'dd/MM/yyyy') : 'N/A' }}
+                                                                </span>
+                                                            </div>
+
+                                                            <span *ngIf="getVencimientoStatus(det) === 'ALERTA'"
+                                                                class="bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 text-[8px] font-black px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-500/30 animate-pulse shrink-0">VENCE
+                                                                PRONTO</span>
+                                                            <span *ngIf="getVencimientoStatus(det) === 'PELIGRO'"
+                                                                class="bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-400 text-[8px] font-black px-1.5 py-0.5 rounded border border-rose-200 dark:border-rose-500/30 animate-pulse shrink-0">CRÍTICO</span>
+                                                            <span *ngIf="getVencimientoStatus(det) === 'VENCIDO'"
+                                                                class="bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-400 text-[8px] font-black px-1.5 py-0.5 rounded border border-purple-200 dark:border-purple-500/30 shrink-0">VENCIDO</span>
+                                                        </div>
+
+                                                        <div class="flex items-end justify-between mt-auto pt-3 border-t"
+                                                            [ngClass]="{
+                                                                 'border-slate-100 dark:border-slate-700': getVencimientoStatus(det) === 'NORMAL',
+                                                                 'border-amber-200/50 dark:border-amber-700/50': getVencimientoStatus(det) === 'ALERTA',
+                                                                 'border-rose-200/50 dark:border-rose-700/50': getVencimientoStatus(det) === 'PELIGRO',
+                                                                 'border-purple-200/50 dark:border-purple-700/50': getVencimientoStatus(det) === 'VENCIDO'
+                                                             }">
+                                                            <div class="flex-1">
+                                                                <span
+                                                                    class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase block leading-tight">Venta
+                                                                    Unidad</span>
+                                                                <div class="flex items-baseline gap-2">
+                                                                    <span class="text-sm font-black" [ngClass]="{
+                                                                            'text-slate-800 dark:text-white': getVencimientoStatus(det) === 'NORMAL',
+                                                                            'text-amber-900 dark:text-amber-100': getVencimientoStatus(det) === 'ALERTA',
+                                                                            'text-rose-900 dark:text-rose-100': getVencimientoStatus(det) === 'PELIGRO',
+                                                                            'text-purple-900 dark:text-purple-100': getVencimientoStatus(det) === 'VENCIDO'
+                                                                        }">S/ {{ det.precioVentaUnitario | number:'1.2-2'
+                                                                        }}</span>
+                                                                    <span *ngIf="getProfitLabel(det)"
+                                                                        class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded"
+                                                                        title="Ganancia configurada">
+                                                                        G: {{ getProfitLabel(det) }}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex items-center gap-1.5 px-2 py-1 rounded-lg border shrink-0"
+                                                                [ngClass]="{
+                                                                     'bg-slate-50 dark:bg-slate-900/50 border-slate-100 dark:border-slate-700': getVencimientoStatus(det) === 'NORMAL',
+                                                                     'bg-amber-100/50 dark:bg-amber-900/50 border-amber-200 dark:border-amber-700': getVencimientoStatus(det) === 'ALERTA',
+                                                                     'bg-rose-100/50 dark:bg-rose-900/50 border-rose-200 dark:border-rose-700': getVencimientoStatus(det) === 'PELIGRO',
+                                                                     'bg-purple-100/50 dark:bg-purple-900/50 border-purple-200 dark:border-purple-700': getVencimientoStatus(det) === 'VENCIDO'
+                                                                 }">
+                                                                <span
+                                                                    class="text-[9px] font-black uppercase leading-none mt-0.5"
+                                                                    [ngClass]="{
+                                                                          'text-slate-400 dark:text-slate-500': getVencimientoStatus(det) === 'NORMAL',
+                                                                          'text-amber-600 dark:text-amber-500': getVencimientoStatus(det) === 'ALERTA',
+                                                                          'text-rose-600 dark:text-rose-500': getVencimientoStatus(det) === 'PELIGRO',
+                                                                          'text-purple-600 dark:text-purple-500': getVencimientoStatus(det) === 'VENCIDO'
+                                                                      }">Stock</span>
+                                                                <span class="text-sm font-black leading-none" [ngClass]="{
+                                                                          'text-blue-600 dark:text-blue-400': getVencimientoStatus(det) === 'NORMAL',
+                                                                          'text-amber-700 dark:text-amber-400': getVencimientoStatus(det) === 'ALERTA',
+                                                                          'text-rose-700 dark:text-rose-400': getVencimientoStatus(det) === 'PELIGRO',
+                                                                          'text-purple-700 dark:text-purple-400': getVencimientoStatus(det) === 'VENCIDO'
+                                                                      }">{{ det.stock }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- PAGINACIÓN INTERNA DE LOTES -->
+                                                <div *ngIf="group.detalles.length > 10"
+                                                    class="mt-6 flex flex-col md:flex-row items-center justify-between gap-4 py-3 border-t border-slate-200 dark:border-slate-800">
+                                                    <span
+                                                        class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+                                                        Mostrando {{ getLotPage(group.idCatalogo) * 10 + 1 }} - {{
+                                                        Math.min((getLotPage(group.idCatalogo) + 1) * 10, group.detalles.length)
+                                                        }} de {{ group.detalles.length }} lotes
+                                                    </span>
+
+                                                    <div class="flex items-center gap-1.5">
+                                                        <button
+                                                            (click)="setLotPage(group.idCatalogo, getLotPage(group.idCatalogo) - 1); $event.stopPropagation()"
+                                                            [disabled]="getLotPage(group.idCatalogo) === 0"
+                                                            class="w-8 h-8 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm">
+                                                            <i class="fas fa-chevron-left text-[10px]"></i>
+                                                        </button>
+
+                                                        <div
+                                                            class="flex items-center px-3 h-8 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-slate-200/50 dark:border-slate-700/50">
+                                                            <span class="text-xs font-black text-blue-600 dark:text-blue-400">{{
+                                                                getLotPage(group.idCatalogo) + 1 }}</span>
+                                                            <span class="text-[10px] font-bold text-slate-400 mx-1.5">/</span>
+                                                            <span class="text-xs font-bold text-slate-500">{{
+                                                                getTotalLotPages(group) }}</span>
+                                                        </div>
+
+                                                        <button
+                                                            (click)="setLotPage(group.idCatalogo, getLotPage(group.idCatalogo) + 1); $event.stopPropagation()"
+                                                            [disabled]="getLotPage(group.idCatalogo) >= getTotalLotPages(group) - 1"
+                                                            class="w-8 h-8 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm">
+                                                            <i class="fas fa-chevron-right text-[10px]"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </ng-container>
+
+                                    <!-- PIE DE PÁGINA: SIN RESULTADOS -->
+                                    <div *ngIf="totalCatalogs() === 0" class="text-center py-16">
+                                        <div
+                                            class="bg-slate-50 dark:bg-slate-700/50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                                            <svg class="h-10 w-10 text-slate-400" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M20 13V6a2 1 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                                            </svg>
+                                        </div>
+                                        <h3 class="text-lg font-medium text-slate-900 dark:text-white">No hay productos</h3>
+                                        <p class="text-slate-500 dark:text-slate-400">No se encontraron registros que coincidan
+                                            con tu búsqueda.</p>
+                                    </div>
+
+                                    <!-- PAGINACIÓN PRINCIPAL (CATÁLOGOS) -->
+                                    <div *ngIf="totalCatalogs() > 0"
+                                        class="p-4 border-t border-slate-100 dark:border-slate-700">
+                                        <app-pagination [currentPage]="currentPageCatalogo()" [totalPages]="totalPagesCatalogs()"
+                                            [pageSize]="pageSizeCatalogo()" (pageChange)="cambiarPagina($event)"
+                                            (pageSizeChange)="cambiarTamanoPagina($event)">
+                                        </app-pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <!-- VISTA: POR VENCIMIENTO -->
+                <div *ngIf="activeTab() === 'POR_VENCIMIENTO'" class="mt-4 animate-in fade-in">
+                    <div *ngIf="productos().length === 0" class="flex flex-col items-center justify-center py-16 text-center">
+                        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-full w-20 h-20 flex items-center justify-center mb-4">
+                            <i class="fas fa-calendar-alt text-2xl text-blue-500"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-white">Inventario Saludable</h3>
+                        <p class="text-slate-500 dark:text-slate-400 max-w-md mt-2">No hay productos próximos a vencer o vencidos registrados en el sistema.</p>
+                    </div>
+
+                    <div *ngIf="productos().length > 0" class="overflow-x-auto border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm bg-white dark:bg-slate-900">
+                        <app-tabla-general 
+                            [datos]="productos()" 
+                            [columnas]="columnsVencimiento" 
+                            [showEdit]="true" 
+                            editIcon="fa-edit" 
+                            (onEdit)="abrirModalEditar($event)">
+                        </app-tabla-general>
+                        
+                        <!-- Paginación Backend -->
+                        <app-pagination [currentPage]="currentPageBackend()" [totalPages]="totalPagesBackend()" 
+                                        [pageSize]="pageSizeBackend()" (pageChange)="cambiarPagina($event)"
+                                        (pageSizeChange)="cambiarTamanoPaginaBackend($event)">
+                        </app-pagination>
+                    </div>
+                </div>
+
+                <!-- VISTA: DISPONIBILIDAD -->
+                <div *ngIf="activeTab() === 'DISPONIBILIDAD'" class="mt-4 animate-in fade-in">
+                    
+                    <!-- Sub-tabs (Pills) -->
+                    <div class="flex items-center justify-center mb-8 mt-4">
+                        <div class="inline-flex bg-slate-100 dark:bg-slate-800 rounded-xl p-1 shadow-sm border border-slate-200 dark:border-slate-700">
+                            <button (click)="setDisponibilidadSubTab('SIN_PRECIO')"
+                                [ngClass]="disponibilidadSubTab() === 'SIN_PRECIO' ? 'bg-white dark:bg-slate-700 text-rose-600 dark:text-rose-400 shadow' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'"
+                                class="px-6 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2">
+                                <i class="fas fa-exclamation-circle"></i> Faltan Precio
+                            </button>
+                            <button (click)="setDisponibilidadSubTab('LISTO')"
+                                [ngClass]="disponibilidadSubTab() === 'LISTO' ? 'bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'"
+                                class="px-6 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2">
+                                <i class="fas fa-check-circle"></i> Listos para vender
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <!-- FALTAN PRECIO -->
+                        <div *ngIf="disponibilidadSubTab() === 'SIN_PRECIO'" class="animate-in fade-in slide-in-from-bottom-2">
+                            <div *ngIf="productos().length === 0" class="flex flex-col items-center justify-center py-12 text-center bg-rose-50/50 dark:bg-rose-900/10 rounded-2xl border border-rose-100 dark:border-rose-900/30">
+                                <div class="bg-rose-100 dark:bg-rose-900/30 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                                    <i class="fas fa-check text-2xl text-emerald-500"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-rose-900 dark:text-rose-200">¡Todo en orden!</h3>
+                                <p class="text-rose-700/70 dark:text-rose-400/70 max-w-md mt-2 text-sm">No hay productos sin precio en esta página.</p>
+                            </div>
+
+                            <div *ngIf="productos().length > 0" class="overflow-x-auto border border-rose-200 dark:border-rose-900/50 rounded-xl shadow-sm">
+                                <app-tabla-general 
+                                    [datos]="productos()" 
+                                    [columnas]="columnsDisponibilidadSinPrecio" 
+                                    (onEdit)="abrirModalEditar($event)">
+                                </app-tabla-general>
+                            </div>
+                        </div>
+
+                        <!-- LISTOS PARA VENDER -->
+                        <div *ngIf="disponibilidadSubTab() === 'LISTO'" class="animate-in fade-in slide-in-from-bottom-2">
+                            <div *ngIf="productos().length === 0" class="flex flex-col items-center justify-center py-12 text-center bg-emerald-50/50 dark:bg-emerald-900/10 rounded-2xl border border-emerald-100 dark:border-emerald-900/30">
+                                <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-200">No hay productos listos</h3>
+                            </div>
+
+                            <div *ngIf="productos().length > 0" class="overflow-x-auto border border-emerald-200 dark:border-emerald-900/50 rounded-xl shadow-sm">
+                                <app-tabla-general 
+                                    [datos]="productos()" 
+                                    [columnas]="columnsDisponibilidadListos" 
+                                    [showEdit]="true" 
+                                    editIcon="fa-edit" 
+                                    (onEdit)="abrirModalEditar($event)">
+                                </app-tabla-general>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paginación Backend -->
+                    <app-pagination [currentPage]="currentPageBackend()" [totalPages]="totalPagesBackend()" 
+                                    [pageSize]="pageSizeBackend()" (pageChange)="cambiarPagina($event)"
+                                    (pageSizeChange)="cambiarTamanoPaginaBackend($event)">
+                    </app-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de formulario -->
+    <app-modal [isOpen]="showModal()"
+        [title]="selectedProducto() ? 'Editar Producto/Servicio' : 'Nuevo Producto/Servicio'" [size]="'xl'"
+        [noPadding]="true" (modalClose)="cerrarModal()">
+        <app-producto-servicio-form *ngIf="showModal()" [producto]="selectedProducto()" (cerrar)="cerrarModal()"
+            (guardado)="onGuardado()" />
+    </app-modal>
+
+    <!-- Modal de Detalle -->
+    <app-producto-servicio-detail *ngIf="showDetailModal()" [producto]="selectedProducto()"
+        (cerrar)="cerrarModalDetalle()">
+    </app-producto-servicio-detail>
+
+    <!-- Drawer de Filtros -->
+    <app-drawer [isOpen]="isDrawerOpen()" title="Filtros Avanzados" (onClose)="isDrawerOpen.set(false)">
+        <div class="p-6 space-y-6">
+            <app-form-select label="Vendedor / Creador" [options]="usuarioOptions()" [value]="usuarioCrea()"
+                (valueChange)="usuarioCrea.set($event)">
+            </app-form-select>
+
+            <div class="grid grid-cols-2 gap-4">
+                <app-form-input label="Fecha Desde" type="date" [value]="fechaDesde()"
+                    (valueChange)="fechaDesde.set($event)">
+                </app-form-input>
+                <app-form-input label="Fecha Hasta" type="date" [value]="fechaHasta()"
+                    (valueChange)="fechaHasta.set($event)">
+                </app-form-input>
+            </div>
+
+            <app-form-switch label="Más Rotación (Top Ventas)" [value]="rotaMas()" (valueChange)="rotaMas.set($event)">
+            </app-form-switch>
+
+            <app-form-switch label="Nuevos Ingresos (15 días)" [value]="queEntra()"
+                (valueChange)="queEntra.set($event)">
+            </app-form-switch>
+
+            <app-form-switch label="Próximos a Vencer (90 días)" [value]="cercaVencer()"
+                (valueChange)="cercaVencer.set($event)">
+            </app-form-switch>
+
+            <div class="pt-6 flex gap-3">
+                <button (click)="limpiarFiltros()"
+                    class="flex-1 px-4 py-2.5 text-sm font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-xl transition-colors">
+                    Limpiar
+                </button>
+                <button (click)="onFiltrar()"
+                    class="flex-1 px-4 py-2.5 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-lg shadow-blue-500/30 transition-all active:scale-95">
+                    Aplicar Filtros
+                </button>
+            </div>
+        </div>
+    </app-drawer>
+
+</div>

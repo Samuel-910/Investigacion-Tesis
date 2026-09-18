@@ -1,0 +1,45 @@
+# Reglas de Desarrollo - Backend (Java / Spring Boot)
+
+## General
+
+- Responde siempre en Español.
+- **NO** compiles ni ejecutes comandos de construcción automáticamente, a menos que se te pida explícitamente.
+
+## Desarrollo del Backend (Java / Spring Boot)
+
+### Convenciones de Búsqueda y Filtros
+- Al agregar filtros de búsqueda, asegúrate de actualizar:
+  1. El `Repository` con la consulta JPQL adecuada (usando `LOWER` y `CONCAT` para búsquedas insensibles a mayúsculas).
+  2. El `Service` para propagar los parámetros.
+  3. El `Controller` para recibir los parámetros opcionales.
+
+### Convenciones de Paginación vs Listas Planas (Arquitectura ERP)
+- **Listados Transaccionales y Maestros Dinámicos (SIEMPRE Paginados - `Pageable`)**:
+  - Todas las entidades del negocio que crezcan con el tiempo de forma indefinida o dinámica **deben ser paginadas** del lado del backend usando el objeto `Pageable` de Spring Data. También aplica para datos maestros que el usuario considere "enormes" (ej. Almacenes).
+  - *Ejemplos*: Productos, Clientes, Ventas, Compras, Movimientos de Almacén (Kardex), Categorías de productos, Laboratorios, Puntos de Emisión, Almacenes de una sucursal.
+  - *Razones*: Evita la sobrecarga de memoria en el servidor (JVM), reduce el payload de transferencia de red y evita que el navegador del frontend se congele al renderizar grandes volúmenes en el DOM.
+
+- **Configuraciones Cortas y Datos Maestros Estáticos (Listas Planas - `List<T>`)**:
+  - Los endpoints que devuelvan catálogos estáticos, finitos o acotados por negocio o ley nacional **deben retornar listas planas (`List`)**.
+  - *Ejemplos*: Monedas (Soles, Dólares), Tipos de Documento de Identidad (DNI, RUC), Métodos de Pago, Sucursales de la empresa, Roles de usuario.
+  - *Razones*: Optimiza el rendimiento de la base de datos evitando la doble consulta `COUNT(*)` implícita en la paginación de Spring Data, y simplifica la lógica de renderizado en dropdowns (select inputs) del frontend.
+
+- **Exportaciones y Descargas Masivas**:
+  - Los reportes diseñados para descargas a Excel o PDF deben procesar la información de forma completa y continua (retornando una lista o a través de streams como `StreamingResponseBody`), pero **nunca** de forma paginada para la descarga física de archivos.
+
+
+
+### Gold Standard de Clean Architecture (Backend)
+- **Controladores**: Siempre deben retornar `ResponseEntity<ApiResponse<T>>` usando el wrapper global. Los parámetros y variables del RequestBody deben tener la anotación `@Valid`. Agregar `@Slf4j` y usar `log.info` para registrar entradas importantes.
+- **Servicios**: Deben retornar el DTO directamente (no el ApiResponse, el controlador se encarga de envolverlo). Agregar `@Slf4j` y usar `log.info` para registrar operaciones críticas.
+- **Mappers**: Nunca crear mapeos manuales con `Builder`. Siempre usar **MapStruct** definiendo interfaces con la anotación `@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)`.
+- **Entidades (Optimización BD)**: Siempre añadir `@Index` en la configuración de la `@Table` para llaves foráneas (`id_sucursal`, `id_producto`, etc.) y columnas altamente consultadas (como `estado`). Esto es crucial para grandes volúmenes de datos.
+- **Manejo de Excepciones**: Asegurar que todas las excepciones, incluyendo `EntityNotFoundException` (usada en JPA), sean manejadas por el `GlobalExceptionHandler` y devuelvan una respuesta estructurada (`ApiResponse`) con estado 404/400 en lugar de un error 500 del servidor.
+- **Código Limpio (Imports)**: Nunca usar rutas completamente calificadas dentro del código (ej. `com.pe.articulos.core.security.SecurityUtils` o `java.time.LocalDate`). Siempre usar los nombres simples y realizar el `import` correspondiente en la cabecera del archivo.
+- **Código Limpio (Comentarios)**: Nunca pongas comentarios explicativos en el código. El código debe explicarse por sí mismo. Si ves que hay comentarios donde editas, elimínalos.
+- **Advertencias del IDE (Null Type Safety)**: Para evitar las falsas advertencias de "Null type safety" en VS Code/Eclipse al interactuar con los repositorios de Spring Data (por el `@NonNullApi`), agrega SIEMPRE la anotación `@SuppressWarnings("null")` a nivel de clase en las implementaciones de los Servicios (`@Service`). Esto mantiene el código limpio sin forzar null-checks innecesarios.
+- **Auditoría JPA (Usuarios automáticos)**: Todas las entidades deben usar `@EntityListeners(AuditingEntityListener.class)` y usar las anotaciones `@CreatedBy` y `@LastModifiedBy` para los campos de usuarios. Está TERMINANTEMENTE PROHIBIDO setear el usuario manualmente en los Servicios o con `@PrePersist`.
+- **Soft Deletes Globales Invisibles**: NUNCA usar `repository.delete(...)` o `deleteById(...)` (Hard Delete). El método de eliminación en el servicio SIEMPRE debe ser un Soft Delete (cambiando el estado a `ELIMINADO`). Además, todas las entidades que manejen eliminación lógica deben llevar la anotación `@SQLRestriction("estado != 3")` a nivel de clase (suponiendo que el valor 3 es ELIMINADO en el enum). Ningún Repositorio ni Servicio debe llevar consultas redundantes como `findBy...AndEstado(..., EstadoGeneral.ACTIVO)`.
+- **Migraciones e Índices Únicos**: Cuando se necesite hacer un campo `UNIQUE` en entidades que soportan Soft Delete, NO se debe usar `@Column(unique=true)`. Se debe crear obligatoriamente un script de migración en Flyway creando un Partial Index (`WHERE estado != 3`) para que PostgreSQL no bloquee inserciones sobre registros ya eliminados.
+- **Purga de Endpoints Huérfanos**: Al refactorizar un módulo o carpeta, se debe verificar rigurosamente qué endpoints del Controlador realmente se están llamando desde el frontend (Angular). ¡OJO! Que un endpoint esté definido en un archivo `.service.ts` del frontend NO CUENTA como uso real (ya que a menudo son copy-paste). Se debe comprobar estrictamente que el método del servicio sea invocado por algún `.component.ts` (pantalla). Si no hay pantalla que lo consuma, el endpoint debe ser ELIMINADO del Controlador, Servicio y Repositorio.
+- **Purga de Columnas Huérfanas (Entidades)**: Al refactorizar un módulo, se deben inspeccionar minuciosamente las Entidades ("tablas monstruosas"). Si se detectan atributos/columnas que jamás se exponen en los DTOs, jamás se utilizan en la lógica del Servicio, y el frontend no las necesita para nada, deben ser ELIMINADAS de la Entidad para mantener la base de datos limpia y optimizada.

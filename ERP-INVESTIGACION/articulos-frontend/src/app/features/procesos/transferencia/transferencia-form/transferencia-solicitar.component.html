@@ -1,0 +1,137 @@
+<div class="space-y-6">
+    <!-- Indicador de Sucursales -->
+    <div
+        class="flex items-center justify-between gap-8 p-4 bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/20 rounded-2xl">
+        <div class="flex-1 min-w-0">
+            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Origen (De donde sale)</p>
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 flex-shrink-0">
+                    <i class="fas fa-truck-loading text-xs"></i>
+                </div>
+                <span class="text-xs font-bold text-slate-700 dark:text-white truncate">
+                    {{ nombreSucursalOrigen() || 'Pendiente...' }}
+                </span>
+            </div>
+        </div>
+        <div class="flex-shrink-0 text-blue-300">
+            <i class="fas fa-arrow-right animate-pulse"></i>
+        </div>
+        <div class="flex-1 min-w-0 text-right">
+            <p class="text-[9px] font-black text-blue-500 uppercase tracking-widest mb-1">Destino (A donde entra - Tú)</p>
+            <div class="flex items-center justify-end gap-3">
+                <span class="text-xs font-bold text-slate-700 dark:text-white truncate">{{ nombreSucursalDestino() ||
+                    'Cargando...' }}</span>
+                <div
+                    class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 flex-shrink-0">
+                    <i class="fas fa-building text-xs"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Configuración General -->
+        <div class="space-y-4">
+            <div class="flex items-start gap-4">
+                <div class="flex-1">
+                    <app-searchable-select label="Sucursal Origen (De donde sale)" [data]="sucursales()"
+                        [(ngModel)]="idSucursalOrigen" placeholder="Seleccionar origen..." bindValue="idSucursal"
+                        bindLabel="nombreSucursal" [hasIcon]="true">
+                        <i icon class="fas fa-sign-out-alt"></i>
+                    </app-searchable-select>
+                </div>
+
+                <div class="pt-[34px] text-slate-300 dark:text-slate-600">
+                    <i class="fas fa-arrow-right text-xs"></i>
+                </div>
+
+                <div class="flex-1 relative">
+                    <label class="absolute -top-2.5 left-2 px-1 bg-white dark:bg-slate-800 rounded text-xs text-blue-500 font-medium z-10 transition-all">
+                        Sucursal Destino (A donde entra)
+                    </label>
+                    <div
+                        class="w-full rounded-xl border-2 border-blue-100 dark:border-blue-900/40 bg-blue-50/20 dark:bg-blue-900/5 text-blue-600 dark:text-blue-400 px-4 py-3 text-sm font-bold flex items-center gap-3 transition-all">
+                        <i class="fas fa-sign-in-alt text-xs opacity-70"></i>
+                        {{ nombreSucursalDestino() }}
+                    </div>
+                </div>
+            </div>
+
+            <app-form-input label="Motivo de la Solicitud" [(ngModel)]="motivo" type="textarea"
+                placeholder="Escriba el motivo aquí..." icon="comment-alt">
+            </app-form-input>
+        </div>
+
+        <!-- Buscador de Productos -->
+        <div class="space-y-4">
+            <app-searchable-select label="Agregar Productos" [data]="productosSearch()"
+                [(ngModel)]="productoSeleccionado" (selected)="seleccionarProducto($event)"
+                placeholder="Buscar por código o nombre..." bindLabel="label" [hasIcon]="true">
+                <i icon class="fas fa-search"></i>
+            </app-searchable-select>
+
+            <div
+                class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-dashed border-slate-200 dark:border-slate-700">
+                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest text-center mb-0">Total
+                    Artículos: {{ detalles().length }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lista de Detalles -->
+    <div class="space-y-3">
+        <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Artículos Solicitados</h3>
+        <div
+            class="overflow-hidden rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800/50">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-slate-50 dark:bg-slate-900/50 text-[9px] font-black text-slate-500 uppercase">
+                    <tr>
+                        <th class="px-4 py-3">Producto</th>
+                        <th class="px-4 py-3 text-center w-32">Cantidad</th>
+                        <th class="px-4 py-3 text-right w-12"></th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50 dark:divide-slate-700">
+                    <tr *ngFor="let d of detalles(); let i = index"
+                        class="hover:bg-slate-50/50 dark:hover:bg-slate-900/20">
+                        <td class="px-4 py-3">
+                            <p class="text-xs font-bold text-slate-700 dark:text-white">{{ d.nombreProducto }}</p>
+                            <span
+                                class="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-[8px] font-black text-slate-400 uppercase">{{
+                                d.unidadMedida }}</span>
+                        </td>
+                        <td class="px-4 py-3 text-center">
+                            <app-form-input [(ngModel)]="d.cantidad" type="number" [min]="1"
+                                className="text-center font-black" padding="py-1.5 px-2">
+                            </app-form-input>
+                        </td>
+                        <td class="px-4 py-3 text-right">
+                            <button (click)="eliminarDetalle(i)"
+                                class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all">
+                                <i class="fas fa-trash-alt text-xs"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="detalles().length === 0">
+                        <td colspan="3"
+                            class="px-4 py-12 text-center text-slate-400 text-[10px] font-black uppercase tracking-widest opacity-40">
+                            Sin productos agregados
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer Acciones -->
+    <div class="pt-6 border-t border-slate-100 dark:border-slate-700 flex justify-end gap-3">
+        <button (click)="onClose()"
+            class="px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all">
+            Cancelar
+        </button>
+        <app-primary-button [label]="loading() ? 'Procesando...' : 'Enviar Solicitud'" (btnClick)="procesar()"
+            [loading]="loading()" [disabled]="loading() || !idSucursalOrigen() || detalles().length === 0">
+        </app-primary-button>
+    </div>
+</div>

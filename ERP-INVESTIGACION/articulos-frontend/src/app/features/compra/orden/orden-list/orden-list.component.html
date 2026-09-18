@@ -1,0 +1,292 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <app-page-header title="Órdenes de Compra" subtitle="Administra el registro de órdenes de compra"
+                [showCounter]="true" counterLabel="Total" [counterValue]="totalElements()">
+            </app-page-header>
+
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 my-6">
+
+                <div class="w-full md:w-auto flex-1 max-w-lg">
+                    <app-search-generic [placeholder]="'Buscar por Número de Comprobante, Fecha...'"
+                        [options]="searchOptions" (onSearch)="onSearch($event)">
+                    </app-search-generic>
+                </div>
+                <div class="flex items-center gap-2">
+                    <app-primary-button label="Nueva Orden" icon="plus" color="brand" (btnClick)="irARegistro()">
+                    </app-primary-button>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                @if (loading()) {
+                <div class="flex justify-center items-center h-64">
+                    <div class="text-center">
+                        <div
+                            class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 dark:border-indigo-400">
+                        </div>
+                        <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium">Cargando órdenes...</p>
+                    </div>
+                </div>
+                } @else {
+                @for (group of ordenesAgrupadas(); track group.nombreGrupo) {
+                <div
+                    class="bg-white dark:bg-slate-900/30 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-all duration-300">
+                    <!-- Cabecera del Grupo -->
+                    <div class="p-4 md:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/40"
+                        (click)="toggleGroup(group.nombreGrupo)">
+
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-10 h-10 flex items-center justify-center rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400">
+                                <i class="fas fa-layer-group"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white uppercase tracking-tight">
+                                    {{ group.nombreGrupo }}
+                                </h3>
+                                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                                    {{ group.ordenes.length }} Orden{{ group.ordenes.length !== 1 ? 'es' : '' }} en este
+                                    grupo
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 ml-auto sm:ml-0">
+                            <button (click)="$event.stopPropagation(); compararGrupo(group)"
+                                class="px-4 py-2 text-xs font-black uppercase tracking-widest bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg shadow-blue-500/30 transition-all active:scale-95 flex items-center gap-2">
+                                <i class="fas fa-columns"></i>
+                                Comparar
+                            </button>
+
+                            <button (click)="$event.stopPropagation(); imprimirMatriz(group)"
+                                class="px-4 py-2 text-xs font-black uppercase tracking-widest bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-white rounded-xl transition-all active:scale-95 flex items-center gap-2"
+                                title="Imprimir Matriz de Comparación">
+                                <i class="fas fa-print"></i>
+                            </button>
+
+                            <div class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 transition-transform duration-300"
+                                [class.rotate-180]="isGroupExpanded(group.nombreGrupo)">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contenido del Grupo (Tarjetas) -->
+                    <div *ngIf="isGroupExpanded(group.nombreGrupo)"
+                        class="p-5 border-t border-slate-100 dark:border-slate-800/50 bg-slate-50/30 dark:bg-slate-900/10 animate-in fade-in slide-in-from-top-2 duration-300">
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                            @for (compra of group.ordenes; track compra.id) {
+                            <div class="relative group/card bg-white dark:bg-slate-800 p-5 rounded-4xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-300 cursor-pointer"
+                                (click)="verDetalles(compra)">
+
+                                <!-- Acciones Rápidas -->
+                                <div class="absolute top-4 right-4 flex gap-2 transition-opacity">
+                                    <button (click)="$event.stopPropagation(); editarCompra(compra)"
+                                        class="w-8 h-8 flex items-center justify-center rounded-full bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white transition-all">
+                                        <i class="fas fa-edit text-xs"></i>
+                                    </button>
+                                    <button (click)="$event.stopPropagation(); imprimirCompraFisico(compra)"
+                                        class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-600 hover:text-white transition-all">
+                                        <i class="fas fa-print text-xs"></i>
+                                    </button>
+                                    <button (click)="$event.stopPropagation(); eliminarCompra(compra)"
+                                        class="w-8 h-8 flex items-center justify-center rounded-full bg-rose-50 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 hover:bg-rose-600 hover:text-white transition-all">
+                                        <i class="fas fa-trash-alt text-xs"></i>
+                                    </button>
+                                </div>
+
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex justify-between items-start mb-1">
+                                            <span
+                                                class="text-[10px] font-black text-indigo-500 uppercase tracking-widest bg-indigo-50 dark:bg-indigo-900/40 px-2 py-0.5 rounded-md">
+                                                #{{ compra.id }}
+                                            </span>
+                                        </div>
+                                        <h4 class="font-bold text-slate-800 dark:text-slate-100 line-clamp-1 truncate">
+                                            {{ compra.proveedor.razonSocial }}
+                                        </h4>
+                                    </div>
+
+                                    <div class="flex items-end justify-between">
+                                        <div class="flex flex-col">
+                                            <span
+                                                class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Valor
+                                                Final</span>
+                                            <span class="text-xl font-black text-indigo-600 dark:text-indigo-400">
+                                                {{ compra.total | currency:'PEN' }}
+                                            </span>
+                                        </div>
+
+                                        <div class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter"
+                                            [ngClass]="{
+                                                            'bg-emerald-100/80 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400': getEstadoNombre(compra.estado) === 'REGISTRADO',
+                                                            'bg-amber-100/80 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400': getEstadoNombre(compra.estado) === 'PENDIENTE',
+                                                            'bg-rose-100/80 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400': getEstadoNombre(compra.estado) === 'ANULADO'
+                                                        }">
+                                            {{ getEstadoNombre(compra.estado) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                } @empty {
+                <div
+                    class="text-center py-20 bg-white dark:bg-slate-800 rounded-3xl border border-dashed border-slate-300 dark:border-slate-700">
+                    <i class="fas fa-inbox text-5xl text-slate-200 dark:text-slate-700 mb-4 block"></i>
+                    <h3 class="text-lg font-bold text-slate-400 dark:text-slate-500">No hay órdenes registradas</h3>
+                    <p class="text-slate-400 dark:text-slate-600">Comienza creando una nueva orden de compra</p>
+                </div>
+                }
+                }
+            </div>
+
+            <!-- Paginación -->
+            <div *ngIf="ordenes().length > 0" class="mt-6">
+                <app-pagination [currentPage]="currentPage()" [totalPages]="totalPages()" [pageSize]="pageSize()"
+                    (pageChange)="cambiarPagina($event)" (pageSizeChange)="cambiarTamanoPagina($event)">
+                </app-pagination>
+            </div>
+        </div>
+    </div>
+
+    <app-modal [isOpen]="showModal()"
+        [title]="selectedCompraIdEditar() ? 'Editar Orden de Compra' : 'Nueva Orden de Compra'" size="7xl"
+        (modalClose)="cerrarModal()">
+        <app-orden-form [idCompra]="selectedCompraIdEditar()" (cerrar)="cerrarModal()" (guardado)="onGuardado()">
+        </app-orden-form>
+    </app-modal>
+
+
+    <!-- Modal de Comparación -->
+    <app-modal [isOpen]="showModalComparar()" title="Comparativa de Precios del Grupo" size="7xl"
+        (modalClose)="cerrarModalComparar()">
+        <div class="p-4 md:p-6 min-h-[500px]">
+            <div class="mb-8 flex justify-between items-end">
+                <div>
+                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-500 mb-2 block">Análisis
+                        Técnico de Cotizaciones</span>
+                    <h3 class="text-3xl font-black text-slate-800 dark:text-white uppercase tracking-tight">
+                        {{ selectedGroupForCompare()?.nombreGrupo || 'Sin Grupo' }}
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Comparativa de precios unitarios entre
+                        proformas del grupo</p>
+                </div>
+            </div>
+
+            <div
+                class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden border-b-0">
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50/50 dark:bg-slate-800/30">
+                                <th
+                                    class="p-6 text-left text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 border-b border-slate-100 dark:border-slate-800 min-w-[320px] sticky left-0 bg-slate-50/50 dark:bg-slate-900 z-20 backdrop-blur-md">
+                                    Descripción del Producto
+                                </th>
+                                @for (orden of comparativoData().ordenes; track orden.id) {
+                                <th
+                                    class="p-6 text-center border-b border-l border-slate-100 dark:border-slate-800 min-w-[200px] bg-sky-50/20 dark:bg-sky-900/10">
+                                    <div class="flex flex-col items-center gap-1.5">
+                                        <span
+                                            class="px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest bg-sky-100 dark:bg-sky-900/40 text-sky-600 dark:text-sky-400 mb-1">
+                                            {{ orden.proveedor }}
+                                        </span>
+                                        <span class="text-xl font-black text-slate-900 dark:text-white font-mono">
+                                            {{ orden.moneda || 'PEN' }} {{ orden.total | number:'1.2-2' }}
+                                        </span>
+                                        <button (click)="seleccionarOrden(orden.id)"
+                                            class="mt-3 px-6 py-2 text-[10px] font-black uppercase tracking-widest bg-sky-500 hover:bg-sky-600 text-white rounded-lg shadow-lg shadow-sky-500/20 transition-all active:scale-95 flex items-center gap-2">
+                                            <i class="fas fa-check-circle"></i>
+                                            Seleccionar
+                                        </button>
+                                    </div>
+                                </th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800/50">
+                            @for (prod of comparativoData().productos; track prod.id) {
+                            <tr
+                                class="group hover:bg-slate-50/80 dark:hover:bg-slate-800/20 transition-all duration-300">
+                                <td
+                                    class="p-6 sticky left-0 bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800/40 z-10 transition-colors border-r border-slate-100 dark:border-slate-800">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-sky-500 group-hover:text-white transition-all shadow-sm">
+                                            <i class="fas fa-box-open text-xs"></i>
+                                        </div>
+                                        <span
+                                            class="text-sm font-bold text-slate-700 dark:text-slate-200 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors truncate max-w-[250px]"
+                                            title="{{ prod.nombre }}">
+                                            {{ prod.nombre }}
+                                        </span>
+                                    </div>
+                                </td>
+                                @for (orden of comparativoData().ordenes; track orden.id) {
+                                <td class="p-6 text-center border-l border-slate-100 dark:border-slate-800/50">
+                                    @if (getPrecioEnOrden(prod, orden.id); as precioObj) {
+                                    <div class="relative inline-flex flex-col items-center px-6 py-3 rounded-xl transition-all duration-500"
+                                        [ngClass]="esMejorPrecio(prod, orden.id) ? 'bg-sky-500 text-white shadow-xl shadow-sky-500/30 scale-105 z-10 font-bold' : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400'">
+                                        
+                                        @if (precioObj.descuento1 > 0 || precioObj.descuento2 > 0) {
+                                            <span class="text-[10px] line-through opacity-70 mb-0.5">
+                                                {{ precioObj.precioUnitario | number:'1.2-4' }}
+                                            </span>
+                                        }
+
+                                        <span class="text-sm font-black font-mono tracking-tight" [class.text-emerald-300]="precioObj.esBonificacion && esMejorPrecio(prod, orden.id)" [class.text-emerald-500]="precioObj.esBonificacion && !esMejorPrecio(prod, orden.id)">
+                                            {{ precioObj.precioFinal | number:'1.2-4' }}
+                                        </span>
+
+                                        @if (precioObj.esBonificacion) {
+                                            <span class="text-[8px] font-black uppercase tracking-widest mt-1 bg-emerald-500 text-white px-1.5 py-0.5 rounded">Boni</span>
+                                        } @else if (precioObj.descuento1 > 0 || precioObj.descuento2 > 0) {
+                                            <div class="flex gap-1 mt-1">
+                                                @if (precioObj.descuento1 > 0) { <span class="text-[8px] font-bold bg-rose-500/90 text-white px-1 rounded">-{{precioObj.descuento1}}%</span> }
+                                                @if (precioObj.descuento2 > 0) { <span class="text-[8px] font-bold bg-rose-500/90 text-white px-1 rounded">-{{precioObj.descuento2}}%</span> }
+                                            </div>
+                                        }
+
+                                        @if (esMejorPrecio(prod, orden.id)) {
+                                        <div
+                                            class="absolute -top-2 -right-2 w-5 h-5 bg-white text-sky-600 rounded-full flex items-center justify-center shadow-lg border-2 border-sky-500">
+                                            <i class="fas fa-check text-[9px]"></i>
+                                        </div>
+                                        <span
+                                            class="text-[8px] font-black uppercase tracking-widest mt-0.5 opacity-90">Opción Ganadora</span>
+                                        }
+                                    </div>
+                                    } @else {
+                                    <div class="flex flex-col items-center gap-1 opacity-20 grayscale">
+                                        <i class="fas fa-minus text-slate-400"></i>
+                                        <span
+                                            class="text-[8px] font-black uppercase tracking-widest text-slate-500">Omitido</span>
+                                    </div>
+                                    }
+                                </td>
+                                }
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </app-modal>
+</div>

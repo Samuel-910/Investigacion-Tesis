@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "nombre": "Donación",
+    "tipo": "INGRESO",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 2,
+    "nombre": "Articulo sin stock",
+    "tipo": "INGRESO",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 3,
+    "nombre": "Por devolución",
+    "tipo": "INGRESO",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 4,
+    "nombre": "Compra nacional",
+    "tipo": "INGRESO",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 5,
+    "nombre": "Inventario inicial",
+    "tipo": "INGRESO",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 6,
+    "nombre": "Entrada de bienes en préstamo",
+    "tipo": "INGRESO",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 7,
+    "nombre": "Ingreso temporal",
+    "tipo": "INGRESO",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 8,
+    "nombre": "Vencimiento",
+    "tipo": "SALIDA",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 9,
+    "nombre": "Daño articulo",
+    "tipo": "SALIDA",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 10,
+    "nombre": "Por campaña",
+    "tipo": "SALIDA",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 11,
+    "nombre": "Asistencia social",
+    "tipo": "SALIDA",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 12,
+    "nombre": "Bonificación",
+    "tipo": "SALIDA",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 13,
+    "nombre": "Donación",
+    "tipo": "SALIDA",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 14,
+    "nombre": "Salida de bienes en préstamo",
+    "tipo": "SALIDA",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 15,
+    "nombre": "Traslado interno(Establecimiento)",
+    "tipo": "SALIDA",
+    "estado": "ACTIVO"
+  },
+  {
+    "id": 16,
+    "nombre": "213",
+    "tipo": "AMBOS",
+    "estado": "ACTIVO"
+  }
+]

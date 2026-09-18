@@ -1,0 +1,110 @@
+<div
+    class="flex flex-col h-full bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+
+    <!-- Header Sidebar -->
+    <div class="p-4 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-transparent">
+        <div class="flex items-center justify-between mb-3">
+            <h2 class="text-base font-semibold text-slate-800 dark:text-white">Pendientes</h2>
+            <div class="flex items-center gap-2">
+                <input type="file" #fileInput (change)="onFileSelected($event)" accept=".xlsx, .xls" class="hidden">
+            </div>
+        </div>
+
+        <!-- Search Input -->
+        <div class="relative">
+            <input type="text" [(ngModel)]="searchTerm" (input)="onSearch($event)"
+                placeholder="Buscar paciente o DNI..."
+                class="w-full pl-9 pr-4 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-600 dark:text-slate-300 placeholder:text-slate-400" />
+            <div class="absolute left-3 top-2.5 text-slate-400">
+                <svg *ngIf="!isLoading" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <!-- Loader -->
+                <svg *ngIf="isLoading" class="animate-spin w-4 h-4 text-blue-500" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lista de Resultados (Scrollable) -->
+    <div class="flex-1 overflow-y-auto p-2 space-y-2">
+
+        <!-- Sin Resultados -->
+        <div *ngIf="!isLoading && results.length === 0 && searchTerm.length >= 2"
+            class="p-4 text-center text-slate-500 dark:text-slate-400 text-sm">
+            No se encontraron pacientes para "{{ searchTerm }}"
+        </div>
+
+        <!-- Lista Dinámica -->
+        <div *ngFor="let user of results" (click)="selectUser(user)" [ngClass]="{
+                'border-blue-500 bg-blue-50/50 dark:bg-blue-900/10': selectedUserId === user.id,
+                'border-transparent bg-white dark:bg-slate-800 hover:border-slate-200 dark:hover:border-slate-600': selectedUserId !== user.id
+            }" class="p-3 rounded-xl border cursor-pointer transition-all group relative">
+
+            <!-- Checkmark Indicador -->
+            <div *ngIf="selectedUserId === user.id" class="absolute top-2 right-2 text-blue-500">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd" />
+                </svg>
+            </div>
+
+            <div class="flex justify-between items-start mb-1">
+                <h3
+                    class="text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                    {{ user.nombreCompleto }}
+                </h3>
+                <div class="flex flex-col items-end">
+                    <span class="text-[10px] font-mono text-slate-400">{{ user.username }}</span>
+                    <span *ngIf="user.isImported"
+                        class="mt-1 px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400 animate-pulse">
+                        IMPORTADO
+                    </span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 mb-2">
+                <span *ngIf="user.numdoc"
+                    class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+                    {{ user.numdoc }}
+                </span>
+                <span *ngIf="user.ruc"
+                    class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">
+                    RUC: {{ user.ruc }}
+                </span>
+                <span *ngIf="user.fechaNacimiento || user.fecha_nacimiento"
+                    class="flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400">
+                    <i class="fa-solid fa-cake-candles"></i>
+                    {{ (user.fechaNacimiento || user.fecha_nacimiento) | date:'dd/MM/yyyy' }}
+                </span>
+                <span *ngIf="user.tipoBeneficiario" class="text-[10px] px-1.5 py-0.5 rounded font-medium"
+                    [ngClass]="user.tipoBeneficiario === 'FAMILIAR' ? 'bg-amber-50 text-amber-600' : 'bg-slate-50 text-slate-600'">
+                    {{ user.tipoBeneficiario }}
+                </span>
+            </div>
+
+            <!-- Roles Tag -->
+            <div class="flex flex-wrap gap-1">
+                <span *ngFor="let role of user.roles"
+                    class="px-2 py-0.5 rounded-full text-[10px] bg-amber-50 text-amber-600 border border-amber-100 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-800">
+                    {{ role }}
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer Sidebar -->
+    <div class="p-3 border-t border-slate-100 dark:border-slate-700 text-center">
+        <button class="text-xs text-blue-600 dark:text-blue-400 hover:underline">
+            Ver todos los usuarios
+        </button>
+    </div>
+
+</div>

@@ -1,0 +1,461 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <div class="mb-6">
+                <app-page-header title="Consultas Kardex" subtitle="Seguimiento de movimientos de artículos"
+                    [showCounter]="true" counterLabel="Total Mov." [counterValue]="totalElements()">
+                </app-page-header>
+
+
+                <!-- Filters -->
+                <div class=" ">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+                        <!-- Sucursal -->
+<div class="md:col-span-6 lg:col-span-3">
+<app-searchable-select
+    [data]="sucursalOptions()" bindLabel="label" bindValue="value" label="Sucursal"
+    [(ngModel)]="sucursalId"
+    (ngModelChange)="onSucursalChange($event)">
+    <i icon class="fas fa-store text-indigo-500"></i>
+</app-searchable-select>
+</div>
+
+<!-- Catalogo Search -->
+                        <div class="md:col-span-12 lg:col-span-5">
+                            <app-searchable-select label="Artículo (Catálogo)" placeholder="Seleccione un artículo..."
+                                [data]="catalogos()" bindLabel="nombre" bindValue="id" [(ngModel)]="idCatalogo">
+                                <i icon class="fas fa-box text-blue-500"></i>
+                            </app-searchable-select>
+                        </div>
+
+                        <!-- Fecha Desde -->
+                        <div class="md:col-span-4 lg:col-span-2">
+                            <app-form-input type="date" [(ngModel)]="fechaDesde" label="Fecha Desde" />
+                        </div>
+
+                        <!-- Fecha Hasta -->
+                        <div class="md:col-span-4 lg:col-span-2">
+                            <app-form-input type="date" [(ngModel)]="fechaHasta" label="Fecha Hasta" />
+                        </div>
+
+                        <!-- Buscar Button -->
+                        <div class="md:col-span-4 lg:col-span-3 flex gap-2 justify-end">
+                            <app-primary-button label="Excel" icon="file-excel" color="green"
+                                [disabled]="loading() || movimientos().length === 0" (btnClick)="exportarExcel()">
+                            </app-primary-button>
+                            
+                            <app-primary-button label="Consultar" icon="search" [loading]="loading()" [fullWidth]="true"
+                                class="h-12" (btnClick)="buscar()">
+                            </app-primary-button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table Section -->
+                <div
+                    class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl bg-white dark:bg-slate-800">
+                    <div class="overflow-x-auto custom-scrollbar">
+                        <table class="w-full text-left border-collapse min-w-[1400px]">
+                            <thead>
+                                <!-- Main Header -->
+                                <tr
+                                    class="bg-slate-50 dark:bg-slate-900/90 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                                    <th class="px-4 py-4 border-b border-slate-200 dark:border-slate-700 text-center"
+                                        rowspan="2">#</th>
+                                    <th class="px-4 py-4 border-b border-slate-200 dark:border-slate-700" rowspan="2">
+                                        OPERACIÓN</th>
+                                    <th class="px-4 py-4 border-b border-slate-200 dark:border-slate-700" rowspan="2">
+                                        USUARIO</th>
+                                    <th class="px-4 py-4 border-b border-slate-200 dark:border-slate-700 text-center"
+                                        rowspan="2">FECHA</th>
+                                    <th class="px-4 py-4 border-b border-slate-200 dark:border-slate-700" rowspan="2">
+                                        DOCUMENTO</th>
+                                    <th class="px-4 py-4 border-b border-slate-200 dark:border-slate-700" rowspan="2">
+                                        LOTE</th>
+                                    <th class="px-4 py-4 border-b border-slate-200 dark:border-slate-700" rowspan="2">
+                                        DETALLE</th>
+
+                                    <th class="px-4 py-3 border-b border-l-2 border-blue-200 dark:border-blue-800/50 text-center text-blue-600 bg-blue-50/50 dark:bg-blue-900/20"
+                                        colspan="3">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <i class="fas fa-arrow-alt-circle-down"></i> ENTRADAS
+                                        </div>
+                                    </th>
+
+                                    <th class="px-4 py-3 border-b border-l-2 border-red-200 dark:border-red-800/50 text-center text-red-600 bg-red-50/50 dark:bg-red-900/20"
+                                        colspan="3">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <i class="fas fa-arrow-alt-circle-up"></i> SALIDAS
+                                        </div>
+                                    </th>
+
+                                    <th class="px-4 py-3 border-b border-l-2 border-emerald-200 dark:border-emerald-800/50 text-center text-emerald-600 bg-emerald-50/50 dark:bg-emerald-900/20"
+                                        colspan="3">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <i class="fas fa-chart-line"></i> SALDO FINAL
+                                        </div>
+                                    </th>
+                                </tr>
+                                <!-- Sub Header -->
+                                <tr
+                                    class="bg-slate-50 dark:bg-slate-900/90 text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">
+                                    <!-- Entradas -->
+                                    <th
+                                        class="px-4 py-2 border-b border-l-2 border-blue-100 dark:border-blue-800/30 bg-blue-50/20 dark:bg-blue-900/10 text-center">
+                                        Cant.</th>
+                                    <th
+                                        class="px-4 py-2 border-b border-blue-50 dark:border-blue-800/20 bg-blue-50/20 dark:bg-blue-900/10 text-right">
+                                        Cost.Unit</th>
+                                    <th
+                                        class="px-4 py-2 border-b border-blue-50 dark:border-blue-800/20 bg-blue-50/20 dark:bg-blue-900/10 text-right">
+                                        Cost.Total</th>
+                                    <!-- Salidas -->
+                                    <th
+                                        class="px-4 py-2 border-b border-l-2 border-red-100 dark:border-red-800/30 bg-red-50/20 dark:bg-red-900/10 text-center">
+                                        Cant.</th>
+                                    <th
+                                        class="px-4 py-2 border-b border-red-50 dark:border-red-800/20 bg-red-50/20 dark:bg-red-900/10 text-right">
+                                        Cost.Unit</th>
+                                    <th
+                                        class="px-4 py-2 border-b border-red-50 dark:border-red-800/20 bg-red-50/20 dark:bg-red-900/10 text-right">
+                                        Cost.Total</th>
+                                    <!-- Saldo Final -->
+                                    <th
+                                        class="px-4 py-2 border-b border-l-2 border-emerald-100 dark:border-emerald-800/30 bg-emerald-50/20 dark:bg-emerald-900/10 text-center text-emerald-700">
+                                        Stock</th>
+                                    <th
+                                        class="px-4 py-2 border-b border-emerald-50 dark:border-emerald-800/20 bg-emerald-50/20 dark:bg-emerald-900/10 text-right">
+                                        Cost.Unit</th>
+                                    <th
+                                        class="px-4 py-2 border-b border-emerald-50 dark:border-emerald-800/20 bg-emerald-50/20 dark:bg-emerald-900/10 text-right">
+                                        Cost.Total</th>
+                                </tr>
+                            </thead>
+                            <tbody
+                                class="divide-y divide-slate-100 dark:divide-slate-700/50 bg-white dark:bg-slate-800/50">
+                                <tr *ngFor="let m of movimientos(); let i = index"
+                                    class="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-all duration-200 text-xs text-slate-700 dark:text-slate-300 group">
+                                    <td class="px-4 py-4 text-center font-medium text-slate-400">{{ i + 1 +
+                                        (currentPage() * pageSize()) }}</td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex flex-col">
+                                            <span
+                                                class="font-black text-blue-600 dark:text-blue-400 group-hover:scale-105 transition-transform origin-left">{{
+                                                m.operacion }}</span>
+                                            <span
+                                                class="text-[9px] opacity-60 uppercase tracking-tighter font-bold text-slate-500">{{
+                                                m.origenTipo }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <div
+                                                class="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-[10px] text-slate-500 font-bold border border-slate-200 dark:border-slate-600">
+                                                {{ (m.usuario?.nombreCompleto || 'U')[0] }}
+                                            </div>
+                                            <span class="truncate max-w-[120px] font-medium">{{
+                                                m.usuario?.nombreCompleto || m.idUsuario }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-center whitespace-nowrap font-bold text-slate-500">{{
+                                        m.fecha | date:'dd/MM/yyyy HH:mm' }}</td>
+                                    <td class="px-4 py-4">
+                                        <span
+                                            class="font-mono text-[10px] bg-slate-100 dark:bg-slate-700/50 px-2 py-1 rounded border border-slate-200 dark:border-slate-600">
+                                            {{ m.numDoc }}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4">
+                                        <span *ngIf="m.nroLote"
+                                            class="px-2 py-1 rounded-md text-[10px] font-black bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800/50 whitespace-nowrap shadow-sm">
+                                            <i class="fas fa-barcode mr-1 opacity-50"></i> {{ m.nroLote }}
+                                        </span>
+                                        <span *ngIf="!m.nroLote"
+                                            class="text-slate-300 dark:text-slate-600 text-[10px] italic">S/L</span>
+                                    </td>
+                                    <td class="px-4 py-4 text-[11px] leading-tight max-w-[200px] truncate font-medium"
+                                        [title]="m.detalle">
+                                        {{ m.detalle }}
+                                    </td>
+
+                                    <!-- ENTRADAS -->
+                                    <td
+                                        class="px-4 py-4 border-l-2 border-blue-50 dark:border-blue-900/10 bg-blue-50/3 dark:bg-blue-900/2 text-center font-black text-blue-700 dark:text-blue-400 italic text-sm">
+                                        {{ m.signo === '+' ? m.cantidad : '-' }}
+                                    </td>
+                                    <td
+                                        class="px-4 py-4 bg-blue-50/3 dark:bg-blue-900/2 text-right text-slate-500 font-medium whitespace-nowrap">
+                                        {{ m.signo === '+' ? (m.costoUnitario | currency:'S/ ':'symbol':'1.2-4') : '-' }}
+                                    </td>
+                                    <td
+                                        class="px-4 py-4 bg-blue-50/3 dark:bg-blue-900/2 text-right font-black text-blue-800 dark:text-blue-300 whitespace-nowrap pr-6">
+                                        {{ m.signo === '+' ? (m.costoTotal | currency:'S/ ':'symbol':'1.2-4') : '-' }}
+                                    </td>
+
+                                    <!-- SALIDAS -->
+                                    <td
+                                        class="px-4 py-4 border-l-2 border-red-50 dark:border-red-900/10 bg-red-50/3 dark:bg-red-900/2 text-center font-black text-red-700 dark:text-red-400 italic text-sm">
+                                        {{ m.signo === '-' ? m.cantidad : '-' }}
+                                    </td>
+                                    <td
+                                        class="px-4 py-4 bg-red-50/3 dark:bg-red-900/2 text-right text-slate-500 font-medium whitespace-nowrap">
+                                        {{ m.signo === '-' ? (m.costoUnitario | currency:'S/ ':'symbol':'1.2-4') : '-' }}
+                                    </td>
+                                    <td
+                                        class="px-4 py-4 bg-red-50/3 dark:bg-red-900/2 text-right font-black text-red-800 dark:text-red-300 whitespace-nowrap pr-6">
+                                        {{ m.signo === '-' ? (m.costoTotal | currency:'S/ ':'symbol':'1.2-4') : '-' }}
+                                    </td>
+
+                                    <!-- SALDO FINAL -->
+                                    <td
+                                        class="px-4 py-4 border-l-2 border-emerald-100 dark:border-emerald-800/30 bg-emerald-50/5 dark:bg-emerald-900/3 text-center font-black text-emerald-700 dark:text-emerald-400 text-base">
+                                        {{ m.saldoCantidad }}
+                                    </td>
+                                    <td
+                                        class="px-4 py-4 bg-emerald-50/5 dark:bg-emerald-900/3 text-right text-slate-500 font-bold italic whitespace-nowrap">
+                                        {{ m.saldoCostoUnitario | currency:'S/ ':'symbol':'1.2-4' }}
+                                    </td>
+                                    <td
+                                        class="px-4 py-4 bg-emerald-50/5 dark:bg-emerald-900/3 text-right font-black text-slate-900 dark:text-white border-r border-slate-100 dark:border-slate-700/50 whitespace-nowrap pr-6">
+                                        {{ m.saldoCostoTotal | currency:'S/ ':'symbol':'1.2-4' }}
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="movimientos().length === 0 && !loading()">
+                                    <td colspan="16"
+                                        class="py-32 text-slate-500 font-medium bg-white dark:bg-slate-800/80">
+                                        <div class="flex flex-col items-center justify-center gap-6">
+                                            <div class="relative">
+                                                <div class="absolute inset-0 bg-blue-500/5 rounded-full blur-3xl"></div>
+                                                <div
+                                                    class="w-24 h-24 rounded-full bg-slate-50 dark:bg-slate-900 flex items-center justify-center relative z-10 border border-slate-200 dark:border-slate-700">
+                                                    <i
+                                                        class="fas fa-receipt text-4xl text-slate-300 dark:text-slate-600"></i>
+                                                </div>
+
+                                            </div>
+                                            <div class="text-center space-y-1">
+                                                <p
+                                                    class="text-xl font-black text-slate-600 dark:text-slate-400 uppercase tracking-tighter">
+                                                    Sin Movimientos</p>
+                                                <p class="text-sm text-slate-400 opacity-60">Selecciona un artículo y un
+                                                    rango de fechas para consultar.</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div
+                        class="px-6 py-6 border-t border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="px-3 py-1 bg-blue-600 text-white rounded-full text-[10px] font-black uppercase tracking-widest shadow-md">
+                                {{ totalElements() }} Resultados
+                            </div>
+                            <span
+                                class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Encontrados</span>
+                        </div>
+                        <app-pagination [currentPage]="currentPage()" [totalPages]="totalPages()"
+                            [pageSize]="pageSize()" (pageChange)="cambiarPagina($event)">
+                        </app-pagination>
+                    </div>
+                </div>
+
+                <!-- Stock Summary (Lotes) -->
+                <div *ngIf="productosLote().length > 0" class="mt-12 space-y-8">
+                    <div class="flex items-center gap-4">
+                        <div class="h-8 w-1 bg-blue-600 rounded-full"></div>
+                        <h3 class="text-lg font-black text-slate-800 dark:text-slate-100 uppercase tracking-tighter">
+                            Resumen de Stock por Lotes</h3>
+                    </div>
+
+                    <div class="flex flex-col lg:flex-row gap-6 items-start">
+                        <!-- Global Stock Card -->
+                        <div
+                            class="w-full lg:w-1/4 bg-linear-to-br from-blue-600 to-blue-800 rounded-3xl p-8 text-white shadow-xl shadow-blue-500/20 relative overflow-hidden group min-h-[220px]">
+                            <div
+                                class="absolute -right-4 -bottom-4 text-white/10 text-9xl transition-transform group-hover:scale-110 duration-500">
+                                <i class="fas fa-cubes"></i>
+                            </div>
+                            <div class="relative z-10 flex flex-col h-full justify-between">
+                                <div
+                                    class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-3xl shadow-inner mb-8">
+                                    <i class="fas fa-box-open"></i>
+                                </div>
+                                <div>
+                                    <p
+                                        class="text-blue-100 text-xs font-black uppercase tracking-widest mb-1 opacity-80">
+                                        Stock Total Actual</p>
+                                    <h3 class="text-5xl font-black tracking-tighter">{{ totalStock() }}</h3>
+                                    <p class="text-[10px] text-blue-200 mt-4 font-bold flex items-center gap-2">
+                                        <i class="fas fa-info-circle opacity-60"></i> Sumatoria de todos los almacenes
+                                    </p>
+
+                                    <!-- Costo Unitario (Solo para Sin Lote según requerimiento) -->
+                                    <div *ngIf="esArticuloSinLote()" class="mt-8 pt-8 border-t border-white/20 animate-in fade-in duration-500">
+                                        <p class="text-blue-100 text-xs font-black uppercase tracking-widest mb-1 opacity-80">
+                                            Costo Unitario
+                                        </p>
+                                        <h3 class="text-4xl font-black tracking-tighter">
+                                            {{ averageCostoUnitario() | currency:'S/ ':'symbol':'1.2-4' }}
+                                        </h3>
+                                        <p class="text-[10px] text-blue-200 mt-2 font-bold flex items-center gap-2">
+                                            <i class="fas fa-tag opacity-60"></i> Costo unitario
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Lots Table Card (Oculta si es Sin Lote) -->
+                        <div *ngIf="!esArticuloSinLote()"
+                            class="w-full lg:w-3/4 bg-white dark:bg-slate-800/50 rounded-3xl border border-slate-200 dark:border-slate-700/50 overflow-hidden shadow-xl">
+                            <div
+                                class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <button (click)="isDetailCollapsed.set(!isDetailCollapsed())" 
+                                            class="w-10 h-10 flex items-center justify-center border-2 border-slate-900 dark:border-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all font-black">
+                                        <i class="fas transition-transform duration-300" 
+                                           [class.fa-chevron-down]="isDetailCollapsed()" 
+                                           [class.fa-chevron-up]="!isDetailCollapsed()"></i>
+                                    </button>
+                                    <i class="fas fa-list-ul text-blue-500"></i>
+                                    <h4
+                                        class="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                                        Detalle de Existencias</h4>
+                                </div>
+                                <div
+                                    class="px-4 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-[10px] font-black uppercase tracking-widest border border-blue-200 dark:border-blue-800/50">
+                                    {{ productosLote().length }} {{ esArticuloSinLote() ? 'Entradas' : 'Lotes' }} Identificados
+                                </div>
+                            </div>
+
+                            <!-- VISTA COLAPSADA (RESUMEN TOP 3) -->
+                            <div *ngIf="isDetailCollapsed()" class="p-4 animate-in fade-in slide-in-from-top-1 duration-300">
+                                <div class="flex flex-wrap gap-3">
+                                    <div *ngFor="let p of top3Lotes()" 
+                                         class="flex-1 min-w-[150px] bg-slate-50/80 dark:bg-slate-900/40 rounded-xl p-3 border border-slate-100 dark:border-slate-700/50 flex flex-col gap-1">
+                                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-tighter truncate">{{ p.nroLote || 'SIN LOTE' }}</span>
+                                        <div class="flex items-baseline gap-1">
+                                            <span class="text-lg font-black text-blue-600 dark:text-blue-400">{{ p.stock }}</span>
+                                            <span class="text-[8px] font-bold text-slate-400 uppercase">uds.</span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="productosLote().length > 3" class="flex items-center px-4 text-[10px] font-bold text-slate-400 italic">
+                                        +{{ productosLote().length - 3 }} más...
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="!isDetailCollapsed()" class="animate-in fade-in slide-in-from-top-2 duration-300">
+                                <!-- VISTA HORIZONTAL: PARA ARTÍCULOS SIN LOTE -->
+                                <div *ngIf="esArticuloSinLote()" class="p-6">
+                                    <div class="flex flex-wrap gap-4">
+                                        <div *ngFor="let p of productosLote()" 
+                                             class="flex-1 min-w-[280px] bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700 flex items-center justify-between group/card hover:border-blue-300 dark:hover:border-blue-800 transition-all">
+                                            <div class="flex items-center gap-4">
+                                                <div class="w-12 h-12 bg-white dark:bg-slate-800 rounded-xl shadow-sm flex items-center justify-center text-blue-500 text-xl border border-slate-100 dark:border-slate-700">
+                                                    <i class="fas fa-warehouse"></i>
+                                                </div>
+                                                <div class="flex flex-col">
+                                                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Stock Disponible</span>
+                                                    <span class="text-2xl font-black text-slate-800 dark:text-white leading-none">{{ p.stock }}</span>
+                                                    <span class="text-[9px] font-bold text-blue-500 uppercase mt-1">Unidades</span>
+                                                </div>
+                                            </div>
+                                            <div class="h-10 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
+                                            <div class="flex flex-col items-end">
+                                                <div class="text-right">
+                                                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-tighter">Costo Unit.</span>
+                                                    <p class="text-sm font-bold text-slate-600 dark:text-slate-300">{{ p.precioCompra | currency:'S/ ':'symbol':'1.2-4' }}</p>
+                                                </div>
+                                                <div class="text-right mt-1">
+                                                    <span class="text-[9px] font-black text-blue-400 uppercase tracking-tighter">P. Venta Sug.</span>
+                                                    <p class="text-sm font-black text-blue-600 dark:text-blue-400">{{ p.precioVentaUnitario | currency:'S/ ':'symbol':'1.2-4' }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- VISTA TABLA: PARA ARTÍCULOS CON LOTES -->
+                                <div *ngIf="!esArticuloSinLote()" class="overflow-x-auto">
+                                <table class="w-full text-left">
+                                    <thead>
+                                        <tr
+                                            class="bg-slate-50/50 dark:bg-slate-800/50 text-slate-400 font-black uppercase text-[10px] tracking-widest border-b border-slate-100 dark:border-slate-700">
+                                            <th class="px-6 py-4">Lote / Vencimiento</th>
+                                            <th class="px-6 py-4 text-center">Stock Disponible</th>
+                                            <th class="px-6 py-4 text-right">Costo Unit.</th>
+                                            <th class="px-6 py-4 text-right pr-10">Precio Venta sugerido</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
+                                        <tr *ngFor="let p of productosLote()"
+                                            class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors group">
+                                            <td class="px-6 py-5">
+                                                <div class="flex items-center gap-3">
+                                                    <div
+                                                        class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:text-blue-500 transition-colors border border-slate-200 dark:border-slate-700">
+                                                        <i class="fas fa-layer-group"></i>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span
+                                                            class="font-black text-slate-800 dark:text-slate-100 text-sm tracking-tight">{{
+                                                            p.nroLote || 'SIN LOTE' }}</span>
+                                                        <span
+                                                            class="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
+                                                            <i class="far fa-calendar-alt mr-1"></i> Vence: {{
+                                                            (p.fechaVencimiento | date:'dd/MM/yyyy') || 'Indefinido' }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-5 text-center">
+                                                <div class="inline-flex flex-col items-center">
+                                                    <span
+                                                        class="px-4 py-1.5 rounded-2xl font-black text-sm shadow-sm transition-all group-hover:scale-110"
+                                                        [class.bg-emerald-100]="(p.stock || 0) > 0"
+                                                        [class.text-emerald-700]="(p.stock || 0) > 0"
+                                                        [class.bg-red-100]="(p.stock || 0) <= 0"
+                                                        [class.text-red-700]="(p.stock || 0) <= 0">
+                                                        {{ p.stock }}
+                                                    </span>
+                                                    <span
+                                                        class="text-[8px] mt-1 font-bold text-slate-400 uppercase">Unidades</span>
+                                                </div>
+                                            </td>
+                                            <td
+                                                class="px-6 py-5 text-right font-black text-slate-600 dark:text-slate-400 text-sm">
+                                                {{ p.precioCompra | currency:'S/ ':'symbol':'1.2-4' }}
+                                            </td>
+                                            <td class="px-6 py-5 text-right pr-10">
+                                                <span
+                                                    class="font-black text-blue-600 dark:text-blue-400 text-base shadow-inner px-3 py-1 bg-blue-50 dark:bg-blue-900/10 rounded-xl">
+                                                    {{ p.precioVentaUnitario | currency:'S/ ':'symbol':'1.2-4' }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <div class="mb-6">
+                <app-page-header title="Historial de Ingreso y Salidas Diversas"
+                    subtitle="Consulta todos los ingresos y salidas realizados" [showCounter]="true"
+                    counterLabel="Movimientos" [counterValue]="totalElements()">
+                </app-page-header>
+                <app-advanced-filter-drawer #filterDrawer
+                    [showGlobalSearch]="true"
+                    searchPlaceholder="Buscar por serie, número, usuario o documento..."
+                    [globalSearchTerm]="searchTerm()"
+                    (onGlobalSearch)="onGlobalSearch($event)"
+                    [sucursalOptions]="sucursalOptions()"
+                    [puntoVentaOptions]="puntoVentaOptions()"
+                    [tipoDocumentoOptions]="tipoDocumentoOptions()"
+                    [initialSucursalId]="defaultSucursalId()"
+                    [documentosDisponibles]="documentosDisponibles()"
+                    [showClasificacion]="false"
+                    [showOperacion]="false" (onApplyFilters)="onFiltersApplied($event)"
+                    (activeFiltersCount)="activeFiltersCount.set($event)">
+                    
+                    <app-primary-button label="Ingreso" icon="plus" color="green"
+                        (btnClick)="irNuevoMovimiento('INGRESO')">
+                    </app-primary-button>
+                    <app-primary-button label="Egreso" icon="add_circle" color="red"
+                        (btnClick)="irNuevoMovimiento('SALIDA')">
+                    </app-primary-button>
+                    
+                </app-advanced-filter-drawer>
+
+                <div class="overflow-hidden">
+
+                    <div *ngIf="loading()" class="flex justify-center items-center h-64">
+                        <div class="text-center">
+                            <div
+                                class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400">
+                            </div>
+                            <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium">Cargando movimientos...</p>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!loading()">
+                        <app-tabla-general [loading]="loading()" [datos]="movimientos()" [columnas]="columns"
+                            [currentPage]="currentPage()" [pageSize]="pageSize()" [showEdit]="true"
+                            [editCondition]="esCotizacion" (onEdit)="continuarCotizacion($event.id)"
+                            [editTooltip]="'Continuar Borrador'" [showDelete]="true" [showViewDetails]="true"
+                            [deleteTooltip]="'Solicitar Anulación'" [deleteIcon]="'fa-ban'"
+                            (onDelete)="anularMovimiento($event)" (viewDetails)="verDetallesMovimiento($event)">
+                        </app-tabla-general>
+
+                        <div *ngIf="totalElements() > 0" class="p-4 border-t border-slate-100 dark:border-slate-700">
+                            <app-pagination [currentPage]="currentPage()" [totalPages]="totalPages()"
+                                [pageSize]="pageSize()" (pageChange)="cambiarPagina($event)"
+                                (pageSizeChange)="cambiarTamanoPagina($event)">
+                            </app-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalles del Movimiento -->
+    <app-movimiento-detalle-modal [isOpen]="showModalDetalles()" [movimiento]="movimientoSeleccionado()"
+        (onClose)="cerrarModalDetalles()">
+    </app-movimiento-detalle-modal>

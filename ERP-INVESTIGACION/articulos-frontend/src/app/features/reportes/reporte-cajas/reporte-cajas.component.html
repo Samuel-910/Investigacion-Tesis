@@ -1,0 +1,88 @@
+<app-reporte-base #reporte
+    title="Reporte de Cajas"
+    subtitle="Seguimiento detallado de movimientos, arqueos y saldos de caja"
+    moduleLabel="Control de Tesorería"
+    description="Analice los flujos de efectivo, ingresos por ventas y egresos operativos filtrados por periodo."
+    [breadcrumbItems]="breadcrumbItems"
+    [loading]="loading()"
+    [data]="listaMovimientos()"
+    [columnConfigs]="columnConfigs"
+    [searchFields]="['concepto', 'medio', 'usuario']"
+    previewTitle="Movimientos de Caja"
+    reportKey="CAJAS_GENERAL"
+    dashboardCategory="Gastos"
+    mainIcon="fas fa-cash-register"
+    (onFiltroChange)="onFiltroChange($event)"
+    (onExportar)="exportarExcel($event)">
+
+    <div table class="overflow-x-auto custom-scrollbar-container">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-10 border-b border-slate-100 dark:border-slate-800">
+                    <th class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center w-16">#</th>
+                    <th *ngFor="let col of columnConfigs"
+                        [hidden]="!reporte.isColumnVisible(col.key)"
+                        class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">
+                        {{col.label}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800/50">
+                <tr *ngFor="let m of reporte.paginatedData(); let i = index" 
+                    class="hover:bg-sky-50/30 dark:hover:bg-sky-900/5 transition-all duration-300 group">
+                    
+                    <td class="px-6 py-4 text-[10px] font-black text-slate-400 text-center">
+                        {{ (reporte.currentPage() * reporte.itemsPerPage()) + i + 1 }}
+                    </td>
+
+                    <ng-container *ngFor="let col of columnConfigs">
+                        <td *ngIf="reporte.isColumnVisible(col.key)" class="px-6 py-4 whitespace-nowrap">
+                            <div *ngIf="col.key === 'nombre'" class="text-sm font-black text-slate-900 dark:text-white uppercase">
+                                {{ m.nombre }}
+                            </div>
+
+                            <div *ngIf="col.key === 'usuario'" class="flex items-center gap-2">
+                                <div class="w-7 h-7 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center text-[10px] font-black text-slate-500 border border-slate-200 dark:border-slate-600 shadow-sm">
+                                    {{m.usuario ? m.usuario.substring(0,2).toUpperCase() : 'US'}}
+                                </div>
+                                <span class="text-[10px] font-bold text-slate-400">{{m.usuario}}</span>
+                            </div>
+
+                            <div *ngIf="['fechaApertura', 'fechaCierre'].includes(col.key)" class="text-xs font-bold text-slate-600 dark:text-slate-300">
+                                {{ m[col.key] ? (m[col.key] | date:'dd/MM/yyyy HH:mm') : '-' }}
+                            </div>
+
+                            <div *ngIf="['saldoInicial', 'saldoTeorico', 'saldoReal'].includes(col.key)" class="text-sm font-black text-slate-900 dark:text-sky-400/90 text-right tabular-nums">
+                                S/ {{ m[col.key] | number:'1.2-2' }}
+                            </div>
+
+                            <div *ngIf="col.key === 'diferencia'" class="text-right">
+                                <span class="text-sm font-black tabular-nums" [class]="m.diferencia === 0 ? 'text-slate-500' : m.diferencia > 0 ? 'text-sky-600 dark:text-sky-400' : 'text-rose-500'">
+                                    {{m.diferencia > 0 ? '+' : ''}} S/ {{m.diferencia | number:'1.2-2'}}
+                                </span>
+                            </div>
+
+                            <div *ngIf="!['nombre', 'usuario', 'fechaApertura', 'fechaCierre', 'saldoInicial', 'saldoTeorico', 'saldoReal', 'diferencia'].includes(col.key)" class="text-xs font-bold text-slate-600 dark:text-slate-300">
+                                {{ m[col.key] || '-' }}
+                            </div>
+                        </td>
+                    </ng-container>
+                </tr>
+                <tr *ngIf="reporte.paginatedData().length === 0">
+                    <td [attr.colspan]="columnConfigs.length + 1" class="px-8 py-24 text-center">
+                        <div class="flex flex-col items-center gap-4">
+                            <div class="w-20 h-20 rounded-full bg-slate-50 dark:bg-slate-900/50 flex items-center justify-center text-slate-300 dark:text-slate-700">
+                                <i class="fas fa-folder-open text-4xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 dark:text-slate-400 font-black text-lg">No se encontraron registros</p>
+                                <p class="text-slate-400 dark:text-slate-500 text-sm mt-1">Ajuste los filtros o el buscador para ver resultados</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</app-reporte-base>

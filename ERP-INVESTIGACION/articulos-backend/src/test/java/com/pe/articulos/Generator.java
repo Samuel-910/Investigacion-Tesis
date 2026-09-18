@@ -1,0 +1,369 @@
+package com.pe.articulos;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.File;
+
+public class Generator {
+    public static void main(String[] args) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode arr = mapper.createArrayNode();
+
+        // 1. FORMATO A4 PREMIUM
+        ObjectNode p1 = arr.addObject();
+        p1.put("nombre", "defecto_factura_venta_a4");
+        p1.put("formatoNombre", "A4");
+        p1.put("orientacion", "Vertical");
+        p1.put("modulo", "VENTA");
+        p1.put("tipoDoc", "01");
+        p1.put("htmlContenido", "<div class=\"prem-a4-container\">" +
+                "  <div class=\"prem-a4-header\">" +
+                "    <div class=\"prem-a4-header-left\">" +
+                "      <h1 class=\"prem-a4-title\">{{clinica.razonSocial}}</h1>" +
+                "      <p class=\"prem-a4-ruc\">RUC: {{clinica.ruc}}</p>" +
+                "      <p class=\"prem-a4-address\">{{clinica.direccion}}</p>" +
+                "      <p class=\"prem-a4-motto\">\"Cuidando de ti y tu familia\"</p>" +
+                "    </div>" +
+                "    <div class=\"prem-a4-header-right\">" +
+                "      <div class=\"prem-a4-doc-box\">" +
+                "        <p class=\"prem-a4-doc-type\">{{documento.tipo_nombre}}</p>" +
+                "        <p class=\"prem-a4-doc-number\">{{documento.serie}} - {{documento.numdoc}}</p>" +
+                "      </div>" +
+                "      <p class=\"prem-a4-date\">Fecha: {{documento.fecha}}</p>" +
+                "    </div>" +
+                "  </div>" +
+                "  <div class=\"prem-a4-data-grid\">" +
+                "    <div class=\"prem-a4-data-col\">" +
+                "      <p class=\"prem-a4-data-row\"><span class=\"prem-a4-label\">Cliente:</span> {{cliente.nombre}}</p>" +
+                "      <p class=\"prem-a4-data-row\"><span class=\"prem-a4-label\">DNI/RUC:</span> {{cliente.documento}}</p>" +
+                "      <p class=\"prem-a4-data-row\"><span class=\"prem-a4-label\">Dirección:</span> {{cliente.direccion}}</p>" +
+                "    </div>" +
+                "    <div class=\"prem-a4-data-col right\">" +
+                "      <p class=\"prem-a4-data-row\"><span class=\"prem-a4-label\">Vendedor:</span> {{usuario.nombreReal}}</p>" +
+                "      <p class=\"prem-a4-data-row\"><span class=\"prem-a4-label\">Método Pago:</span> {{documento.metodoPago}}</p>" +
+                "      <p class=\"prem-a4-data-row\"><span class=\"prem-a4-label\">Seguro:</span> {{documento.seguro}}</p>" +
+                "    </div>" +
+                "  </div>" +
+                "  <table class=\"prem-a4-table\">" +
+                "    <thead>" +
+                "      <tr>" +
+                "        <th>Cant.</th>" +
+                "        <th>Descripción</th>" +
+                "        <th>Lote / Vence</th>" +
+                "        <th style=\"text-align: right;\">Unit.</th>" +
+                "        <th style=\"text-align: right;\">Subtotal</th>" +
+                "      </tr>" +
+                "    </thead>" +
+                "    <tbody class=\"prem-a4-tbody\">" +
+                "      {{tabla_items}}" +
+                "    </tbody>" +
+                "  </table>" +
+                "  <div class=\"prem-a4-footer-row\">" +
+                "    <div class=\"prem-a4-indications-box\">" +
+                "      <p class=\"prem-a4-indications-label\">Indicaciones:</p>" +
+                "      <p class=\"prem-a4-indications-text\">{{documento.obs}}</p>" +
+                "    </div>" +
+                "    <div class=\"prem-a4-totals-box\">" +
+                "      <div class=\"prem-a4-total-row\">" +
+                "        <span>Subtotal:</span>" +
+                "        <span>S/ {{documento.valorVenta}}</span>" +
+                "      </div>" +
+                "      <div class=\"prem-a4-total-row\">" +
+                "        <span>IGV (18%):</span>" +
+                "        <span>S/ {{documento.igv}}</span>" +
+                "      </div>" +
+                "      <div class=\"prem-a4-grand-total\">" +
+                "        <span>TOTAL:</span>" +
+                "        <span>S/ {{documento.total}}</span>" +
+                "      </div>" +
+                "    </div>" +
+                "  </div>" +
+                "  <div class=\"prem-a4-bottom\">" +
+                "    <p class=\"prem-a4-bottom-text\">Representación impresa del documento electrónico.</p>" +
+                "    <p class=\"prem-a4-bottom-text\">Consulte su documento en: {{clinica.web}}</p>" +
+                "  </div>" +
+                "</div>");
+        p1.put("htmlTraducido", p1.get("htmlContenido").asText());
+        p1.put("cssEstilo", ".prem-a4-container { max-width: 896px; margin: 2.5rem auto; padding: 2rem; background-color: #ffffff; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; font-family: sans-serif; }\n" +
+                ".prem-a4-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #2563eb; padding-bottom: 1rem; }\n" +
+                ".prem-a4-header-left { flex: 1; }\n" +
+                ".prem-a4-title { font-size: 1.875rem; font-weight: 700; color: #1d4ed8; text-transform: uppercase; line-height: 1; margin: 0; }\n" +
+                ".prem-a4-ruc { font-size: 0.875rem; color: #4b5563; margin-top: 0.5rem; margin-bottom: 0; }\n" +
+                ".prem-a4-address { font-size: 0.875rem; color: #4b5563; margin: 0; }\n" +
+                ".prem-a4-motto { font-size: 0.875rem; color: #4b5563; font-style: italic; margin: 0; }\n" +
+                ".prem-a4-header-right { text-align: right; }\n" +
+                ".prem-a4-doc-box { background-color: #eff6ff; padding: 1rem; border: 1px solid #bfdbfe; border-radius: 0.5rem; }\n" +
+                ".prem-a4-doc-type { color: #1d4ed8; font-weight: 700; text-transform: uppercase; margin: 0; }\n" +
+                ".prem-a4-doc-number { font-size: 1.25rem; font-family: monospace; margin: 0; }\n" +
+                ".prem-a4-date { font-size: 0.75rem; color: #6b7280; margin-top: 0.5rem; font-style: italic; margin-bottom: 0; }\n" +
+                ".prem-a4-data-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin: 1.5rem 0; font-size: 0.875rem; }\n" +
+                ".prem-a4-data-col { display: flex; flex-direction: column; gap: 0.25rem; }\n" +
+                ".prem-a4-data-col.right { text-align: right; }\n" +
+                ".prem-a4-data-row { margin: 0; }\n" +
+                ".prem-a4-label { font-weight: 700; text-transform: uppercase; color: #374151; }\n" +
+                ".prem-a4-table { width: 100%; text-align: left; font-size: 0.875rem; margin-bottom: 2rem; border-collapse: collapse; }\n" +
+                ".prem-a4-table thead tr { background-color: #2563eb; color: #ffffff; text-transform: uppercase; }\n" +
+                ".prem-a4-table th { padding: 0.5rem 1rem; border: 1px solid #1d4ed8; }\n" +
+                ".prem-a4-tbody { color: #4b5563; }\n" +
+                ".prem-a4-footer-row { display: flex; justify-content: space-between; }\n" +
+                ".prem-a4-indications-box { width: 50%; padding: 1rem; background-color: #f9fafb; border-radius: 0.5rem; border: 1px dashed #d1d5db; }\n" +
+                ".prem-a4-indications-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #6b7280; margin-bottom: 0.25rem; text-decoration: underline; }\n" +
+                ".prem-a4-indications-text { font-size: 0.75rem; font-style: italic; color: #4b5563; margin: 0; }\n" +
+                ".prem-a4-totals-box { width: 33.333333%; display: flex; flex-direction: column; gap: 0.5rem; text-align: right; }\n" +
+                ".prem-a4-total-row { display: flex; justify-content: space-between; padding: 0 0.5rem; font-size: 0.875rem; }\n" +
+                ".prem-a4-grand-total { display: flex; justify-content: space-between; padding: 0 0.5rem; font-size: 1.25rem; font-weight: 700; border-top: 1px solid currentColor; padding-top: 0.5rem; color: #1e40af; }\n" +
+                ".prem-a4-bottom { margin-top: 3rem; text-align: center; font-size: 0.75rem; color: #9ca3af; border-top: 1px solid currentColor; padding-top: 1rem; }\n" +
+                ".prem-a4-bottom-text { margin: 0; }");
+
+        // 2. FORMATO TICKET PREMIUM
+        ObjectNode p2 = arr.addObject();
+        p2.put("nombre", "defecto_venta_ticket");
+        p2.put("formatoNombre", "Ticket 80mm");
+        p2.put("orientacion", "Vertical");
+        p2.put("modulo", "VENTA");
+        p2.put("tipoDoc", "12");
+        p2.put("htmlContenido", "<div class=\"prem-ticket-container\">" +
+                "  <div class=\"prem-ticket-header\">" +
+                "    <h2 class=\"prem-ticket-title\">{{clinica.razonSocial}}</h2>" +
+                "    <p class=\"prem-ticket-info\">RUC: {{clinica.ruc}}</p>" +
+                "    <p class=\"prem-ticket-info\">{{clinica.direccion}}</p>" +
+                "    <p class=\"prem-ticket-info\">Tlf: {{clinica.telefono}}</p>" +
+                "  </div>" +
+                "  <div class=\"prem-ticket-info-box\">" +
+                "    <p class=\"prem-ticket-info\">TICKET: {{documento.serie}}-{{documento.numdoc}}</p>" +
+                "    <p class=\"prem-ticket-info\">FECHA: {{documento.fecha}}</p>" +
+                "    <p class=\"prem-ticket-info\">CAJERO: {{usuario.username}}</p>" +
+                "  </div>" +
+                "  <table class=\"prem-ticket-table\">" +
+                "    <thead>" +
+                "      <tr>" +
+                "        <th style=\"text-align: left;\">DESCRIPCIÓN</th>" +
+                "        <th style=\"text-align: right;\">TOTAL</th>" +
+                "      </tr>" +
+                "    </thead>" +
+                "    <tbody>" +
+                "      {{tabla_items}}" +
+                "    </tbody>" +
+                "  </table>" +
+                "  <div class=\"prem-ticket-totals\">" +
+                "    <div class=\"prem-ticket-total-row\">" +
+                "      <span>SUBTOTAL:</span>" +
+                "      <span>S/ {{documento.valorVenta}}</span>" +
+                "    </div>" +
+                "    <div class=\"prem-ticket-grand-total\">" +
+                "      <span>TOTAL A PAGAR:</span>" +
+                "      <span>S/ {{documento.total}}</span>" +
+                "    </div>" +
+                "  </div>" +
+                "  <div class=\"prem-ticket-footer\">" +
+                "    <p class=\"prem-ticket-footer-text\">¡GRACIAS POR SU COMPRA!</p>" +
+                "    <p class=\"prem-ticket-footer-text\" style=\"margin-top: 0.5rem;\">Verifique su medicina antes de retirarse.</p>" +
+                "    <div class=\"prem-ticket-qr-placeholder\">" +
+                "      <div class=\"prem-ticket-qr-box\"></div>" +
+                "    </div>" +
+                "  </div>" +
+                "</div>");
+        p2.putNull("htmlTraducido");
+        p2.put("cssEstilo", ".prem-ticket-container { width: 80mm; margin: 0 auto; padding: 1rem; background-color: #ffffff; border: 1px solid #e5e7eb; font-family: monospace; font-size: 0.75rem; }\n" +
+                ".prem-ticket-header { text-align: center; margin-bottom: 1rem; }\n" +
+                ".prem-ticket-title { font-size: 1rem; font-weight: 900; text-transform: uppercase; margin: 0; }\n" +
+                ".prem-ticket-info { margin: 0; }\n" +
+                ".prem-ticket-info-box { border-top: 1px dashed #000000; border-bottom: 1px dashed #000000; padding: 0.5rem 0; margin: 0.5rem 0; }\n" +
+                ".prem-ticket-table { width: 100%; margin: 0.5rem 0; border-collapse: collapse; }\n" +
+                ".prem-ticket-table thead tr { border-bottom: 1px solid #000000; }\n" +
+                ".prem-ticket-table th { padding: 0.25rem 0; }\n" +
+                ".prem-ticket-totals { border-top: 1px solid #000000; padding-top: 0.5rem; margin-top: 1rem; display: flex; flex-direction: column; gap: 0.25rem; }\n" +
+                ".prem-ticket-total-row { display: flex; justify-content: space-between; }\n" +
+                ".prem-ticket-grand-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.875rem; border-top: 1px dashed #000000; padding-top: 0.25rem; }\n" +
+                ".prem-ticket-footer { margin-top: 1.5rem; text-align: center; }\n" +
+                ".prem-ticket-footer-text { margin: 0; }\n" +
+                ".prem-ticket-qr-placeholder { display: flex; justify-content: center; margin-top: 0.5rem; }\n" +
+                ".prem-ticket-qr-box { width: 6rem; height: 1rem; background-color: #d1d5db; }");
+
+        // 4. PLANTILLA TICKET MOVIMIENTOS INGRESOS
+        ObjectNode p3 = arr.addObject();
+        p3.put("nombre", "defecto_movimientos_ingresos_ticket");
+        p3.put("formatoNombre", "Ticket 80mm");
+        p3.put("orientacion", "Vertical");
+        p3.put("modulo", "INGRESOS_DIVERSOS");
+        p3.put("tipoDoc", "12");
+        p3.put("htmlContenido", "<body style=\"font-family: 'Courier New', Courier, monospace; width: 300px; margin: 0; padding: 10px;\">\n" +
+                "    <table style=\"width: 100%; border-collapse: collapse;\">\n" +
+                "        <tr>\n" +
+                "            <td style=\"width: 80px; vertical-align: top;\">\n" +
+                "                <img src=\"{{clinica.logoCuadrado}}\" style=\"width: 80px; height: 80px; object-fit: contain; border: 1px dashed #ccc;\">\n" +
+                "            </td>\n" +
+                "            <td style=\"padding-left: 10px; vertical-align: top;\">\n" +
+                "                <div style=\"font-weight: bold; font-size: 14px;\">{{clinica.razonSocial}}</div>\n" +
+                "                <div style=\"font-size: 11px;\">RUC: {{clinica.ruc}}</div>\n" +
+                "                <div style=\"font-size: 11px;\">{{clinica.direccion}}</div>\n" +
+                "                <div style=\"font-size: 11px;\">TELF: {{clinica.telefono}}</div>\n" +
+                "            </td>\n" +
+                "        </tr>\n" +
+                "    </table>\n" +
+                "\n" +
+                "    <div style=\"border-top: 1px dashed #000; margin: 10px 0;\"></div>\n" +
+                "\n" +
+                "    <div style=\"text-align: center; font-weight: bold; margin-bottom: 10px;\">\n" +
+                "        <i>MOVIMIENTOS DE INGRESO</i>\n" +
+                "    </div>\n" +
+                "\n" +
+                "    <table style=\"width: 100%; font-size: 12px; margin-bottom: 10px;\">\n" +
+                "        <tr>\n" +
+                "            <td style=\"width: 40%;\">Numero:</td>\n" +
+                "            <td style=\"font-weight: bold;\">{{movimiento.numDocumento}}</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td colspan=\"2\" style=\"padding-top: 5px;\"><u>Datos del usuario:</u></td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td>Nombre:</td>\n" +
+                "            <td>{{usuario.nombre}}</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td>Motivo:</td>\n" +
+                "            <td>{{movimiento.motivo}}</td>\n" +
+                "        </tr>\n" +
+                "    </table>\n" +
+                "\n" +
+                "    <table style=\"width: 100%; border-collapse: collapse; font-size: 11px; border: 1px solid #000;\">\n" +
+                "        <thead>\n" +
+                "            <tr style=\"background-color: #eee;\">\n" +
+                "                <th style=\"border: 1px solid #000; padding: 4px; text-align: left;\">PRODUCTO</th>\n" +
+                "                <th style=\"border: 1px solid #000; padding: 4px; text-align: center;\">TIPO</th>\n" +
+                "                <th style=\"border: 1px solid #000; padding: 4px; text-align: center;\">CANT.</th>\n" +
+                "            </tr>\n" +
+                "        </thead>\n" +
+                "        <tbody>\n" +
+                "            <tr>\n" +
+                "                <td style=\"border: 1px solid #000; padding: 4px;\">{{detalle.nombreProducto}}</td>\n" +
+                "                <td style=\"border: 1px solid #000; padding: 4px; text-align: center;\">{{detalle.tipo}}</td>\n" +
+                "                <td style=\"border: 1px solid #000; padding: 4px; text-align: center;\">{{detalle.cantidad}}</td>\n" +
+                "            </tr>\n" +
+                "        </tbody>\n" +
+                "    </table>\n" +
+                "</body>");
+        p3.putNull("htmlTraducido");
+        p3.put("cssEstilo", "* { box-sizing: border-box; }");
+
+        // 5. PLANTILLA TICKET MOVIMIENTOS SALIDAS
+        ObjectNode p4 = arr.addObject();
+        p4.put("nombre", "defecto_movimientos_salidas_ticket");
+        p4.put("formatoNombre", "Ticket 80mm");
+        p4.put("orientacion", "Vertical");
+        p4.put("modulo", "SALIDAS_DIVERSAS");
+        p4.put("tipoDoc", "12");
+        p4.put("htmlContenido", "<body style=\"font-family: 'Courier New', Courier, monospace; width: 300px; margin: 0; padding: 10px;\">\n" +
+                "    <table style=\"width: 100%; border-collapse: collapse;\">\n" +
+                "        <tr>\n" +
+                "            <td style=\"width: 80px; vertical-align: top;\">\n" +
+                "                <img src=\"{{clinica.logoCuadrado}}\" style=\"width: 80px; height: 80px; object-fit: contain; border: 1px dashed #ccc;\">\n" +
+                "            </td>\n" +
+                "            <td style=\"padding-left: 10px; vertical-align: top;\">\n" +
+                "                <div style=\"font-weight: bold; font-size: 14px;\">{{clinica.razonSocial}}</div>\n" +
+                "                <div style=\"font-size: 11px;\">RUC: {{clinica.ruc}}</div>\n" +
+                "                <div style=\"font-size: 11px;\">{{clinica.direccion}}</div>\n" +
+                "                <div style=\"font-size: 11px;\">TELF: {{clinica.telefono}}</div>\n" +
+                "            </td>\n" +
+                "        </tr>\n" +
+                "    </table>\n" +
+                "\n" +
+                "    <div style=\"border-top: 1px dashed #000; margin: 10px 0;\"></div>\n" +
+                "\n" +
+                "    <div style=\"text-align: center; font-weight: bold; margin-bottom: 10px;\">\n" +
+                "        <i>MOVIMIENTOS DE SALIDA</i>\n" +
+                "    </div>\n" +
+                "\n" +
+                "    <table style=\"width: 100%; font-size: 12px; margin-bottom: 10px;\">\n" +
+                "        <tr>\n" +
+                "            <td style=\"width: 40%;\">Numero:</td>\n" +
+                "            <td style=\"font-weight: bold;\">{{movimiento.numDocumento}}</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td colspan=\"2\" style=\"padding-top: 5px;\"><u>Datos del usuario:</u></td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td>Nombre:</td>\n" +
+                "            <td>{{usuario.nombre}}</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td>Motivo:</td>\n" +
+                "            <td>{{movimiento.motivo}}</td>\n" +
+                "        </tr>\n" +
+                "    </table>\n" +
+                "\n" +
+                "    <table style=\"width: 100%; border-collapse: collapse; font-size: 11px; border: 1px solid #000;\">\n" +
+                "        <thead>\n" +
+                "            <tr style=\"background-color: #eee;\">\n" +
+                "                <th style=\"border: 1px solid #000; padding: 4px; text-align: left;\">PRODUCTO</th>\n" +
+                "                <th style=\"border: 1px solid #000; padding: 4px; text-align: center;\">TIPO</th>\n" +
+                "                <th style=\"border: 1px solid #000; padding: 4px; text-align: center;\">CANT.</th>\n" +
+                "            </tr>\n" +
+                "        </thead>\n" +
+                "        <tbody>\n" +
+                "            <tr>\n" +
+                "                <td style=\"border: 1px solid #000; padding: 4px;\">{{detalle.nombreProducto}}</td>\n" +
+                "                <td style=\"border: 1px solid #000; padding: 4px; text-align: center;\">{{detalle.tipo}}</td>\n" +
+                "                <td style=\"border: 1px solid #000; padding: 4px; text-align: center;\">{{detalle.cantidad}}</td>\n" +
+                "            </tr>\n" +
+                "        </tbody>\n" +
+                "    </table>\n" +
+                "</body>");
+        p4.putNull("htmlTraducido");
+        p4.put("cssEstilo", "* { box-sizing: border-box; }");
+
+        // 6. PLANTILLA NOTA DE CREDITO
+        ObjectNode p5 = arr.addObject();
+        p5.put("nombre", "defecto_nota_credito_a4");
+        p5.put("formatoNombre", "A4");
+        p5.put("orientacion", "Vertical");
+        p5.put("modulo", "VENTA");
+        p5.put("tipoDoc", "07");
+        String htmlNC = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>Nota de Crédito</title><style>body { font-family: sans-serif; padding: 20px; } table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px;} th, td { border: 1px solid #ddd; padding: 8px; text-align: left; } th { background-color: #f2f2f2; } .header { margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px; } .info { margin-bottom: 20px; display: flex; justify-content: space-between; }</style></head><body>"
+                + "<div class=\"header\"><h2>NOTA DE CRÉDITO ELECTRÓNICA</h2><h3>{{clinica.nombre}}</h3><p>{{clinica.direccion}} | Tel: {{clinica.telefono}}</p></div>"
+                + "<div class=\"info\"><div><h4>Cliente:</h4><p>{{cliente.nombre}}<br>RUC/DNI: {{cliente.documento}}</p></div>"
+                + "<div><h4>Documento:</h4><p>Número: {{documento.serie}}-{{documento.numdoc}}<br>Fecha: {{documento.fecha}}</p></div></div>"
+                + "<table><thead><tr><th>Cant.</th><th>Unid.</th><th>Producto</th><th>P. Unitario</th><th>Total</th></tr></thead>"
+                + "<tbody>{{tabla_items}}</tbody>"
+                + "<tfoot><tr><th colspan=\"4\" style=\"text-align: right;\">Total ({{documento.moneda_nombre}}):</th><th>S/ {{documento.total}}</th></tr></tfoot>"
+                + "</table></body></html>";
+        p5.put("htmlContenido", htmlNC);
+        p5.put("htmlTraducido", htmlNC);
+        p5.put("cssEstilo", "");
+
+        // 7. PLANTILLA COMPRA A4
+        ObjectNode p6 = arr.addObject();
+        p6.put("nombre", "defecto_compra_a4");
+        p6.put("formatoNombre", "A4");
+        p6.put("orientacion", "Vertical");
+        p6.put("modulo", "COMPRA");
+        p6.putNull("tipoDoc");
+        String htmlCompra = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>Orden de Compra</title><style>body { font-family: sans-serif; padding: 20px; } table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px;} th, td { border: 1px solid #ddd; padding: 8px; text-align: left; } th { background-color: #f2f2f2; } .header { margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px; } .info { margin-bottom: 20px; display: flex; justify-content: space-between; }</style></head><body>"
+                + "<div class=\"header\"><h2>ORDEN DE COMPRA</h2><h3>{{clinica.nombre}}</h3><p>{{clinica.direccion}} | Tel: {{clinica.telefono}}</p></div>"
+                + "<div class=\"info\"><div><h4>Proveedor:</h4><p>{{cliente.nombre}}<br>RUC/DNI: {{cliente.documento}}</p></div>"
+                + "<div><h4>Documento:</h4><p>Tipo: {{documento.tipo_nombre}}<br>Número: {{documento.serie}}-{{documento.numdoc}}<br>Fecha: {{documento.fecha}}</p></div></div>"
+                + "<table><thead><tr><th>Cant.</th><th>Unid.</th><th>Producto</th><th>P. Unitario</th><th>Total</th></tr></thead>"
+                + "<tbody>{{tabla_items}}</tbody>"
+                + "<tfoot><tr><th colspan=\"4\" style=\"text-align: right;\">Total a Pagar ({{documento.moneda_nombre}}):</th><th>S/ {{documento.total}}</th></tr></tfoot>"
+                + "</table></body></html>";
+        p6.put("htmlContenido", htmlCompra);
+        p6.put("htmlTraducido", htmlCompra);
+        p6.put("cssEstilo", "");
+
+        // 8. PLANTILLA MATRIZ COMPARATIVA A4
+        ObjectNode p7 = arr.addObject();
+        p7.put("nombre", "defecto_matriz_comparativa_a4");
+        p7.put("formatoNombre", "A4");
+        p7.put("orientacion", "Horizontal");
+        p7.put("modulo", "COMPRA");
+        p7.putNull("tipoDoc");
+        String htmlMatriz = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>Matriz Comparativa</title><style>body { font-family: sans-serif; padding: 20px; } table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; } th, td { border: 1px solid #ddd; padding: 6px; text-align: left; } th { background-color: #f2f2f2; } .header { margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px; text-align: center; }</style></head><body>"
+                + "<div class=\"header\"><h2>MATRIZ COMPARATIVA DE PRECIOS</h2><h3>GRUPO: {{grupo.nombre}}</h3><p>{{clinica.nombre}}</p></div>"
+                + "{{tabla_matriz}}</body></html>";
+        p7.put("htmlContenido", htmlMatriz);
+        p7.put("htmlTraducido", htmlMatriz);
+        p7.put("cssEstilo", "");
+        
+        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("c:/Users/HP/Documents/GitHub/articulos/articulos-backend/src/main/resources/data/seed/sucursal/plantillas.json"), arr);
+    }
+}

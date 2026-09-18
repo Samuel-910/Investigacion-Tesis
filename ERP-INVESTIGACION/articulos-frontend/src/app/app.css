@@ -1,0 +1,52 @@
+/* Estilos globales para Scrollbar - Modo Día y Noche */
+:root {
+    --sb-track: #f1f5f9;
+    --sb-thumb: #cbd5e1;
+    --sb-thumb-hover: #94a3b8;
+}
+
+.dark {
+    --sb-track: #0f172a;
+    --sb-thumb: #334155;
+    --sb-thumb-hover: #475569;
+}
+
+/* Scrollbar Genérico */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--sb-track) !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb) !important;
+    border-radius: 20px;
+    border: 2px solid var(--sb-track);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--sb-thumb-hover) !important;
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--sb-thumb) var(--sb-track) !important;
+}
+
+/* Scrollbar específico para áreas de tablas */
+.overflow-x-auto::-webkit-scrollbar {
+    height: 10px; /* Un poco más grueso para facilitar el scroll horizontal */
+}
+
+/* Asegurar que el contenedor de la tabla no tenga bordes blancos en modo oscuro */
+.dark .border-slate-100 {
+    border-color: rgba(51, 65, 85, 0.5) !important;
+}
+
+.dark .bg-slate-50\/80 {
+    background-color: rgba(15, 23, 42, 0.8) !important;
+}

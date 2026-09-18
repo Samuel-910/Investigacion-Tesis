@@ -1,0 +1,241 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <div class="mb-6">
+                <app-page-header title="Transferencias" subtitle="Gestión de envíos y recepciones entre sucursales"
+                    [showCounter]="true" counterLabel="Total" [counterValue]="totalRegistros()">
+                </app-page-header>
+
+
+                <div class="flex justify-between">
+                    <div
+                        class="flex flex-wrap items-center gap-2 mb-6 p-1 bg-slate-100 dark:bg-slate-900/50 rounded-xl w-fit">
+                        <button (click)="cambiarFiltro('TODAS')" [class.bg-white]="estadoFiltro() === 'TODAS'"
+                            [class.shadow-sm]="estadoFiltro() === 'TODAS'"
+                            [class.text-blue-600]="estadoFiltro() === 'TODAS'"
+                            [class.dark:bg-slate-800]="estadoFiltro() === 'TODAS'"
+                            class="px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all hover:bg-white/50 dark:hover:bg-slate-800/50 text-slate-500">
+                            Todas
+                        </button>
+                        <button (click)="cambiarFiltro('PENDIENTES')" [class.bg-white]="estadoFiltro() === 'PENDIENTES'"
+                            [class.shadow-sm]="estadoFiltro() === 'PENDIENTES'"
+                            [class.text-blue-600]="estadoFiltro() === 'PENDIENTES'"
+                            [class.dark:bg-slate-800]="estadoFiltro() === 'PENDIENTES'"
+                            class="px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all hover:bg-white/50 dark:hover:bg-slate-800/50 text-slate-500 flex items-center gap-2">
+                            Pendientes
+                            <span *ngIf="countPendientes() > 0"
+                                class="px-1.5 py-0.5 bg-yellow-100 text-yellow-700 rounded-md text-[10px]">{{
+                                countPendientes() }}</span>
+                        </button>
+                        <button (click)="cambiarFiltro('ACEPTADAS')" [class.bg-white]="estadoFiltro() === 'ACEPTADAS'"
+                            [class.shadow-sm]="estadoFiltro() === 'ACEPTADAS'"
+                            [class.text-blue-600]="estadoFiltro() === 'ACEPTADAS'"
+                            [class.dark:bg-slate-800]="estadoFiltro() === 'ACEPTADAS'"
+                            class="px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all hover:bg-white/50 dark:hover:bg-slate-800/50 text-slate-500 flex items-center gap-2">
+                            Aceptadas
+                            <span *ngIf="countAceptadas() > 0"
+                                class="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded-md text-[10px]">{{
+                                countAceptadas() }}</span>
+                        </button>
+                        <button (click)="cambiarFiltro('CANCELADAS')" [class.bg-white]="estadoFiltro() === 'CANCELADAS'"
+                            [class.shadow-sm]="estadoFiltro() === 'CANCELADAS'"
+                            [class.text-blue-600]="estadoFiltro() === 'CANCELADAS'"
+                            [class.dark:bg-slate-800]="estadoFiltro() === 'CANCELADAS'"
+                            class="px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all hover:bg-white/50 dark:hover:bg-slate-800/50 text-slate-500 flex items-center gap-2">
+                            Canceladas
+                        </button>
+                    </div>
+                    <app-primary-button label="Solicitar Productos" icon="plus" (btnClick)="nuevaTransferencia()">
+                    </app-primary-button>
+                </div>
+
+
+                <!-- BUSCADOR PERSISTENTE (Fuera del spinner de carga y resguardado para mantener foco) -->
+                <div *ngIf="tieneTransferenciasIniciales()" class="mb-6 flex flex-col md:flex-row items-center gap-4">
+                    <div class="flex-1 md:w-80">
+                        <app-search-generic 
+                            [options]="searchOptions" 
+                            placeholder="Buscar transferencias..."
+                            (onSearch)="handleSearch($event)">
+                        </app-search-generic>
+                    </div>
+                </div>
+
+
+                <!-- Table Section -->
+                <div class="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-slate-100 dark:bg-slate-900/80">
+                                <tr
+                                    class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700">
+                                    <th class="px-6 py-4">N°</th>
+                                    <th class="px-6 py-4">Fecha Solicitud</th>
+                                    <th class="px-6 py-4">Origen / Destino</th>
+                                    <th class="px-6 py-4">Estado</th>
+                                    <th class="px-6 py-4">Motivo</th>
+                                    <th class="px-6 py-4 text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-700 font-medium">
+                                <tr *ngFor="let t of transferenciasPaginadas(); let i = index"
+                                    class="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+                                    <td class="px-6 py-4 font-bold text-slate-400 text-sm">#{{ paginaActual() * tamanoPagina() + i + 1 }}</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col">
+                                            <span class="text-xs font-bold text-slate-700 dark:text-slate-200">{{
+                                                t.fechaSolicitud | date:'dd/MM/yyyy' }}</span>
+                                            <span class="text-[10px] text-slate-400 uppercase tracking-tighter">{{
+                                                t.fechaSolicitud | date:'shortTime' }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col gap-1">
+                                            <div class="flex items-center gap-1.5">
+                                                <i *ngIf="esOrigen(t)" class="fas fa-arrow-up text-[10px] text-blue-500"
+                                                    title="Saliente"></i>
+                                                <i *ngIf="!esOrigen(t)"
+                                                    class="fas fa-arrow-down text-[10px] text-emerald-500"
+                                                    title="Entrante"></i>
+                                                <span
+                                                    class="text-[9px] font-black px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-500 uppercase">DE:</span>
+                                                <span class="text-xs font-bold text-slate-700 dark:text-slate-200">{{
+                                                    t.sucursalOrigenNombre || t.idSucursalOrigen }}</span>
+                                            </div>
+                                            <div class="flex items-center gap-1.5 pl-4">
+                                                <span
+                                                    class="text-[9px] font-black px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-500 uppercase">A:</span>
+                                                <span class="text-xs font-bold text-slate-700 dark:text-slate-200">{{
+                                                    t.sucursalDestinoNombre || t.idSucursalDestino }}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col gap-1.5">
+                                            <span [ngClass]="{
+                                                'bg-yellow-100 text-yellow-700 border-yellow-200': getEstadoNombre(t.estado) === 'SOLICITADO',
+                                                'bg-blue-100 text-blue-700 border-blue-200': getEstadoNombre(t.estado) === 'ENVIADO',
+                                                'bg-emerald-100 text-emerald-700 border-emerald-200': getEstadoNombre(t.estado) === 'RECIBIDO',
+                                                'bg-rose-100 text-rose-700 border-rose-200': getEstadoNombre(t.estado) === 'CANCELADO'
+                                            }"
+                                                class="inline-flex items-center w-fit px-2 py-0.5 rounded-full text-[9px] font-black border uppercase tracking-wider">
+                                                {{ getEstadoNombre(t.estado) }}
+                                            </span>
+
+                                            <!-- Auditoría rápida -->
+                                            <div class="flex flex-col text-[10px] leading-tight">
+                                                <div *ngIf="getEstadoNombre(t.estado) === 'SOLICITADO'"
+                                                    class="text-slate-400">
+                                                    <span class="font-black uppercase text-[8px]">Por:</span>
+                                                    {{ (t.usuarioSolicitaNombre || '').split(' ')[0] || '...'
+                                                    }}
+                                                </div>
+                                                <div *ngIf="getEstadoNombre(t.estado) === 'RECIBIDO' || getEstadoNombre(t.estado) === 'ENVIADO'"
+                                                    class="text-emerald-500">
+                                                    <span class="font-black uppercase text-[8px]">Aceptado:</span>
+                                                    {{ (t.usuarioEnviaNombre || t.usuarioRecibeNombre || '').split(' ')[0] || '...' }}
+                                                </div>
+                                                <div *ngIf="getEstadoNombre(t.estado) === 'CANCELADO'"
+                                                    class="text-rose-500">
+                                                    <span class="font-black uppercase text-[8px]">Negado:</span>
+                                                    {{ (t.usuarioCancelaNombre || '').split(' ')[0] || '...' }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 max-w-xs">
+                                        <div class="flex flex-col">
+                                            <p
+                                                class="text-xs text-slate-600 dark:text-slate-400 truncate font-semibold">
+                                                {{ t.motivo }}
+                                            </p>
+                                            <span
+                                                *ngIf="getEstadoNombre(t.estado) === 'CANCELADO' && t.fechaCancelacion"
+                                                class="text-[9px] text-rose-400 font-bold uppercase tracking-tighter">
+                                                {{ t.fechaCancelacion | date:'dd/MM/yyyy HH:mm' }}
+                                            </span>
+                                            <span
+                                                *ngIf="(getEstadoNombre(t.estado) === 'RECIBIDO' || getEstadoNombre(t.estado) === 'ENVIADO') && t.fechaEnvio"
+                                                class="text-[9px] text-emerald-400 font-bold uppercase tracking-tighter">
+                                                {{ t.fechaEnvio | date:'dd/MM/yyyy HH:mm' }}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="flex justify-center gap-2">
+                                            <button (click)="verDetalle(t)"
+                                                class="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 border border-slate-200 dark:border-slate-700 rounded-xl transition-all shadow-sm group"
+                                                title="Ver Detalle y Acciones">
+                                                <i class="fas fa-eye group-hover:scale-110 transition-transform"></i>
+                                                <span
+                                                    class="text-[10px] font-black uppercase tracking-widest">Detalle</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="transferenciasPaginadas().length === 0 && !loading()">
+                                    <td colspan="6" class="py-20 text-center">
+                                        <div class="flex flex-col items-center gap-2 text-slate-400">
+                                            <i class="fas fa-search text-3xl opacity-20 mb-2"></i>
+                                            <span class="text-sm font-bold uppercase tracking-widest">No hay
+                                                transferencias en esta categoría</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="loading()">
+                                    <td colspan="6" class="py-20 text-center">
+                                        <div class="flex flex-col items-center gap-3">
+                                            <div
+                                                class="w-8 h-8 border-3 border-blue-500/20 border-t-blue-500 rounded-full animate-spin">
+                                            </div>
+                                            <span
+                                                class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sincronizando
+                                                Transferencias...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Paginación -->
+                <div class="mt-4" *ngIf="tieneTransferenciasIniciales() && !loading()">
+                    <app-pagination 
+                        [currentPage]="paginaActual()" 
+                        [totalPages]="totalPages()" 
+                        [pageSize]="tamanoPagina()"
+                        (pageChange)="onPageChange($event)"
+                        (pageSizeChange)="onPageSizeChange($event)">
+                    </app-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Solicitar Productos -->
+<app-modal [isOpen]="showModalSolicitar()" title="Solicitar Productos" size="3xl"
+    (modalClose)="showModalSolicitar.set(false)" iconType="document">
+    <app-transferencia-solicitar (cerrar)="showModalSolicitar.set(false)" (guardado)="onSolicitudGuardada()">
+    </app-transferencia-solicitar>
+</app-modal>
+
+<!-- Modal Detalle de Transferencia -->
+<app-modal [isOpen]="showModalDetalle()" title="Detalle de Transferencia" size="3xl"
+    (modalClose)="showModalDetalle.set(false)">
+    <app-transferencia-detalle [idTransferencia]="idTransferenciaSeleccionada()" (cerrar)="showModalDetalle.set(false)"
+        (accionCompletada)="onAccionDetalleCompletada()">
+    </app-transferencia-detalle>
+</app-modal>

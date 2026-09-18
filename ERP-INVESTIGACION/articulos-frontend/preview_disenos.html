@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opciones de Diseño - Diccionario</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Fira Code', monospace; }
+        /* Scrollbar oscura */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 p-8 min-h-screen">
+    
+    <div class="max-w-7xl mx-auto space-y-16">
+        
+        <div class="text-center space-y-4 mb-12">
+            <h1 class="text-4xl font-black bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Opciones de Diseño</h1>
+            <p class="text-slate-400">Compara los 4 enfoques visuales para el Diccionario de Permisos</p>
+        </div>
+
+        <!-- OPCIÓN 1 -->
+        <section class="space-y-4">
+            <div class="flex items-center gap-4">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold">1</span>
+                <h2 class="text-2xl font-bold text-white">Glassmorphism Premium</h2>
+            </div>
+            
+            <div class="bg-slate-900/50 p-6 rounded-3xl border border-slate-800 relative overflow-hidden">
+                <!-- Decorative blur -->
+                <div class="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="w-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 mb-4 flex justify-between items-center cursor-pointer hover:bg-white/10 transition">
+                    <div class="flex items-center gap-4">
+                        <div class="p-2 bg-white/10 rounded-xl text-blue-400">📦</div>
+                        <div>
+                            <h3 class="font-black text-lg text-white">ALMACEN</h3>
+                            <span class="text-xs font-semibold text-blue-400 bg-blue-500/10 px-2 py-1 rounded-full">2 CAPACIDADES</span>
+                        </div>
+                    </div>
+                    <svg class="w-5 h-5 text-slate-400 transform rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pl-4">
+                    <!-- Tarjeta 1 -->
+                    <div class="bg-white/5 backdrop-blur-md border border-white/5 rounded-2xl p-5 hover:bg-white/10 hover:border-white/20 transition-all group shadow-lg cursor-pointer hover:-translate-y-1">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 font-bold text-[10px] uppercase tracking-wider rounded-full border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-colors">ALMACEN_CREAR</span>
+                            <span class="text-slate-500 text-xs font-mono">ID:31</span>
+                        </div>
+                        <p class="text-sm text-slate-300 font-medium">Crear almacenes en el sistema</p>
+                    </div>
+                    <!-- Tarjeta 2 -->
+                    <div class="bg-white/5 backdrop-blur-md border border-white/5 rounded-2xl p-5 hover:bg-white/10 hover:border-white/20 transition-all group shadow-lg cursor-pointer hover:-translate-y-1">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-3 py-1 bg-blue-500/10 text-blue-400 font-bold text-[10px] uppercase tracking-wider rounded-full border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">ALMACEN_LEER</span>
+                            <span class="text-slate-500 text-xs font-mono">ID:32</span>
+                        </div>
+                        <p class="text-sm text-slate-300 font-medium">Ver listado de almacenes</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OPCIÓN 2 -->
+        <section class="space-y-4">
+            <div class="flex items-center gap-4">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-400 font-bold">2</span>
+                <h2 class="text-2xl font-bold text-white">Neón / Cyber</h2>
+            </div>
+            
+            <div class="bg-slate-950 p-6 rounded-lg border border-slate-900">
+                <div class="w-full bg-slate-900 border-l-4 border-cyan-500 rounded-r-lg p-4 mb-6 flex justify-between items-center cursor-pointer hover:bg-slate-800 transition shadow-[0_0_15px_rgba(6,182,212,0.15)]">
+                    <div class="flex items-center gap-4">
+                        <div class="text-cyan-400 text-2xl">⚡</div>
+                        <div>
+                            <h3 class="font-black text-lg text-white uppercase tracking-widest">ALMACEN</h3>
+                            <span class="text-[10px] font-mono text-cyan-500 tracking-widest uppercase mt-1 block">2 CAPACIDADES</span>
+                        </div>
+                    </div>
+                    <svg class="w-5 h-5 text-cyan-500 transform rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pl-4">
+                    <!-- Tarjeta 1 -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-lg p-5 hover:border-cyan-500 transition-all group cursor-pointer hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-16 h-16 bg-cyan-500/10 rounded-bl-full group-hover:bg-cyan-500/20 transition-colors"></div>
+                        <div class="flex justify-between items-start mb-4 relative z-10">
+                            <span class="font-mono text-cyan-400 font-bold text-sm tracking-wider group-hover:text-cyan-300">ALMACEN_CREAR</span>
+                            <span class="text-slate-600 text-xs font-mono group-hover:text-cyan-600/50">#31</span>
+                        </div>
+                        <p class="text-sm text-slate-400 relative z-10">Crear almacenes en el sistema</p>
+                    </div>
+                    <!-- Tarjeta 2 -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-lg p-5 hover:border-fuchsia-500 transition-all group cursor-pointer hover:shadow-[0_0_20px_rgba(217,70,239,0.3)] relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-16 h-16 bg-fuchsia-500/10 rounded-bl-full group-hover:bg-fuchsia-500/20 transition-colors"></div>
+                        <div class="flex justify-between items-start mb-4 relative z-10">
+                            <span class="font-mono text-fuchsia-400 font-bold text-sm tracking-wider group-hover:text-fuchsia-300">ALMACEN_LEER</span>
+                            <span class="text-slate-600 text-xs font-mono group-hover:text-fuchsia-600/50">#32</span>
+                        </div>
+                        <p class="text-sm text-slate-400 relative z-10">Ver listado de almacenes</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OPCIÓN 3 -->
+        <section class="space-y-4">
+            <div class="flex items-center gap-4">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 font-bold">3</span>
+                <h2 class="text-2xl font-bold text-white">Consola de Administrador</h2>
+            </div>
+            
+            <div class="bg-[#1e1e1e] p-6 rounded-md font-mono text-sm border border-[#333]">
+                <div class="w-full border-b border-[#333] pb-2 mb-4 flex justify-between items-end cursor-pointer group">
+                    <div>
+                        <span class="text-emerald-400 mr-2">></span>
+                        <span class="font-bold text-slate-200">module: ALMACEN</span>
+                    </div>
+                    <span class="text-[#666] text-xs">items=2</span>
+                </div>
+
+                <div class="space-y-1 pl-4">
+                    <!-- Fila 1 -->
+                    <div class="flex items-center justify-between py-2 px-3 hover:bg-[#2a2a2a] rounded transition-colors cursor-pointer border border-transparent hover:border-[#444]">
+                        <div class="flex items-center gap-6">
+                            <span class="text-[#888] w-8">031</span>
+                            <span class="text-emerald-400 font-semibold w-40">ALMACEN_CREAR</span>
+                            <span class="text-[#ccc]">Crear almacenes en el sistema</span>
+                        </div>
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    </div>
+                    <!-- Fila 2 -->
+                    <div class="flex items-center justify-between py-2 px-3 hover:bg-[#2a2a2a] rounded transition-colors cursor-pointer border border-transparent hover:border-[#444]">
+                        <div class="flex items-center gap-6">
+                            <span class="text-[#888] w-8">032</span>
+                            <span class="text-blue-400 font-semibold w-40">ALMACEN_LEER</span>
+                            <span class="text-[#ccc]">Ver listado de almacenes</span>
+                        </div>
+                        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OPCIÓN 4 -->
+        <section class="space-y-4 pb-20">
+            <div class="flex items-center gap-4">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-500/20 text-indigo-400 font-bold">4</span>
+                <h2 class="text-2xl font-bold text-white">Dashboard Analítico</h2>
+            </div>
+            
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                <div class="w-full bg-slate-800 rounded-xl p-4 mb-6 flex justify-between items-center cursor-pointer hover:bg-slate-700 transition shadow-md border border-slate-700/50">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-white">Almacén</h3>
+                            <p class="text-xs text-slate-400">Gestión de inventarios e infraestructura</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-semibold text-slate-300 bg-slate-900 px-3 py-1 rounded-lg">2 permisos</span>
+                        <svg class="w-5 h-5 text-slate-500 transform rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pl-4">
+                    <!-- Tarjeta 1 -->
+                    <div class="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 hover:border-indigo-500/50 transition-all group cursor-pointer hover:bg-slate-800 shadow-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-bold text-slate-200">Crear</h4>
+                            <span class="bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">Creación</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-3 font-mono">ALMACEN_CREAR</p>
+                        <p class="text-sm text-slate-300">Crear almacenes en el sistema</p>
+                    </div>
+                    <!-- Tarjeta 2 -->
+                    <div class="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 hover:border-indigo-500/50 transition-all group cursor-pointer hover:bg-slate-800 shadow-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-bold text-slate-200">Leer</h4>
+                            <span class="bg-blue-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">Lectura</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-3 font-mono">ALMACEN_LEER</p>
+                        <p class="text-sm text-slate-300">Ver listado de almacenes</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

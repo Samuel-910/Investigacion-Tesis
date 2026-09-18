@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "descripcion": "CAJA",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.647381",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.647381",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 2,
+    "descripcion": "ALMACEN",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.651039",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.651039",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 3,
+    "descripcion": "534",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-07-20T15:07:17.277954",
+    "usuarioCreacion": "user_san_isidro",
+    "fechaModificacion": "2026-07-20T15:07:17.277954",
+    "usuarioModificacion": "user_san_isidro"
+  }
+]

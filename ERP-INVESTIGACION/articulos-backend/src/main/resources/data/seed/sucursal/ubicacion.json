@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "descripcion": "A-1",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.506971",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.506971",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 2,
+    "descripcion": "A-2",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.507978",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.507978",
+    "usuarioModificacion": null
+  }
+]

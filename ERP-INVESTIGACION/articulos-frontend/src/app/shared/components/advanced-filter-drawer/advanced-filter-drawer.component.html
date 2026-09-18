@@ -1,0 +1,245 @@
+<!-- TOP BAR: GLOBAL SEARCH AND TRIGGER BUTTON -->
+<div class="flex flex-col md:flex-row gap-4 justify-between items-center w-full mb-6" *ngIf="!hideTrigger">
+    <!-- Buscador Global -->
+    <div class="relative flex-grow max-w-xl shadow-sm" *ngIf="showGlobalSearch">
+        <i class="fa-solid fa-search absolute left-4 top-3.5 text-slate-500"></i>
+        <input type="text" [placeholder]="searchPlaceholder" [ngModel]="globalSearchTerm" (ngModelChange)="onGlobalSearchChange($event)"
+            class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 focus:border-blue-500 rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none transition-colors text-slate-700 dark:text-white">
+    </div>
+    
+    <!-- Espaciador si no hay buscador global pero sí hay otros botones -->
+    <div *ngIf="!showGlobalSearch" class="flex-1 w-full md:w-auto relative"></div>
+
+    <!-- Botones de Acción (Proyectados + Filtros) -->
+    <div class="flex gap-3 shrink-0 items-center">
+        <!-- BOTÓN DE FILTROS -->
+        <button (click)="openDrawer()"
+            class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 relative shadow-sm group">
+            <div class="bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 p-1 rounded-md group-hover:bg-blue-500/20 dark:group-hover:bg-blue-500/30 transition-colors flex items-center justify-center">
+                <i class="fa-solid fa-sliders text-[11px]"></i>
+            </div>
+            <span class="tracking-tight">Filtros Avanzados</span>
+            <!-- Badge contador -->
+            <span *ngIf="activeTags().length > 0"
+                class="absolute -top-1.5 -right-1.5 bg-blue-500 text-white text-[9px] font-bold w-3.5 h-3.5 flex items-center justify-center rounded-full shadow-md">
+                {{ activeTags().length }}
+            </span>
+        </button>
+
+        <!-- Aquí se insertan otros botones (Ej: Nuevo, Ingreso, Egreso) -->
+        <ng-content></ng-content>
+    </div>
+</div>
+
+<!-- COMPONENTE INYECTADO: INDICADORES DE FILTROS ACTIVOS (Para mostrar justo debajo del buscador) -->
+<ng-container *ngIf="activeTags().length > 0">
+    <div class="flex items-center flex-wrap gap-2 mb-6 bg-slate-50 dark:bg-slate-800/30 p-3 rounded-xl border border-slate-200 dark:border-slate-800 border-dashed transition-all">
+        <span class="text-xs text-slate-500 font-medium uppercase tracking-wider mr-2">Filtros Activos:</span>
+        <div class="flex items-center flex-wrap gap-2">
+            <span *ngFor="let tag of activeTags()" 
+                  class="inline-flex items-center gap-1.5 border px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors"
+                  [ngClass]="getColorClasses(tag.colorTheme)">
+                <i class="fa-solid text-[10px]" [ngClass]="tag.icon"></i> 
+                {{ tag.text }} 
+                <button (click)="removeFilter(tag.type)" class="ml-1 opacity-70 hover:opacity-100 transition-opacity">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </span>
+        </div>
+        <button (click)="clearFilters()" class="text-xs text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 font-medium ml-auto transition-colors underline decoration-slate-300 dark:decoration-slate-600 underline-offset-2">Limpiar todos</button>
+    </div>
+</ng-container>
+
+<!-- OVERLAY -->
+<div *ngIf="isOpen()" 
+     class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100] transition-opacity duration-300"
+     (click)="closeDrawer()">
+</div>
+
+<!-- DRAWER (Right Sidebar) -->
+<div #drawerBody class="fixed top-0 right-0 bottom-0 w-[420px] bg-white dark:bg-slate-800 border-l border-slate-200 dark:border-slate-700 shadow-2xl flex flex-col z-[110] transition-transform duration-300 transform"
+     [class.translate-x-full]="!isOpen()">
+    <div class="p-5 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center bg-white dark:bg-slate-800 sticky top-0 z-10">
+        <h3 class="font-semibold text-slate-800 dark:text-white flex items-center gap-2 text-lg">
+            <i class="fa-solid fa-filter text-brand-500 dark:text-brand-400"></i> Filtros de Búsqueda
+        </h3>
+        <button (click)="closeDrawer()" class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-white transition-colors">
+            <i class="fa-solid fa-times"></i>
+        </button>
+    </div>
+    
+    <div class="p-6 overflow-y-auto flex-grow space-y-6 custom-scrollbar">
+        
+        <!-- SECCIÓN: TIPO DE MOVIMIENTO -->
+        <div class="space-y-4" *ngIf="showClasificacion">
+            <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest border-b border-slate-200 dark:border-slate-700 pb-2">Clasificación</label>
+            
+            <div class="flex flex-wrap gap-2">
+                <label class="cursor-pointer">
+                    <input type="radio" [name]="radioGroup" value="TODOS" 
+                           [checked]="filtros().tipoMovimiento === 'TODOS'" 
+                           (change)="setTipoMovimiento('TODOS')" class="hidden pill-radio">
+                    <div class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-white border-2 border-transparent transition-all"
+                         [ngClass]="{'!border-slate-400 dark:!border-white opacity-100': filtros().tipoMovimiento === 'TODOS', 'opacity-70': filtros().tipoMovimiento !== 'TODOS'}">Todos</div>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="radio" [name]="radioGroup" value="COMPRA" 
+                           [checked]="filtros().tipoMovimiento === 'COMPRA'" 
+                           (change)="setTipoMovimiento('COMPRA')" class="hidden pill-radio">
+                    <div class="px-3 py-1.5 rounded-full text-xs font-medium bg-blue-900/40 text-blue-500 border-2 border-transparent transition-all"
+                         [ngClass]="{'border-blue-500 opacity-100': filtros().tipoMovimiento === 'COMPRA', 'opacity-70': filtros().tipoMovimiento !== 'COMPRA'}">Compra</div>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="radio" [name]="radioGroup" value="VENTA" 
+                           [checked]="filtros().tipoMovimiento === 'VENTA'" 
+                           (change)="setTipoMovimiento('VENTA')" class="hidden pill-radio">
+                    <div class="px-3 py-1.5 rounded-full text-xs font-medium bg-emerald-900/40 text-emerald-500 border-2 border-transparent transition-all"
+                         [ngClass]="{'border-emerald-500 opacity-100': filtros().tipoMovimiento === 'VENTA', 'opacity-70': filtros().tipoMovimiento !== 'VENTA'}">Venta</div>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="radio" [name]="radioGroup" value="CREDITO_DEBITO" 
+                           [checked]="filtros().tipoMovimiento === 'CREDITO_DEBITO'" 
+                           (change)="setTipoMovimiento('CREDITO_DEBITO')" class="hidden pill-radio">
+                    <div class="px-3 py-1.5 rounded-full text-xs font-medium bg-red-900/40 text-red-500 border-2 border-transparent transition-all"
+                         [ngClass]="{'border-red-500 opacity-100': filtros().tipoMovimiento === 'CREDITO_DEBITO', 'opacity-70': filtros().tipoMovimiento !== 'CREDITO_DEBITO'}">Crédito / Débito</div>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="radio" [name]="radioGroup" value="OTROS" 
+                           [checked]="filtros().tipoMovimiento === 'OTROS'" 
+                           (change)="setTipoMovimiento('OTROS')" class="hidden pill-radio">
+                    <div class="px-3 py-1.5 rounded-full text-xs font-medium bg-indigo-900/40 text-indigo-500 border-2 border-transparent transition-all"
+                         [ngClass]="{'border-indigo-500 opacity-100': filtros().tipoMovimiento === 'OTROS', 'opacity-70': filtros().tipoMovimiento !== 'OTROS'}">Otros Mov.</div>
+                </label>
+            </div>
+        </div>
+
+        <hr class="border-slate-200 dark:border-slate-700/50" *ngIf="showClasificacion && (showFechas || showMesAnio)">
+
+        <!-- SECCIÓN: TIEMPO (MES Y AÑO) -->
+        <div class="space-y-4" *ngIf="showMesAnio">
+            <div class="grid grid-cols-2 gap-3">
+                <app-searchable-select label="Mes" 
+                    [data]="mesOptions" bindLabel="label" bindValue="value"
+                    [ngModel]="filtros().mes" (ngModelChange)="updateFilter('mes', $event)" />
+                <app-searchable-select label="Año" 
+                    [data]="anioOptions" bindLabel="label" bindValue="value"
+                    [ngModel]="filtros().anio" (ngModelChange)="updateFilter('anio', $event)" />
+            </div>
+        </div>
+
+        <!-- SECCIÓN: TIEMPO -->
+        <div class="space-y-4" *ngIf="showFechas">
+            <div class="grid grid-cols-2 gap-3">
+                <app-form-input type="date" [ngModel]="filtros().fechaDesde" 
+                    (ngModelChange)="updateFilter('fechaDesde', $event)" label="Fecha Desde" />
+                <app-form-input type="date" [ngModel]="filtros().fechaHasta" 
+                    (ngModelChange)="updateFilter('fechaHasta', $event)" label="Fecha Hasta" />
+            </div>
+        </div>
+
+        <hr class="border-slate-200 dark:border-slate-700/50" *ngIf="(showClasificacion || showFechas) && showDocumento">
+
+        <!-- SECCIÓN: DOCUMENTO -->
+        <div class="space-y-4" *ngIf="showDocumento">
+            <app-searchable-select label="Tipo de Documento" 
+                             [data]="tipoDocumentoOptions" 
+                             bindLabel="label" bindValue="value"
+                             [ngModel]="filtros().tipoDocumento" 
+                             (ngModelChange)="updateFilter('tipoDocumento', $event)" />
+
+            <div class="grid grid-cols-2 gap-3" *ngIf="!showRangoNumeros">
+                <app-form-input type="text" [ngModel]="filtros().serie" 
+                    (ngModelChange)="updateFilter('serie', $event)" label="Serie" placeholder="Ej: F001" />
+                <app-form-input type="text" [ngModel]="filtros().numeroComprobante" 
+                    (ngModelChange)="updateFilter('numeroComprobante', $event)" label="Nº Comprobante" placeholder="Ej: 123" />
+            </div>
+
+            <div class="grid grid-cols-1 gap-3" *ngIf="showRangoNumeros">
+                <app-form-input type="text" [ngModel]="filtros().serie" 
+                    (ngModelChange)="updateFilter('serie', $event)" label="Serie" placeholder="Ej: F001" />
+                <div class="grid grid-cols-2 gap-3">
+                    <app-form-input type="text" [ngModel]="filtros().numeroDesde" 
+                        (ngModelChange)="updateFilter('numeroDesde', $event)" label="Nº Desde" placeholder="Ej: 0000123" />
+                    <app-form-input type="text" [ngModel]="filtros().numeroHasta" 
+                        (ngModelChange)="updateFilter('numeroHasta', $event)" label="Nº Hasta" placeholder="Ej: 0000125" />
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-slate-200 dark:border-slate-700/50" *ngIf="(showClasificacion || showFechas || showDocumento) && showOperacion">
+
+        <!-- SECCIÓN: OPERACIÓN -->
+        <div class="space-y-4" *ngIf="showOperacion">
+            <app-searchable-select 
+                label="Vendedor" 
+                [data]="vendedorOptions" 
+                bindLabel="label" bindValue="value" 
+                [ngModel]="filtros().vendedorId" 
+                (ngModelChange)="updateFilter('vendedorId', $event)" />
+
+            <app-searchable-select label="Condición de Pago" 
+                             [data]="condicionPagoOptions" 
+                             bindLabel="label" bindValue="value"
+                             [ngModel]="filtros().condicionPagoId" 
+                             (ngModelChange)="updateFilter('condicionPagoId', $event)" />
+        </div>
+
+        <!-- SECCIÓN: CATÁLOGO DE ARTÍCULOS -->
+        <div class="space-y-4" *ngIf="showCatalogo">
+            <app-searchable-select label="Categoría" 
+                             [data]="categoriaOptions" 
+                             bindLabel="label" bindValue="value"
+                             [ngModel]="filtros().categoriaId" 
+                             (ngModelChange)="updateFilter('categoriaId', $event)" />
+
+            <div class="grid grid-cols-2 gap-3">
+                <app-searchable-select label="Tipo de Producto" 
+                                 [data]="marcaOptions" 
+                                 bindLabel="label" bindValue="value"
+                                 [ngModel]="filtros().esGenerico" 
+                                 (ngModelChange)="updateFilter('esGenerico', $event)" />
+
+                <app-searchable-select label="Maneja Lotes" 
+                                 [data]="booleanOptions" 
+                                 bindLabel="label" bindValue="value"
+                                 [ngModel]="filtros().manejaLotes" 
+                                 (ngModelChange)="updateFilter('manejaLotes', $event)" />
+            </div>
+
+            <app-searchable-select label="Afectación Tributaria" 
+                             [data]="afectacionOptions" 
+                             bindLabel="label" bindValue="value"
+                             [ngModel]="filtros().tipoAfectacion" 
+                             (ngModelChange)="updateFilter('tipoAfectacion', $event)" />
+        </div>
+
+        <hr class="border-slate-200 dark:border-slate-700/50" *ngIf="(showClasificacion || showFechas || showDocumento || showOperacion || showCatalogo) && (showUbicacion || showEstado)">
+
+        <!-- SECCIÓN: UBICACIÓN Y ESTADO -->
+        <div class="space-y-4" *ngIf="showUbicacion || showEstado">
+            <div class="grid grid-cols-2 gap-3" *ngIf="showUbicacion">
+                <app-searchable-select 
+                    label="Sucursal" 
+                    [data]="sucursalOptions" 
+                    bindLabel="label" bindValue="value" 
+                    [ngModel]="filtros().sucursalId" 
+                    (ngModelChange)="updateFilter('sucursalId', $event)" />
+
+                <app-searchable-select *ngIf="showPuntoVenta"
+                    label="Punto Venta" 
+                    [data]="puntoVentaOptions" 
+                    bindLabel="label" bindValue="value" 
+                    [ngModel]="filtros().puntoVentaId" 
+                    (ngModelChange)="updateFilter('puntoVentaId', $event)" />
+            </div>
+
+            <app-searchable-select label="Estado" *ngIf="showEstado"
+                             [data]="estadoOptions" 
+                             bindLabel="label" bindValue="value"
+                             [ngModel]="filtros().estado" 
+                             (ngModelChange)="updateFilter('estado', $event)" />
+        </div>
+
+    </div>
+</div>
+

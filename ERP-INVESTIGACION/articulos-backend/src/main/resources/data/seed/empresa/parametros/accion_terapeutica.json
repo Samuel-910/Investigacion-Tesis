@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "descripcion": "AMPOLLA DISOLVENTE",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.491331",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.491331",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 2,
+    "descripcion": "ACIDEZ +INDIGESTION + MALESTAR ESTOMACAL",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.49417",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.49417",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 3,
+    "descripcion": "ANALGESICO +ANTIREUMATICO",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.495175",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.495175",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 4,
+    "descripcion": "ANALGESICO -ANTIACIDO",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.496618",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.496618",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 5,
+    "descripcion": "ANALGESICO ANTIINFLAMATORIO +MULTIVITAMINICO",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.496618",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.496618",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 6,
+    "descripcion": "ANALGESICO DE LAS VIAS URINARIAS",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.498125",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.498125",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 7,
+    "descripcion": "ANALGESICO-ANTIINFLAMATORIO",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.500133",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.500133",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 8,
+    "descripcion": "ANALGESICO-ANTIINFLAMATORIO-ANTIPIRETICO",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.500133",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.500133",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 9,
+    "descripcion": "ANALGESICO-ANTIINFLAMATORIO-RELAJANTE MUSCULAR",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.501864",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.501864",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 10,
+    "descripcion": "ANALGESICO-ANTIPIRETICO",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.501864",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.501864",
+    "usuarioModificacion": null
+  }
+]

@@ -1,0 +1,103 @@
+<app-reporte-base #reporte
+    title="Reporte de Ventas"
+    subtitle="Gestión de libros electrónicos SIRE y análisis estratégico"
+    moduleLabel="Módulo Tributario SIRE"
+    description="Prepare su archivo TXT/Excel para el reemplazo de propuesta RVIE siguiendo los estándares de SUNAT 2024."
+    [breadcrumbItems]="breadcrumbItems"
+    [loading]="loading()"
+    [data]="listaSireVentas()"
+    [columnConfigs]="columnConfigs"
+    [searchFields]="['cliente', 'nroDocCli', 'serie', 'numero', 'fecha', 'periodo']"
+    previewTitle="Tabla de Ventas SIRE"
+    dashboardCategory="Ventas"
+    mainIcon="fas fa-file-invoice-dollar"
+    (onFiltroChange)="onFiltroChange($event)"
+    (onExportar)="exportarExcel($event)">
+
+    <table table class="w-full text-left border-separate border-spacing-0">
+        <thead>
+            <tr class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-20 border-b border-slate-100 dark:border-slate-800">
+                <th class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center w-16">#</th>
+                <ng-container *ngFor="let col of columnConfigs">
+                    <th *ngIf="reporte.isColumnVisible(col.key)" 
+                        [class.text-right]="col.label.includes('BASE') || col.label.includes('IGV') || col.label.includes('TOTAL') || col.label.includes('EXPORTACION') || col.label.includes('EXONERADO') || col.label.includes('INAFECTO')"
+                        class="px-6 py-5 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100 dark:border-slate-700/50 whitespace-nowrap">
+                        <div class="flex items-center gap-2" [class.justify-end]="col.label.includes('BASE') || col.label.includes('IGV') || col.label.includes('TOTAL') || col.label.includes('EXPORTACION') || col.label.includes('EXONERADO') || col.label.includes('INAFECTO')">
+                            {{col.label}}
+                            <i class="fas fa-sort text-[8px] opacity-30"></i>
+                        </div>
+                    </th>
+                </ng-container>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-800/50">
+            <tr *ngFor="let v of reporte.paginatedData(); let i = index" 
+                class="hover:bg-sky-50/50 dark:hover:bg-sky-500/5 transition-all duration-300 group">
+                
+                <!-- Índice -->
+                <td class="px-6 py-4 text-[10px] font-black text-slate-400 text-center">
+                    {{ (reporte.currentPage() * reporte.itemsPerPage()) + i + 1 }}
+                </td>
+
+                <ng-container *ngFor="let col of columnConfigs">
+                    <td *ngIf="reporte.isColumnVisible(col.key)" class="px-6 py-4 whitespace-nowrap">
+                        
+                        <!-- Formateo para Importes -->
+                        <div *ngIf="col.label.includes('BASE') || col.label.includes('IGV') || col.label.includes('TOTAL') || col.label.includes('EXPORTACION') || col.label.includes('EXONERADO') || col.label.includes('INAFECTO') || col.label.includes('DESC.') || col.label.includes('I.S.C') || col.label.includes('ICBPER')" 
+                            class="text-sm font-black text-slate-900 dark:text-sky-400/90 text-right tabular-nums">
+                            {{v[col.key] | number:'1.2-2'}}
+                        </div>
+
+                        <!-- Formateo para Estado -->
+                        <div *ngIf="col.key === 'estado'" class="status-marker flex items-center gap-2">
+                            <div class="relative flex h-2 w-2">
+                                <span *ngIf="isVigente(v.estado)" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                                <span [class]="isVigente(v.estado) ? 'bg-sky-500' : 'bg-rose-500'" 
+                                    class="relative inline-flex rounded-full h-2 w-2 shadow-[0_0_8px_rgba(14,165,233,0.5)]"></span>
+                            </div>
+                            <span class="text-[10px] font-black uppercase tracking-widest"
+                                [class]="isVigente(v.estado) ? 'text-sky-600 dark:text-sky-400' : 'text-rose-500 dark:text-rose-400'">
+                                {{isVigente(v.estado) ? 'VIGENTE' : 'ANULADO'}}
+                            </span>
+                        </div>
+
+                        <!-- Formateo para Tipo Doc -->
+                        <div *ngIf="col.key === 'tipoDoc'">
+                            <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-black rounded-md border border-slate-200 dark:border-slate-700/50">
+                                {{v.tipoDoc}}
+                            </span>
+                        </div>
+
+                        <!-- Texto estándar -->
+                        <div *ngIf="col.key !== 'estado' && col.key !== 'tipoDoc' && !col.label.includes('BASE') && !col.label.includes('IGV') && !col.label.includes('TOTAL') && !col.label.includes('EXPORTACION') && !col.label.includes('EXONERADO') && !col.label.includes('INAFECTO') && !col.label.includes('DESC.') && !col.label.includes('I.S.C') && !col.label.includes('ICBPER')"
+                            [class.font-black]="col.key === 'nroDocCli' || col.key === 'numero'"
+                            [class.text-slate-900]="col.key === 'cliente' || col.key === 'nroDocCli'"
+                            [class.dark:text-white]="col.key === 'cliente' || col.key === 'nroDocCli'"
+                            class="text-sm text-slate-600 dark:text-slate-400 transition-colors">
+                            {{v[col.key]}}
+                        </div>
+                    </td>
+                </ng-container>
+            </tr>
+            
+            <tr *ngIf="reporte.paginatedData().length === 0">
+                <td [attr.colspan]="columnConfigs.length + 1" class="px-8 py-24 text-center">
+                    <div class="flex flex-col items-center gap-6 animate-in fade-in zoom-in duration-500">
+                        <div class="w-24 h-24 bg-slate-50 dark:bg-slate-900/50 rounded-[2.5rem] flex items-center justify-center text-slate-200 dark:text-slate-800 text-4xl shadow-inner border border-slate-100 dark:border-slate-800">
+                            <i class="fas fa-inbox"></i>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-slate-900 dark:text-white font-black text-xl tracking-tight">
+                                Sin registros encontrados
+                            </p>
+                            <p class="text-slate-400 dark:text-slate-500 font-medium text-sm">
+                                Ajuste los filtros de búsqueda para ver más resultados
+                            </p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</app-reporte-base>

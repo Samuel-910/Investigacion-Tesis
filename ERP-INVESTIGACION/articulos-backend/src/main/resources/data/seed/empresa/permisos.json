@@ -1,0 +1,47 @@
+[
+  { "name": "USUARIO_CREAR", "description": "Crear usuarios", "module": "USUARIO" },
+  { "name": "USUARIO_LEER", "description": "Ver usuarios", "module": "USUARIO" },
+  { "name": "USUARIO_ACTUALIZAR", "description": "Actualizar usuarios", "module": "USUARIO" },
+  { "name": "USUARIO_ELIMINAR", "description": "Eliminar usuarios", "module": "USUARIO" },
+  
+  { "name": "ROL_CREAR", "description": "Crear roles y permisos", "module": "ROL" },
+  { "name": "ROL_LEER", "description": "Ver roles y permisos", "module": "ROL" },
+  { "name": "ROL_ACTUALIZAR", "description": "Actualizar roles y permisos", "module": "ROL" },
+  { "name": "ROL_ELIMINAR", "description": "Eliminar roles y permisos", "module": "ROL" },
+
+  { "name": "EMPRESA_CREAR", "description": "Crear empresas y sucursales", "module": "EMPRESA" },
+  { "name": "EMPRESA_LEER", "description": "Ver empresas y sucursales", "module": "EMPRESA" },
+  { "name": "EMPRESA_ACTUALIZAR", "description": "Actualizar empresas y sucursales", "module": "EMPRESA" },
+  
+  { "name": "PRODUCTO_CREAR", "description": "Crear productos", "module": "PRODUCTO" },
+  { "name": "PRODUCTO_LEER", "description": "Ver productos", "module": "PRODUCTO" },
+  { "name": "PRODUCTO_ACTUALIZAR", "description": "Actualizar productos", "module": "PRODUCTO" },
+  { "name": "PRODUCTO_ELIMINAR", "description": "Eliminar productos", "module": "PRODUCTO" },
+  
+  { "name": "MOVIMIENTO_CREAR", "description": "Crear ingresos y salidas", "module": "MOVIMIENTO" },
+  { "name": "MOVIMIENTO_LEER", "description": "Ver ingresos y salidas", "module": "MOVIMIENTO" },
+  
+  { "name": "REPORTE_VER", "description": "Ver reportes", "module": "REPORTE" },
+  
+  { "name": "COMPRA_CREAR", "description": "Registrar compras", "module": "COMPRA" },
+  { "name": "COMPRA_LEER", "description": "Ver compras", "module": "COMPRA" },
+  
+  { "name": "PROVEEDOR_CREAR", "description": "Crear proveedores", "module": "PROVEEDOR" },
+  { "name": "PROVEEDOR_LEER", "description": "Ver proveedores", "module": "PROVEEDOR" },
+  
+  { "name": "VENTA_CREAR", "description": "Registrar ventas", "module": "VENTA" },
+  { "name": "VENTA_LEER", "description": "Ver ventas", "module": "VENTA_LEER" },
+  { "name": "VENTA_ANULAR", "description": "Anular ventas", "module": "VENTA" },
+  
+  { "name": "CAJA_CREAR", "description": "Apertura y cierre de caja", "module": "CAJA" },
+  { "name": "CAJA_LEER", "description": "Ver movimientos de caja", "module": "CAJA" },
+  { "name": "CAJA_GENERAL_LEER", "description": "Ver caja general", "module": "CAJA_GENERAL" },
+  { "name": "ARQUEO_CAJA_LEER", "description": "Ver arqueos de caja", "module": "ARQUEO_CAJA" },
+  { "name": "MEDIO_PAGO_LEER", "description": "Ver medios de pago", "module": "MEDIO_PAGO" },
+  
+  { "name": "ALMACEN_CREAR", "description": "Crear almacenes", "module": "ALMACEN" },
+  { "name": "ALMACEN_LEER", "description": "Ver almacenes", "module": "ALMACEN" },
+  
+  { "name": "FACTURACION_LEER", "description": "Ver comprobantes y resúmenes", "module": "FACTURACION" },
+  { "name": "DOCUMENTOS_LEER", "description": "Ver plantillas de documentos", "module": "DOCUMENTOS" }
+]

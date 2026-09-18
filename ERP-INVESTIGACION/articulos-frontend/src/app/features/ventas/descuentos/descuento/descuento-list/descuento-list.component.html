@@ -1,0 +1,69 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+        <div class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <div class="mb-6">
+                <app-page-header 
+                    title="Gestión de Descuentos" 
+                    subtitle="Administra las reglas de descuento para ventas"
+                    [showCounter]="true"
+                    counterLabel="Total"
+                    [counterValue]="totalElements()">
+                </app-page-header>
+
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 my-6">
+                    <div class="flex-1 md:w-80">
+                        <app-search-generic [options]="searchOptions" placeholder="Buscar por nombre..."
+                            (onSearch)="onSearch($event)">
+                        </app-search-generic>
+                    </div>
+
+                    <app-primary-button label="Nuevo Descuento" icon="plus" color="brand" (btnClick)="abrirModalNuevo()">
+                    </app-primary-button>
+                </div>
+
+                <div class="overflow-hidden">
+                    <div *ngIf="loading()" class="flex justify-center items-center h-64">
+                        <div class="text-center">
+                            <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 dark:border-indigo-400"></div>
+                            <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium">Cargando...</p>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!loading()">
+                        <app-tabla-general 
+                            [datos]="descuentos()" 
+                            [columnas]="columnasDescuentos" 
+                            [currentPage]="currentPage()" 
+                            [pageSize]="pageSize()"
+                            (onEdit)="editar($event)" 
+                            (onDelete)="eliminar($event)">
+                        </app-tabla-general>
+
+                        <div *ngIf="totalElements() > 0" class="p-4 border-t border-slate-100 dark:border-slate-700">
+                            <app-pagination 
+                                [currentPage]="currentPage()" 
+                                [totalPages]="totalPages()"
+                                [pageSize]="pageSize()" 
+                                (pageChange)="onPageChange($event)">
+                            </app-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-modal [isOpen]="showModal()" [title]="selectedDescuento() ? 'Editar Descuento' : 'Nuevo Descuento'" [size]="'xl'"
+    (modalClose)="cerrarModal()">
+    <app-descuento-form *ngIf="showModal()" [descuento]="selectedDescuento()" (cerrar)="cerrarModal()" (guardado)="onGuardado()">
+    </app-descuento-form>
+</app-modal>

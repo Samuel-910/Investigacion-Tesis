@@ -1,0 +1,22 @@
+<app-modal [isOpen]="isOpen" title="Detalle de Movimientos" size="lg" (modalClose)="onClose()">
+    <div class="p-4">
+        <div *ngIf="loading()" class="flex justify-center items-center h-48">
+            <div class="text-center">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                <p class="mt-2 text-sm text-slate-500">Cargando movimientos...</p>
+            </div>
+        </div>
+
+        <div *ngIf="!loading()">
+            <app-tabla-general [datos]="movimientos()" [columnas]="columns" [showEdit]="false" [showDelete]="false"
+                [currentPage]="currentPage()" [pageSize]="pageSize()" [showActions]="false">
+            </app-tabla-general>
+
+            <div *ngIf="totalElements() > 0" class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+                <app-pagination [currentPage]="currentPage()" [totalPages]="totalPages()" [pageSize]="pageSize()"
+                    (pageChange)="cambiarPagina($event)">
+                </app-pagination>
+            </div>
+        </div>
+    </div>
+</app-modal>

@@ -1,0 +1,156 @@
+[
+  {
+    "titulo": "Configuración",
+    "icono": "fa-cog",
+    "orden": 1,
+    "tipo": "GRUPO",
+    "acceso": "Articulos",
+    "children": [
+      {
+        "titulo": "Seguridad",
+        "icono": "fa-shield-alt",
+        "orden": 1,
+        "tipo": "SUBMENU",
+        "acceso": "Articulos",
+        "children": [
+          { "titulo": "Gestión de Usuarios", "ruta": "/configuracion/seguridad/users", "orden": 1, "tipo": "ITEM", "moduloRequerido": "USUARIO", "acceso": "Articulos" },
+          { "titulo": "Roles de Usuario", "ruta": "/configuracion/seguridad/roles", "orden": 2, "tipo": "ITEM", "moduloRequerido": "ROL", "acceso": "Articulos" },
+          { "titulo": "Catálogo de Permisos", "ruta": "/configuracion/seguridad/permisos", "orden": 3, "tipo": "ITEM", "moduloRequerido": "ROL", "acceso": "Articulos" },
+          { "titulo": "Administración avanzada", "ruta": "/configuracion/seguridad/admin", "orden": 4, "tipo": "ITEM", "moduloRequerido": "USUARIO", "acceso": "Articulos" },
+          { "titulo": "Cambio de Clave", "ruta": "/configuracion/seguridad/cambio-clave", "orden": 5, "tipo": "ITEM", "moduloRequerido": "USUARIO", "acceso": "Articulos" }
+        ]
+      },
+      { "titulo": "Puntos de Venta", "ruta": "/configuracion/puntos-venta", "orden": 2, "tipo": "ITEM", "moduloRequerido": "EMPRESA", "acceso": "Articulos" },
+      { "titulo": "Atributos Puntos", "ruta": "/configuracion/puntos-atributos", "orden": 3, "tipo": "ITEM", "moduloRequerido": "EMPRESA", "acceso": "Articulos" },
+      { "titulo": "Datos Clinicas", "ruta": "/configuracion/empresas", "orden": 4, "tipo": "ITEM", "moduloRequerido": "EMPRESA", "acceso": "Articulos" },
+      { "titulo": "Sucursales", "ruta": "/configuracion/sucursales", "orden": 5, "tipo": "ITEM", "moduloRequerido": "EMPRESA", "acceso": "Articulos" },
+      { "titulo": "Catálogo", "ruta": "/configuracion/catalogo-productos", "orden": 6, "tipo": "ITEM", "moduloRequerido": "PRODUCTO", "acceso": "Articulos" },
+      { "titulo": "Atributos Catalogo", "ruta": "/configuracion/atributos-producto", "orden": 7, "tipo": "ITEM", "moduloRequerido": "PRODUCTO", "acceso": "Articulos" }
+    ]
+  },
+  {
+    "titulo": "Procesos",
+    "icono": "fa-tasks",
+    "orden": 2,
+    "tipo": "GRUPO",
+    "acceso": "Articulos",
+    "children": [
+      { "titulo": "Ingresos y salidas diversas", "ruta": "/procesos/historial-movimientos", "orden": 1, "tipo": "ITEM", "moduloRequerido": "MOVIMIENTO", "acceso": "Articulos" },
+      { "titulo": "Atributos Diversos", "ruta": "/procesos/atributos-diverso", "orden": 2, "tipo": "ITEM", "moduloRequerido": "ALMACEN", "acceso": "Articulos" },
+      { "titulo": "Reimprimir comprobantes", "ruta": "/procesos/reimprimir-comprobantes", "orden": 3, "tipo": "ITEM", "moduloRequerido": "VENTA_LEER", "acceso": "Articulos" },
+      { "titulo": "Detalle de documentos punto de venta", "ruta": "/procesos/detalle-documentos", "orden": 4, "tipo": "ITEM", "moduloRequerido": "REPORTE", "acceso": "Articulos" },
+      { "titulo": "Documento por paciente-historial", "ruta": "/procesos/documento-paciente", "orden": 5, "tipo": "ITEM", "moduloRequerido": "REPORTE", "acceso": "Articulos" },
+      { "titulo": "Transferencias", "ruta": "/procesos/transferencias", "orden": 6, "tipo": "ITEM", "moduloRequerido": "MOVIMIENTO", "acceso": "Articulos" },
+      { "titulo": "Solicitudes de Anulación", "ruta": "/procesos/aprobaciones", "orden": 7, "tipo": "ITEM", "moduloRequerido": "FACTURACION", "acceso": "Articulos" }
+    ]
+  },
+  {
+    "titulo": "Reportes",
+    "icono": "fa-chart-line",
+    "orden": 3,
+    "tipo": "GRUPO",
+    "acceso": "Articulos",
+    "children": [
+      { "titulo": "Correlatividad", "ruta": "/reportes/correlatividad", "orden": 1, "tipo": "ITEM", "moduloRequerido": "REPORTE", "acceso": "Articulos" },
+      { "titulo": "Reporte de compras", "ruta": "/reportes/compras", "orden": 2, "tipo": "ITEM", "moduloRequerido": "REPORTE", "acceso": "Articulos" },
+      { "titulo": "Reporte de ventas", "ruta": "/reportes/ventas", "orden": 3, "tipo": "ITEM", "moduloRequerido": "REPORTE", "acceso": "Articulos" },
+      { "titulo": "Reporte de cajas", "ruta": "/reportes/cajas", "orden": 4, "tipo": "ITEM", "moduloRequerido": "REPORTE", "acceso": "Articulos" },
+      { "titulo": "Kardex", "ruta": "/reportes/kardex", "orden": 5, "tipo": "ITEM", "moduloRequerido": "REPORTE", "acceso": "Articulos" },
+      { "titulo": "Stock valorizado", "ruta": "/reportes/stock-valorizado", "orden": 6, "tipo": "ITEM", "moduloRequerido": "REPORTE", "acceso": "Articulos" },
+      { "titulo": "Reporte descuento", "ruta": "/reportes/descuento", "orden": 7, "tipo": "ITEM", "moduloRequerido": "REPORTE", "acceso": "Articulos" },
+      { "titulo": "Reporte de comprobantes anulados", "ruta": "/reportes/comprobantes-anulados", "orden": 8, "tipo": "ITEM", "moduloRequerido": "REPORTE", "acceso": "Articulos" },
+      { "titulo": "Reporte de nota de créditos", "ruta": "/reportes/nota-credito", "orden": 9, "tipo": "ITEM", "moduloRequerido": "REPORTE", "acceso": "Articulos" }
+    ]
+  },
+  {
+    "titulo": "Compra",
+    "icono": "fa-shopping-cart",
+    "orden": 4,
+    "tipo": "GRUPO",
+    "acceso": "Articulos",
+    "children": [
+      { "titulo": "Orden de compra", "ruta": "/compra/orden", "orden": 1, "tipo": "ITEM", "moduloRequerido": "COMPRA", "acceso": "Articulos" },
+      { "titulo": "Registrar compra", "ruta": "/compra/registrar", "orden": 2, "tipo": "ITEM", "moduloRequerido": "COMPRA", "acceso": "Articulos" },
+      { "titulo": "Intercambio de Productos", "ruta": "/compra/intercambio", "orden": 3, "tipo": "ITEM", "moduloRequerido": "COMPRA", "acceso": "Articulos" },
+      { "titulo": "Proveedores", "ruta": "/compra/proveedores", "orden": 6, "tipo": "ITEM", "moduloRequerido": "PROVEEDOR", "acceso": "Articulos" },
+      { "titulo": "Cuentas por pagar a proveedores", "ruta": "/compra/pagos-pendientes", "orden": 7, "tipo": "ITEM", "moduloRequerido": "PROVEEDOR", "acceso": "Articulos" }
+    ]
+  },
+  {
+    "titulo": "Ventas",
+    "icono": "fa-cash-register",
+    "orden": 5,
+    "tipo": "GRUPO",
+    "acceso": "Articulos",
+    "children": [
+      { "titulo": "Listado de Ventas", "ruta": "/venta/listado", "orden": 1, "tipo": "ITEM", "moduloRequerido": "VENTA_LEER", "acceso": "Articulos" },
+      { "titulo": "Cotización de venta", "ruta": "/venta/cotizaciones", "orden": 2, "tipo": "ITEM", "moduloRequerido": "VENTA", "acceso": "Articulos" },
+      { "titulo": "Notas de venta", "ruta": "/venta/notas-venta", "orden": 3, "tipo": "ITEM", "moduloRequerido": "VENTA", "acceso": "Articulos" },
+      { "titulo": "Registrar venta", "ruta": "/venta/venta", "orden": 4, "tipo": "ITEM", "moduloRequerido": "VENTA", "acceso": "Articulos" },
+      { "titulo": "Notas de crédito", "ruta": "/venta/notas-credito", "orden": 5, "tipo": "ITEM", "moduloRequerido": "VENTA", "acceso": "Articulos" },
+      { "titulo": "Devoluciones", "ruta": "/venta/devoluciones", "orden": 6, "tipo": "ITEM", "moduloRequerido": "VENTA_LEER", "acceso": "Articulos" },
+      {
+        "titulo": "DESCUENTOS",
+        "icono": "fa-percent",
+        "orden": 7,
+        "tipo": "SUBMENU",
+        "acceso": "Articulos",
+        "children": [
+          { "titulo": "Gestión de Beneficios", "ruta": "/venta/descuentos/lista", "orden": 1, "tipo": "ITEM", "moduloRequerido": "VENTA", "acceso": "Articulos" },
+          { "titulo": "Convenios", "ruta": "/venta/descuentos/convenio", "orden": 2, "tipo": "ITEM", "moduloRequerido": "VENTA", "acceso": "Articulos" }
+        ]
+      }
+    ]
+  },
+  {
+    "titulo": "Facturación",
+    "icono": "fa-file-invoice",
+    "orden": 6,
+    "tipo": "GRUPO",
+    "acceso": "Articulos",
+    "children": [
+      { "titulo": "Comprobantes electrónicos", "ruta": "/venta/comprobante-electronico", "orden": 1, "tipo": "ITEM", "moduloRequerido": "FACTURACION", "acceso": "Articulos" },
+      { "titulo": "Resumen de boletas", "ruta": "/facturacion/resumenes", "orden": 2, "tipo": "ITEM", "moduloRequerido": "FACTURACION", "acceso": "Articulos" },
+      { "titulo": "Resumen de bajas", "ruta": "/facturacion/anulaciones", "orden": 3, "tipo": "ITEM", "moduloRequerido": "FACTURACION", "acceso": "Articulos" }
+    ]
+  },
+  {
+    "titulo": "Caja",
+    "icono": "fa-wallet",
+    "orden": 7,
+    "tipo": "GRUPO",
+    "acceso": "Articulos",
+    "children": [
+      { "titulo": "Arqueo Caja", "ruta": "/caja/arqueos", "orden": 1, "tipo": "ITEM", "moduloRequerido": "ARQUEO_CAJA", "acceso": "Articulos" },
+      { "titulo": "Caja Chica", "ruta": "/caja/chica", "orden": 2, "tipo": "ITEM", "moduloRequerido": "CAJA", "acceso": "Articulos" },
+      { "titulo": "Caja General", "ruta": "/caja/general", "orden": 3, "tipo": "ITEM", "moduloRequerido": "CAJA_GENERAL", "acceso": "Articulos" },
+      { "titulo": "Medio Pago", "ruta": "/caja/medio-pago", "orden": 4, "tipo": "ITEM", "moduloRequerido": "MEDIO_PAGO", "acceso": "Articulos" },
+      { "titulo": "Diferencia de costos", "ruta": "/caja/diferencia-costos", "orden": 5, "tipo": "ITEM", "moduloRequerido": "CAJA", "acceso": "Articulos" },
+      { "titulo": "Gestión de cuentas", "ruta": "/caja/cuentas", "orden": 6, "tipo": "ITEM", "moduloRequerido": "CAJA", "acceso": "Articulos" }
+    ]
+  },
+  {
+    "titulo": "Almacén",
+    "icono": "fa-warehouse",
+    "orden": 8,
+    "tipo": "GRUPO",
+    "acceso": "Articulos",
+    "children": [
+      { "titulo": "Gestión Almacenes", "ruta": "/almacen/almacenes", "orden": 1, "tipo": "ITEM", "moduloRequerido": "ALMACEN", "acceso": "Articulos" },
+      { "titulo": "Productos", "ruta": "/almacen/productos", "orden": 2, "tipo": "ITEM", "moduloRequerido": "PRODUCTO", "acceso": "Articulos" }
+    ]
+  },
+  {
+    "titulo": "Documentos",
+    "icono": "fa-file-alt",
+    "orden": 9,
+    "tipo": "GRUPO",
+    "acceso": "Articulos",
+    "children": [
+      { "titulo": "Bloques de plantillas", "ruta": "/documentos/bloques", "orden": 1, "tipo": "ITEM", "moduloRequerido": "DOCUMENTOS", "acceso": "Articulos" },
+      { "titulo": "Formatos de Impresión", "ruta": "/documentos/formatos", "orden": 2, "tipo": "ITEM", "moduloRequerido": "DOCUMENTOS", "acceso": "Articulos" },
+      { "titulo": "Plantillas", "ruta": "/documentos", "orden": 3, "tipo": "ITEM", "moduloRequerido": "DOCUMENTOS", "acceso": "Articulos" },
+      { "titulo": "Puntos de Emisión", "ruta": "/documentos/puntos", "orden": 4, "tipo": "ITEM", "moduloRequerido": "DOCUMENTOS", "acceso": "Articulos" }
+    ]
+  }
+]

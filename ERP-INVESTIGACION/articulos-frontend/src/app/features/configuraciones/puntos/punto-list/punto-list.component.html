@@ -1,0 +1,102 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems" [showIcon]="true"></app-breadcrumb>
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+
+            <div class="px-8 pt-8">
+                <app-page-header title="Puntos de Venta"
+                    [subtitle]="'Gestiona los puntos de emisión y sus procesos en ' + userSucursal" [showCounter]="true"
+                    counterLabel="Total" [counterValue]="totalElements()">
+                </app-page-header>
+            </div>
+            <div class="px-8 pb-8">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 my-6">
+                    <div class="flex-1 md:w-80">
+                        <app-search-generic [options]="searchOptions" placeholder="Buscar en la lista..."
+                            (onSearch)="handleSearch($event)">
+                        </app-search-generic>
+                    </div>
+
+                    <app-primary-button label="Nuevo Punto" icon="plus" color="brand" (btnClick)="abrirModalNuevo()">
+                    </app-primary-button>
+                </div>
+
+                <div class="overflow-hidden">
+                    <div *ngIf="loading()" class="flex justify-center items-center h-64">
+                        <div class="text-center">
+                            <div
+                                class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 dark:border-indigo-400">
+                            </div>
+                            <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium">Cargando...</p>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!loading()">
+                        <app-tabla-general [datos]="puntos()" [columnas]="columns" [currentPage]="currentPage()"
+                            [pageSize]="pageSize()" (onEdit)="editar($event)" (onDelete)="eliminar($event)"
+                            [showConfig]="true" (onConfig)="verDocumentos($event)" configTooltip="Ver Documentos">
+                        </app-tabla-general>
+
+                        <div *ngIf="totalElements() > 0" class="p-4 border-t border-slate-100 dark:border-slate-700">
+                            <app-pagination [currentPage]="currentPage()" [totalPages]="totalPages()"
+                                [pageSize]="pageSize()" (pageChange)="onPageChange($event)"
+                                (pageSizeChange)="onPageSizeChange($event)">
+                            </app-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<app-modal [showSucursal]="true" [isOpen]="showModal()" [title]="selectedPunto() ? 'Editar Punto' : 'Registrar Punto'"
+    [size]="'md'" (modalClose)="cerrarModal()">
+    <app-punto-form *ngIf="showModal()" [punto]="selectedPunto()" (onSave)="onGuardar()" (onCancel)="cerrarModal()">
+    </app-punto-form>
+</app-modal>
+
+<!-- Modal de Documentos Asignados -->
+<app-modal [showSucursal]="false" [isOpen]="showDocumentosModal()" [title]="'Documentos: ' + selectedPunto()?.nombre"
+    [size]="'lg'" (modalClose)="showDocumentosModal.set(false)">
+
+    <div class="space-y-4">
+        <div class="flex justify-end mb-2">
+            <app-primary-button label="Añadir Documento" icon="plus" size="sm" color="brand"
+                (btnClick)="nuevoDocumento()">
+            </app-primary-button>
+        </div>
+        <div
+            class="overflow-hidden rounded-xl border border-slate-100 dark:border-slate-700 bg-slate-50/30 dark:bg-slate-900/10">
+            <app-tabla-general [datos]="documentosPunto()" [columnas]="documentosColumns"
+                [loading]="loadingDocumentos()" [showEdit]="true" [showDelete]="true" (onEdit)="editarDocumento($event)"
+                (onDelete)="eliminarDocumento($event)">
+            </app-tabla-general>
+        </div>
+
+        <div class="flex justify-end pt-4">
+            <button (click)="showDocumentosModal.set(false)"
+                class="px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
+                Cerrar
+            </button>
+        </div>
+    </div>
+</app-modal>
+
+<!-- Modal de Formulario de Documento -->
+<app-modal [showSucursal]="false" [isOpen]="showDocFormModal()"
+    [title]="selectedDoc() ? 'Editar Documento' : 'Añadir Documento'" [size]="'md'"
+    (modalClose)="showDocFormModal.set(false)">
+    <app-punto-documento-form [puntoId]="selectedPunto()?.punto" [documento]="selectedDoc()"
+        (onSave)="onGuardarDocumento()" (onCancel)="showDocFormModal.set(false)">
+    </app-punto-documento-form>
+</app-modal>

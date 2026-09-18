@@ -1,0 +1,55 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6 bg-white dark:bg-slate-800 rounded-3xl">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <div class="md:col-span-2">
+            <app-form-input label="Nombre del Punto" formControlName="nombre" [required]="true" [hasIcon]="true"
+                [error]="getError('nombre')" placeholder="Ej. CAJA PRINCIPAL">
+                <i icon class="fas fa-store text-xs"></i>
+            </app-form-input>
+        </div>
+
+        <div>
+            <app-searchable-select [data]="tipos()" label="Tipo" placeholder="Seleccionar tipo..."
+                bindLabel="descripcion" bindValue="id" formControlName="idTipo" iconBgColor="bg-purple-500"
+                [required]="true" [error]="getError('idTipo')" [hasIcon]="true">
+                <i icon class="fas fa-tag text-xs"></i>
+            </app-searchable-select>
+        </div>
+
+        <div>
+            <app-searchable-select [data]="procesos()" label="Proceso" placeholder="Seleccionar proceso..."
+                bindLabel="descripcion" bindValue="id" formControlName="idProceso" iconBgColor="bg-teal-500"
+                [required]="true" [error]="getError('idProceso')" [hasIcon]="true">
+                <i icon class="fas fa-cogs text-xs"></i>
+            </app-searchable-select>
+        </div>
+
+        <div class="md:col-span-2">
+            <app-searchable-select [data]="almacenes()" label="Almacén Asignado" placeholder="Buscar almacén..."
+                bindLabel="nombre" bindValue="id" formControlName="idAlmacen" iconBgColor="bg-orange-500"
+                [hasIcon]="true">
+                <i icon class="fas fa-warehouse text-xs"></i>
+            </app-searchable-select>
+        </div>
+
+        <app-form-input label="IP Restringida (Opcional)" formControlName="ipAccesoModulo" placeholder="192.168.1.10"
+            [hasIcon]="true">
+            <i icon class="fas fa-desktop text-xs"></i>
+        </app-form-input>
+
+        <div class="flex items-center px-1">
+            <app-form-switch label="Estado del Punto" formControlName="valido" onLabel="Activo" offLabel="Inactivo">
+            </app-form-switch>
+        </div>
+    </div>
+
+    <div class="flex items-center justify-end gap-3 pt-6 border-t border-slate-100 dark:border-slate-700">
+        <button type="button" (click)="onCancel.emit()"
+            class="text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors uppercase tracking-widest">
+            Cancelar
+        </button>
+        <app-primary-button [label]="loading() ? 'Guardando...' : (punto ? 'ACTUALIZAR' : 'GUARDAR')"
+            [loading]="loading()" [disabled]="form.invalid || loading()" color="blue" type="submit">
+        </app-primary-button>
+    </div>
+</form>

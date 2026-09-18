@@ -1,0 +1,24 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="((sidebarService.isOpen$ | async) ?? true) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <app-page-header title="Medios de Pago" subtitle="Gestión de catálogos auxiliares para cobros y pagos"
+                [showCounter]="true" counterLabel="Total" [counterValue]="totalMediosPago()">
+            </app-page-header>
+
+            <div class="mt-6">
+                <app-atributo-list [service]="metodoPagoService" titulo="Medio de Pago"
+                    (totalElementsChange)="totalMediosPago.set($event)">
+                </app-atributo-list>
+            </div>
+        </div>
+    </div>
+</div>

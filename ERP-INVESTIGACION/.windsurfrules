@@ -1,0 +1,19 @@
+# Reglas del Proyecto Articulos
+
+Este repositorio está dividido en dos submódulos principales (Backend y Frontend), cada uno con sus propias reglas de desarrollo específicas.
+
+## Reglas Generales del Repositorio
+- Responde siempre en Español.
+- **NO** compiles ni ejecutes comandos de construcción (build/serve/mvn) automáticamente, a menos que se te pida explícitamente.
+- **Comentarios**: Nunca pongas comentarios en el código y si ves que hay comentarios donde editas, bórralos.
+- **NUNCA JAMAS** pongas más de 10 en tamaño de página por defecto al llamar a los endpoints, el límite del backend es 100.
+
+## Submódulos del Proyecto
+
+### 1. Frontend (Angular)
+- Las reglas de diseño, layout, uso de señales (Angular Signals), homogeneización de paginación y componentes compartidos se encuentran en:
+  - [articulos-frontend/.windsurfrules](file:///c:/Users/HP/Documents/GitHub/articulos/articulos-frontend/.windsurfrules)
+
+### 2. Backend (Java / Spring Boot)
+- Las reglas de arquitectura de base de datos, convenciones de búsqueda, filtros y la estrategia de paginación vs listas planas del ERP se encuentran en:
+  - [articulos-backend/.windsurfrules](file:///c:/Users/HP/Documents/GitHub/articulos/articulos-backend/.windsurfrules)

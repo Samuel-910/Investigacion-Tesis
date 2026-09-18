@@ -1,0 +1,39 @@
+<div *ngIf="_isOpen()" class="fixed inset-0 z-[60] overflow-hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+    <!-- Overlay con desenfoque -->
+    <div (click)="close()" 
+         class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300 ease-in-out" 
+         aria-hidden="true"></div>
+
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-10 pointer-events-none">
+        <!-- Panel Lateral -->
+        <div class="w-screen max-w-sm pointer-events-auto transform transition-all duration-500 ease-in-out"
+             [ngClass]="{ 'translate-x-0': _isOpen(), 'translate-x-full': !_isOpen() }">
+            
+            <div class="flex flex-col h-full bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-200 dark:border-slate-800">
+                <!-- Header -->
+                <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-bold text-slate-800 dark:text-white" id="slide-over-title">
+                            {{ title }}
+                        </h2>
+                        <button (click)="close()" 
+                                class="p-2 rounded-lg text-slate-400 hover:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Body (Transclusión) -->
+                <div class="flex-1 relative overflow-y-auto px-6 py-6 scrollbar-hide">
+                    <ng-content select="[slot='body']"></ng-content>
+                    <ng-content></ng-content> <!-- Contenido por defecto -->
+                </div>
+
+                <!-- Footer (Opcional) -->
+                <div class="px-6 py-5 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
+                    <ng-content select="[slot='footer']"></ng-content>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

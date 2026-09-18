@@ -1,0 +1,334 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+        <div
+            class="w-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700/50 overflow-hidden transition-all duration-300">
+
+            <!-- Tabs -->
+            <div class="flex border-b border-slate-200 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-900/20">
+                <button (click)="cambiarTab('MES')"
+                    [class]="tabActiva() === 'MES' ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-800 shadow-sm' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-white/50 dark:hover:bg-slate-800/50'"
+                    class="px-8 py-4 text-xs font-black uppercase tracking-widest border-b-2 transition-all relative group">
+                    Resumen por mes
+                </button>
+                <button (click)="cambiarTab('TIPO_DOC')"
+                    [class]="tabActiva() === 'TIPO_DOC' ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-800 shadow-sm' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-white/50 dark:hover:bg-slate-800/50'"
+                    class="px-8 py-4 text-xs font-black uppercase tracking-widest border-b-2 transition-all relative group">
+                    Resumen por tipo doc.
+                </button>
+            </div>
+
+            <div class="p-6">
+                <!-- Filtros Estilo Imagen 2 -->
+                <div class="mb-6">
+                    <h3 class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                        <span class="w-8 h-px bg-slate-200 dark:bg-slate-700"></span>
+                        Criterios de búsqueda
+                    </h3>
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end bg-slate-50/50 dark:bg-slate-900/40 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-inner">
+
+                        <div class="md:col-span-12 flex gap-4 items-end bg-slate-50/50 dark:bg-slate-900/40 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-inner">
+                            
+                                                        <!-- Sucursal y Punto de Venta Comunes -->
+                            <div class="flex-1">
+                                <app-searchable-select
+                                    [data]="sucursalOptions()" bindLabel="label" bindValue="value" label="Sucursal"
+                                    [(ngModel)]="sucursalId"
+                                    (ngModelChange)="onSucursalChange($event)">
+                                </app-searchable-select>
+                            </div>
+                            <div class="flex-1">
+                                <app-searchable-select
+                                    [data]="puntoOptions()" bindLabel="label" bindValue="value" label="Punto de Venta"
+                                    [(ngModel)]="puntoId"
+                                    (ngModelChange)="onPuntoChange()">
+                                </app-searchable-select>
+                            </div>
+
+                            <!-- Filtros Pestaa MES -->
+                            <ng-container *ngIf="tabActiva() === 'MES'">
+                                <div class="flex-1">
+                                    <label class="block text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase mb-1.5 tracking-wider">Año</label>
+                                    <select [(ngModel)]="anio"
+                                        class="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500/20 transition-all outline-none">
+                                        <option *ngFor="let a of anios" [value]="a">{{a}}</option>
+                                    </select>
+                                </div>
+                                <div class="flex-1">
+                                    <label class="block text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase mb-1.5 tracking-wider">Mes</label>
+                                    <select [(ngModel)]="mes"
+                                        class="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500/20 transition-all outline-none">
+                                        <option *ngFor="let m of meses" [value]="m.value">{{m.label}}</option>
+                                    </select>
+                                </div>
+                            </ng-container>
+
+                            <!-- Filtros Pestaña TIPO_DOC -->
+                            <ng-container *ngIf="tabActiva() === 'TIPO_DOC'">
+                                <div class="flex-1">
+                                    <label class="block text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase mb-1.5 tracking-wider">Módulo de Búsqueda</label>
+                                    <select [(ngModel)]="moduloSeleccionado"
+                                        class="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500/20 transition-all outline-none">
+                                        <option *ngFor="let mod of modulos" [value]="mod.value">{{mod.label}}</option>
+                                    </select>
+                                </div>
+                            </ng-container>
+
+                            <div class="flex gap-2 min-w-fit">
+                                <button (click)="onFiltrar()"
+                                    class="bg-linear-to-r from-[#008FB5] to-[#00A8D6] hover:from-[#0092B8] hover:to-[#00B8E6] text-white px-6 py-2.5 rounded-xl flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-cyan-500/30 active:scale-95">
+                                    <i class="fas fa-search"></i> Buscar
+                                </button>
+                                <button (click)="anio.set(2026); mes.set(1)" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 p-2.5 rounded-xl transition-all active:scale-95 shadow-sm">
+                                    <i class="fas fa-eraser"></i>
+                                </button>
+                                <button (click)="onExportarExcel()" class="bg-emerald-500/10 dark:bg-emerald-500/20 hover:bg-emerald-500 text-emerald-600 dark:text-emerald-400 hover:text-white p-2.5 rounded-xl transition-all active:scale-95 shadow-sm border border-emerald-500/20" title="Exportar a Excel">
+                                    <i class="fas fa-file-excel"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BUSCADOR PERSISTENTE PRINCIPAL (Fuera de la tabla y del spinner de carga) -->
+                <div *ngIf="tieneDatosIniciales()" class="mb-6 flex flex-col md:flex-row items-center gap-4">
+                    <div class="flex-1 md:w-80">
+                        <app-search-generic 
+                            [options]="searchOptionsPrincipal" 
+                            placeholder="Buscar en el reporte..."
+                            (onSearch)="handleSearchPrincipal($event)">
+                        </app-search-generic>
+                    </div>
+                </div>
+
+                <!-- Tabla de Datos -->
+                <div class="relative overflow-hidden border border-slate-200 dark:border-slate-700/50 rounded-2xl shadow-sm">
+                    <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-linear-to-r from-[#008FB5] to-[#00A8D6] text-white uppercase font-black tracking-widest text-[10px]">
+                            <tr>
+                                <th class="px-5 py-4 border-r border-white/10">Tipo Documento</th>
+                                <th class="px-5 py-4 border-r border-white/10 shrink-0">Serie</th>
+                                <th class="px-5 py-4 border-r border-white/10 text-center">Cant.</th>
+                                <th class="px-5 py-4 border-r border-white/10">Desde</th>
+                                <th class="px-5 py-4 border-r border-white/10">Hasta</th>
+                                <th class="px-5 py-4 border-r border-white/10 text-right whitespace-nowrap">Base Imp.</th>
+                                <th class="px-5 py-4 border-r border-white/10 text-right shrink-0">Inaf.</th>
+                                <th class="px-5 py-4 border-r border-white/10 text-right shrink-0">Exon.</th>
+                                <th class="px-5 py-4 border-r border-white/10 text-right shrink-0">IGV</th>
+                                <th class="px-5 py-4 text-right">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
+                            <!-- Filas de Datos (Iteradas) -->
+                            <ng-container *ngFor="let row of datosPaginados()">
+                                <tr class="group hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-all duration-200">
+                                    <td class="px-5 py-4 font-black text-blue-600 dark:text-blue-400 cursor-pointer group-hover:pl-7 transition-all flex items-center gap-2"
+                                        (click)="abrirDetalle(row)">
+                                        <i class="fas fa-file-alt text-[10px] opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                        {{row.tipoDocDescripcion}}
+                                    </td>
+                                    <td class="px-5 py-4 font-bold text-slate-600 dark:text-slate-300">{{row.serie}}
+                                    </td>
+                                    <td class="px-5 py-4 text-center font-medium text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200">{{row.cantidad}}</td>
+                                    <td class="px-5 py-4 font-mono text-slate-500 dark:text-slate-400">{{row.desde}}</td>
+                                    <td class="px-5 py-4 font-mono text-slate-500 dark:text-slate-400">{{row.hasta}}</td>
+                                    <td class="px-5 py-4 text-right font-medium text-slate-600 dark:text-slate-300">{{row.baseImp | number:'1.2-2'}}</td>
+                                    <td class="px-5 py-4 text-right font-medium text-slate-600 dark:text-slate-300">{{row.valorInaf | number:'1.2-2'}}</td>
+                                    <td class="px-5 py-4 text-right font-medium text-slate-600 dark:text-slate-300">{{row.valorExo | number:'1.2-2'}}</td>
+                                    <td class="px-5 py-4 text-right font-medium text-slate-600 dark:text-slate-300">{{row.igv | number:'1.2-2'}}</td>
+                                    <td class="px-5 py-4 text-right font-black text-slate-800 dark:text-white">{{row.total | number:'1.2-2'}}</td>
+                                </tr>
+                            </ng-container>
+
+                            <!-- Fila de Total Final -->
+                            <tr *ngIf="datosFiltradosSinPaginacion().length > 0" class="bg-slate-900/90 dark:bg-slate-950/80 text-white backdrop-blur-sm border-t-2 border-indigo-500/30">
+                                <td colspan="5" class="px-5 py-5 text-right font-black uppercase tracking-[0.2em] text-[10px] text-indigo-400">Total General
+                                </td>
+                                <td class="px-5 py-5 text-right font-black text-sm border-l border-white/5">
+                                    {{getTotalSum('baseImp') | number:'1.2-2'}}</td>
+                                <td class="px-5 py-5 text-right font-black text-sm border-l border-white/5">
+                                    {{getTotalSum('valorInaf') | number:'1.2-2'}}</td>
+                                <td class="px-5 py-5 text-right font-black text-sm border-l border-white/5">
+                                    {{getTotalSum('valorExo') | number:'1.2-2'}}</td>
+                                <td class="px-5 py-5 text-right font-black text-sm border-l border-white/5">
+                                    {{getTotalSum('igv') | number:'1.2-2'}}</td>
+                                <td class="px-5 py-5 text-right font-black text-base border-l border-white/5 text-emerald-400">
+                                    <span class="text-[10px] mr-1 opacity-50 font-medium">S/</span>
+                                    {{getTotalSum('total') | number:'1.2-2'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div *ngIf="!loading() && datosPaginados().length === 0"
+                        class="text-center py-20 bg-slate-50 dark:bg-slate-900/20">
+                        <i class="fas fa-folder-open text-4xl text-slate-300 mb-4 block"></i>
+                        <h3 class="text-lg font-bold text-slate-700 dark:text-slate-400">No hay movimientos</h3>
+                        <p class="text-slate-500 text-sm">No se encontraron ventas para el periodo seleccionado o coinciden con la búsqueda.</p>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div *ngIf="loading()" class="py-20 flex flex-col items-center justify-center">
+                        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-[#008FB5] mb-4"></div>
+                        <p class="text-slate-600 font-bold uppercase tracking-widest text-xs">Cargando reporte...</p>
+                    </div>
+                </div>
+
+                <!-- Paginación Principal -->
+                <div class="mt-4" *ngIf="tieneDatosIniciales() && !loading()">
+                    <app-pagination 
+                        [currentPage]="paginaActualPrincipal()" 
+                        [totalPages]="totalPagesPrincipal()" 
+                        [pageSize]="tamanoPaginaPrincipal()"
+                        (pageChange)="onPageChangePrincipal($event)"
+                        (pageSizeChange)="onPageSizeChangePrincipal($event)">
+                    </app-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Detalle (Simulando Imágenes 3 y 4) -->
+<app-modal [isOpen]="showModalDetalle()" (modalClose)="cerrarDetalle()" [size]="'xl'"
+    [title]="'+Resumen de correlatividad'">
+    <div class="p-6 space-y-5 bg-white dark:bg-slate-900/90" *ngIf="selectedRow()">
+        <!-- Summary Info Card -->
+        <div class="p-5 bg-slate-50/50 dark:bg-slate-800/40 rounded-2xl border border-slate-200 dark:border-slate-700/50 shadow-inner group transition-all">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-1">
+                    <p class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Tipo de Documento</p>
+                    <p class="text-base font-black text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-file-invoice text-[#008FB5]"></i>
+                        {{selectedRow().tipoDocDescripcion}}
+                    </p>
+                </div>
+                <div class="space-y-1 md:text-right">
+                    <p class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Serie & Periodo</p>
+                    <p class="text-sm font-bold text-slate-700 dark:text-slate-300">
+                        Serie: <span class="text-[#008FB5] font-black">{{selectedRow().serie}}</span>
+                        <span class="mx-2 text-slate-300 dark:text-slate-600">|</span>
+                        Fecha: <span class="font-mono">{{anio()}}/{{mes() | number:'2.0'}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- BUSCADOR PERSISTENTE DETALLE (Modal) -->
+        <div *ngIf="tieneDetalleInicial()" class="mb-4 flex flex-col md:flex-row items-center gap-4">
+            <div class="flex-1 md:w-80">
+                <app-search-generic 
+                    [options]="searchOptionsDetalle" 
+                    placeholder="Buscar en el detalle..."
+                    (onSearch)="handleSearchDetalle($event)">
+                </app-search-generic>
+            </div>
+        </div>
+
+        <!-- Detail Table Container -->
+        <div class="relative overflow-hidden border border-slate-200 dark:border-slate-700/50 rounded-2xl shadow-sm">
+            <div class="overflow-x-auto max-h-[50vh]">
+                <table class="w-full text-[11px] text-left border-collapse">
+                    <thead class="bg-linear-to-r from-[#008FB5] to-[#00A8D6] text-white uppercase font-black sticky top-0 z-10 shadow-md">
+                        <tr>
+                            <th class="px-3 py-3 border-r border-white/10 text-center">#</th>
+                            <th class="px-3 py-3 border-r border-white/10">Fecha Emisión</th>
+                            <th class="px-3 py-3 border-r border-white/10">Nro. Comprobante</th>
+                            <th class="px-3 py-3 border-r border-white/10 text-right">V.V.</th>
+                            <th class="px-3 py-3 border-r border-white/10 text-right">Desc.</th>
+                            <th class="px-3 py-3 border-r border-white/10 text-right">Base Imp.</th>
+                            <th class="px-3 py-3 border-r border-white/10 text-right">Inaf.</th>
+                            <th class="px-3 py-3 border-r border-white/10 text-right">Exon.</th>
+                            <th class="px-3 py-3 border-r border-white/10 text-right">IGV</th>
+                            <th class="px-3 py-3 border-r border-white/10 text-right">Total</th>
+                            <th class="px-3 py-3 border-r border-white/10">Usuario</th>
+                            <th class="px-3 py-3 text-center">Est.</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
+                        <tr *ngIf="loadingDetalle()">
+                            <td colspan="12" class="px-3 py-10 text-center">
+                                <div class="flex flex-col items-center gap-2">
+                                    <i class="fas fa-circle-notch fa-spin text-2xl text-[#008FB5]"></i>
+                                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Obteniendo movimientos...</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="!loadingDetalle() && detallePaginado().length === 0">
+                            <td colspan="12" class="px-3 py-10 text-center">
+                                <div class="flex flex-col items-center gap-2 opacity-50">
+                                    <i class="fas fa-inbox text-3xl text-slate-300"></i>
+                                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">No se encontraron registros</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Filas Generadas -->
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors group" *ngFor="let det of detallePaginado(); let i = index">
+                            <td class="px-3 py-2 text-center text-slate-400 dark:text-slate-500 font-mono">#{{ paginaActualDetalle() * tamanoPaginaDetalle() + i + 1 }}</td>
+                            <td class="px-3 py-2 text-slate-600 dark:text-slate-400">{{ det.fecha | date:'dd/MM/yy HH:mm' }}</td>
+                            <td class="px-3 py-2 font-bold text-slate-700 dark:text-slate-200">{{ det.numeroDocumento }}</td>
+                            <td class="px-3 py-2 text-right text-slate-500 dark:text-slate-400">{{ (det.total - det.igv) | number:'1.2-2' }}</td>
+                            <td class="px-3 py-2 text-right text-slate-500 dark:text-slate-400 italic">{{ det.descuento | number:'1.2-2' }}</td>
+                            <td class="px-3 py-2 text-right font-medium text-slate-600 dark:text-slate-300">{{ det.baseImp | number:'1.2-2' }}</td>
+                            <td class="px-3 py-2 text-right font-medium text-slate-600 dark:text-slate-300">{{ det.valorInaf | number:'1.2-2' }}</td>
+                            <td class="px-3 py-2 text-right font-medium text-slate-600 dark:text-slate-300">{{ det.valorExo | number:'1.2-2' }}</td>
+                            <td class="px-3 py-2 text-right font-medium text-slate-600 dark:text-slate-300">{{ det.igv | number:'1.2-2' }}</td>
+                            <td class="px-3 py-2 text-right font-black text-slate-800 dark:text-white group-hover:text-emerald-500 transition-colors">{{ det.total | number:'1.2-2' }}</td>
+                            <td class="px-3 py-2 lowercase text-slate-500 dark:text-slate-400">{{ det.idUser }}</td>
+                            <td class="px-3 py-2 text-center">
+                                <i class="fas p-1 rounded-md"
+                                    [ngClass]="det.estado === 'V' ? 'fa-check text-emerald-500 bg-emerald-500/10' : 'fa-times text-rose-500 bg-rose-500/10'"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginación Detalle -->
+            <div class="px-4 py-2 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-100 dark:border-slate-700/50" *ngIf="tieneDetalleInicial() && !loadingDetalle()">
+                <app-pagination 
+                    [currentPage]="paginaActualDetalle()" 
+                    [totalPages]="totalPagesDetalle()" 
+                    [pageSize]="tamanoPaginaDetalle()"
+                    (pageChange)="onPageChangeDetalle($event)"
+                    (pageSizeChange)="onPageSizeChangeDetalle($event)">
+                </app-pagination>
+            </div>
+            <!-- Footer Suma -->
+            <div class="bg-indigo-600 dark:bg-indigo-900/80 text-white px-3 py-3 flex items-center justify-between border-t border-white/10" *ngIf="!loadingDetalle()">
+                <span class="text-[10px] font-black uppercase tracking-[0.2em] ml-2">Sumatoria de movimientos:</span>
+                <div class="flex gap-4">
+                    <div class="text-right">
+                        <p class="text-[8px] opacity-70 uppercase font-bold">Imp. Base</p>
+                        <p class="font-bold">{{selectedRow().baseImp | number:'1.2-2'}}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[8px] opacity-70 uppercase font-bold">Total IGV</p>
+                        <p class="font-bold">{{selectedRow().igv | number:'1.2-2'}}</p>
+                    </div>
+                    <div class="text-right bg-white/10 px-4 py-1 rounded-lg">
+                        <p class="text-[8px] opacity-70 uppercase font-bold text-emerald-300">Total General</p>
+                        <p class="text-lg font-black text-emerald-400"><span class="text-[10px] opacity-50 mr-0.5">S/</span>{{selectedRow().total | number:'1.2-2'}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        <div class="flex justify-end pt-2">
+            <button (click)="cerrarDetalle()"
+                class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-8 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 transition-all active:scale-95 shadow-sm border border-slate-200 dark:border-slate-700">
+                <i class="fas fa-times"></i> Salir del Detalle
+            </button>
+        </div>
+    </div>
+</app-modal>

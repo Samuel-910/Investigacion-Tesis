@@ -1,0 +1,51 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <app-page-header title="Atributos del Producto" subtitle="Gestión de catálogos auxiliares para productos">
+            </app-page-header>
+
+            <!-- Tabs -->
+            <div class="flex flex-wrap border-b border-slate-200 dark:border-slate-700 mb-6">
+                <button *ngFor="let tab of tabs" (click)="setActiveTab(tab.id)"
+                    class="mr-2 px-4 py-2 text-sm font-medium transition-colors relative" [ngClass]="{
+                        'text-blue-600 dark:text-blue-400': activeTab() === tab.id,
+                        'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300': activeTab() !== tab.id
+                    }">
+                    {{ tab.label }}
+                    <div *ngIf="activeTab() === tab.id"
+                        class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-400 rounded-t-full">
+                    </div>
+                </button>
+            </div>
+
+            <div [ngSwitch]="activeTab()">
+                <app-atributo-list *ngSwitchCase="'CATEGORIAS'" [service]="categoriaService" titulo="Categoría">
+                </app-atributo-list>
+
+                <app-atributo-list *ngSwitchCase="'LABORATORIOS'" [service]="laboratorioService" titulo="Laboratorio">
+                </app-atributo-list>
+
+                <app-atributo-list *ngSwitchCase="'PRINCIPIOS'" [service]="principioActivoService"
+                    titulo="Principio Activo">
+                </app-atributo-list>
+
+                <app-atributo-list *ngSwitchCase="'ACCIONES'" [service]="accionTerapeuticaService"
+                    titulo="Acción Terapéutica">
+                </app-atributo-list>
+
+                <app-atributo-list *ngSwitchCase="'UBICACIONES'" [service]="ubicacionService" titulo="Ubicación">
+                </app-atributo-list>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,261 @@
+<app-header></app-header>
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <app-page-header title="Aprobación de Anulaciones"
+                subtitle="Gestión de solicitudes de anulación de documentos" [showCounter]="false"></app-page-header>
+
+            <!-- Sistema de Pestañas -->
+            <div class="flex gap-4 mb-6 border-b border-slate-200 dark:border-slate-700">
+                <button (click)="setTab('pendientes')" [class.text-primary-600]="tabActiva() === 'pendientes'"
+                    [class.border-primary-600]="tabActiva() === 'pendientes'"
+                    class="pb-4 px-2 font-bold text-sm transition-all border-b-2 border-transparent text-slate-500 dark:text-slate-400">
+                    Pendientes ({{solicitudes().length}})
+                </button>
+                <button (click)="setTab('historial')" [class.text-primary-600]="tabActiva() === 'historial'"
+                    [class.border-primary-600]="tabActiva() === 'historial'"
+                    class="pb-4 px-2 font-bold text-sm transition-all border-b-2 border-transparent text-slate-500 dark:text-slate-400">
+                    Historial
+                </button>
+            </div>
+
+            <div class="mb-6">
+                <app-advanced-filter-drawer #filterDrawer
+                    [showGlobalSearch]="true"
+                    searchPlaceholder="Buscar solicitud..."
+                    [globalSearchTerm]="searchTerm()"
+                    (onGlobalSearch)="onGlobalSearch($event)"
+                    [sucursalOptions]="sucursalOptions()"
+                    [puntoVentaOptions]="puntoOptions()"
+                    [initialSucursalId]="defaultSucursalId()"
+                    [showClasificacion]="true"
+                    [showDocumento]="true"
+                    [showOperacion]="false"
+                    [showEstado]="false"
+                    [showFechas]="true"
+                    (onApplyFilters)="onFiltersApplied($event)"
+                    (activeFiltersCount)="activeFiltersCount.set($event)">
+                </app-advanced-filter-drawer>
+            </div>
+
+            <div class="mt-4">
+                <div *ngIf="loading()" class="flex justify-center items-center h-64">
+                    <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+                </div>
+
+                <ng-container *ngIf="!loading()">
+                    <!-- VISTA PENDIENTES -->
+                    <div *ngIf="tabActiva() === 'pendientes'">
+                        <!-- Todo al día (Sin solicitudes de inicio) -->
+                        <div *ngIf="!tieneSolicitudesIniciales()"
+                            class="bg-white dark:bg-slate-800 rounded-3xl p-12 text-center shadow-sm border border-slate-200 dark:border-slate-700">
+                            <div
+                                class="w-20 h-20 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-check-circle text-3xl text-slate-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Todo al día</h3>
+                            <p class="text-slate-500 dark:text-slate-400 mt-2">No hay solicitudes de anulación pendientes.</p>
+                        </div>
+
+                        <!-- No se encontraron resultados al buscar -->
+                        <div *ngIf="tieneSolicitudesIniciales() && solicitudes().length === 0"
+                            class="bg-white dark:bg-slate-800 rounded-3xl p-12 text-center shadow-sm border border-slate-200 dark:border-slate-700">
+                            <div
+                                class="w-20 h-20 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-search text-3xl text-slate-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Sin resultados</h3>
+                            <p class="text-slate-500 dark:text-slate-400 mt-2">No se encontraron solicitudes que coincidan con la búsqueda.</p>
+                        </div>
+
+                        <div *ngIf="solicitudesPaginadas().length > 0"
+                            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div *ngFor="let s of solicitudesPaginadas()"
+                                class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-all">
+                                <div class="flex justify-between items-start mb-4">
+                                    <span [class.bg-emerald-100]="s.tipoDocumento === 'Factura' || s.tipoDocumento === 'Boleta'"
+                                        [class.text-emerald-700]="s.tipoDocumento === 'Factura' || s.tipoDocumento === 'Boleta'"
+                                        [class.bg-rose-100]="s.tipoDocumento === 'Nota de Crédito'"
+                                        [class.text-rose-700]="s.tipoDocumento === 'Nota de Crédito'"
+                                        [class.bg-orange-100]="s.tipoDocumento === 'Nota de Débito'"
+                                        [class.text-orange-700]="s.tipoDocumento === 'Nota de Débito'"
+                                        [class.bg-indigo-100]="s.tipoDocumento === 'Nota de Venta' || s.tipoDocumento === 'NOTA DE VENTA'"
+                                        [class.text-indigo-700]="s.tipoDocumento === 'Nota de Venta' || s.tipoDocumento === 'NOTA DE VENTA'"
+                                        [class.bg-blue-100]="s.tipo === 'COMPRA'"
+                                        [class.text-blue-700]="s.tipo === 'COMPRA'"
+                                        [class.bg-purple-100]="s.tipo === 'MOVIMIENTO_DIVERSO'"
+                                        [class.text-purple-700]="s.tipo === 'MOVIMIENTO_DIVERSO'"
+                                        [class.bg-slate-100]="!s.tipoDocumento && s.tipo === 'VENTA'"
+                                        [class.text-slate-700]="!s.tipoDocumento && s.tipo === 'VENTA'"
+                                        class="text-[10px] font-bold px-3 py-1 rounded-full uppercase">
+                                        {{s.tipoDocumento || s.tipo}}
+                                    </span>
+                                    <span class="text-[10px] text-slate-400 font-bold uppercase">{{s.fechaSolicitud |
+                                        date:'dd/MM HH:mm'}}</span>
+                                </div>
+
+                                <h4 class="font-black text-slate-900 dark:text-white text-lg">{{s.documentoReferencia}}
+                                </h4>
+                                <p class="text-xs text-slate-500 font-bold mb-4 uppercase">{{s.clienteProveedor}}</p>
+
+                                <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl mb-6">
+                                    <p class="text-[10px] uppercase text-slate-400 font-bold mb-1">Motivo Solicitado:
+                                    </p>
+                                    <p class="text-xs text-slate-700 dark:text-slate-300 italic">"{{s.motivo}}"</p>
+                                </div>
+
+                                <div class="flex justify-between items-center mb-6">
+                                    <div>
+                                        <p class="text-[10px] uppercase text-slate-400 font-bold">Monto:</p>
+                                        <p class="text-xl font-black text-slate-900 dark:text-white">S/ {{s.monto |
+                                            number:'1.2-2'}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <app-primary-button label="Ver Detalles" icon="search" (btnClick)="verDetalle(s)" [color]="'brand'" [fullWidth]="true">
+                                    </app-primary-button>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <app-primary-button label="Rechazar" (btnClick)="procesar(s, false)" [color]="'red'"
+                                        [fullWidth]="true">
+                                    </app-primary-button>
+                                    <app-primary-button label="Aprobar" (btnClick)="procesar(s, true)" [color]="'green'"
+                                        [fullWidth]="true">
+                                    </app-primary-button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6" *ngIf="tieneSolicitudesIniciales() && solicitudes().length > 0">
+                            <app-pagination [currentPage]="paginaActualPendientes()" [totalPages]="totalPagesPendientes()"
+                                [pageSize]="tamanoPaginaPendientes()" (pageChange)="onPageChangePendientes($event)"
+                                (pageSizeChange)="onPageSizeChangePendientes($event)">
+                            </app-pagination>
+                        </div>
+                    </div>
+
+                    <!-- VISTA HISTORIAL -->
+                    <div *ngIf="tabActiva() === 'historial'" class="space-y-4">
+                        <!-- Sin historial original -->
+                        <div *ngIf="!tieneHistorialInicial()" class="text-center py-20 text-slate-400">
+                            <i class="fas fa-history text-4xl mb-4"></i>
+                            <p>No hay historial de solicitudes procesadas.</p>
+                        </div>
+
+                        <!-- No se encontraron resultados al buscar -->
+                        <div *ngIf="tieneHistorialInicial() && historial().length === 0"
+                            class="bg-white dark:bg-slate-800 rounded-3xl p-12 text-center shadow-sm border border-slate-200 dark:border-slate-700">
+                            <div
+                                class="w-20 h-20 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-search text-3xl text-slate-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Sin resultados</h3>
+                            <p class="text-slate-500 dark:text-slate-400 mt-2">No se encontraron solicitudes que coincidan con la búsqueda.</p>
+                        </div>
+
+                        <div *ngIf="historialPaginado().length > 0"
+                            class="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+                            <table class="w-full text-left border-collapse">
+                                <thead
+                                    class="bg-slate-50 dark:bg-slate-900/50 text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                                    <tr>
+                                        <th class="px-6 py-4">Documento</th>
+                                        <th class="px-6 py-4">Tipo</th>
+                                        <th class="px-6 py-4">Fecha</th>
+                                        <th class="px-6 py-4">Estado</th>
+                                        <th class="px-6 py-4">Atendido Por</th>
+                                        <th class="px-6 py-4">Observación</th>
+                                        <th class="px-6 py-4 text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-50 dark:divide-slate-700/50">
+                                    <tr *ngFor="let h of historialPaginado()"
+                                        class="hover:bg-slate-50/50 dark:hover:bg-slate-900/20 transition-colors">
+                                        <td class="px-6 py-4">
+                                            <p class="text-xs font-bold text-slate-700 dark:text-white">
+                                                {{h.documentoReferencia}}</p>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span [class.bg-emerald-100]="h.tipoDocumento === 'Factura' || h.tipoDocumento === 'Boleta'"
+                                                  [class.text-emerald-700]="h.tipoDocumento === 'Factura' || h.tipoDocumento === 'Boleta'"
+                                                  [class.bg-rose-100]="h.tipoDocumento === 'Nota de Crédito' || h.tipoDocumento === 'NOTA DE CRÉDITO'"
+                                                  [class.text-rose-700]="h.tipoDocumento === 'Nota de Crédito' || h.tipoDocumento === 'NOTA DE CRÉDITO'"
+                                                  [class.bg-orange-100]="h.tipoDocumento === 'Nota de Débito' || h.tipoDocumento === 'NOTA DE DÉBITO'"
+                                                  [class.text-orange-700]="h.tipoDocumento === 'Nota de Débito' || h.tipoDocumento === 'NOTA DE DÉBITO'"
+                                                  [class.bg-indigo-100]="h.tipoDocumento === 'Nota de Venta' || h.tipoDocumento === 'NOTA DE VENTA'"
+                                                  [class.text-indigo-700]="h.tipoDocumento === 'Nota de Venta' || h.tipoDocumento === 'NOTA DE VENTA'"
+                                                  [class.bg-blue-100]="h.tipo === 'COMPRA'"
+                                                  [class.text-blue-700]="h.tipo === 'COMPRA'"
+                                                  [class.bg-purple-100]="h.tipo === 'MOVIMIENTO_DIVERSO'"
+                                                  [class.text-purple-700]="h.tipo === 'MOVIMIENTO_DIVERSO'"
+                                                  [class.bg-slate-100]="!h.tipoDocumento && h.tipo === 'VENTA'"
+                                                  [class.text-slate-700]="!h.tipoDocumento && h.tipo === 'VENTA'"
+                                                  class="text-[10px] font-bold px-3 py-1 rounded-full uppercase">
+                                                  {{h.tipoDocumento || (h.tipo === 'MOVIMIENTO_DIVERSO' ? 'MOVIMIENTO' : h.tipo)}}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 text-[10px] font-bold text-slate-500">
+                                            {{h.fechaAtiende | date:'dd/MM/yyyy HH:mm'}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span [ngClass]="{
+                                            'bg-emerald-100 text-emerald-700': h.estado === 'APROBADA',
+                                            'bg-rose-100 text-rose-700': h.estado === 'RECHAZADA',
+                                            'bg-amber-100 text-amber-700': h.estado === 'PENDIENTE'
+                                        }" class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">
+                                                {{h.estado}}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 text-xs font-bold text-slate-600 dark:text-slate-400">
+                                            {{h.usuarioAtiende || '---'}}
+                                        </td>
+                                        <td class="px-6 py-4 text-xs text-slate-500 italic max-w-xs truncate">
+                                            "{{h.observacionAtiende || '---'}}"
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <button (click)="verDetalle(h)"
+                                                    class="p-2 bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-blue-900/20 dark:text-blue-400 dark:hover:bg-blue-900/40 rounded-lg transition-colors"
+                                                    title="Ver Detalle">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mt-6" *ngIf="tieneHistorialInicial() && historial().length > 0">
+                            <app-pagination [currentPage]="paginaActualHistorial()" [totalPages]="totalPagesHistorial()"
+                                [pageSize]="tamanoPaginaHistorial()" (pageChange)="onPageChangeHistorial($event)"
+                                (pageSizeChange)="onPageSizeChangeHistorial($event)">
+                            </app-pagination>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+
+        <!-- Modales de Detalle -->
+        <app-venta-detalle-modal [isOpen]="isVentaModalOpen()" [venta]="selectedVenta()"
+            (onClose)="isVentaModalOpen.set(false); selectedVenta.set(null)">
+        </app-venta-detalle-modal>
+
+        <app-modal [isOpen]="isCompraModalOpen()" title="Detalle de Compra" size="7xl"
+            (modalClose)="isCompraModalOpen.set(false); selectedCompraId.set(null)">
+            <app-registro-detalle *ngIf="selectedCompraId()" [idCompra]="selectedCompraId()"
+                (cerrar)="isCompraModalOpen.set(false); selectedCompraId.set(null)">
+            </app-registro-detalle>
+        </app-modal>
+
+        <app-movimiento-detalle-modal 
+            [isOpen]="isMovimientoModalOpen()" 
+            [movimiento]="selectedMovimiento()" 
+            (onClose)="isMovimientoModalOpen.set(false); selectedMovimiento.set(null)">
+        </app-movimiento-detalle-modal>
+    </div>
+</div>

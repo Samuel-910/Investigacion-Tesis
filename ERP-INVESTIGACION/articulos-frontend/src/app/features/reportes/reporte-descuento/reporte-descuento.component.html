@@ -1,0 +1,100 @@
+<app-reporte-base #reporte
+    title="Reporte de Descuentos"
+    subtitle="Análisis de descuentos aplicados en ventas y promociones"
+    moduleLabel="Estrategia Comercial"
+    description="Monitoree el impacto de sus promociones, cupones y descuentos directos sobre la venta base."
+    [breadcrumbItems]="breadcrumbItems"
+    [loading]="loading()"
+    [data]="listaDescuentos()"
+    [columnConfigs]="columnConfigs"
+    [searchFields]="['cliente', 'comprobante', 'motivo']"
+    previewTitle="Detalle de Beneficios"
+    reportKey="DESCUENTOS_GENERAL"
+    dashboardCategory="Ventas"
+    mainIcon="fas fa-tags"
+    (onFiltroChange)="onFiltroChange($event)"
+    (onExportar)="exportarExcel($event)">
+
+    <div table class="overflow-x-auto custom-scrollbar-container">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-10 border-b border-slate-100 dark:border-slate-800">
+                    <th class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center w-16">#</th>
+                    <th *ngFor="let col of columnConfigs"
+                        [hidden]="!reporte.isColumnVisible(col.key)"
+                        class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">
+                        {{col.label}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800/50">
+                <tr *ngFor="let d of reporte.paginatedData(); let i = index" 
+                    class="hover:bg-sky-50/30 dark:hover:bg-sky-900/5 transition-all duration-300 group">
+                    
+                    <td class="px-6 py-4 text-[10px] font-black text-slate-400 text-center">
+                        {{ (reporte.currentPage() * reporte.itemsPerPage()) + i + 1 }}
+                    </td>
+
+                    <ng-container *ngFor="let col of columnConfigs">
+                        <td *ngIf="reporte.isColumnVisible(col.key)" class="px-6 py-4 whitespace-nowrap">
+                            
+                            <!-- Fecha -->
+                            <div *ngIf="col.key === 'fecha'" class="text-xs font-bold text-slate-600 dark:text-slate-300">
+                                {{ d.fecha }}
+                            </div>
+
+                            <!-- Documento -->
+                            <div *ngIf="col.key === 'comprobante'">
+                                <span class="text-sm font-black text-slate-900 dark:text-white">{{ d.comprobante }}</span>
+                            </div>
+
+                            <!-- Cliente -->
+                            <div *ngIf="col.key === 'cliente'" class="max-w-xs truncate">
+                                <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase">{{ d.cliente }}</span>
+                            </div>
+
+                            <div *ngIf="col.key === 'motivo'">
+                                <span class="px-2 py-1 bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-400 text-[10px] font-black rounded-md border border-amber-200 dark:border-amber-800/30">
+                                    {{d.motivo}}
+                                </span>
+                            </div>
+
+                            <!-- Venta Base -->
+                            <div *ngIf="col.key === 'base'" class="text-right">
+                                <span class="text-sm font-black text-slate-900 dark:text-white tabular-nums">
+                                    S/ {{d.base | number:'1.2-2'}}
+                                </span>
+                            </div>
+
+                            <!-- Monto Desc -->
+                            <div *ngIf="col.key === 'descuento'" class="text-right">
+                                <span class="text-sm font-black text-rose-500 tabular-nums">
+                                    - S/ {{d.descuento | number:'1.2-2'}}
+                                </span>
+                            </div>
+
+                            <!-- Default -->
+                            <div *ngIf="!['fecha', 'comprobante', 'cliente', 'motivo', 'base', 'descuento'].includes(col.key)" class="text-xs font-bold text-slate-600 dark:text-slate-300">
+                                {{ d[col.key] || '-' }}
+                            </div>
+                        </td>
+                    </ng-container>
+                </tr>
+                <tr *ngIf="reporte.paginatedData().length === 0">
+                    <td [attr.colspan]="columnConfigs.length + 1" class="px-8 py-24 text-center">
+                        <div class="flex flex-col items-center gap-4">
+                            <div class="w-20 h-20 rounded-full bg-slate-50 dark:bg-slate-900/50 flex items-center justify-center text-slate-300 dark:text-slate-700">
+                                <i class="fas fa-folder-open text-4xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 dark:text-slate-400 font-black text-lg">No se encontraron registros</p>
+                                <p class="text-slate-400 dark:text-slate-500 text-sm mt-1">Ajuste los filtros o el buscador para ver resultados</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</app-reporte-base>

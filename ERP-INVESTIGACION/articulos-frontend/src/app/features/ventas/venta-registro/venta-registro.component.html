@@ -1,0 +1,15 @@
+<app-header></app-header>
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out h-full pl-[290px]">
+        <div class="grid grid-cols-12 gap-6 h-[calc(100vh-100px)]">
+            <div class="col-span-12 md:col-span-4 lg:col-span-3 h-full overflow-hidden">
+                <app-venta-sidebar (onUserSelected)="handleUserSelection($event)"></app-venta-sidebar>
+            </div>
+            <div class="col-span-12 md:col-span-8 lg:col-span-9 h-full overflow-hidden">
+                <app-venta-main [selectedPatient]="selectedPatient()" (onPatientLoaded)="handleUserSelection($event)"></app-venta-main>
+            </div>
+        </div>
+    </div>
+</div>

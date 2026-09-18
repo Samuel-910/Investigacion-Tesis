@@ -1,0 +1,34 @@
+[ {
+  "id" : 1,
+  "nombre" : "A4",
+  "anchoPx" : 794,
+  "altoPx" : 1123,
+  "descripcion" : "Tamaño estándar A4 (210mm x 297mm)",
+  "estado" : 1,
+  "createdBy" : null,
+  "createdAt" : null,
+  "modifiedBy" : null,
+  "updatedAt" : null
+}, {
+  "id" : 2,
+  "nombre" : "A5",
+  "anchoPx" : 559,
+  "altoPx" : 794,
+  "descripcion" : "Tamaño estándar A5 (148mm x 210mm)",
+  "estado" : 1,
+  "createdBy" : null,
+  "createdAt" : null,
+  "modifiedBy" : null,
+  "updatedAt" : null
+}, {
+  "id" : 3,
+  "nombre" : "Ticket 80mm",
+  "anchoPx" : 302,
+  "altoPx" : null,
+  "descripcion" : "Tamaño para impresoras térmicas de 80mm",
+  "estado" : 1,
+  "createdBy" : null,
+  "createdAt" : null,
+  "modifiedBy" : null,
+  "updatedAt" : null
+} ]

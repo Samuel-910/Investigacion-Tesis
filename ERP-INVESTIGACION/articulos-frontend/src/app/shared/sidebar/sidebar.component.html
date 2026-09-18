@@ -1,0 +1,168 @@
+<div *ngIf="sidebarService.isOpen$ | async" (click)="sidebarService.close()"
+    class="fixed inset-0 bg-slate-900/60 dark:bg-black/70 z-20 md:hidden backdrop-blur-sm transition-opacity animate-fadeIn">
+</div>
+
+<aside *ngIf="sidebarService.isOpen$ | async"
+    class="w-[260px] bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shrink-0 transition-all duration-300 ease-in-out shadow-2xl flex flex-col fixed top-16 left-0 z-40 h-[calc(100vh-64px)] border-r border-slate-200 dark:border-slate-800 overflow-y-auto">
+
+    <!-- HEADER DEL USUARIO -->
+    <div class="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
+        <div
+            class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 welcome-card">
+            <div class="flex shrink-0 profile-picture">
+                <img [src]="getProfileImage()" alt="Foto de Perfil"
+                    class="w-[60px] h-[60px] rounded-full border-2 border-slate-300 dark:border-slate-600 object-cover">
+            </div>
+
+            <div class="flex flex-col welcome-info">
+                <span class="text-sm font-light text-slate-600 dark:text-slate-300 welcome-text">{{bien}}</span>
+                <span class="text-xl font-bold leading-tight text-slate-900 dark:text-white user-name">{{ usuarioActual
+                    }}</span>
+
+                <div class="flex gap-4 mt-2 action-icons">
+                    <a [routerLink]="['/dashboard/Principal']"
+                        class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors action-icon"
+                        title="Inicio">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <a href="#"
+                        class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors action-icon"
+                        title="Perfil">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <button (click)="themeService.toggleTheme()"
+                        class="text-slate-600 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400 transition-colors action-icon bg-transparent border-0 cursor-pointer"
+                        [title]="themeService.darkMode() ? 'Modo Día' : 'Modo Noche'">
+                        <i [class]="themeService.darkMode() ? 'fas fa-sun' : 'fas fa-moon'"></i>
+                    </button>
+
+                    <button (click)="cerrarSesion()"
+                        class="text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 transition-colors action-icon bg-transparent border-0 cursor-pointer"
+                        title="Cerrar Sesión">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MENÚ DINÁMICO COMPLETO -->
+    <nav class="flex-1 px-2 py-4 space-y-2">
+
+        <!-- Iterar sobre los grupos principales (CONFIGURACIONES, PROCESOS, REPORTES) -->
+        <ng-container *ngFor="let grupo of menuDinamico">
+            <div class="space-y-1">
+                <!-- Botón del grupo principal -->
+                <button (click)="toggleGrupo(grupo.id)" [class.bg-blue-600]="grupoExpandido[grupo.id]"
+                    [class.dark:bg-blue-600]="grupoExpandido[grupo.id]" [class.text-white]="grupoExpandido[grupo.id]"
+                    [class.text-slate-700]="!grupoExpandido[grupo.id]"
+                    [class.dark:text-slate-300]="!grupoExpandido[grupo.id]"
+                    class="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-200 group">
+
+                    <div class="flex items-center space-x-3">
+                        <!-- Icono dinámico del grupo -->
+                        <i [class]="'fas ' + grupo.icono + ' w-5 h-5 opacity-70 group-hover:opacity-100'"></i>
+                        <span class="text-sm font-black uppercase tracking-tighter">{{ grupo.titulo }}</span>
+                    </div>
+
+                    <svg class="w-4 h-4 transition-transform duration-300" [class.rotate-90]="grupoExpandido[grupo.id]"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+
+                <!-- Contenido del grupo cuando está expandido -->
+                <div *ngIf="grupoExpandido[grupo.id]" class="mt-1 ml-4 space-y-0" @slideDown>
+
+                    <!-- Iterar sobre los hijos del grupo (pueden ser SUBMENUs o ITEMs) -->
+                    <ng-container *ngFor="let child of grupo.children; let f = first; let l = last">
+
+                        <!-- Si es un SUBMENU (ej: SEGURIDAD) -->
+                        <div *ngIf="child.tipo === 'SUBMENU'" class="relative">
+                            <button (click)="toggleSubmenu(child.id)"
+                                class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors group">
+                                <div class="flex items-center gap-3">
+                                    <i
+                                        [class]="'fas ' + child.icono + ' text-[10px] text-slate-500 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400'"></i>
+                                    <span
+                                        class="text-[11px] font-black text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white uppercase tracking-widest">
+                                        {{ child.titulo }}
+                                    </span>
+                                </div>
+                                <i class="fas fa-chevron-right text-[8px] text-slate-400 dark:text-slate-500 transition-transform duration-200"
+                                    [class.rotate-90]="submenuExpandido[child.id]"></i>
+                            </button>
+
+                            <!-- Items del submenu -->
+                            <div *ngIf="submenuExpandido[child.id]"
+                                class="mt-1 ml-4 space-y-0 bg-slate-50 dark:bg-slate-900/30 rounded-r-lg">
+                                <ng-container *ngFor="let subItem of child.children; let sf = first; let sl = last">
+                                    <ng-container
+                                        *ngTemplateOutlet="navLink; context: { item: subItem, isFirst: sf, isLast: sl }">
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                        <!-- Si es un ITEM directo (sin submenu) -->
+                        <ng-container *ngIf="child.tipo === 'ITEM'">
+                            <ng-container *ngTemplateOutlet="navLink; context: { item: child, isFirst: f, isLast: l }">
+                            </ng-container>
+                        </ng-container>
+
+                    </ng-container>
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- Mensaje de carga -->
+        <div *ngIf="menuDinamico.length === 0" class="text-center text-slate-500 dark:text-slate-400 text-sm py-8">
+            <i class="fas fa-spinner fa-spin mb-2 text-2xl"></i>
+            <p>Cargando menú...</p>
+        </div>
+
+    </nav>
+</aside>
+
+<!-- TEMPLATE PARA LOS LINKS DE NAVEGACIÓN -->
+<ng-template #navLink let-item="item" let-isFirst="isFirst" let-isLast="isLast">
+    <button (click)="navegarA(item.ruta)"
+        class="w-full flex items-center hover:bg-slate-100 dark:hover:bg-white/5 transition-all rounded-lg group relative">
+
+        <!-- Líneas de conexión vertical -->
+        <div class="relative shrink-0 w-4 h-10 flex items-center justify-center">
+            <!-- Línea superior -->
+            <div *ngIf="!isFirst" class="absolute top-0 w-[1.5px] h-1/2 left-1/2 -translate-x-1/2"
+                [ngClass]="rutaActual === item.ruta ? 'bg-blue-600 dark:bg-blue-600' : 'bg-slate-300 dark:bg-slate-700'">
+            </div>
+
+            <!-- Línea inferior -->
+            <div *ngIf="!isLast" class="absolute bottom-0 w-[1.5px] h-1/2 left-1/2 -translate-x-1/2"
+                [ngClass]="rutaActual === item.ruta ? 'bg-blue-600 dark:bg-blue-600' : 'bg-slate-300 dark:bg-slate-700'">
+            </div>
+
+            <!-- Punto indicador -->
+            <div class="relative z-10 w-2.5 h-2.5 rounded-full border-2 transition-all duration-300" [ngClass]="{
+                    'bg-blue-600 border-blue-600 scale-125 shadow-[0_0_8px_rgba(37,99,235,0.7)]': rutaActual === item.ruta,
+                    'bg-white dark:bg-slate-900 border-slate-400 dark:border-slate-600 group-hover:border-slate-500 dark:group-hover:border-slate-400': rutaActual !== item.ruta
+                }">
+                <!-- Check icon cuando está activo -->
+                <svg *ngIf="rutaActual === item.ruta" class="w-full h-full text-white p-0.5" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="5" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- Texto del link -->
+        <span class="text-[11px] font-bold transition-colors uppercase tracking-tight text-left flex-1 px-2"
+            [ngClass]="rutaActual === item.ruta ? 'text-blue-600 dark:text-white' : 'text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'">
+            {{ item.titulo }}
+        </span>
+
+        <!-- Indicador derecho cuando está activo -->
+        <div *ngIf="rutaActual === item.ruta"
+            class="absolute right-0 top-2 bottom-2 w-0.5 bg-blue-600 dark:bg-blue-600 rounded-l-full shadow-lg shadow-blue-500/50">
+        </div>
+    </button>
+</ng-template>

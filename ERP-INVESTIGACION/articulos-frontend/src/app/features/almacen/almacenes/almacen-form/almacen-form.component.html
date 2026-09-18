@@ -1,0 +1,84 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+    <!-- Fila 1: Nombre -->
+    <div>
+        <app-form-input label="Nombre" formControlName="nombre" [required]="true" [hasIcon]="true"
+            [error]="isFieldInvalid('nombre') ? 'Requerido' : null">
+            <i icon class="fas fa-warehouse text-slate-400"></i>
+        </app-form-input>
+    </div>
+
+    <!-- Fila 2: Código + Responsable -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <app-form-input label="Código" formControlName="codigo" [hasIcon]="true"
+            [error]="isFieldInvalid('codigo') ? 'Inválido' : null">
+            <i icon class="fas fa-barcode text-slate-400"></i>
+        </app-form-input>
+
+        <app-searchable-select label="Responsable" formControlName="responsable" [data]="usuarios()"
+            bindLabel="nombreCompleto" bindValue="nombreCompleto" [hasIcon]="true"
+            [error]="isFieldInvalid('responsable') ? 'Requerido' : null">
+            <i icon class="fas fa-user-tie text-slate-400"></i>
+        </app-searchable-select>
+    </div>
+
+    <!-- Fila 3: Ubicación -->
+    <div>
+        <app-form-input label="Ubicación Física" formControlName="ubicacion" [hasIcon]="true"
+            placeholder="Ej. Sótano, Bloque B...">
+            <i icon class="fas fa-map-marker-alt text-slate-400"></i>
+        </app-form-input>
+    </div>
+
+    <!-- Fila 4: Switches (Principal + Estado) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <app-form-label>¿Es Almacén Principal?</app-form-label>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" formControlName="esPrincipal" class="sr-only peer">
+                <div
+                    class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-600">
+                </div>
+                <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    {{ form.get('esPrincipal')?.value ? 'Sí, principal' : 'No' }}
+                </span>
+            </label>
+        </div>
+
+        <div>
+            <app-form-label>Estado</app-form-label>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" formControlName="estado" class="sr-only peer">
+                <div
+                    class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                </div>
+                <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    {{ form.get('estado')?.value ? 'Activo' : 'Inactivo' }}
+                </span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="error()"
+        class="p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl text-sm font-medium animate-fadeIn">
+        {{ error() }}
+    </div>
+
+    <!-- Actions -->
+    <div class="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+        <button type="button" (click)="onClose()"
+            class="px-5 py-2.5 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            Cancelar
+        </button>
+        <button type="submit" [disabled]="loading()"
+            class="px-6 py-2.5 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2">
+            <svg *ngIf="loading()" class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
+            </svg>
+            {{ loading() ? 'Guardando...' : (almacen?.id ? 'Actualizar' : 'Guardar') }}
+        </button>
+    </div>
+</form>

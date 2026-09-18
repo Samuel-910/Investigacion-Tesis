@@ -1,0 +1,195 @@
+<app-header></app-header>
+
+<div class="h-full bg-slate-50 dark:bg-slate-900 pt-16 transition-colors duration-300">
+    <app-sidebar></app-sidebar>
+
+    <div [style.padding-left]="(sidebarService.isOpen$ | async) ? '290px' : '20px'"
+        class="p-4 md:p-6 min-w-0 transition-all duration-300 ease-in-out">
+
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <div class="mb-6">
+                <app-page-header title="Plantillas de Documentos"
+                    subtitle="Diseña y gestiona plantillas dinámicas para PDFs" [showCounter]="true"
+                    counterLabel="Total" [counterValue]="totalRegistros()">
+                </app-page-header>
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 my-6">
+                    <app-search-generic 
+                        [options]="searchOptions" 
+                        placeholder="Buscar plantillas..."
+                        (onSearch)="onSearch($event)">
+                    </app-search-generic>
+
+                    <div class="flex items-center gap-2">
+                        <app-primary-button label="Crear Nueva Plantilla" icon="plus" color="brand"
+                            (btnClick)="irAEditor()">
+                        </app-primary-button>
+                    </div>
+                </div>
+
+                <div class="overflow-hidden">
+                    @if (loading()) {
+                    <div class="flex justify-center items-center h-64">
+                        <div class="text-center">
+                            <div
+                                class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400">
+                            </div>
+                            <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium">Cargando plantillas...</p>
+                        </div>
+                    </div>
+                    } @else {
+                    <div
+                        class="relative overflow-x-auto shadow-sm rounded-xl border border-slate-200 dark:border-slate-700">
+                        <table class="w-full text-sm text-left text-slate-500 dark:text-slate-400">
+                            <thead
+                                class="text-xs text-slate-700 uppercase bg-slate-50 dark:bg-slate-700/50 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4 font-bold uppercase tracking-wider">Nombre</th>
+                                    <th scope="col" class="px-6 py-4 font-bold uppercase tracking-wider">Formato</th>
+                                    <th scope="col" class="px-6 py-4 font-bold uppercase tracking-wider text-center">
+                                        Módulo</th>
+                                    <th scope="col" class="px-6 py-4 font-bold uppercase tracking-wider">Tipo Documento
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 font-bold uppercase tracking-wider text-center">
+                                        Orientación</th>
+                                    <th scope="col" class="px-6 py-4 font-bold uppercase tracking-wider text-center">
+                                        Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (p of pagedPlantillas(); track p.id) {
+                                <tr
+                                    class="bg-white dark:bg-slate-800 border-b dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-slate-900 dark:text-white">
+                                        <div class="flex flex-col">
+                                            <span>{{ p.nombre }}</span>
+                                            <span *ngIf="p.isDefault"
+                                                class="text-[10px] text-emerald-500 font-bold uppercase tracking-tighter">Predeterminado</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 rounded-md text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                            {{ p.formato?.nombre || 'Personalizado' }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <span [ngClass]="{
+                                            'text-blue-600 bg-blue-50 dark:bg-blue-900/20': p.modulo === 'VENTA',
+                                            'text-pink-600 bg-pink-50 dark:bg-pink-900/20': p.modulo === 'COMPRA',
+                                            'text-slate-600 bg-slate-50 dark:bg-slate-700': p.modulo === 'INVENTARIO'
+                                        }"
+                                            class="px-2 py-0.5 rounded text-[10px] font-black tracking-widest uppercase">
+                                            {{ p.modulo }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 font-semibold text-slate-600 dark:text-slate-400">
+                                        {{ (p.tipoDocumento && typeof p.tipoDocumento === 'object') ?
+                                        p.tipoDocumento.nombre : p.tipoDocumento }}
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="flex items-center justify-center gap-1.5">
+                                            <i class="fas"
+                                                [ngClass]="p.orientacion === 'Vertical' ? 'fa-arrows-alt-v' : 'fa-arrows-alt-h'"></i>
+                                            <span>{{ p.orientacion }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <button (click)="abrirPrevisualizacion(p)" title="Previsualizar"
+                                                class="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all">
+                                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                </svg>
+                                            </button>
+                                            <button (click)="irAEditor(p)" title="Editar Diseño"
+                                                class="p-2 text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg transition-all">
+                                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                </svg>
+                                            </button>
+                                            <button (click)="copiarDiseno(p)" title="Copiar Diseño"
+                                                class="p-2 text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-all">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                            <button (click)="eliminar(p)" title="Eliminar"
+                                                class="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-6">
+                        <app-pagination 
+                            [totalPages]="totalPages()" 
+                            [pageSize]="tamanoPagina()"
+                            [currentPage]="paginaActual()" 
+                            (pageChange)="cambiarPagina($event)"
+                            (pageSizeChange)="cambiarTamanoPagina($event)">
+                        </app-pagination>
+                    </div>
+
+                    @if (plantillasFiltradas().length === 0) {
+                    <div class="text-center py-16">
+                        <div
+                            class="bg-slate-50 dark:bg-slate-700/50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-search text-3xl text-slate-300"></i>
+                        </div>
+                        <h3 class="text-lg font-medium text-slate-900 dark:text-white">Sin resultados</h3>
+                        <p class="text-slate-500 dark:text-slate-400">No se encontraron plantillas que coincidan con tu
+                            búsqueda.</p>
+                    </div>
+                    }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Previsualización -->
+<app-modal [showSucursal]="true" [isOpen]="showModalPreview()" (modalClose)="cerrarModalPreview()"
+    [title]="'Vista Previa: ' + previewTitle()">
+    <div class="p-4 bg-slate-100 min-h-[600px] rounded-lg">
+        <div *ngIf="previewContent" [innerHTML]="previewContent" class="w-full h-full bg-white shadow-lg mx-auto"></div>
+    </div>
+    <div class="mt-4 flex justify-end">
+        <app-primary-button label="Cerrar" color="red" (btnClick)="cerrarModalPreview()"></app-primary-button>
+    </div>
+</app-modal>
+
+<!-- Modal de Creación Contextual -->
+<app-modal [showSucursal]="true" [isOpen]="showModalNuevo()" (modalClose)="showModalNuevo.set(false)"
+    [title]="'Nuevo Documento Inteligente'" [size]="'lg'">
+    @if (showModalNuevo()) {
+        <app-nuevo-documento-modal (onCancel)="showModalNuevo.set(false)"
+            (onContinue)="onConfirmarNuevaPlantilla($event)">
+        </app-nuevo-documento-modal>
+    }
+</app-modal>
+
+<!-- Modal de Copiado de Plantilla -->
+<app-modal [showSucursal]="true" [isOpen]="showModalCopiar()" (modalClose)="showModalCopiar.set(false)"
+    [title]="'Duplicar Plantilla Existente'" [size]="'lg'">
+    @if (showModalCopiar() && plantillaACopiar()) {
+        <app-copiar-documento-modal [plantilla]="plantillaACopiar()!" (onCancel)="showModalCopiar.set(false)"
+            (onContinue)="onConfirmarNuevaPlantilla($event)">
+        </app-copiar-documento-modal>
+    }
+</app-modal>
+

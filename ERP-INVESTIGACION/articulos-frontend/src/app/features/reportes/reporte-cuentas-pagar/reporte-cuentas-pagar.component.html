@@ -1,0 +1,77 @@
+<app-reporte-base #reporte
+    title="Cuentas por Pagar"
+    subtitle="Control de deudas pendientes y compromisos con proveedores"
+    moduleLabel="Finanzas y Créditos"
+    description="Analice el estado de sus obligaciones financieras y el nivel de deuda por cada proveedor."
+    [breadcrumbItems]="breadcrumbItems"
+    [loading]="loading()"
+    [data]="listaDeudas()"
+    [columnConfigs]="columnConfigs"
+    [searchFields]="['label']"
+    previewTitle="Deudas Pendientes"
+    reportKey="DEUDAS_GENERAL"
+    dashboardCategory="Finanzas"
+    mainIcon="fas fa-hand-holding-dollar"
+    (onFiltroChange)="onFiltroChange($event)"
+    (onExportar)="exportarExcel($event)">
+
+    <div table class="overflow-x-auto custom-scrollbar-container">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-10 border-b border-slate-100 dark:border-slate-800">
+                    <th class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center w-16">#</th>
+                    <th *ngFor="let col of columnConfigs"
+                        [hidden]="!reporte.isColumnVisible(col.key)"
+                        class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">
+                        {{col.label}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800/50">
+                <tr *ngFor="let d of reporte.paginatedData(); let i = index" 
+                    class="hover:bg-orange-50/30 dark:hover:bg-orange-900/10 transition-all duration-300 group">
+                    
+                    <td class="px-6 py-4 text-[10px] font-black text-slate-400 text-center">
+                        {{ (reporte.currentPage() * reporte.itemsPerPage()) + i + 1 }}
+                    </td>
+
+                    <ng-container *ngFor="let col of columnConfigs">
+                        <td *ngIf="reporte.isColumnVisible(col.key)" class="px-6 py-4">
+                            
+                            <!-- Proveedor -->
+                            <div *ngIf="col.key === 'label'" class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400">
+                                    <i class="fas fa-truck"></i>
+                                </div>
+                                <span class="text-sm font-black text-slate-900 dark:text-white uppercase">{{ d.label }}</span>
+                            </div>
+
+                            <!-- Deuda -->
+                            <div *ngIf="col.key === 'value'" class="w-full max-w-xs">
+                                <div class="flex justify-between items-center mb-1.5">
+                                    <span class="text-[10px] font-black text-orange-600 dark:text-orange-400 tabular-nums">
+                                        S/ {{d.value | number:'1.2-2'}}
+                                    </span>
+                                    <span class="text-[10px] font-bold text-slate-400">
+                                        {{ (d.value / (listaDeudas()[0]?.value || 1)) * 100 | number:'1.0-0' }}%
+                                    </span>
+                                </div>
+                                <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                    <div class="h-full bg-orange-500 rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(249,115,22,0.3)]"
+                                        [style.width.%]="(d.value / (listaDeudas()[0]?.value || 1)) * 100">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Default -->
+                            <div *ngIf="!['label', 'value'].includes(col.key)" class="text-xs font-bold text-slate-600 dark:text-slate-300">
+                                {{ d[col.key] || '-' }}
+                            </div>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</app-reporte-base>

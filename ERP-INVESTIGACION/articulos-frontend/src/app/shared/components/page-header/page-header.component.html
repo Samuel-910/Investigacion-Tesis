@@ -1,0 +1,23 @@
+<div class="mb-6 transition-all">
+  <div class="flex items-end justify-between gap-4">
+    <div class="flex-1 min-w-0">
+      <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight">
+        {{ title }}
+      </h2>
+      <p *ngIf="subtitle" class="mt-2 text-slate-500 dark:text-slate-400 text-sm font-medium">
+        {{ subtitle }}
+      </p>
+    </div>
+
+    <div *ngIf="showCounter" class="flex flex-col items-end shrink-0">
+      <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{{ counterLabel }}</span>
+      <span class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white leading-none tracking-tight">
+        {{ counterValue }}
+      </span>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+    
+    <div *ngIf="error()" class="p-3 text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg">
+        {{ error() }}
+    </div>
+
+    <!-- Nombre -->
+    <div class="flex flex-col gap-2">
+        <app-form-input 
+            label="Nombre de Clasificación" 
+            formControlName="nombre" 
+            [required]="true" 
+            placeholder="Ej. ALMACÉN CENTRAL, MERMA, etc."
+            class="uppercase">
+        </app-form-input>
+    </div>
+
+    <!-- Tipo de Movimiento -->
+    <div class="flex flex-col gap-2">
+        <app-form-select 
+            label="Tipo de Movimiento"
+            formControlName="tipo" 
+            [options]="tiposMovimiento"
+            [required]="true"
+            placeholder="Seleccione el tipo">
+        </app-form-select>
+    </div>
+
+    <!-- Estado -->
+    <div class="flex flex-col gap-2" *ngIf="clasificacion">
+        <app-form-select 
+            label="Estado"
+            formControlName="estado" 
+            [options]="estados"
+            [required]="true"
+            placeholder="Seleccione el estado">
+        </app-form-select>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex justify-end gap-3 pt-6 border-t border-slate-100 dark:border-slate-800">
+        <button 
+            type="button" 
+            (click)="onClose()"
+            class="px-5 py-2.5 rounded-xl text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors uppercase tracking-widest">
+            Cancelar
+        </button>
+        <app-primary-button 
+            [label]="loading() ? 'Guardando...' : 'Guardar'" 
+            [loading]="loading()"
+            [disabled]="form.invalid || loading()" 
+            type="submit" 
+            color="brand">
+        </app-primary-button>
+    </div>
+</form>

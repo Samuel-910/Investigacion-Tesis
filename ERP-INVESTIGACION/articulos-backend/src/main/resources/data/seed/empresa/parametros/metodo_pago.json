@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "descripcion": "EFECTIVO",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.514593",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.514593",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 2,
+    "descripcion": "TARJETA",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.516606",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.516606",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 3,
+    "descripcion": "TRANSFERENCIA",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.517978",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.517978",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 4,
+    "descripcion": "YAPE",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.518987",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-05-31T18:20:40.518987",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 6,
+    "descripcion": "EJEMPLO",
+    "estado": "INACTIVO",
+    "fechaCreacion": "2026-06-12T11:01:19.692647",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-06-12T11:03:33.125708",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 5,
+    "descripcion": "PLIN",
+    "estado": "INACTIVO",
+    "fechaCreacion": "2026-05-31T18:20:40.520493",
+    "usuarioCreacion": null,
+    "fechaModificacion": "2026-06-12T11:05:11.878969",
+    "usuarioModificacion": null
+  },
+  {
+    "id": 7,
+    "descripcion": "123",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-06-14T12:16:25.47949",
+    "usuarioCreacion": null,
+    "fechaModificacion": null,
+    "usuarioModificacion": null
+  },
+  {
+    "id": 8,
+    "descripcion": "213123",
+    "estado": "ACTIVO",
+    "fechaCreacion": "2026-07-22T10:32:12.326472",
+    "usuarioCreacion": "user_san_isidro",
+    "fechaModificacion": "2026-07-22T10:32:12.326472",
+    "usuarioModificacion": "user_san_isidro"
+  }
+]

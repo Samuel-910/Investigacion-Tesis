@@ -1,0 +1,14 @@
+/* Estilos específicos para el drawer si son necesarios, 
+   aunque la mayoría se maneja con Tailwind */
+:host {
+    display: block;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
