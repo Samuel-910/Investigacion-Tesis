@@ -1,0 +1,116 @@
+{
+  "P001": {
+    "bar": [
+      "reportes/cajas",
+      "configuracion/puntos-venta",
+      "caja/arqueos"
+    ],
+    "groups": [
+      {
+        "id": "g3",
+        "items": [
+          "reportes/cajas",
+          "reportes/ventas",
+          "reportes/descuento",
+          "reportes/compras",
+          "reportes/kardex",
+          "reportes/correlatividad",
+          "reportes/documentos-anulados",
+          "reportes/nota-credito",
+          "reportes/stock-valorizado",
+          "reportes/comprobantes-anulados"
+        ]
+      },
+      {
+        "id": "g1",
+        "items": [
+          "configuracion/puntos-venta",
+          "configuracion/seguridad/roles",
+          "configuracion/seguridad/users",
+          "configuracion/seguridad/permisos",
+          "configuracion/sucursales",
+          "configuracion/seguridad/admin",
+          "configuracion/catalogo-productos",
+          "configuracion/seguridad/cambio-clave",
+          "configuracion/puntos-atributos",
+          "configuracion/empresas",
+          "configuracion/utilitarios",
+          "configuracion/atributos-producto"
+        ]
+      },
+      {
+        "id": "g7",
+        "items": [
+          "caja/arqueos",
+          "caja/medio-pago",
+          "caja/general",
+          "caja/chica",
+          "caja/diferencia-costos",
+          "caja/cuentas"
+        ]
+      },
+      {
+        "id": "g9",
+        "items": [
+          "documentos/formatos",
+          "documentos/puntos",
+          "documentos",
+          "documentos/bloques"
+        ]
+      },
+      {
+        "id": "g2",
+        "items": [
+          "procesos/aprobaciones",
+          "procesos/transferencias",
+          "procesos/documento-cliente",
+          "procesos/atributos-diverso",
+          "procesos/reimprimir-comprobantes",
+          "procesos/historial-movimientos",
+          "procesos/detalle-documentos"
+        ]
+      },
+      {
+        "id": "g4",
+        "items": [
+          "compra/registrar",
+          "compra/pagos-pendientes",
+          "compra/estado-cuenta",
+          "compra/intercambio",
+          "compra/orden",
+          "compra/proveedores"
+        ]
+      },
+      {
+        "id": "g6",
+        "items": [
+          "facturacion/resumenes",
+          "venta/comprobante-electronico",
+          "facturacion/anulaciones"
+        ]
+      },
+      {
+        "id": "g5",
+        "items": [
+          "venta/venta",
+          "venta/descuentos/convenio",
+          "venta/devoluciones",
+          "venta/notas-credito",
+          "venta/clientes",
+          "venta/notas-venta",
+          "venta/anulaciones",
+          "venta/listado",
+          "venta/descuentos/lista",
+          "venta/cotizaciones"
+        ]
+      },
+      {
+        "id": "g8",
+        "items": [
+          "almacen/almacenes",
+          "almacen/productos"
+        ]
+      }
+    ]
+  }
+}

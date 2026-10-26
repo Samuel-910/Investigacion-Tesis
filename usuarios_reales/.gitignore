@@ -1,0 +1,12 @@
+# Datos de participantes reales: no se suben al repositorio (privacidad / ética)
+datos_reales/
+
+# Datos sintéticos: se regeneran con 00_Generador_Datos/simulador_erp_real.py (semilla 42)
+datos_sinteticos/
+
+# Salidas grandes y regenerables del pipeline
+OE1_Baseline/output_oe1/perfiles_usuario.json
+OE1_Baseline/output_oe1/costo_navegacion_baseline.csv
+OE2_Modelado/output_oe2/scores_relevancia.json
+OE3_Agente_DQN/output_oe3/menus_personalizados.json
+OE5_Evaluacion/output_oe5/datos_pre_post.csv

@@ -1,0 +1,9 @@
+user_id,role,M1_Promedio
+us_adm_001,Administrador,1.7352130695797658
+us_adm_002,Administrador,1.5118252392128544
+us_alm_001,Almacen,1.551314834106765
+us_alm_002,Almacen,1.2757144033599606
+us_cmp_001,Compras,1.538987561111455
+us_cmp_002,Compras,1.3817912657290896
+us_vta_001,Ventas,1.4493106963961169
+us_vta_002,Ventas,1.1158195500824983
