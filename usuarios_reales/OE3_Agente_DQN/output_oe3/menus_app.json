@@ -10,15 +10,15 @@
         "id": "g3",
         "items": [
           "reportes/cajas",
-          "reportes/ventas",
           "reportes/descuento",
+          "reportes/ventas",
           "reportes/compras",
           "reportes/kardex",
           "reportes/correlatividad",
           "reportes/documentos-anulados",
+          "reportes/comprobantes-anulados",
           "reportes/nota-credito",
-          "reportes/stock-valorizado",
-          "reportes/comprobantes-anulados"
+          "reportes/stock-valorizado"
         ]
       },
       {
@@ -64,8 +64,8 @@
           "procesos/aprobaciones",
           "procesos/transferencias",
           "procesos/documento-cliente",
-          "procesos/atributos-diverso",
           "procesos/reimprimir-comprobantes",
+          "procesos/atributos-diverso",
           "procesos/historial-movimientos",
           "procesos/detalle-documentos"
         ]
@@ -74,11 +74,11 @@
         "id": "g4",
         "items": [
           "compra/registrar",
-          "compra/pagos-pendientes",
           "compra/estado-cuenta",
+          "compra/pagos-pendientes",
+          "compra/proveedores",
           "compra/intercambio",
-          "compra/orden",
-          "compra/proveedores"
+          "compra/orden"
         ]
       },
       {
@@ -95,13 +95,13 @@
           "venta/venta",
           "venta/descuentos/convenio",
           "venta/devoluciones",
-          "venta/notas-credito",
-          "venta/clientes",
           "venta/notas-venta",
           "venta/anulaciones",
+          "venta/notas-credito",
           "venta/listado",
-          "venta/descuentos/lista",
-          "venta/cotizaciones"
+          "venta/clientes",
+          "venta/cotizaciones",
+          "venta/descuentos/lista"
         ]
       },
       {

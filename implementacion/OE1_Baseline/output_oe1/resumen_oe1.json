@@ -1,13 +1,13 @@
 {
   "oe1_completado": true,
-  "fecha_ejecucion": "2026-09-11T13:33:28.954100",
+  "fecha_ejecucion": "2026-10-26T08:40:35.517268",
   "corpus": {
     "total_eventos": 87465,
     "total_sesiones": 1206,
     "total_usuarios": 8,
     "roles": [
-      "Administrador",
       "Ventas",
+      "Administrador",
       "Compras",
       "Almacen"
     ],

@@ -15,7 +15,7 @@ if torch.cuda.is_available():
     torch.cuda.manual_seed_all(SEED)
 
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-OE2_DIR = Path("../OE2_Modelado_GRU/output_oe2")
+OE2_DIR = Path("../OE2_Modelado/output_oe2")
 OUTPUT_DIR = Path("output_oe3")
 OUTPUT_DIR.mkdir(exist_ok=True)
 

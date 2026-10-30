@@ -11,6 +11,7 @@
 Uso:
   python run_all_pipeline.py            # todo (genera datos y reentrena)
   python run_all_pipeline.py --sin-entrenar   # reutiliza los modelos ya entrenados
+  python run_all_pipeline.py --solo-reales    # solo datos reales (P001...) con los modelos ya entrenados
 """
 import os
 import subprocess
@@ -23,12 +24,13 @@ venv_python = base_dir / "venv" / "Scripts" / "python.exe"
 if not venv_python.exists():  # se reutiliza el entorno de implementacion/
     venv_python = base_dir.parent / "implementacion" / "venv" / "Scripts" / "python.exe"
 
-entrenar = "--sin-entrenar" not in sys.argv
+solo_reales = "--solo-reales" in sys.argv          # solo participantes reales, sin entrenar
+entrenar = "--sin-entrenar" not in sys.argv and not solo_reales
 
 steps = [
     ("00_Generador_Datos", ["construir_config_erp.py"]),
-    ("00_Generador_Datos", ["simulador_erp_real.py"]),
-    ("OE1_Baseline", ["main.py", "--fuente", "mixto"]),
+    *([] if solo_reales else [("00_Generador_Datos", ["simulador_erp_real.py"])]),
+    ("OE1_Baseline", ["main.py", "--fuente", "real" if solo_reales else "mixto"]),
     *([("OE2_Modelado", ["main.py", "--model", "all"]),
        ("OE2_Modelado", ["plot_benchmark.py"])] if entrenar else []),
     ("OE2_Modelado", ["generate_scores.py"]),

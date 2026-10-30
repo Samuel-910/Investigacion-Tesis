@@ -1,4 +1,4 @@
 Metrica,PRE_Mean,POST_Mean,Reduccion_%,p_value,Significativo,Cohens_D,Efecto
-M1,2.132,1.095,48.64,0.0,SI,5.034,Fuerte
-M2,39.093,19.673,49.68,0.0,SI,0.505,Medio
-M3,0.01,0.01,-0.7,3e-05,SI,-0.005,Leve
+M1,2.222,1.076,51.57,0.5,NO,11459371069.182,Fuerte
+M2,589.2,230.416,60.89,0.5,NO,3587837015529.911,Fuerte
+M3,0.022,0.01,54.95,0.5,NO,122000000.0,Fuerte

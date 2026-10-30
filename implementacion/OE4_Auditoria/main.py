@@ -9,7 +9,7 @@ OUTPUT_DIR = Path("output_oe4")
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 OE1_OUTPUT = Path("../OE1_Baseline/output_oe1")
-OE2_OUTPUT = Path("../OE2_Modelado_GRU/output_oe2")
+OE2_OUTPUT = Path("../OE2_Modelado/output_oe2")
 OE3_OUTPUT = Path("../OE3_Agente_DQN/output_oe3")
 
 def check_import(modulo):

@@ -3,16 +3,13 @@ import subprocess
 import time
 from pathlib import Path
 
-base_dir = Path(r"d:\Ciclo X\Investigacion\implementacion")
+base_dir = Path(__file__).resolve().parent
 venv_python = base_dir / "venv" / "Scripts" / "python.exe"
 
 # List of steps to execute in order
 steps = [
     ("OE1_Baseline", ["main.py"]),
-    # Note: Only running generate_scores.py for OE2 to save time, assuming the model is already trained.
-    # If the model wasn't trained, we would run main.py here first.
-    ("OE2_Modelado_GRU", ["generate_scores.py"]), 
-    ("OE3_Agente_DQN", ["main.py"]),
+    ("OE2_Modelado", ["generate_scores.py"]), 
     ("OE3_Agente_DQN", ["evaluate.py"]),
     ("OE4_Auditoria", ["main.py"]),
     ("OE5_Evaluacion", ["main.py"]),
@@ -22,6 +19,9 @@ log_path = base_dir / "pipeline_execution.log"
 
 print(f"Starting end-to-end pipeline execution...")
 start_time = time.time()
+
+env = os.environ.copy()
+env["PYTHONIOENCODING"] = "utf-8"
 
 with open(log_path, "w", encoding="utf-8") as log_file:
     for folder, cmds in steps:
@@ -37,8 +37,15 @@ with open(log_path, "w", encoding="utf-8") as log_file:
                 capture_output=True,
                 text=True,
                 encoding='utf-8',
-                errors='replace'
+                errors='replace',
+                env=env
             )
+            # Imprimir en consola en vivo para que el usuario vea los resultados
+            if result.stdout:
+                print(result.stdout)
+            if result.stderr:
+                print(result.stderr)
+
             log_file.write(result.stdout)
             if result.stderr:
                 log_file.write("\n[STDERR]\n" + result.stderr)
@@ -53,3 +60,4 @@ summary = f"\nPipeline execution completed in {elapsed:.2f} seconds."
 print(summary)
 with open(log_path, "a", encoding="utf-8") as log_file:
     log_file.write(summary + "\n")
+
